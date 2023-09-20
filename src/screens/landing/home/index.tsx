@@ -14,7 +14,7 @@ export function HomeScreen() {
           </div>
 
           <div className="md:5/12 lg:w-6/12">
-            <img className="md:-ml-8" src="./images/stats-login.webp" alt="tailus stats and login components" loading="lazy" width="1779" height="1592" />
+            <img className="md:-ml-8" src="./images/some-image.webp" alt="" loading="lazy" />
           </div>
         </div>
       </div>
