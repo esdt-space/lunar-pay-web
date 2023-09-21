@@ -24,6 +24,7 @@
     "tailwind-merge": "^1.14.0"
   },
   "devDependencies": {
+    "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@types/node": "^20.6.0",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
@@ -39,6 +40,7 @@
     "tailwindcss-animate": "^1.0.7",
     "typescript": "^5.0.2",
     "vite": "^4.4.5",
+    "vite-plugin-mkcert": "^1.16.0",
     "vite-plugin-svgr": "^3.2.0"
   }
 }
