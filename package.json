@@ -11,6 +11,9 @@
   },
   "dependencies": {
     "@formkit/auto-animate": "^0.8.0",
+    "@multiversx/sdk-core": "^12.9.0",
+    "@multiversx/sdk-dapp": "^2.21.0",
+    "@multiversx/sdk-network-providers": "^2.0.0",
     "@radix-ui/react-slot": "^1.0.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
