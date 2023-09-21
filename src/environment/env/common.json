@@ -1,0 +1,15 @@
+{
+  "appName": "LunarPay",
+  "appUrl": "https://localhost",
+  "walletConnect": {
+    "projectId": "38542af6040379fb7ba2a23d644b58cd"
+  },
+  "mvx": {
+    "apiTimeout": 6000,
+    "transactionSize": 15,
+    "toolsApiUrl": "https://tools.multiversx.com",
+    "nativeAuthDomains": [
+      "https://tools.multiversx.com"
+    ]
+  }
+}

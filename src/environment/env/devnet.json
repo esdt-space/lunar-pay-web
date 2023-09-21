@@ -1,0 +1,12 @@
+{
+  "type": "devnet",
+  "mvx": {
+    "apiUrl": "https://devnet-api.multiversx.com"
+  },
+  "contracts": {
+    "lunarPay": "..."
+  },
+  "microservice": {
+    "lunarPayApi": "http://localhost:3001"
+  }
+}

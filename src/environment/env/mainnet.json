@@ -1,0 +1,12 @@
+{
+  "type": "mainnet",
+  "mvx": {
+    "apiUrl": "https://api.multiversx.com"
+  },
+  "contracts": {
+    "lunarPay": "..."
+  },
+  "microservice": {
+    "lunarPayApi": "http://localhost:3001"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "testnet",
+  "mvx": {
+    "apiUrl": "https://testnet-api.multiversx.com"
+  },
+  "contracts": {
+    "lunarPay": "..."
+  },
+  "microservice": {
+    "lunarPayApi": "http://localhost:3001"
+  }
+}
