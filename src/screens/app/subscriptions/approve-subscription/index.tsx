@@ -1,9 +1,11 @@
+import { ArrowLeft } from "lucide-react";
+
+import { cn } from "@/theme/utils.ts";
 import { Button } from '@/components/ui/button'
-import {SubscriptionDetails} from "@/features/subscription/components/subscription-details.tsx";
-import {cn} from "@/theme/utils.ts";
-import {ArrowLeft} from "lucide-react";
+import { SubscriptionDetails } from "@/features/subscription/components/subscription-details.tsx";
 
 export function ApproveSubscriptionScreen() {
+
   return (
     <div className={'flex flex-1 flex-col'}>
       <div className={'flex h-24 items-center pl-8'}>
