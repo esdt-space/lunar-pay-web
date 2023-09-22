@@ -9,8 +9,9 @@ export type EnvironmentType = {
   isTestnet: boolean
   isDevnet: boolean
 
-  walletConnect: {
-    projectId: string
+  auth: {
+    walletConnectProjectId: string,
+    nativeAuthDomains: string[]
   }
 
   mvx: {
@@ -26,6 +27,6 @@ export type EnvironmentType = {
   }
 
   microservice: {
-    lunarPayApi: string
+    apiUrl: string
   }
 }

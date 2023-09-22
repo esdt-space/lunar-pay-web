@@ -6,5 +6,5 @@ export const defaultAuthButtonConfig = {
 
 export const defaultWalletConnectButtonConfig = {
   ...defaultAuthButtonConfig,
-  isWalletConnectV2: AppEnvironment.walletConnect.projectId !== undefined,
+  isWalletConnectV2: AppEnvironment.auth.walletConnectProjectId !== undefined,
 }
