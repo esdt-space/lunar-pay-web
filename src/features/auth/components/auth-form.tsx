@@ -17,7 +17,7 @@ export function AuthForm(props: Props) {
   const [flowStep, setFlowStep] = useState<FlowContentStep>('default')
 
   return (
-    <div className={'flex flex-col flex-1 gap-8'}>
+    <div className={'flex flex-col flex-1 gap-4'}>
       <Card className={'p-4 space-y-2 bg-muted/50'}>	
           <div className={'flex items-center gap-1'}>	
             <Info className={'w-4 h-4'} />	
@@ -33,10 +33,6 @@ export function AuthForm(props: Props) {
           </p>	
       </Card>
 
-      <div>
-        <p className='text-lg font-bold'>Connect Wallet</p>
-      </div>      
-
       {flowStep === 'default' && (
         <>
         <AuthButtons
@@ -44,7 +40,7 @@ export function AuthForm(props: Props) {
           mobileAppButtonClickHandler={() => setFlowStep('mobile-wallet')}
         />
 
-        <div className={'text-center'}>
+        <div className={'text-center mt-8'}>
           <h3 className={'text-lg font-bold'}>New to MultiversX?</h3>
           <div className={'text-muted-foreground'}>Easily create your own MultiversX wallet using xPortal</div>
         </div>

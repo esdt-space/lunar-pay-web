@@ -1,3 +1,4 @@
+import { ChevronRight } from "lucide-react";
 import { useExtensionLogin, useWebWalletLogin } from '@multiversx/sdk-dapp/hooks'
 
 import { cn } from "@/theme/utils.ts";
@@ -28,34 +29,34 @@ export function AuthButtons(props: Props) {
       <Button
         className={cn([
           'justify-between',
-          'bg-gradient-to-r from-primary to-secondary',
-          'justify-center'
+          'bg-gradient-to-r from-primary to-secondary'
         ])}
         onClick={mobileAppButtonClickHandler}
       >
         xPortal
+        <ChevronRight />
       </Button>
 
       <Button
         className={cn([
           'justify-between',
-          'bg-gradient-to-r from-primary to-secondary',
-          'justify-center'
+          'bg-gradient-to-r from-primary to-secondary'
         ])}
         onClick={initiateExtensionLogin}
       >
         MultiversX DeFi Wallet
+        <ChevronRight />
       </Button>
 
       <Button
         className={cn([
           'justify-between',
-          'bg-gradient-to-r from-primary to-secondary',
-          'justify-center'
+          'bg-gradient-to-r from-primary to-secondary'
         ])}
         onClick={initiateWebWalletLogin}
       >
         Web Wallet
+        <ChevronRight />
       </Button>
     </div>
   )
