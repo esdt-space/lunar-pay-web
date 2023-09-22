@@ -17,7 +17,7 @@ export function AuthenticationScreen() {
 
         <IllustrationImage className={"absolute inset-0 z-0 w-full h-full object-cover"} />
       </div>
-      <div className={'flex flex-1 p-24 items-center justify-center'}>
+      <div className={'flex flex-1 p-16 lg:p-24 items-center justify-center'}>
         <div className={'flex-1 max-w-[500px] space-y-2'}>
           <p className='text-lg font-bold'>Connect Wallet</p>
 
