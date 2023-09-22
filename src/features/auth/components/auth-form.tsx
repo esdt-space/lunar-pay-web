@@ -35,6 +35,9 @@ export function AuthForm(props: Props) {
           </p>
         </Card>
 
+      <div>
+          <p className='text-lg font-extrabold'>Connect Wallet</p>
+        </div>      
 
       {flowStep === 'default' && (
         <>
