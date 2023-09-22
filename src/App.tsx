@@ -1,11 +1,17 @@
-import {ApplicationRouter} from "@/navigation";
-import {BrowserRouter} from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
+
+import {MvxAxiosContext, MvxDappContext} from "@/lib/mvx";
+import { ApplicationRouter } from "@/navigation";
 
 function App() {
   return (
-    <BrowserRouter>
-      <ApplicationRouter />
-    </BrowserRouter>
+    <MvxAxiosContext>
+      <BrowserRouter>
+          <MvxDappContext>
+            <ApplicationRouter />
+          </MvxDappContext>
+      </BrowserRouter>
+    </MvxAxiosContext>
   )
 }
 
