@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
 
+import {AuthenticatedRouteOutlet, AuthRoutesOutlet} from "./outlets";
 import { RoutesConfig } from './routes.config'
 import { useScrollToTopHandler } from './hooks/useScrollToTopHandler'
 
@@ -8,6 +9,7 @@ import { PublicLayout } from "@/components/layout/public-layout";
 
 import { HomeScreen } from "@/screens/landing/home";
 import { ApproveSubscriptionScreen } from "@/screens/app/subscriptions";
+import { AuthenticationScreen } from "@/screens/auth/authentication-screen.tsx";
 
 export function ApplicationRouter() {
   useScrollToTopHandler()
@@ -21,8 +23,14 @@ export function ApplicationRouter() {
           <Route index element={<HomeScreen />} />
         </Route>
 
-        <Route path={''}>
-          <Route path={`${RoutesConfig.approveSubscription}/:id`} element={<ApproveSubscriptionScreen />} />
+        <Route element={<AuthenticatedRouteOutlet />}>
+          <Route path={RoutesConfig.approveSubscription}>
+            <Route path={`:id`} element={<ApproveSubscriptionScreen />} />
+          </Route>
+        </Route>
+
+        <Route path={RoutesConfig.auth} element={<AuthRoutesOutlet />}>
+          <Route index element={<AuthenticationScreen />} />
         </Route>
       </Routes>
     </React.Suspense>
