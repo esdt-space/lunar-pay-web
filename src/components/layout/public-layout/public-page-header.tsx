@@ -1,9 +1,17 @@
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+import { logout } from "@multiversx/sdk-dapp/utils";
+import { useGetAccount } from "@multiversx/sdk-dapp/hooks";
 
-import { RoutesConfig } from "@/navigation";
 import { AppIcon } from "@/components/shared/app-icon.tsx";
 
+import { RoutesConfig } from "@/navigation";
+import { useIsAuthenticated } from "@/features/auth";
+
 export function PublicPageHeader() {
+  const { address } = useGetAccount()
+  const isAuthenticated = useIsAuthenticated()
+  const signOutHandler = () => logout(RoutesConfig.auth)
+
   return (
     <header>
       <nav id="navbar" className="fixed inset-x-0 z-20 w-full border-b border-gray-100 bg-white/80 backdrop-blur dark:border-gray-700/30 dark:bg-gray-900/80">
@@ -47,9 +55,11 @@ export function PublicPageHeader() {
               </div>
 
               <div className="mt-12 -ml-1 flex w-full flex-col space-y-2 border-primary/10 dark:border-gray-700 sm:flex-row md:w-max lg:mt-0 lg:mr-6 lg:space-y-0 lg:border-l lg:pl-6">
-                <a className="relative ml-auto flex h-9 w-full items-center justify-center before:absolute before:inset-0 before:rounded-full before:bg-primary before:transition-transform before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 dark:before:border-gray-700 dark:before:bg-primaryLight sm:px-4 lg:before:border lg:before:border-gray-200 lg:before:bg-gray-100 lg:dark:before:bg-gray-800" href="/pages/contact">
-                  <span className="relative text-sm font-semibold text-white dark:text-gray-900 lg:text-primary lg:dark:text-white">Get started</span>
-                </a>
+                <Link to={''} onClick={signOutHandler} className={'relative ml-auto flex h-9 w-full items-center justify-center before:absolute before:inset-0 before:rounded-full before:bg-primary before:transition-transform before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 dark:before:border-gray-700 dark:before:bg-primaryLight sm:px-4 lg:before:border lg:before:border-gray-200 lg:before:bg-gray-100 lg:dark:before:bg-gray-800'}>
+                  <span className="relative text-sm font-semibold text-white lg:text-primary max-w-[100px] truncate">
+                    {isAuthenticated ? address : 'Get started'}
+                  </span>
+                </Link>
               </div>
             </div>
             <div className="fixed top-3 right-14 z-20 sm:right-24 lg:hidden">
