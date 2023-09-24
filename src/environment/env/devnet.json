@@ -4,7 +4,7 @@
     "apiUrl": "https://devnet-api.multiversx.com"
   },
   "contracts": {
-    "lunarPay": "..."
+    "lunarPay": "erd1qqqqqqqqqqqqqpgqpt9mvmz3hm7p8vzkmrjrm62m5wtafdnrttdqtma5nf"
   },
   "microservice": {
     "apiUrl": "http://localhost:3001"
