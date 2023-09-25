@@ -5,11 +5,13 @@ import {AuthenticatedRouteOutlet, AuthRoutesOutlet} from "./outlets";
 import { RoutesConfig } from './routes.config'
 import { useScrollToTopHandler } from './hooks/useScrollToTopHandler'
 
+import { AppLayout } from "@/components/layout/app-layout";
 import { PublicLayout } from "@/components/layout/public-layout";
 
 import { HomeScreen } from "@/screens/landing/home";
 import { ApproveSubscriptionScreen } from "@/screens/app/subscriptions";
 import { AuthenticationScreen } from "@/screens/auth/authentication-screen.tsx";
+import { DashboardScreen } from "@/screens/app/dashboard/dashboard.screen.tsx";
 
 export function ApplicationRouter() {
   useScrollToTopHandler()
@@ -26,6 +28,11 @@ export function ApplicationRouter() {
         <Route element={<AuthenticatedRouteOutlet />}>
           <Route path={RoutesConfig.approveSubscription}>
             <Route path={`:id`} element={<ApproveSubscriptionScreen />} />
+          </Route>
+
+          <Route element={<AppLayout />}>
+            <Route index element={<DashboardScreen />} />
+            <Route path={RoutesConfig.dashboard} element={<DashboardScreen />} />
           </Route>
         </Route>
 
