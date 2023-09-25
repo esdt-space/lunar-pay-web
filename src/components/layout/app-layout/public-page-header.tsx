@@ -25,7 +25,8 @@ function HeaderLink(props: HeaderLinkProps) {
 export function PublicPageHeader() {
   const { address } = useGetAccount()
   const isAuthenticated = useIsAuthenticated()
-  const signOutHandler = () => logout(RoutesConfig.auth)
+
+  const signOutHandler = () => logout(RoutesConfig.home)
 
   return (
     <header>

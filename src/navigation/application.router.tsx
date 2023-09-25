@@ -21,7 +21,7 @@ export function ApplicationRouter() {
   return (
     <React.Suspense fallback={<></>}>
       <Routes location={state?.backgroundLocation || location}>
-        <Route path={''} element={<PublicLayout />}>
+        <Route element={<PublicLayout />}>
           <Route index element={<HomeScreen />} />
         </Route>
 
