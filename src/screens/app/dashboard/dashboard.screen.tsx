@@ -9,6 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs.t
 import { EsdtToken } from "@/features/tokens";
 import { EsdtTokenSelector } from "@/features/tokens/components";
 import { useAccountEsdtTokensList } from "@/features/account-tokens/hooks";
+import { mockData } from "./mock-data";
 
 export function DashboardScreen() {
   const accountTokens = useAccountEsdtTokensList();
@@ -47,18 +48,23 @@ export function DashboardScreen() {
           />
 
           <div className={'flex flex-col gap-3'}>
-            {filteredVaultTokens.map(token => (
+            {/* {filteredVaultTokens.map(token => ( */}
+            {mockData.map(token => (
               <div key={token.identifier} className={'flex justify-between items-center'}>
                 <div>
                   <div className={'text-sm font-medium'}>{token.name}</div>
                   <div className={'text-xs text-muted-foreground'}>{token.identifier}</div>
                 </div>
-                <div className={'self-end space-x-2'}>
-                  {/*<Button size={'sm'} variant={'outline'}>Withdraw</Button>*/}
-                  <Button size={'sm'} variant={'outline'}>
-                    Send
-                    <Wallet className={'ml-2 w-3 h-3'} />
-                  </Button>
+                
+                <div className={'flex justify-between items-center gap-10'}>
+                  <div className={'text-sm font-medium'}>111</div>
+                  <div className={'self-end space-x-2'}>
+                    {/*<Button size={'sm'} variant={'outline'}>Withdraw</Button>*/}
+                    <Button size={'sm'} variant={'outline'}>
+                      Send
+                      <Wallet className={'ml-2 w-3 h-3'} />
+                    </Button>
+                  </div>
                 </div>
               </div>
             ))}
@@ -80,7 +86,7 @@ export function DashboardScreen() {
             <TabsContent className={'flex flex-1 flex-col p-8 gap-4'} value="account">
               <EsdtTokenSelector
                 value={selectedToken}
-                tokens={accountTokens}
+                tokens={mockData}
                 onChange={(token) => setSelectedToken(token)}
               />
 
@@ -95,6 +101,37 @@ export function DashboardScreen() {
               </div>
             </TabsContent>
           </Tabs>
+        </Card>
+      </div>
+
+      <div className={'flex flex-1 flex-col lg:flex-row gap-4 md:gap-8 mt-10'}>
+      <Card className={'flex flex-col flex-1 p-8 gap-4 shadow'}>
+          <h2 className={'text-sm font-semibold uppercase tracking-wide'}>Pending Amount</h2>
+          <div className={'text-2xl font-black'}>$1111.00</div>
+          <div className={'w-full'}>
+            <Button size={'sm'} variant={'outline'} className={'justify-self-end'}>
+              Collect All
+              <Wallet className={'ml-2 w-3 h-3'} />
+            </Button>
+          </div>
+        </Card>
+
+        <Card className={'flex flex-col flex-1 p-8 gap-4 shadow'}>
+          <h2 className={'text-sm font-semibold uppercase tracking-wide'}>Latest Transactions</h2>
+          <div className={'flex flex-col gap-3'}>
+            {mockData.map(token => (
+              <div key={token.identifier} className={'flex justify-between items-center'}>
+                <div>
+                  Transaction
+                </div>
+                <div className={'self-end space-x-2'}>
+                  <Button size={'sm'} variant={'outline'}>
+                    Click
+                  </Button>
+                </div>
+              </div>
+            ))}
+          </div>
         </Card>
       </div>
     </div>
