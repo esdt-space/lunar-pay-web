@@ -10,6 +10,6 @@ export class RoutesConfig {
   static approveSubscription = '/approve-subscription'
 
   static getDefaultLoginRoute() {
-    return this.dashboard
+    return this.home
   }
 }
