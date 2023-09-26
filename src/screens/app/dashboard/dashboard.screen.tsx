@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ArrowUpRight, Wallet } from "lucide-react";
 
 import { Card } from "@/components/ui/card";
@@ -15,6 +15,10 @@ export function DashboardScreen() {
   const [selectedToken, setSelectedToken] = useState<EsdtToken | undefined>(undefined);
 
   const [assetSearchValue, setAssetSearchValue] = useState('');
+
+  useEffect(() => {
+    console.log(accountTokens)
+  }, [])
 
   //TODO: Get actual tokens from the vault SC
   const vaultTokens = useAccountEsdtTokensList();
@@ -55,7 +59,7 @@ export function DashboardScreen() {
                 </div>
                 
                 <div className={'flex justify-between items-center gap-10'}>
-                  <div className={'text-sm font-medium'}>111</div>
+                  <div className={'text-sm font-medium'}></div>
                   <div className={'self-end space-x-2'}>
                     <Button size={'sm'} variant={'outline'}>
                       Send
