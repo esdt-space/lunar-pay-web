@@ -33,11 +33,19 @@ export function DisplayAmountTokenSelector(props: Props) {
             <span className={'text-xs'}>{(value as EsdtToken).name}</span>
           </div> : <div className={'text-xs'}>Select Token</div>}
         </div>
+
         <div className='w-5/12'>
-          <Input type={"number"} className='border-none focus:outline-none focus:ring-0 focus:border-none active:border-none hover:border-none placeholder:border-none disabled:border-none' placeholder='Enter Amount' />
-       </div>
+          <Input  
+            style={{
+              boxShadow: 'none'
+            }}
+            type={"number"} 
+            className='border-none focus:outline-none focus:ring-0 focus:border-none active:border-none hover:border-none placeholder:border-none disabled:border-none' 
+            placeholder='Enter Amount' />
+        </div>
+
         <div className='w-2/12 cursor-pointer '>
-        <p className="font-extrabold">MAX</p>
+          <p className="font-extrabold">MAX</p>
         </div>
       </div>
 
