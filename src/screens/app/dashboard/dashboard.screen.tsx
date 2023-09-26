@@ -7,9 +7,9 @@ import { Button } from "@/components/ui/button.tsx";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs.tsx";
 
 import { EsdtToken } from "@/features/tokens";
-import { EsdtTokenSelector } from "@/features/tokens/components";
 import { useAccountEsdtTokensList } from "@/features/account-tokens/hooks";
 import { mockData } from "./mock-data";
+import { DisplayAmountTokenSelector } from "@/features/tokens/components";
 
 export function DashboardScreen() {
   const accountTokens = useAccountEsdtTokensList();
@@ -84,28 +84,33 @@ export function DashboardScreen() {
               </TabsTrigger>
             </TabsList>
             <TabsContent className={'flex flex-1 flex-col p-8 gap-4'} value="account">
-              <EsdtTokenSelector
+              <DisplayAmountTokenSelector
                 value={selectedToken}
                 tokens={mockData}
                 onChange={(token) => setSelectedToken(token)}
               />
-
               <div className={'text-sm text-muted-foreground'}>
                 Deposit assets into your Lunar Pay Vault.
               </div>
               <Button>Deposit</Button>
             </TabsContent>
             <TabsContent className={'flex flex-col flex-1 p-8 gap-4'} value="password">
+              <DisplayAmountTokenSelector
+                value={selectedToken}
+                tokens={mockData}
+                onChange={(token) => setSelectedToken(token)}
+              />
               <div className={'text-sm text-muted-foreground'}>
                 Withdraw assets from your Lunar Pay Vault.
               </div>
+              <Button>Withdraw</Button>
             </TabsContent>
           </Tabs>
         </Card>
       </div>
 
       <div className={'flex flex-1 flex-col lg:flex-row gap-4 md:gap-8 mt-10'}>
-      <Card className={'flex flex-col flex-1 p-8 gap-4 shadow'}>
+        <Card className={'flex flex-col flex-1 p-8 gap-4 shadow'}>
           <h2 className={'text-sm font-semibold uppercase tracking-wide'}>Pending Amount</h2>
           <div className={'text-2xl font-black'}>$1111.00</div>
           <div className={'w-full'}>
