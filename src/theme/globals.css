@@ -105,4 +105,8 @@
   input[type="number"] {
     -moz-appearance: textfield;
   }
+
+  div[data-state="inactive"] {
+    display: none;
+}
 }
