@@ -11,11 +11,13 @@ import { Input } from '@/components/ui/input'
 type Props = {
   tokens: EsdtToken[]
   value?: EsdtToken
+  amount?: string
   onChange: (token: EsdtToken) => void
+  onChangeAmount: (amount: string) => void
 }
 
 export function DisplayAmountTokenSelector(props: Props) {
-  const { tokens = [], value, onChange } = props
+  const { tokens = [], value, amount, onChange, onChangeAmount } = props
   const [isOpen, setIsOpen] = useState(false)
 
   const closeDialogHandler = () => setIsOpen(false)
@@ -36,6 +38,8 @@ export function DisplayAmountTokenSelector(props: Props) {
 
           <div>
             <Input  
+              value={amount}
+              onChange={(e) => onChangeAmount(e.target.value)}
               style={{
                 boxShadow: 'none'
               }}

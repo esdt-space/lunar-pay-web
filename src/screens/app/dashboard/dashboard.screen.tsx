@@ -10,10 +10,41 @@ import { EsdtToken } from "@/features/tokens";
 import { useAccountEsdtTokensList } from "@/features/account-tokens/hooks";
 import { DisplayAmountTokenSelector } from "@/features/tokens/components";
 import BigNumber from "bignumber.js";
+import { depositEgldInteraction, depositEsdtInteraction, withdrawEgldInteraction, withdrawEsdtInteraction } from "@/features/vault/contract/interactions";
 
 export function DashboardScreen() {
   const accountTokens = useAccountEsdtTokensList();
-  const [selectedToken, setSelectedToken] = useState<EsdtToken | undefined>(undefined);
+  const [selectedAccountToken, setSelectedAccountToken] = useState<EsdtToken | undefined>(undefined);
+  const [selectedVaultToken, setSelectedVaultToken] = useState<EsdtToken | undefined>(undefined);
+
+  const [selectedAccountAmount, setSelectedAccountAmount] = useState<string>("");
+  const [selectedVaultAmount, setSelectedVaultAmount] = useState<string>("");
+
+  const depositToken = () => {
+    if (selectedAccountToken === undefined) {
+      return
+    }
+
+    if(selectedAccountToken.name !== "EGLD") {
+      depositEsdtInteraction(selectedAccountToken, Number(selectedAccountAmount))
+      return
+    }
+
+    depositEgldInteraction(Number(selectedAccountAmount))
+  }
+
+  const withdrawToken = () => {
+    if(selectedVaultToken === undefined) {
+      return
+    }
+
+    if(selectedVaultToken.name !== "EGLD") {
+      withdrawEsdtInteraction(selectedVaultToken, Number(selectedVaultAmount))
+      return
+    }
+
+    withdrawEgldInteraction(Number(selectedVaultAmount))
+  }
 
   const [assetSearchValue, setAssetSearchValue] = useState('');
 
@@ -82,25 +113,29 @@ export function DashboardScreen() {
             </TabsList>
             <TabsContent className={'flex flex-1 flex-col p-8 gap-4'} value="account">
               <DisplayAmountTokenSelector
-                value={selectedToken}
+                value={selectedAccountToken}
                 tokens={accountTokens}
-                onChange={(token) => setSelectedToken(token)}
+                amount={selectedAccountAmount}
+                onChange={(token) => setSelectedAccountToken(token)}
+                onChangeAmount={(amount) => setSelectedAccountAmount(amount)}
               />
               <div className={'text-sm text-muted-foreground'}>
                 Deposit assets into your Lunar Pay Vault.
               </div>
-              <Button>Deposit</Button>
+              <Button onClick={depositToken}>Deposit</Button>
             </TabsContent>
             <TabsContent className={'flex flex-col flex-1 p-8 gap-4'} value="password">
               <DisplayAmountTokenSelector
-                value={selectedToken}
+                value={selectedVaultToken}
                 tokens={vaultTokens}
-                onChange={(token) => setSelectedToken(token)}
+                amount={selectedVaultAmount}
+                onChange={(token) => setSelectedVaultToken(token)}
+                onChangeAmount={(amount) => setSelectedVaultAmount(amount)}
               />
               <div className={'text-sm text-muted-foreground'}>
                 Withdraw assets from your Lunar Pay Vault.
               </div>
-              <Button>Withdraw</Button>
+              <Button onClick={withdrawToken}>Withdraw</Button>
             </TabsContent>
           </Tabs>
         </Card>
