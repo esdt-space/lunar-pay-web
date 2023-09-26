@@ -8,7 +8,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs.t
 
 import { EsdtToken } from "@/features/tokens";
 import { useAccountEsdtTokensList } from "@/features/account-tokens/hooks";
-import { mockData } from "./mock-data";
 import { DisplayAmountTokenSelector } from "@/features/tokens/components";
 
 export function DashboardScreen() {
@@ -48,8 +47,7 @@ export function DashboardScreen() {
           />
 
           <div className={'flex flex-col gap-3'}>
-            {/* {filteredVaultTokens.map(token => ( */}
-            {mockData.map(token => (
+            {filteredVaultTokens.map(token => (
               <div key={token.identifier} className={'flex justify-between items-center'}>
                 <div>
                   <div className={'text-sm font-medium'}>{token.name}</div>
@@ -59,7 +57,6 @@ export function DashboardScreen() {
                 <div className={'flex justify-between items-center gap-10'}>
                   <div className={'text-sm font-medium'}>111</div>
                   <div className={'self-end space-x-2'}>
-                    {/*<Button size={'sm'} variant={'outline'}>Withdraw</Button>*/}
                     <Button size={'sm'} variant={'outline'}>
                       Send
                       <Wallet className={'ml-2 w-3 h-3'} />
@@ -86,7 +83,7 @@ export function DashboardScreen() {
             <TabsContent className={'flex flex-1 flex-col p-8 gap-4'} value="account">
               <DisplayAmountTokenSelector
                 value={selectedToken}
-                tokens={mockData}
+                tokens={accountTokens}
                 onChange={(token) => setSelectedToken(token)}
               />
               <div className={'text-sm text-muted-foreground'}>
@@ -97,7 +94,7 @@ export function DashboardScreen() {
             <TabsContent className={'flex flex-col flex-1 p-8 gap-4'} value="password">
               <DisplayAmountTokenSelector
                 value={selectedToken}
-                tokens={mockData}
+                tokens={vaultTokens}
                 onChange={(token) => setSelectedToken(token)}
               />
               <div className={'text-sm text-muted-foreground'}>
@@ -124,8 +121,7 @@ export function DashboardScreen() {
         <Card className={'flex flex-col flex-1 p-8 gap-4 shadow'}>
           <h2 className={'text-sm font-semibold uppercase tracking-wide'}>Latest Transactions</h2>
           <div className={'flex flex-col gap-3'}>
-            {mockData.map(token => (
-              <div key={token.identifier} className={'flex justify-between items-center'}>
+              <div  className={'flex justify-between items-center'}>
                 <div>
                   Transaction
                 </div>
@@ -135,7 +131,26 @@ export function DashboardScreen() {
                   </Button>
                 </div>
               </div>
-            ))}
+              <div  className={'flex justify-between items-center'}>
+                <div>
+                  Transaction
+                </div>
+                <div className={'self-end space-x-2'}>
+                  <Button size={'sm'} variant={'outline'}>
+                    Click
+                  </Button>
+                </div>
+              </div>
+              <div  className={'flex justify-between items-center'}>
+                <div>
+                  Transaction
+                </div>
+                <div className={'self-end space-x-2'}>
+                  <Button size={'sm'} variant={'outline'}>
+                    Click
+                  </Button>
+                </div>
+              </div>
           </div>
         </Card>
       </div>
