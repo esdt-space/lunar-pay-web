@@ -7,6 +7,7 @@ import { TokenLogo } from '@/features/tokens/components'
 
 import { Input } from '@/components/ui/input'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import BigNumber from 'bignumber.js'
 
 type Props = {
   isOpen: boolean
@@ -80,10 +81,13 @@ export default function TokenSelectorDialog(props: Props) {
                       data-index={row.index}
                       ref={virtualizer.measureElement}
                       onClick={() => selectTokenHandler(token)}
-                      className={'flex gap-2 rounded-md hover:bg-slate-50/20 p-2 cursor-pointer'}
+                      className={'flex gap-2 rounded-md hover:bg-slate-50/20 p-2 cursor-pointer justify-between'}
                     >
-                      <TokenLogo className={'h-6 w-6'} token={token} />
-                      {token.name}
+                      <div className={'flex gap-2'}>
+                        <TokenLogo className={'h-6 w-6'} token={token} />
+                        {token.name}
+                      </div>
+                      <div>{new BigNumber(token.balance).dividedBy(Math.pow(10, token.decimals)).toString()}</div>
                     </div>
                   )
                 })}

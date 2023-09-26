@@ -27,14 +27,14 @@ export function DisplayAmountTokenSelector(props: Props) {
   return (
     <Select value={value?.identifier}>
       <div className='flex flex-1 items-center border pl-3 pr-3 rounded-md'>
-          <div className='cursor-pointer' onClick={() => setIsOpen(true)}>
+          <div className='cursor-pointer mr-auto w-8/12' onClick={() => setIsOpen(true)}>
             {value ? <div className={`flex gap-2 items-center`}>
               <TokenLogo className={'w-4 h-4'} token={value as EsdtToken} />
               <span className={'text-xs'}>{(value as EsdtToken).name}</span>
             </div> : <div className={'text-xs'}>Select Token</div>}
           </div>
 
-          <div className='ml-auto justify-end'>
+          <div>
             <Input  
               style={{
                 boxShadow: 'none'
