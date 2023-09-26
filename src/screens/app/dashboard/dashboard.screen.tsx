@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { ArrowUpRight, Wallet } from "lucide-react";
 
 import { Card } from "@/components/ui/card";
@@ -15,10 +15,6 @@ export function DashboardScreen() {
   const [selectedToken, setSelectedToken] = useState<EsdtToken | undefined>(undefined);
 
   const [assetSearchValue, setAssetSearchValue] = useState('');
-
-  useEffect(() => {
-    console.log(accountTokens)
-  }, [])
 
   //TODO: Get actual tokens from the vault SC
   const vaultTokens = useAccountEsdtTokensList();
@@ -98,7 +94,7 @@ export function DashboardScreen() {
             <TabsContent className={'flex flex-col flex-1 p-8 gap-4'} value="password">
               <DisplayAmountTokenSelector
                 value={selectedToken}
-                tokens={vaultTokens}
+                tokens={filteredVaultTokens}
                 onChange={(token) => setSelectedToken(token)}
               />
               <div className={'text-sm text-muted-foreground'}>

@@ -15,7 +15,7 @@ export function TokenLogo(props: Props) {
 
   return (
     <Avatar className={cn('w-6 h-6', className)}>
-      <AvatarImage src={token.assets.pngUrl} />
+      <AvatarImage src={token.assets ? token.assets.pngUrl : ""} />
       <AvatarFallback className={'bg-slate-800'}>
         <HelpCircle />
       </AvatarFallback>
