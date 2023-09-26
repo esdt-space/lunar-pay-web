@@ -57,12 +57,14 @@ export function DashboardScreen() {
     );
   }, [vaultTokens, assetSearchValue]);
 
+  const lunarBalance = vaultTokens.reduce((acc, val) => acc + Number(new BigNumber(val.balance).dividedBy(Math.pow(10, val.decimals))) , 0)
+
   return (
     <div className={'container mx-auto p-4 sm:p-12 xl:p-16'}>
       <div className={'flex flex-1 flex-col lg:flex-row gap-4 md:gap-8'}>
         <Card className={'flex flex-col flex-1 p-8 gap-4 shadow'}>
           <h2 className={'text-sm font-semibold uppercase tracking-wide'}>Lunar Balance</h2>
-          <div className={'text-2xl font-black'}>$100.00</div>
+          <div className={'text-2xl font-black'}>{lunarBalance}</div>
           <div className={'text-sm text-muted-foreground'}>
             Deposited balance is the overall sum of all the tokens available in the Lunar Pay Vault. This balance may
             not be accurate as balance rates are not available for all tokens.
