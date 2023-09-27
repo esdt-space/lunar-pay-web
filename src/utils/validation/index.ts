@@ -1,0 +1,1 @@
+export {checkIsValidAddress} from './address'
