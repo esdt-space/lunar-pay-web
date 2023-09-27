@@ -1,40 +1,89 @@
 import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { ArrowRight, File } from "lucide-react"
+
+export type LatestTransaction = {
+  transactionHash: string
+  transactionFee: string
+  method: string
+  from: string
+  to: string
+  value: string
+  age: string
+}
+
+type BasicDetailsTransaction = Pick<LatestTransaction, 'from' | 'to' | 'value' | 'age'>
+
+const transactionsMockData: BasicDetailsTransaction[] = [
+  {
+    value: "100",
+    age: "30 seconds ago",
+    from: "address",
+    to: "address",
+  },
+  {
+    value: "123",
+    age: "1 minute ago",
+    from: "address",
+    to: "address",
+  },
+  {
+    value: "111",
+    age: "2 minutes ago",
+    from: "address",
+    to: "address",
+  },
+]
 
 export const DashboardLatestTransactionsWidget = () => {
-    return <Card className={'flex flex-col flex-1 p-8 gap-4 shadow'}>
-        <h2 className={'text-sm font-semibold uppercase tracking-wide'}>Latest Transactions</h2>
-        <div className={'flex flex-col gap-3'}>
-        <div  className={'flex justify-between items-center'}>
+    return <Card className={'flex flex-col flex-1 p-3 shadow'}>
+        <CardHeader>
+          <CardTitle>Latest Transactions</CardTitle>
+        </CardHeader>
+        <CardContent>
           <div>
-            Transaction
+            {transactionsMockData.map((transaction, index) => (
+              <div key={index} className={"flex flex-1 justify-between border-b border-gray-200"}>
+                <div
+                  className="flex-1 mt-4 grid grid-cols-[25px_1fr] items-start pb-2"
+                >
+                  <File className="mr-2 h-4 w-4" />
+                  <div className="space-y-1">
+                    <p className="text-sm font-medium leading-none">
+                      {transaction.value}
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      {transaction.age}
+                    </p>
+                  </div>
+                </div>
+                <div
+                  className="flex-1 mt-4 pb-2 self-center"
+                >
+                  <div className="space-y-1">
+                    <p className="text-sm font-medium leading-none">
+                      From: {transaction.from}
+                    </p>
+                  </div>
+                </div>
+                <div
+                  className="flex-1 mt-4 pb-2 self-center"
+                >
+                  <div className="space-y-1">
+                    <p className="text-sm font-medium leading-none">
+                      To: {transaction.to}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
-          <div className={'self-end space-x-2'}>
-            <Button size={'sm'} variant={'outline'}>
-              Click
-            </Button>
-          </div>
-        </div>
-        <div  className={'flex justify-between items-center'}>
-          <div>
-            Transaction
-          </div>
-          <div className={'self-end space-x-2'}>
-            <Button size={'sm'} variant={'outline'}>
-              Click
-            </Button>
-          </div>
-        </div>
-        <div  className={'flex justify-between items-center'}>
-          <div>
-            Transaction
-          </div>
-          <div className={'self-end space-x-2'}>
-            <Button size={'sm'} variant={'outline'}>
-              Click
-            </Button>
-          </div>
-        </div>
-    </div>
+        </CardContent>
+        <CardFooter>
+          <Button className="w-full">
+            View All Transactions
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </Button>
+        </CardFooter>
   </Card>
 }
