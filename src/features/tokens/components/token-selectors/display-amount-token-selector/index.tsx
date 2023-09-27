@@ -43,7 +43,7 @@ export function DisplayAmountTokenSelector(props: Props) {
             </div> : <div className={'text-xs'}>Select Token</div>}
           </div>
 
-          <div className={'justify-end lg:w-5/12'}>
+          <div className={'ml-5 justify-end lg:w-5/12'}>
             <Input  
               value={amount}
               onChange={(e) => onChangeAmount(e.target.value)}
