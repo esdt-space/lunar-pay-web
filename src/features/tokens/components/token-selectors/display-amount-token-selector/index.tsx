@@ -7,6 +7,7 @@ import { Select } from '@/components/ui/select'
 
 import TokenSelectorDialog from './token-selector-dialog'
 import { Input } from '@/components/ui/input'
+import { formatTokenBalance } from '@/theme/utils'
 
 type Props = {
   tokens: EsdtToken[]
@@ -26,29 +27,35 @@ export function DisplayAmountTokenSelector(props: Props) {
     setIsOpen(false)
   }
 
+  const getBalanceNumber = () => {
+    if(value) {
+      return onChangeAmount(formatTokenBalance(value.balance, value.decimals).toString())
+    }
+  }
+
   return (
     <Select value={value?.identifier}>
       <div className='flex flex-1 items-center border pl-3 pr-3 rounded-md'>
-          <div className='cursor-pointer mr-auto w-8/12' onClick={() => setIsOpen(true)}>
+          <div className='cursor-pointer mr-auto lg:w-5/12' onClick={() => setIsOpen(true)}>
             {value ? <div className={`flex gap-2 items-center`}>
               <TokenLogo className={'w-4 h-4'} token={value as EsdtToken} />
               <span className={'text-xs'}>{(value as EsdtToken).name}</span>
             </div> : <div className={'text-xs'}>Select Token</div>}
           </div>
 
-          <div>
+          <div className={'justify-end lg:w-5/12'}>
             <Input  
               value={amount}
               onChange={(e) => onChangeAmount(e.target.value)}
               style={{
                 boxShadow: 'none'
               }}
-              className='border-none focus:outline-none focus:ring-0 focus:border-none active:border-none hover:border-none placeholder:border-none disabled:border-none' 
+              className={'border-none focus:outline-none focus:ring-0 focus:border-none active:border-none hover:border-none placeholder:border-none disabled:border-none text-xs' }
               type={"number"} 
               placeholder='Enter Amount' />
           </div>
 
-          <div className='cursor-pointer justify-end'>
+          <div className={'cursor-pointer justify-end lg:w-2/12'} onClick={getBalanceNumber}>
             <p className="font-extrabold">MAX</p>
           </div>
       </div>

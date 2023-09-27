@@ -9,8 +9,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs.t
 import { EsdtToken } from "@/features/tokens";
 import { useAccountEsdtTokensList } from "@/features/account-tokens/hooks";
 import { DisplayAmountTokenSelector } from "@/features/tokens/components";
-import BigNumber from "bignumber.js";
 import { depositEgldInteraction, depositEsdtInteraction, withdrawEgldInteraction, withdrawEsdtInteraction } from "@/features/vault/contract/interactions";
+import { formatTokenBalance } from "@/theme/utils";
 
 export function DashboardScreen() {
   const accountTokens = useAccountEsdtTokensList();
@@ -48,6 +48,7 @@ export function DashboardScreen() {
 
   const [assetSearchValue, setAssetSearchValue] = useState('');
 
+  //TODO: Get actual tokens from the vault SC
   const vaultTokens = useAccountEsdtTokensList();
   const filteredVaultTokens = useMemo(() => {
     if(assetSearchValue.length === 0) return vaultTokens;
@@ -57,7 +58,7 @@ export function DashboardScreen() {
     );
   }, [vaultTokens, assetSearchValue]);
 
-  const lunarBalance = vaultTokens.reduce((acc, val) => acc + Number(new BigNumber(val.balance).dividedBy(Math.pow(10, val.decimals))) , 0)
+  const lunarBalance = vaultTokens.reduce((acc, val) => acc + Number(formatTokenBalance(val.balance, val.decimals)) , 0)
 
   return (
     <div className={'container mx-auto p-4 sm:p-12 xl:p-16'}>
@@ -88,7 +89,7 @@ export function DashboardScreen() {
                 </div>
                 
                 <div className={'flex justify-between items-center gap-10'}>
-                  <div className={'text-sm font-medium'}>{new BigNumber(token.balance).dividedBy(Math.pow(10, token.decimals)).toString()}</div>
+                  <div className={'text-sm font-medium'}>{formatTokenBalance(token.balance, token.decimals).toString()}</div>
                   <div className={'self-end space-x-2'}>
                     <Button size={'sm'} variant={'outline'}>
                       Send
