@@ -1,8 +1,8 @@
 import { useMemo, useState } from "react";
 import { ArrowUpRight } from "lucide-react"
 
-import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs.tsx";
 
 import { EsdtToken } from "@/features/tokens"
@@ -51,7 +51,7 @@ export const DepositWithdrawWidget = () => {
   }
 
   return (
-    <Card className={'flex flex-1 flex-col shadow'}>
+    <Card className={'flex flex-col flex-1 shadow'}>
       <Tabs defaultValue="deposit" className="flex flex-col space-y-0" >
         <TabsList className={'flex'}>
           <TabsTrigger className={'flex-1'} value="deposit" onClick={onTabChange}>
@@ -64,33 +64,35 @@ export const DepositWithdrawWidget = () => {
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent className={'flex flex-1 flex-col p-8 gap-4'} value="deposit">
-          <DisplayAmountTokenSelector
-            value={selectedToken}
-            tokens={depositTokensList}
-            onChange={(token) => setSelectedToken(token)}
-            amount={amount}
-            onChangeAmount={(amount) => setAmount(amount)}
-          />
-          <div className={'text-sm text-muted-foreground'}>
-            Deposit assets into the Lunar Pay Vault.
-          </div>
-          <Button onClick={depositToken}>Deposit</Button>
-        </TabsContent>
+        <CardContent className={'p-8'}>
+          <TabsContent className={'flex flex-1 flex-col gap-4 mt-0'} value="deposit">
+            <DisplayAmountTokenSelector
+              value={selectedToken}
+              tokens={depositTokensList}
+              onChange={(token) => setSelectedToken(token)}
+              amount={amount}
+              onChangeAmount={(amount) => setAmount(amount)}
+            />
+            <div className={'text-sm text-muted-foreground'}>
+              Deposit assets into the Lunar Pay Vault.
+            </div>
+            <Button onClick={depositToken}>Deposit</Button>
+          </TabsContent>
 
-        <TabsContent className={'flex flex-col flex-1 p-8 gap-4'} value="withdraw">
-          <DisplayAmountTokenSelector
-            value={selectedToken}
-            tokens={userVaultTokens}
-            onChange={(token) => setSelectedToken(token)}
-            amount={amount}
-            onChangeAmount={(amount) => setAmount(amount)}
-          />
-          <div className={'text-sm text-muted-foreground'}>
-            Withdraw assets from the Lunar Pay Vault.
-          </div>
-          <Button onClick={withdrawToken}>Withdraw</Button>
-        </TabsContent>
+          <TabsContent className={'flex flex-col flex-1 gap-4 mt-0'} value="withdraw">
+            <DisplayAmountTokenSelector
+              value={selectedToken}
+              tokens={userVaultTokens}
+              onChange={(token) => setSelectedToken(token)}
+              amount={amount}
+              onChangeAmount={(amount) => setAmount(amount)}
+            />
+            <div className={'text-sm text-muted-foreground'}>
+              Withdraw assets from the Lunar Pay Vault.
+            </div>
+            <Button onClick={withdrawToken}>Withdraw</Button>
+          </TabsContent>
+        </CardContent>
       </Tabs>
     </Card>
   )

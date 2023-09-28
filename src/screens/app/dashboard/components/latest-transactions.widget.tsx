@@ -1,6 +1,7 @@
+import { ArrowRight, File } from "lucide-react"
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { ArrowRight, File } from "lucide-react"
 
 export type LatestTransaction = {
   transactionHash: string
@@ -36,12 +37,15 @@ const transactionsMockData: BasicDetailsTransaction[] = [
 ]
 
 export const DashboardLatestTransactionsWidget = () => {
-  return <Card className={'flex flex-col flex-1 p-3 shadow'}>
-    <CardHeader>
-      <CardTitle>Latest Transactions</CardTitle>
-    </CardHeader>
-    <CardContent>
-      <div>
+  return (
+    <Card className={'flex-1 shadow p-2'}>
+      <CardHeader>
+        <CardTitle className={'text-sm font-semibold uppercase tracking-wide'}>
+          Latest Transactions
+        </CardTitle>
+      </CardHeader>
+
+      <CardContent>
         {transactionsMockData.map((transaction, index) => (
           <div key={index} className={"flex flex-1 justify-between border-b border-gray-200"}>
             <div
@@ -77,13 +81,13 @@ export const DashboardLatestTransactionsWidget = () => {
             </div>
           </div>
         ))}
-      </div>
-    </CardContent>
-    <CardFooter>
-      <Button className="w-full">
-        View All Transactions
-        <ArrowRight className="ml-2 h-4 w-4" />
-      </Button>
-    </CardFooter>
-  </Card>
+      </CardContent>
+      <CardFooter>
+        <Button className="w-full">
+          View All Transactions
+          <ArrowRight className="ml-2 h-4 w-4" />
+        </Button>
+      </CardFooter>
+    </Card>
+  )
 }

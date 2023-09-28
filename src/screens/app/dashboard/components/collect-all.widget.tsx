@@ -1,16 +1,26 @@
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
 import { Wallet } from "lucide-react"
 
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+
 export const DashboarCollectAllWidget = () => {
-    return <Card className={'flex flex-col flex-1 p-8 gap-4 shadow'}>
-      <h2 className={'text-sm font-semibold uppercase tracking-wide'}>Pending Amount</h2>
-      <div className={'text-2xl font-black'}>$1111.00</div>
-      <div className={'w-full'}>
-        <Button size={'sm'} variant={'outline'} className={'justify-self-end'}>
-          Collect All
-          <Wallet className={'ml-2 w-3 h-3'} />
-        </Button>
-      </div>
-  </Card>
+  return (
+    <Card className={'flex-1 shadow p-2'}>
+      <CardHeader>
+        <CardTitle className={'text-sm font-semibold uppercase tracking-wide'}>
+          Pending Amount
+        </CardTitle>
+      </CardHeader>
+
+      <CardContent className={'space-y-4'}>
+        <div className={'text-2xl font-black'}>$1111.00</div>
+        <div className={'w-full'}>
+          <Button size={'sm'} variant={'outline'} className={'justify-self-end'}>
+            Collect All
+            <Wallet className={'ml-2 w-3 h-3'}/>
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
+  )
 }
