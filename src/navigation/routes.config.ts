@@ -9,6 +9,8 @@ export class RoutesConfig {
   static subscriptions = '/subscriptions'
   static approveSubscription = '/approve-subscription'
 
+  static admin = '/admin'
+
   static getDefaultLoginRoute() {
     return this.home
   }
