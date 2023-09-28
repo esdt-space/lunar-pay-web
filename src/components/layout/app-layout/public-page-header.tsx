@@ -47,6 +47,7 @@ export function PublicPageHeader() {
             <div id="navlinks" className="invisible absolute top-full left-0 z-20 w-full origin-top-right translate-y-1 scale-90 flex-col flex-wrap justify-end gap-6 rounded-3xl border border-gray-100 bg-white p-8 opacity-0 shadow-2xl shadow-gray-600/10 transition-all duration-300 dark:border-gray-700 dark:bg-gray-800 dark:shadow-none lg:visible lg:relative lg:flex lg:w-auto lg:translate-y-0 lg:scale-100 lg:flex-row lg:items-center lg:gap-0 lg:border-none lg:bg-transparent lg:p-0 lg:opacity-100 lg:shadow-none lg:peer-checked:translate-y-0 dark:lg:bg-transparent">
               <div className="text-gray-600 dark:text-gray-300 lg:pr-4">
                 <ul className="space-y-6 text-base font-medium tracking-wide lg:flex lg:space-y-0 lg:text-sm">
+                  <HeaderLink text={'Admin'} location={RoutesConfig.admin} />
                   <HeaderLink text={'Payroll'} location={RoutesConfig.payroll} />
                   <HeaderLink text={'Subscriptions'} location={RoutesConfig.subscriptions} />
                 </ul>

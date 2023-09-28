@@ -1,20 +1,15 @@
-import BigNumber from "bignumber.js";
-import { ContractCallPayloadBuilder, ContractFunction } from '@multiversx/sdk-core/out'
+import {ContractCallPayloadBuilder, ContractFunction, TokenTransfer} from '@multiversx/sdk-core/out'
 
-import { Egld } from "@/features/tokens";
 import { AppEnvironment } from '@/environment'
 import { sendTransactionsHandler } from '@/lib/mvx'
 
 export async function depositEgldInteraction(amount: number) {
   const payload = getTransactionData()
 
-  const token = new Egld();
-  const transactionValue = new BigNumber(amount).multipliedBy(Math.pow(10, token.decimals))
-
   const transaction = {
-    value: transactionValue.toString(),
     gasLimit: 10000000,
     data: payload.toString(),
+    value: TokenTransfer.egldFromAmount(amount).toString(),
     receiver: AppEnvironment.contracts.lunarPay,
   }
 
