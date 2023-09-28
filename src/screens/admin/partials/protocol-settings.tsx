@@ -114,7 +114,7 @@ export function ProtocolSettings() {
           </CardTitle>
         </CardHeader>
 
-        <CardContent className={'space-y-3 overflow-hidden'}>
+        <CardContent className={'space-y-3'}>
           <div className={'grid sm:flex gap-1'}>
             <Input
               value={addressToWhitelist}
