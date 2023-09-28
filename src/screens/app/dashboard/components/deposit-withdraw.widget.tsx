@@ -8,14 +8,15 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs.t
 import { EsdtToken } from "@/features/tokens"
 import { DisplayAmountTokenSelector } from "@/features/tokens/components"
 import { depositEsdtInteraction, depositEgldInteraction, withdrawEsdtInteraction, withdrawEgldInteraction } from "@/features/vault/contract/interactions"
-import { useWhitelistedVaultTokens } from "@/features/vault/hooks";
-import { useAccountEsdtTokensList } from "@/features/account-tokens/hooks";
+import { useWhitelistedVaultTokens, useAccountVaultTokens } from "@/features/vault/hooks";
+import { useAccountTokensList } from "@/features/account-tokens/hooks";
 
 export const DepositWithdrawWidget = () => {
   const [amount, setAmount] = useState('');
   const [selectedToken, setSelectedToken] = useState<EsdtToken | undefined>(undefined);
 
-  const accountTokens = useAccountEsdtTokensList();
+  const accountTokens = useAccountTokensList();
+  const userVaultTokens = useAccountVaultTokens();
   const whitelistedTokens = useWhitelistedVaultTokens();
 
   const depositTokensList = useMemo(() => {
@@ -24,13 +25,11 @@ export const DepositWithdrawWidget = () => {
     return accountTokens.filter(item => whitelistedTokenIds.includes(item.identifier));
   }, [accountTokens, whitelistedTokens]);
 
-  //TODO: Need to get user's tokens from the vault
-  const userVaultTokens = useAccountEsdtTokensList();
 
   const depositToken = () => {
     if (!selectedToken) return
     
-    if(selectedToken.name !== "EGLD")
+    if(selectedToken.identifier !== "EGLD")
       return depositEsdtInteraction(selectedToken, Number(amount))
 
     return depositEgldInteraction(Number(amount))
@@ -39,7 +38,7 @@ export const DepositWithdrawWidget = () => {
   const withdrawToken = () => {
     if(!selectedToken) return
     
-    if(selectedToken.name !== "EGLD")
+    if(selectedToken.identifier !== "EGLD")
       return withdrawEsdtInteraction(selectedToken, Number(amount))
     
     return withdrawEgldInteraction(Number(amount))

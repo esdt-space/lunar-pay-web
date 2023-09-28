@@ -6,9 +6,9 @@ import { Button } from "@/components/ui/button.tsx";
 import { Separator } from "@/components/ui/separator.tsx";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-import { EsdtToken, useEsdtTokensList } from "@/features/tokens";
+import { EsdtToken } from "@/features/tokens";
 import { EsdtTokenSelector } from "@/features/tokens/components";
-
+import { useTokensList } from "@/features/tokens/hooks/use-tokens.ts";
 import { useWhitelistedVaultAddresses, useWhitelistedVaultTokens } from "@/features/vault/hooks";
 import {
   addAddressToWhitelistInteraction,
@@ -18,7 +18,7 @@ import {
 } from "@/features/vault/contract/interactions";
 
 export function ProtocolSettings() {
-  const tokens = useEsdtTokensList();
+  const tokens = useTokensList();
   const [selectedToken, setSelectedToken] = useState<EsdtToken | undefined>(undefined);
   const [tokenSearchValue, setTokenSearchValue] = useState('');
   const [addressToWhitelist, setAddressToWhitelist] = useState('');

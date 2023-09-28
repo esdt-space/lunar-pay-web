@@ -8,10 +8,10 @@ import { Tabs, TabsContent } from "@/components/ui/tabs.tsx";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { EsdtToken } from "@/features/tokens";
-import { useAccountEsdtTokensList } from "@/features/account-tokens/hooks";
 
+import { TokenLogo } from "@/features/tokens/components";
+import { useAccountVaultTokens } from "@/features/vault/hooks";
 import { TransferAssetComponent } from "./transfer-asset-component.tsx";
-import {TokenLogo} from "@/features/tokens/components";
 
 enum ScreenTabs {
   ViewAssets = 'view-assets',
@@ -23,8 +23,7 @@ export const VaultAssetsWidget = () => {
   const [selectedTab, setSelectedTab] = useState<ScreenTabs>(ScreenTabs.ViewAssets)
   const [selectedToken, setSelectedToken] = useState<EsdtToken>()
 
-  //TODO: Need to get user's tokens from the vault
-  const vaultTokens = useAccountEsdtTokensList();
+  const vaultTokens = useAccountVaultTokens();
   const filteredVaultTokens = useMemo(() => {
     if(assetSearchValue.length === 0) return vaultTokens;
 
