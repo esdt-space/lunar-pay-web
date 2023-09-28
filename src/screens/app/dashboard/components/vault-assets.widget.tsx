@@ -2,7 +2,6 @@ import { Wallet } from "lucide-react"
 import { useMemo, useState } from "react"
 import { FormatAmount } from "@multiversx/sdk-dapp/UI";
 
-
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -33,8 +32,6 @@ export const VaultAssetsWidget = () => {
       item.identifier.includes(assetSearchValue)
     );
   }, [vaultTokens, assetSearchValue]);
-
-
 
   return (
     <Card className={'flex flex-col flex-1 p-8 gap-4 shadow'}>
