@@ -11,6 +11,7 @@ import { EsdtToken } from "@/features/tokens";
 import { useAccountEsdtTokensList } from "@/features/account-tokens/hooks";
 
 import { TransferAssetComponent } from "./transfer-asset-component.tsx";
+import {TokenLogo} from "@/features/tokens/components";
 
 enum ScreenTabs {
   ViewAssets = 'view-assets',
@@ -53,9 +54,12 @@ export const VaultAssetsWidget = () => {
             <div className={'grid space-y-3'}>
               {filteredVaultTokens.map(token => (
                 <div key={token.identifier} className={'flex justify-between items-center'}>
-                  <div>
-                    <div className={'text-sm font-medium'}>{token.name}</div>
-                    <div className={'text-xs text-muted-foreground'}>{token.identifier}</div>
+                  <div className={'flex gap-1'}>
+                    <TokenLogo token={token} />
+                    <div>
+                      <div className={'text-sm font-medium'}>{token.name}</div>
+                      <div className={'text-xs text-muted-foreground'}>{token.identifier}</div>
+                    </div>
                   </div>
 
                   <div className={'flex justify-between items-center gap-10'}>
