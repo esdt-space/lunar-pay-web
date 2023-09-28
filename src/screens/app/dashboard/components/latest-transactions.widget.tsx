@@ -36,54 +36,54 @@ const transactionsMockData: BasicDetailsTransaction[] = [
 ]
 
 export const DashboardLatestTransactionsWidget = () => {
-    return <Card className={'flex flex-col flex-1 p-3 shadow'}>
-        <CardHeader>
-          <CardTitle>Latest Transactions</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div>
-            {transactionsMockData.map((transaction, index) => (
-              <div key={index} className={"flex flex-1 justify-between border-b border-gray-200"}>
-                <div
-                  className="flex-1 mt-4 grid grid-cols-[25px_1fr] items-start pb-2"
-                >
-                  <File className="mr-2 h-4 w-4" />
-                  <div className="space-y-1">
-                    <p className="text-sm font-medium leading-none">
-                      {transaction.value}
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      {transaction.age}
-                    </p>
-                  </div>
-                </div>
-                <div
-                  className="flex-1 mt-4 pb-2 self-center"
-                >
-                  <div className="space-y-1">
-                    <p className="text-sm font-medium leading-none">
-                      From: {transaction.from}
-                    </p>
-                  </div>
-                </div>
-                <div
-                  className="flex-1 mt-4 pb-2 self-center"
-                >
-                  <div className="space-y-1">
-                    <p className="text-sm font-medium leading-none">
-                      To: {transaction.to}
-                    </p>
-                  </div>
-                </div>
+  return <Card className={'flex flex-col flex-1 p-3 shadow'}>
+    <CardHeader>
+      <CardTitle>Latest Transactions</CardTitle>
+    </CardHeader>
+    <CardContent>
+      <div>
+        {transactionsMockData.map((transaction, index) => (
+          <div key={index} className={"flex flex-1 justify-between border-b border-gray-200"}>
+            <div
+              className="flex-1 mt-4 grid grid-cols-[25px_1fr] items-start pb-2"
+            >
+              <File className="mr-2 h-4 w-4" />
+              <div className="space-y-1">
+                <p className="text-sm font-medium leading-none">
+                  {transaction.value}
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  {transaction.age}
+                </p>
               </div>
-            ))}
+            </div>
+            <div
+              className="flex-1 mt-4 pb-2 self-center"
+            >
+              <div className="space-y-1">
+                <p className="text-sm font-medium leading-none">
+                  From: {transaction.from}
+                </p>
+              </div>
+            </div>
+            <div
+              className="flex-1 mt-4 pb-2 self-center"
+            >
+              <div className="space-y-1">
+                <p className="text-sm font-medium leading-none">
+                  To: {transaction.to}
+                </p>
+              </div>
+            </div>
           </div>
-        </CardContent>
-        <CardFooter>
-          <Button className="w-full">
-            View All Transactions
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
-        </CardFooter>
+        ))}
+      </div>
+    </CardContent>
+    <CardFooter>
+      <Button className="w-full">
+        View All Transactions
+        <ArrowRight className="ml-2 h-4 w-4" />
+      </Button>
+    </CardFooter>
   </Card>
 }
