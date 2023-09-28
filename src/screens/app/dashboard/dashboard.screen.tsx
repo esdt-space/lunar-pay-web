@@ -4,7 +4,7 @@ import { EsdtToken } from "@/features/tokens";
 import { useAccountEsdtTokensList } from "@/features/account-tokens/hooks";
 import { DashboarAssetsWidget } from "./components/assets.widget";
 import { DashboardLunarBalanceWidget } from "./components/lunar-balance.widget";
-import { DashboardTokenExchangeWidget } from "./components/token-exchange.widget";
+import { DepositWithdrawWidget} from "./components/deposit-withdraw.widget.tsx";
 import { DashboarCollectAllWidget } from "./components/collect-all.widget";
 import { DashboardLatestTransactionsWidget } from "./components/latest-transactions.widget";
 
@@ -38,7 +38,7 @@ export function DashboardScreen() {
           setAssetSearchValue={setAssetSearchValue} 
           filteredVaultTokens={filteredVaultTokens} />
 
-        <DashboardTokenExchangeWidget 
+        <DepositWithdrawWidget
           selectedAccountToken={selectedAccountToken} 
           selectedVaultToken={selectedVaultToken}
           accountTokens={accountTokens}
