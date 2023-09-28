@@ -3,7 +3,7 @@ import { Wallet } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
-export const DashboarCollectAllWidget = () => {
+export const DashboardCollectAllWidget = () => {
   return (
     <Card className={'flex-1 shadow p-2'}>
       <CardHeader>

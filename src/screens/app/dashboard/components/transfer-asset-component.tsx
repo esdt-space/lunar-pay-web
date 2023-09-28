@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button"
 import { checkIsValidAddress } from "@/utils"
 import { EsdtToken } from "@/features/tokens";
 import { transferTokenInteraction } from "@/features/vault/contract/interactions";
+import { FormatAmount } from "@multiversx/sdk-dapp/UI";
+import { TokenLogo } from "@/features/tokens/components";
 
 type Props = {
   finishCallback: () => void
@@ -49,6 +51,24 @@ export const TransferAssetComponent = ( props: Props ) => {
 
   return <div className={'flex flex-1 flex-col gap-4'}>
     <div className={'flex flex-1 flex-col gap-2'}>
+      <div className={'flex flex-1 justify-between items-center p-2'}>
+        <div className={'flex gap-1'}>
+          <TokenLogo token={selectedToken ? selectedToken : new EsdtToken()} />
+          <div>
+            <div className={'text-sm font-medium'}>{selectedToken && selectedToken.name}</div>
+            <div className={'text-xs text-muted-foreground'}>{selectedToken && selectedToken.identifier}</div>
+          </div>
+        </div>
+        <div>
+          <FormatAmount
+            value={selectedToken ? selectedToken.balance : ""}
+            token={selectedToken && selectedToken.identifier}
+            decimals={selectedToken && selectedToken.decimals}
+            digits={5}
+            showLabel={false}
+          />
+        </div>
+      </div>
 
       <div className='flex flex-1 justify-between items-center border rounded-md'>
         <Input
