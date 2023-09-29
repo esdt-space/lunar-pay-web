@@ -1,8 +1,8 @@
 import { CircleDashed } from 'lucide-react'
 
+import { cn } from '@/theme/utils'
 import { EsdtToken } from '@/features/tokens'
 
-import { cn } from '@/theme/utils'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 type Props = {
