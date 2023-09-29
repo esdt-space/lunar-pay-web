@@ -1,14 +1,15 @@
-import { useState } from 'react'
+import { ChangeEvent, useState } from 'react'
+
+import { cn, formatTokenBalance } from '@/theme/utils'
+
+import { Input } from '@/components/ui/input'
+import { Select } from '@/components/ui/select'
 
 import { EsdtToken } from '@/features/tokens'
 import { TokenLogo } from '@/features/tokens/components'
+import { checkTokenHasEnoughBalance } from "@/utils/validation";
 
-import { Select } from '@/components/ui/select'
-
-import TokenSelectorDialog from './token-selector-dialog'
-import { Input } from '@/components/ui/input'
-import { cn, formatTokenBalance } from '@/theme/utils'
-import { checkIsValidAmount } from '@/utils'
+import { TokenSelectorDialog } from '../token-selector-dialog'
 
 type Props = {
   tokens: EsdtToken[]
@@ -16,15 +17,17 @@ type Props = {
   amount?: string
   onChange: (token: EsdtToken) => void
   onChangeAmount: (amount: string) => void
+  showBalances?: boolean
 }
 
-export function DisplayAmountTokenSelector(props: Props) {
-  const { tokens = [], value, amount, onChange, onChangeAmount } = props
+export function TokenSelectorWithAmount(props: Props) {
+  const { tokens = [], value, amount, onChange, onChangeAmount, showBalances } = props
 
   const [isOpen, setIsOpen] = useState(false)
-  const [amountExceedsAssets, setAmountEsceedsAssets] = useState(false)
+  const [amountExceeded, setAmountExceeded] = useState(false)
 
   const closeDialogHandler = () => setIsOpen(false)
+
   const selectTokenHandler = (token: EsdtToken) => {
     onChange(token)
     setIsOpen(false)
@@ -36,16 +39,15 @@ export function DisplayAmountTokenSelector(props: Props) {
     }
   }
 
-  const changeAmountHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const changeAmountHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if(value !== undefined) {
-      let isValid = checkIsValidAmount(value, parseInt(e.target.value))
-      setAmountEsceedsAssets(isValid)
+      setAmountExceeded(checkTokenHasEnoughBalance(value, e.target.value));
     }
 
     onChangeAmount(e.target.value)
   }
   
-  const invalidAmountStyle = amountExceedsAssets ? "border-red-500" : ""
+  const invalidAmountStyle = amountExceeded ? "border-red-500" : ""
 
   return (
     <Select value={value?.identifier}>
@@ -73,7 +75,8 @@ export function DisplayAmountTokenSelector(props: Props) {
             <p className="font-extrabold">MAX</p>
           </div>
       </div>
-      {amountExceedsAssets && <p className={'text-red-500 text-xs ml-2 -mt-4'}>The amount you added exceeds your assets</p>}
+
+      {amountExceeded && <p className={'text-red-500 text-xs ml-2 -mt-4'}>The amount you added exceeds your assets</p>}
 
       <TokenSelectorDialog
         value={value}
@@ -81,6 +84,7 @@ export function DisplayAmountTokenSelector(props: Props) {
         isOpen={isOpen}
         closeDialogHandler={closeDialogHandler}
         selectTokenHandler={selectTokenHandler}
+        showBalances={showBalances}
       />
     </Select>
   )

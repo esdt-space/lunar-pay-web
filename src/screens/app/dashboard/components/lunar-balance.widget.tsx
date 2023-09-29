@@ -5,7 +5,7 @@ import { useAccountVaultTokens } from "@/features/vault/hooks";
 export const DashboardLunarBalanceWidget = () => {
   const vaultTokens = useAccountVaultTokens();
 
-  let lunarBalance = vaultTokens.reduce((acc, val) => {
+  const lunarBalance = vaultTokens.reduce((acc, val) => {
     if(val.valueUsd !== undefined) {
       acc += val.valueUsd
     }
