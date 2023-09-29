@@ -22,7 +22,9 @@ export const TransferAssetComponent = ( props: Props ) => {
   const [amount, setAmount] = useState("")
   const [address, setAddress] = useState("")
   const [addressIsInvalid, setAddressIsInvalid] = useState(false)
+  const [amountExceedsAssets, setAmountEsceedsAssets] = useState(false)
 
+  const invalidAmountStyle = amountExceedsAssets ? "border-red-500" : ""
   const invalidAddressStyle = addressIsInvalid ? "border-red-500" : ""
 
   const changeAddressHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,6 +35,18 @@ export const TransferAssetComponent = ( props: Props ) => {
     }
 
     setAddress(e.target.value)
+  }
+
+  const changeAmountHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if(selectedToken !== undefined) {
+      if(e.target.value > selectedToken?.balance) {
+        setAmountEsceedsAssets(true)
+      } else {
+        setAmountEsceedsAssets(false)
+      }
+    }
+
+    setAmount(e.target.value)
   }
 
   const getBalanceNumber = () => {
@@ -70,20 +84,21 @@ export const TransferAssetComponent = ( props: Props ) => {
         </div>
       </div>
 
-      <div className='flex flex-1 justify-between items-center border rounded-md'>
+      <div className={cn(['flex flex-1 justify-between items-center border rounded-md', invalidAmountStyle])}>
         <Input
           value={amount}
           type={"number"}
           placeholder='Enter Amount'
           style={{boxShadow: 'none'}}
           className={'border-none text-xs'}
-          onChange={(e) => setAmount(e.target.value)}
+          onChange={changeAmountHandler}
         />
 
         <div className={'cursor-pointer mr-3'} onClick={getBalanceNumber}>
           <p className="font-extrabold">MAX</p>
         </div>
       </div>
+      {amountExceedsAssets && <p className={'text-red-500 text-xs ml-2 -mt-2'}>The amount you added exceeds your assets</p>}
 
       <Input
         type={"text"}
