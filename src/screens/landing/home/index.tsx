@@ -14,8 +14,8 @@ export function HomeScreen() {
             <h2 className="text-4xl font-bold text-gray-800 max-w-[400px] leading-tight">
               <span className={'font-black'}>Payments</span> made simple for <span className={'font-black'}>WEB3 businesses</span>.
             </h2>
-            <p className="mt-8 text-muted-foreground">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eum omnis voluptatem accusantium nemo perspiciatis delectus atque autem! repellat expedita consequatur! Officiis id consequatur atque doloremque!
+            <p className="mt-8 text-gray-600">
+              Lunar Pay is helping to create a future where money move more freely; giving individuals, businesses, investors and teams more flexibility and easier access to tokens.
             </p>
             <p className="mb-12 mt-4 text-gray-600">Nobis minus voluptatibus pariatur dignissimos libero quaerat iure expedita at? Asperiores nemo possimus nesciunt dicta veniam aspernatur quam mollitia.</p>
 
