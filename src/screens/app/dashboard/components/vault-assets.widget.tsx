@@ -1,6 +1,7 @@
 import { Wallet } from "lucide-react";
 import { useMemo, useState } from "react";
 import { FormatAmount } from "@multiversx/sdk-dapp/UI";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -8,11 +9,10 @@ import { Tabs, TabsContent } from "@/components/ui/tabs.tsx";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { EsdtToken } from "@/features/tokens";
-
 import { TokenLogo } from "@/features/tokens/components";
 import { useAccountVaultTokens } from "@/features/vault/hooks";
+
 import { TransferAssetComponent } from "./transfer-asset-component.tsx";
-import {useAutoAnimate} from "@formkit/auto-animate/react";
 
 enum ScreenTabs {
   ViewAssets = 'view-assets',

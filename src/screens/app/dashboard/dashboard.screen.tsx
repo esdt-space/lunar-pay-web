@@ -1,6 +1,6 @@
 import { VaultAssetsWidget } from "./components/vault-assets.widget.tsx";
 import { DashboardLunarBalanceWidget } from "./components/lunar-balance.widget";
-import { DepositWithdrawWidget} from "./components/deposit-withdraw.widget.tsx";
+import { DepositWithdrawWidget } from "./components/deposit-withdraw.widget.tsx";
 import { DashboardCollectAllWidget } from "./components/collect-all.widget";
 import { DashboardLatestTransactionsWidget } from "./components/latest-transactions.widget";
 
