@@ -10,7 +10,7 @@ import { PublicLayout } from "@/components/layout/public-layout";
 
 import { HomeScreen } from "@/screens/landing/home";
 import { AdminScreen } from '@/screens/admin';
-import { ApproveSubscriptionScreen } from "@/screens/app/subscriptions";
+import { ApproveSubscriptionScreen, SubscriptionsOverviewScreen } from "@/screens/app/subscriptions";
 import { AuthenticationScreen } from "@/screens/auth/authentication-screen.tsx";
 import { DashboardScreen } from "@/screens/app/dashboard/dashboard.screen.tsx";
 
@@ -38,6 +38,10 @@ export function ApplicationRouter() {
 
             <Route path={RoutesConfig.admin}>
               <Route index element={<AdminScreen />} />
+            </Route>
+
+            <Route path={RoutesConfig.subscriptions}>
+              <Route index element={<SubscriptionsOverviewScreen />} />
             </Route>
           </Route>
         </Route>
