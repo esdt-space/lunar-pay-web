@@ -27,6 +27,7 @@ export function ApplicationRouter() {
         </Route>
 
         <Route element={<AuthenticatedRouteOutlet />}>
+
           <Route path={RoutesConfig.approveSubscription}>
             <Route path={`:id`} element={<ApproveSubscriptionScreen />} />
           </Route>

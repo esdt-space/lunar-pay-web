@@ -21,6 +21,8 @@ export class EsdtToken extends Token {
 
   isPaused!: boolean
 
+  valueUsd?: number
+
   constructor(params: Partial<EsdtToken> = {}) {
     super(params)
   }
