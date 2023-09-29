@@ -1,6 +1,5 @@
 import { Wallet } from "lucide-react";
 import { useMemo, useState } from "react";
-import { FormatAmount } from "@multiversx/sdk-dapp/UI";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 import { Input } from "@/components/ui/input";
@@ -9,7 +8,7 @@ import { Tabs, TabsContent } from "@/components/ui/tabs.tsx";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { EsdtToken } from "@/features/tokens";
-import { TokenLogo } from "@/features/tokens/components";
+import { TokenItem } from "@/features/tokens/components";
 import { useAccountVaultTokens } from "@/features/vault/hooks";
 
 import { TransferAssetComponent } from "./transfer-asset-component.tsx";
@@ -54,36 +53,20 @@ export const VaultAssetsWidget = () => {
 
             <div className={'grid space-y-3'} ref={animatedElement}>
               {filteredVaultTokens.map(token => (
-                <div key={token.identifier} className={'flex justify-between items-center'}>
-                  <div className={'flex gap-1'}>
-                    <TokenLogo token={token} />
-                    <div>
-                      <div className={'text-sm font-medium'}>{token.name}</div>
-                      <div className={'text-xs text-muted-foreground'}>{token.identifier}</div>
-                    </div>
-                  </div>
+                <div key={token.identifier} className={'flex justify-between gap-2 items-center'}>
+                  <TokenItem token={token} showBalances />
 
-                  <div className={'flex justify-between items-center gap-10'}>
-                    <div className={'text-sm font-medium'}>
-                      <FormatAmount
-                        value={token.balance}
-                        token={token.identifier}
-                        decimals={token.decimals}
-                        digits={5}
-                        showLabel={false}
-                      />
-                      {/*{formatTokenBalance(token.balance, token.decimals).toString()}*/}
-                    </div>
-                    <div className={'self-end space-x-2'}>
-                      <Button size={'sm'} variant={'outline'} onClick={() => {
-                        setSelectedToken(token)
-                        setSelectedTab(ScreenTabs.TransferAsset)
-                      }}>
-                        Send
-                        <Wallet className={'ml-2 w-3 h-3'}/>
-                      </Button>
-                    </div>
-                  </div>
+                  <Button
+                    size={'sm'}
+                    variant={'outline'}
+                    onClick={() => {
+                      setSelectedToken(token)
+                      setSelectedTab(ScreenTabs.TransferAsset)
+                    }}
+                  >
+                    Send
+                    <Wallet className={'ml-2 w-3 h-3'}/>
+                  </Button>
                 </div>
               ))}
             </div>

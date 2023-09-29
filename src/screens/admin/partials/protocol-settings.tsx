@@ -7,8 +7,8 @@ import { Separator } from "@/components/ui/separator.tsx";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { EsdtToken } from "@/features/tokens";
-import { EsdtTokenSelector } from "@/features/tokens/components";
 import { useTokensList } from "@/features/tokens/hooks/use-tokens.ts";
+import { TokenItem, EsdtTokenSelector } from "@/features/tokens/components";
 import { useWhitelistedVaultAddresses, useWhitelistedVaultTokens } from "@/features/vault/hooks";
 import {
   addAddressToWhitelistInteraction,
@@ -82,25 +82,26 @@ export function ProtocolSettings() {
               <Separator />
 
               <Input
+                className={'mb-3'}
                 value={tokenSearchValue}
                 placeholder={'Search token'}
                 onChange={e => setTokenSearchValue(e.target.value)}
               />
 
-              {filteredWhitelistVaultTokens.map(token => (
-                <div key={token.identifier} className={'flex justify-between items-center'}>
-                  <div>
-                    <div className={'text-sm font-medium'}>{token.name}</div>
-                    <div className={'text-xs text-muted-foreground'}>{token.identifier}</div>
+              <div className={'space-y-1'}>
+                {filteredWhitelistVaultTokens.map(token => (
+                  <div key={token.identifier} className={'flex bg-slate-50 p-2 rounded justify-between items-center'}>
+                    <TokenItem token={token} />
+
+                    <div className={'space-x-2'}>
+                      <Button size={'sm'} variant={'outline'} onClick={() => removeTokenFromWhitelist(token)}>
+                        Remove
+                        <Trash2 className={'ml-2 w-3 h-3'}/>
+                      </Button>
+                    </div>
                   </div>
-                  <div className={'self-end space-x-2'}>
-                    <Button size={'sm'} variant={'outline'} onClick={() => removeTokenFromWhitelist(token)}>
-                      Remove
-                      <Trash2 className={'ml-2 w-3 h-3'}/>
-                    </Button>
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           )}
         </CardContent>
