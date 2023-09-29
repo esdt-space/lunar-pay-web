@@ -2,14 +2,15 @@ import Spline from '@splinetool/react-spline';
 
 import { cn } from "@/theme/utils.ts";
 import { Button } from "@/components/ui/button.tsx";
-import {Badge} from "@/components/ui/badge.tsx";
+import { Badge } from "@/components/ui/badge.tsx";
+
+import { HomeFeaturesPartial } from "./partials/features.tsx";
 
 export function HomeScreen() {
   return (
-    <div className={'flex min-h-screen'}>
+    <div className={'flex flex-col gap-48 pb-48'}>
       <div className={cn([
-        "isolate flex lg:mx-auto mt-24 gap-12 items-center",
-        "px-4 sm:px-12 xl:max-w-6xl xl:px-0"
+        "container flex flex-1 isolate lg:mx-auto mt-48 lg:mt-40 gap-12 items-center",
       ])}>
           <div className="w-full max-w-[540px] lg:max-w-none lg:w-1/2">
             <Badge variant={'outline'} className={'mb-2 p-2 px-4 text-primary font-semibold'}>
@@ -34,6 +35,8 @@ export function HomeScreen() {
             <Spline className='w-full' scene="https://prod.spline.design/jarUpvCPzoBGEUIe/scene.splinecode"/>
           </div>
       </div>
+
+      <HomeFeaturesPartial />
     </div>
   )
 }
