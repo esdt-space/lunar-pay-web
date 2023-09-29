@@ -1,6 +1,6 @@
 export type PartialAbiType = {
   name?: string
-  constructor?: any
-  endpoints?: any[]
-  types?: Record<string, any>
+  constructor?: unknown
+  endpoints?: unknown[]
+  types?: Record<string, unknown>
 }
