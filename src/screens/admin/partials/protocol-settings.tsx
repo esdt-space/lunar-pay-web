@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { Trash2 } from "lucide-react";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 import { Input } from "@/components/ui/input.tsx";
 import { Button } from "@/components/ui/button.tsx";
@@ -24,6 +25,9 @@ export function ProtocolSettings() {
   const [addressToWhitelist, setAddressToWhitelist] = useState('');
   const [addressSearchValue, setAddressSearchValue] = useState('');
 
+  const [animatedTokensDivRef] = useAutoAnimate();
+  const [animatedAddressesDivRef] = useAutoAnimate();
+
   const whitelistedVaultTokens = useWhitelistedVaultTokens();
   const filteredWhitelistVaultTokens = useMemo(() => {
     if(tokenSearchValue.length === 0) return whitelistedVaultTokens;
@@ -35,6 +39,13 @@ export function ProtocolSettings() {
   }, [whitelistedVaultTokens, tokenSearchValue]);
 
   const whitelistedAddresses = useWhitelistedVaultAddresses()
+  const filteredWhitelistAddresses = useMemo(() => {
+    if(addressSearchValue.length === 0) return whitelistedAddresses;
+
+    return whitelistedAddresses.filter(item =>
+      item.toLocaleLowerCase().includes(addressSearchValue.toLocaleLowerCase())
+    );
+  }, [whitelistedAddresses, addressSearchValue]);
 
 
   const addTokenToWhitelistButtonHandler = () => {
@@ -88,7 +99,7 @@ export function ProtocolSettings() {
                 onChange={e => setTokenSearchValue(e.target.value)}
               />
 
-              <div className={'space-y-1'}>
+              <div className={'space-y-1'} ref={animatedTokensDivRef}>
                 {filteredWhitelistVaultTokens.map(token => (
                   <div key={token.identifier} className={'flex bg-slate-50 p-2 rounded justify-between items-center'}>
                     <TokenItem token={token} />
@@ -136,8 +147,8 @@ export function ProtocolSettings() {
                 onChange={e => setAddressSearchValue(e.target.value)}
               />
 
-              <div className={'space-y-3'}>
-                {whitelistedAddresses.map(address => (
+              <div className={'space-y-3'} ref={animatedAddressesDivRef}>
+                {filteredWhitelistAddresses.map(address => (
                   <div key={address} className={'flex flex-1 justify-between items-center gap-2'}>
                     <div className={'truncate text-sm font-medium'}>{address}</div>
                     <Button size={'sm'} variant={'outline'} onClick={() => removeAddressFromWhitelist(address)}>
