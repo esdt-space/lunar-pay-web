@@ -1,4 +1,5 @@
-import { Button } from "@/components/ui/button"
+import { Switch } from "@/components/ui/switch"
+import { Star, Users } from "lucide-react"
 
 type SubscriptionItem = {
   id: string
@@ -32,14 +33,23 @@ export const SubscriptionsList = () => {
   return (
     <div className="flex flex-col gap-4 w-full">
       {items.map((item, index) => {
-        return <div key={index} className="flex flex-1 justify-between rounded-md border border-blue-500 bg-gradiant-to-r from-blue-500 to-red-500 p-6 shadow">
-          <div className="flex gap-4">
-            <div>Icon</div>
-            <div>{item.name}</div>
+        return <div key={index} className="flex flex-1 justify-between rounded-md border border-blue-500 bg-gradiant-to-r from-blue-500 to-red-500 p-4 shadow">
+          <div className="flex items-center ml-2 gap-4">
+            <Star className="cursor-pointer" />
+            <div className="flex flex-col">
+              <div>{item.name}</div>
+              <div className="text-sm text-muted-foreground">{item.subscriptionRate}</div>
+            </div>
           </div>
-          <div className="flex gap-4">
-            <div>{item.subscribers}</div>
-            <div><Button>Click</Button></div>
+
+          <div className="flex items-center mr-2 gap-4">
+            <div className="mr-8">
+              <Users />
+              {item.subscribers}
+            </div>
+            <div className="flex space-x-2">
+              <Switch id="airplane-mode" />
+            </div>
           </div>
         </div>
       })}
