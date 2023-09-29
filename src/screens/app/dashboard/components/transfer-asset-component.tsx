@@ -5,7 +5,7 @@ import { cn, formatTokenBalance } from "@/theme/utils"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 
-import { checkIsValidAddress } from "@/utils"
+import { checkIsValidAddress, checkIsValidAmount } from "@/utils"
 import { EsdtToken } from "@/features/tokens";
 import { transferTokenInteraction } from "@/features/vault/contract/interactions";
 import { FormatAmount } from "@multiversx/sdk-dapp/UI";
@@ -39,11 +39,8 @@ export const TransferAssetComponent = ( props: Props ) => {
 
   const changeAmountHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if(selectedToken !== undefined) {
-      if(e.target.value > selectedToken?.balance) {
-        setAmountEsceedsAssets(true)
-      } else {
-        setAmountEsceedsAssets(false)
-      }
+      let isValid = checkIsValidAmount(selectedToken, parseInt(e.target.value))
+      setAmountEsceedsAssets(isValid)
     }
 
     setAmount(e.target.value)
