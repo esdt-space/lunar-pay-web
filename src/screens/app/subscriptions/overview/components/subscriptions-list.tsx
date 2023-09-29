@@ -5,7 +5,8 @@ type SubscriptionItem = {
   id: string
   favorite: boolean
   name: string
-  subscriptionRate: string
+  recurrencePeriod: string
+  subscriptionCost: string
   subscribers: number
 }
 
@@ -13,19 +14,22 @@ const items: SubscriptionItem[] = [{
   id: "889714f8-db9f-448c-9308-844379fd155f",
   favorite: true,
   name: "Netflix PRO",
-  subscriptionRate: "Charged Monthly",
+  recurrencePeriod: "Charged Monthly",
+  subscriptionCost: "2 EGLD / Month",
   subscribers: 10
 },{
   id: "00b7086f-35b8-4294-bfc1-d30340f9d3f1",
   favorite: true,
   name: "Netflix PRO",
-  subscriptionRate: "Charged Monthly",
+  recurrencePeriod: "Charged Monthly",
+  subscriptionCost: "2 EGLD / Month",
   subscribers: 10
 },{
   id: "4aa597fb-e825-45ee-8d31-48c56aaf0192",
   favorite: false,
   name: "Netflix PRO",
-  subscriptionRate: "Charged Monthly",
+  recurrencePeriod: "Charged Monthly",
+  subscriptionCost: "2 EGLD / Month",
   subscribers: 10
 }]
 
@@ -38,7 +42,10 @@ export const SubscriptionsList = () => {
             <Star className="cursor-pointer" />
             <div className="flex flex-col">
               <div>{item.name}</div>
-              <div className="text-sm text-muted-foreground">{item.subscriptionRate}</div>
+              <div className="text-sm text-muted-foreground">{item.recurrencePeriod}</div>
+            </div>
+            <div className="ml-4">
+              {item.subscriptionCost}
             </div>
           </div>
 
