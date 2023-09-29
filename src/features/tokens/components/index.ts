@@ -1,3 +1,4 @@
+export * from './token-item'
 export * from './token-logo'
 export * from './token-balance'
 export * from './token-selectors/esdt-token-selector'
