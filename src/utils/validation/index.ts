@@ -1,2 +1,2 @@
 export { checkIsValidAddress } from './address'
-export { checkIsValidAmount } from './amount-balance'
+export { checkIsValidAmount, checkTokenHasEnoughBalance } from './amount-balance'
