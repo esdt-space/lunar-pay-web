@@ -1,6 +1,7 @@
 import { Wallet } from "lucide-react";
 import { useMemo, useState } from "react";
 import { FormatAmount } from "@multiversx/sdk-dapp/UI";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -8,9 +9,9 @@ import { Tabs, TabsContent } from "@/components/ui/tabs.tsx";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { EsdtToken } from "@/features/tokens";
-
 import { TokenLogo } from "@/features/tokens/components";
 import { useAccountVaultTokens } from "@/features/vault/hooks";
+
 import { TransferAssetComponent } from "./transfer-asset-component.tsx";
 
 enum ScreenTabs {
@@ -19,6 +20,7 @@ enum ScreenTabs {
 }
 
 export const VaultAssetsWidget = () => {
+  const [animatedElement] = useAutoAnimate()
   const [assetSearchValue, setAssetSearchValue] = useState('');
   const [selectedTab, setSelectedTab] = useState<ScreenTabs>(ScreenTabs.ViewAssets)
   const [selectedToken, setSelectedToken] = useState<EsdtToken>()
@@ -50,7 +52,7 @@ export const VaultAssetsWidget = () => {
               onChange={e => setAssetSearchValue(e.target.value)}
             />
 
-            <div className={'grid space-y-3'}>
+            <div className={'grid space-y-3'} ref={animatedElement}>
               {filteredVaultTokens.map(token => (
                 <div key={token.identifier} className={'flex justify-between items-center'}>
                   <div className={'flex gap-1'}>

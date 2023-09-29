@@ -1,12 +1,12 @@
-import React, { useMemo, useState } from 'react'
+import { useMemo, useState, useRef } from 'react'
 import { useDebounce } from '@multiversx/sdk-dapp/hooks'
 import { useVirtualizer } from '@tanstack/react-virtual'
 
-import { EsdtToken } from '@/features/tokens'
-import { TokenLogo } from '@/features/tokens/components'
-
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+
+import { EsdtToken } from '@/features/tokens'
+import { TokenLogo, TokenBalance } from '@/features/tokens/components'
 
 type Props = {
   isOpen: boolean
@@ -14,12 +14,13 @@ type Props = {
   tokens: EsdtToken[]
   closeDialogHandler: () => void
   selectTokenHandler: (token: EsdtToken) => void
+  showBalances?: boolean
 }
 
-export default function TokenSelectorDialog(props: Props) {
+export function TokenSelectorDialog(props: Props) {
   const [filterValue, setFilterValue] = useState('')
-  const { isOpen, tokens, closeDialogHandler, selectTokenHandler } = props
-  const parentRef = React.useRef<HTMLDivElement>(null)
+  const {isOpen, tokens, closeDialogHandler, selectTokenHandler, showBalances = false} = props
+  const parentRef = useRef<HTMLDivElement>(null)
 
   const debouncedFilterValue = useDebounce(filterValue, 300)
 
@@ -80,10 +81,18 @@ export default function TokenSelectorDialog(props: Props) {
                       data-index={row.index}
                       ref={virtualizer.measureElement}
                       onClick={() => selectTokenHandler(token)}
-                      className={'flex gap-2 rounded-md hover:bg-slate-50/20 p-2 cursor-pointer'}
+                      className={'flex justify-between gap-2 rounded-md hover:bg-slate-50 p-2 cursor-pointer'}
                     >
-                      <TokenLogo className={'h-6 w-6'} token={token} />
-                      {token.name}
+                      <div className={'flex gap-2 items-center'}>
+                        <TokenLogo className={'h-8 w-8'} token={token}/>
+
+                        <div className={'flex flex-col'}>
+                          <div className={'text-sm font-semibold'}>{token.name}</div>
+                          <div className={'text-xs text-muted-foreground'}>{token.identifier}</div>
+                        </div>
+                      </div>
+
+                      {showBalances && (<TokenBalance token={token} />)}
                     </div>
                   )
                 })}

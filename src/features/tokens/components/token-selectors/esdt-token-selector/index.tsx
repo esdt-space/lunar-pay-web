@@ -5,7 +5,7 @@ import { TokenLogo } from '@/features/tokens/components'
 
 import { Select, SelectTrigger, SelectValue } from '@/components/ui/select'
 
-import TokenSelectorDialog from './token-selector-dialog'
+import { TokenSelectorDialog } from '../token-selector-dialog'
 
 type Props = {
   tokens: EsdtToken[]

@@ -1,14 +1,21 @@
-import { EsdtToken } from "@/features/tokens";
 import BigNumber from "bignumber.js";
+import { EsdtToken } from "@/features/tokens";
 
-export function checkIsValidAmount(token: EsdtToken, inputValue: number): boolean {
-    const tokenBalance = BigNumber(token.balance);
-    const input = BigNumber(inputValue).multipliedBy(Math.pow(10, token.decimals))
+export function checkIsValidAmount(value: string | number): boolean {
+  const bigNumberValue = BigNumber(value);
 
-    if(input.c !== null && tokenBalance.c !== null) {
-      if (tokenBalance.c[0] < input.c[0]) return true;
-      if (tokenBalance.c[0] > input.c[0]) return false;
-    }
+  return !bigNumberValue.isNaN() && bigNumberValue.gte(0);
+}
 
+export function checkTokenHasEnoughBalance(token: EsdtToken, balanceValue: string | number): boolean {
+  const tokenBalanceBigNumberBigUIntValue = BigNumber(token.balance);
+  const balanceBigNumberBigUIntValue = BigNumber(balanceValue).multipliedBy(Math.pow(10, token.decimals))
+
+  if(!checkIsValidAmount(balanceValue))
     return false;
+
+  if (tokenBalanceBigNumberBigUIntValue.isNaN() || balanceBigNumberBigUIntValue.isNaN())
+    return false;
+
+  return tokenBalanceBigNumberBigUIntValue.gte(balanceBigNumberBigUIntValue);
 }

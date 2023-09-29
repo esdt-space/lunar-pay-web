@@ -1,15 +1,15 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
+import { FormatAmount } from "@multiversx/sdk-dapp/UI";
 
 import { cn, formatTokenBalance } from "@/theme/utils"
+import { checkIsValidAddress, checkTokenHasEnoughBalance } from "@/utils"
 
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 
-import { checkIsValidAddress, checkIsValidAmount } from "@/utils"
 import { EsdtToken } from "@/features/tokens";
-import { transferTokenInteraction } from "@/features/vault/contract/interactions";
-import { FormatAmount } from "@multiversx/sdk-dapp/UI";
 import { TokenLogo } from "@/features/tokens/components";
+import { transferTokenInteraction } from "@/features/vault/contract/interactions";
 
 type Props = {
   finishCallback: () => void
@@ -22,12 +22,12 @@ export const TransferAssetComponent = ( props: Props ) => {
   const [amount, setAmount] = useState("")
   const [address, setAddress] = useState("")
   const [addressIsInvalid, setAddressIsInvalid] = useState(false)
-  const [amountExceedsAssets, setAmountEsceedsAssets] = useState(false)
+  const [amountExceeded, setAmountExceeded] = useState(false)
 
-  const invalidAmountStyle = amountExceedsAssets ? "border-red-500" : ""
+  const invalidAmountStyle = amountExceeded ? "border-red-500" : ""
   const invalidAddressStyle = addressIsInvalid ? "border-red-500" : ""
 
-  const changeAddressHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const changeAddressHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if(!checkIsValidAddress(e.target.value)) {
       setAddressIsInvalid(true)
     } else {
@@ -37,10 +37,9 @@ export const TransferAssetComponent = ( props: Props ) => {
     setAddress(e.target.value)
   }
 
-  const changeAmountHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const changeAmountHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if(selectedToken !== undefined) {
-      let isValid = checkIsValidAmount(selectedToken, parseInt(e.target.value))
-      setAmountEsceedsAssets(isValid)
+      setAmountExceeded(checkTokenHasEnoughBalance(selectedToken, parseInt(e.target.value)));
     }
 
     setAmount(e.target.value)
@@ -95,7 +94,8 @@ export const TransferAssetComponent = ( props: Props ) => {
           <p className="font-extrabold">MAX</p>
         </div>
       </div>
-      {amountExceedsAssets && <p className={'text-red-500 text-xs ml-2 -mt-2'}>The amount you added exceeds your assets</p>}
+
+      {amountExceeded && <p className={'text-red-500 text-xs ml-2 -mt-2'}>The amount you added exceeds your assets</p>}
 
       <Input
         type={"text"}
