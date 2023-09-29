@@ -21,9 +21,11 @@ export function HomeScreen() {
               <span className={'font-black'}>Payments</span> made simple for <span className={'font-black'}>WEB3 businesses</span>.
             </h2>
             <p className="mt-8 text-gray-600">
-              Lunar Pay is helping to create a future where money move more freely; giving individuals, businesses, investors and teams more flexibility and easier access to tokens.
+              Lunar Pay is reshaping the financial landscape of WEB3. We offer individuals, businesses, investors, and teams enhanced flexibility and streamlined access to tokens.
             </p>
-            <p className="mb-12 mt-4 text-gray-600">Nobis minus voluptatibus pariatur dignissimos libero quaerat iure expedita at? Asperiores nemo possimus nesciunt dicta veniam aspernatur quam mollitia.</p>
+            <p className="mb-12 mt-4 text-gray-600">
+              Introducing the Vault — a groundbreaking smart contract designed to act as your personalized funding wallet. With the Vault, you can now establish and manage payment agreements tailored to your needs, setting the stage for a multitude of financial utilities in the WEB3 space.
+            </p>
 
             <Button size={'lg'}>GET STARTED</Button>
           </div>
