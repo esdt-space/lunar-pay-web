@@ -23,7 +23,8 @@ export class TokensService {
 
   static async getEsdtTokens(): Promise<EsdtToken[]> {
     return this.api.get<EsdtToken[]>('/tokens/esdt')
-      .then((response) => response.data);
+      .then((response) => response.data)
+      .then(data => data.map(item => new EsdtToken(item)))
   }
 
   static async getEsdtTokensTransformed(): Promise<TransformedTokens> {
