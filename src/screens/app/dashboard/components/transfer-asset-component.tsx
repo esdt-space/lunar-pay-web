@@ -2,7 +2,7 @@ import { ChangeEvent, useState } from "react";
 import { FormatAmount } from "@multiversx/sdk-dapp/UI";
 
 import { cn, formatTokenBalance } from "@/theme/utils"
-import { checkIsValidAddress, checkIsValidAmount } from "@/utils"
+import { checkIsValidAddress, checkTokenHasEnoughBalance } from "@/utils"
 
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -39,7 +39,7 @@ export const TransferAssetComponent = ( props: Props ) => {
 
   const changeAmountHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if(selectedToken !== undefined) {
-      setAmountExceeded(checkIsValidAmount(selectedToken, parseInt(e.target.value)));
+      setAmountExceeded(checkTokenHasEnoughBalance(selectedToken, parseInt(e.target.value)));
     }
 
     setAmount(e.target.value)
@@ -94,6 +94,7 @@ export const TransferAssetComponent = ( props: Props ) => {
           <p className="font-extrabold">MAX</p>
         </div>
       </div>
+
       {amountExceeded && <p className={'text-red-500 text-xs ml-2 -mt-2'}>The amount you added exceeds your assets</p>}
 
       <Input

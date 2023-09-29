@@ -1,15 +1,20 @@
 import { useMemo, useState } from "react";
-import { ArrowUpRight } from "lucide-react"
+import { ArrowUpRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs.tsx";
 
-import { EsdtToken } from "@/features/tokens"
-import { DisplayAmountTokenSelector } from "@/features/tokens/components"
-import { depositEsdtInteraction, depositEgldInteraction, withdrawEsdtInteraction, withdrawEgldInteraction } from "@/features/vault/contract/interactions"
-import { useWhitelistedVaultTokens, useAccountVaultTokens } from "@/features/vault/hooks";
+import { EsdtToken } from "@/features/tokens";
+import { TokenSelectorWithAmount } from "@/features/tokens/components";
 import { useAccountTokensList } from "@/features/account-tokens/hooks";
+import { useWhitelistedVaultTokens, useAccountVaultTokens } from "@/features/vault/hooks";
+import {
+  depositEsdtInteraction,
+  depositEgldInteraction,
+  withdrawEsdtInteraction,
+  withdrawEgldInteraction
+} from "@/features/vault/contract/interactions";
 
 export const DepositWithdrawWidget = () => {
   const [amount, setAmount] = useState('');
@@ -24,7 +29,6 @@ export const DepositWithdrawWidget = () => {
 
     return accountTokens.filter(item => whitelistedTokenIds.includes(item.identifier));
   }, [accountTokens, whitelistedTokens]);
-
 
   const depositToken = () => {
     if (!selectedToken) return
@@ -65,7 +69,8 @@ export const DepositWithdrawWidget = () => {
 
         <CardContent className={'p-8'}>
           <TabsContent className={'flex flex-1 flex-col gap-4 mt-0'} value="deposit">
-            <DisplayAmountTokenSelector
+            <TokenSelectorWithAmount
+              showBalances
               value={selectedToken}
               tokens={depositTokensList}
               onChange={(token) => setSelectedToken(token)}
@@ -79,7 +84,8 @@ export const DepositWithdrawWidget = () => {
           </TabsContent>
 
           <TabsContent className={'flex flex-col flex-1 gap-4 mt-0'} value="withdraw">
-            <DisplayAmountTokenSelector
+            <TokenSelectorWithAmount
+              showBalances
               value={selectedToken}
               tokens={userVaultTokens}
               onChange={(token) => setSelectedToken(token)}
