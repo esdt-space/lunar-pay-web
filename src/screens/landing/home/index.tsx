@@ -32,7 +32,7 @@ export function HomeScreen() {
             </p>
 
             <Link
-              className={'rounded-full bg-gradient-to-br from-primary to-secondary py-3 px-8 self-start'}
+              className={'rounded-full bg-gradient-to-br from-primary to-secondary py-2.5 px-8 self-start hover:px-10 transition-all duration-300'}
               to={RoutesConfig.dashboard}
             >
               <span className={'text-sm text-white font-semibold'}>Launch App</span>
