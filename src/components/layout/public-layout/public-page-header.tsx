@@ -25,7 +25,7 @@ export function PublicPageHeader() {
                 <ul className="space-y-6 text-base font-medium tracking-wide lg:flex lg:space-y-0 lg:text-sm">
                   <li>
                     <a className="block transition hover:text-primary dark:hover:text-primaryLight md:px-4" href="/pages/solution">
-                      <span>Solution</span>
+                      <span>Solutions</span>
                     </a>
                   </li>
                   <li>

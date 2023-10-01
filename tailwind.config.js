@@ -16,6 +16,9 @@ module.exports = {
       },
     },
     extend: {
+      screens: {
+        "2xl": "1400px",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -70,6 +73,9 @@ module.exports = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      backgroundImage: {
+        'waves-pattern': "url('/assets/media/patterns/waves-pattern.svg')",
+      }
     },
   },
   plugins: [require("tailwindcss-animate")],

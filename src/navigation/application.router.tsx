@@ -24,10 +24,16 @@ export function ApplicationRouter() {
       <Routes location={state?.backgroundLocation || location}>
         <Route element={<PublicLayout />}>
           <Route index element={<HomeScreen />} />
+
+          <Route path={RoutesConfig.landingInvoices} element={<></>} />
+          <Route path={RoutesConfig.landingPayroll} element={<></>} />
+          <Route path={RoutesConfig.landingSubscriptions} element={<></>} />
+          <Route path={RoutesConfig.landingVesting} element={<></>} />
+          <Route path={RoutesConfig.landingDonations} element={<></>} />
+          <Route path={RoutesConfig.landingExpensesAndAllowances} element={<></>} />
         </Route>
 
         <Route element={<AuthenticatedRouteOutlet />}>
-
           <Route path={RoutesConfig.approveSubscription}>
             <Route path={`:id`} element={<ApproveSubscriptionScreen />} />
           </Route>
