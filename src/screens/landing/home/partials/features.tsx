@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Building2, ChevronRight, CreditCard, Star, Wallet2 } from "lucide-react";
+import {ArrowRight, Building2, ChevronRight, CreditCard, HeartHandshake, Wallet2} from "lucide-react";
 
 import { cn } from "@/theme/utils.ts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card.tsx";
@@ -72,7 +72,7 @@ export function HomeFeaturesPartial() {
             description={'Facilitate token transfers to multiple recipients in just one transaction, ensuring cost efficiency. Delve deeper into investment by granting trusted services the ability to refine your investments.'}
           />
           <SolutionCard
-            icon={<Star className={'w-5 h-5 text-primary'}/>}
+            icon={<HeartHandshake className={'w-5 h-5 text-primary'}/>}
             title={'Donations'}
             description={'Amplify your philanthropic impact. Craft recurring donation agreements with flexibility, empowering donors to designate their recurring contribution amount.'}
           />
