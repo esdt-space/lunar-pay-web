@@ -22,13 +22,17 @@ export const CreateSubscriptionWidget = () => {
           <Button onClick={() => setBenefits(["", ...benefits])}>Add Benefit</Button>
         </div>
         {benefits.map((item, index) => {
+          console.log(item)
           return <div key={index} className="flex gap-4">   
             <Input 
               placeholder="Enter benefit text..."
               onChange={(e) => e.target.value} />
             <Button 
               className="bg-red-500 hover:bg-red-500" 
-              onClick={() => setBenefits(benefits.filter((el, elIndex) => elIndex !== index))}
+              onClick={() => setBenefits(benefits.filter((el, elIndex) => {
+                console.log(el)
+                return elIndex !== index
+              }))}
             >Remove</Button>
           </div>
         })}
