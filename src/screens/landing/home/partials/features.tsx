@@ -83,7 +83,7 @@ export function HomeFeaturesPartial() {
           initial="offscreen"
           whileInView="onscreen"
           variants={container}
-          viewport={{ once: false, amount: 0.3 }}
+          viewport={{ once: true, amount: 0.3 }}
           className={'grid grid-cols-2 gap-4 lg:gap-6 xl:pr-60'}
         >
             <SolutionCard
