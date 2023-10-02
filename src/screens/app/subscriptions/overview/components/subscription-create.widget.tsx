@@ -13,10 +13,10 @@ export const CreateSubscriptionWidget = () => {
       <CardHeader>
         Create Subscription
       </CardHeader>
-      <CardContent>
-        <Input placeholder="Subscription Name" className="mb-6"/>
-        <Textarea placeholder="Description" className="mb-6" />
-        <Separator className="mb-6" />
+      <CardContent className={'space-y-3'}>
+        <Input placeholder="Subscription Name"/>
+        <Textarea placeholder="Description" />
+        <Separator />
         <div className="flex mb-6 w-full justify-between">
           <div>Benefits</div>
           <Button onClick={() => setBenefits(["", ...benefits])}>Add Benefit</Button>
@@ -25,8 +25,7 @@ export const CreateSubscriptionWidget = () => {
           return <div key={index} className="flex gap-4">   
             <Input 
               placeholder="Enter benefit text..."
-              onChange={(e) => e.target.value}
-              className="mb-6"/>
+              onChange={(e) => e.target.value} />
             <Button 
               className="bg-red-500 hover:bg-red-500" 
               onClick={() => setBenefits(benefits.filter((el, elIndex) => elIndex !== index))}
