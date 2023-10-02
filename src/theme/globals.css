@@ -84,6 +84,7 @@
   }
 
   html {
+    overflow-x: hidden;
     @apply flex w-full h-full;
   }
 

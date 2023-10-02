@@ -22,7 +22,7 @@ function HeaderLink(props: HeaderLinkProps) {
   )
 }
 
-export function PublicPageHeader() {
+export function AppPageHeader() {
   const { address } = useGetAccount()
   const isAuthenticated = useIsAuthenticated()
 
