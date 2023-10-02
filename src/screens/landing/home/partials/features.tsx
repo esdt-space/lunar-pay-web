@@ -33,13 +33,13 @@ function SolutionCard(props: SolutionCardProps) {
     <motion.div
       variants={cardVariants}
       className={cn([
-        'flex col-span-full md:col-span-1 bg-white',
+        'flex col-span-full md:col-span-1 bg-white rounded-md overflow-hidden',
         'shadow hover:shadow-xl hover:shadow-blue-950/10 transition-shadow duration-300',
       ])}
     >
       <Card
         className={cn([
-        'flex flex-col relative group p-2 border-none',
+        'flex flex-col relative group p-2 border-none rounded-none',
       ])}>
         <CardHeader className={'space-y-3 pb-2'}>
           <div className={'p-3 rounded bg-gradient-to-br from-primary/5 to-secondary/5 bg-blue-50 self-start'}>
