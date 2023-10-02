@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { motion, Variants } from "framer-motion";
 import { ArrowRight, Building2, ChevronRight, CreditCard, HeartHandshake, Wallet2 } from "lucide-react";
 
 import { cn } from "@/theme/utils.ts";
@@ -14,24 +14,24 @@ type SolutionCardProps = {
   location: string;
 }
 
-const cardVariants: Variants = {
-  offscreen: {
-    scale: 0,
-  },
+const itemVariants = {
+  offscreen: { scale: 0 },
+  onscreen: { scale: 1 }
+}
+
+const container = {
   onscreen: {
-    scale: 1,
     transition: {
-      type: "spring",
-      bounce: 0.3,
-      duration: 0.8
+      duration: 0.5,
+      staggerChildren: 0.15,
     }
   }
-};
+}
 
 function SolutionCard(props: SolutionCardProps) {
   return (
     <motion.div
-      variants={cardVariants}
+      variants={itemVariants}
       className={cn([
         'flex col-span-full md:col-span-1 bg-white rounded-md overflow-hidden',
         'shadow hover:shadow-xl hover:shadow-blue-950/10 transition-shadow duration-300',
@@ -82,7 +82,8 @@ export function HomeFeaturesPartial() {
         <motion.div
           initial="offscreen"
           whileInView="onscreen"
-          viewport={{ once: true, amount: 0.3 }}
+          variants={container}
+          viewport={{ once: false, amount: 0.3 }}
           className={'grid grid-cols-2 gap-4 lg:gap-6 xl:pr-60'}
         >
             <SolutionCard

@@ -63,7 +63,7 @@ export function WhyUsPartial() {
           variants={container}
           initial="offscreen"
           whileInView="onscreen"
-          viewport={{ once: true, amount: 0.7 }}
+          viewport={{ once: true, amount: 0.6 }}
           className="grid grid-cols-3 gap-12 mt-16"
         >
           <WhyUsItem
