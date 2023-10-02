@@ -3,8 +3,8 @@ import { SubscriptionPaymentAgreement } from "./components/payment-agreement.wid
 
 export const SubscriptionsOverviewScreen = () => {
     return <div className={'container mx-auto p-4 sm:p-12 xl:p-16'}>
-      <SubscriptionPaymentAgreement />
       <CreateSubscriptionWidget />
+      <SubscriptionPaymentAgreement />
       <SubscriptionsOverviewDashboard />
       <SubscriptionsOverviewList />
     </div>

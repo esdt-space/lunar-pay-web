@@ -33,7 +33,7 @@ export function SubscriptionTypeSelector(props: SubscriptionTypeSelectorProps) {
     <RadioGroup
       value={props.value}
       className="grid grid-cols-2 gap-4"
-      onValueChange={(newValue) => props.onChange(newValue as SubscriptionType)}
+      onValueChange={(newValue: SubscriptionType) => props.onChange(newValue)}
     >
       <ItemLabel itemId="fixed-amount">
         <div className='flex flex-col space-y-3'>
