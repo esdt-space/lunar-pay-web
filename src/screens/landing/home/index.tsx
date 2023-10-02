@@ -40,7 +40,7 @@ export function HomeScreen() {
           </div>
 
           <div className={cn([
-            "-right-[220px] -top-[340px] md:-right-6 sm:top-auto",
+            "-right-[220px] -top-[340px] h-[600px] md:-right-6 sm:top-auto",
             "absolute lg:static md:w-5/12 lg:w-1/2 -z-10 pointer-events-none opacity-50 sm:opacity-100",
           ])}>
             <Spline className='w-full' scene="https://prod.spline.design/jarUpvCPzoBGEUIe/scene.splinecode"/>
