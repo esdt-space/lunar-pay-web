@@ -37,7 +37,7 @@ export const SubscriptionPaymentAgreement = () => {
           placeholder=""
           onChange={(e) => e.target.value} />
         <div className="flex w-full">
-          <Button className="flex-1 bg-black hover:bg-black">Save Draft & Continue</Button>
+          <Button className="flex-1 bg-black hover:bg-black">Create Payment Agreement</Button>
         </div>
       </CardContent>
     </Card>

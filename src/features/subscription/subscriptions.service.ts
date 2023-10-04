@@ -14,4 +14,16 @@ export class SubscriptionsService {
       .get<unknown[]>(`/subscriptions`)
       .then((response) => response.data)
   }
+
+  static async createSubscription(input: any) {
+    return this.api
+      .post('/subscriptions', input)
+      .then((response) => response.data)
+  }
+
+  static async deleteSubscription(id: string) {
+    return this.api
+      .delete(`/subscriptions/${id}`)
+      .then((response) => response)
+  }
 }
