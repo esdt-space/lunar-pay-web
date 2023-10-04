@@ -77,7 +77,7 @@ export const UserDetailsWidget = ({setSelectedTab}: Props) => {
     <Separator />
     <div className="flex mb-6 w-full justify-between">
       <div>Benefits</div>
-      <Button className="bg-black hover:bg-black" onClick={() => {
+      <Button onClick={() => {
         if(benefits.length <= 8) {
           setBenefits(["", ...benefits])
         }
@@ -100,7 +100,7 @@ export const UserDetailsWidget = ({setSelectedTab}: Props) => {
 
     <div className="flex w-full">
       <Button 
-        className="flex-1 bg-black hover:bg-black"
+        className="flex-1"
         onClick={saveDetails} >Save Draft & Continue</Button>
     </div>
   </div>

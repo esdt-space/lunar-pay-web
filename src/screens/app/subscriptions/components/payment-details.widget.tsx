@@ -69,7 +69,7 @@ export const PaymentDetailsWidget = () => {
     </div>
     <div className="flex w-full">
       <Button 
-        className="flex-1 bg-black hover:bg-black"
+        className="flex-1"
         onClick={saveAgreement}>Create Payment Agreement</Button>
     </div>
   </div>
