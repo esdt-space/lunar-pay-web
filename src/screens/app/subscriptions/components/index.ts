@@ -1,3 +1,3 @@
-export { CreateSubscriptionWidget } from './subscription-create.widget'
-export { SubscriptionConfirmation } from './subscription-confirm.widget'
+export { UserDetailsWidget } from './user-details.widget'
 export { PaymentTypeSelector } from './payment-type-selector'
+export { PaymentDetailsWidget } from './payment-details.widget'

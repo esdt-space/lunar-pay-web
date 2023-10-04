@@ -1,3 +1,3 @@
 export * from './approve-subscription'
 
-export { SubscriptionsScreen } from './subscriptions.screen'
+export { SubscriptionScreen } from './subscription.screen'
