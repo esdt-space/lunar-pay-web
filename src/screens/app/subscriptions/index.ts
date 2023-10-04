@@ -1,2 +1,3 @@
 export * from './approve-subscription'
-export * from './overview'
+
+export { SubscriptionsScreen } from './subscriptions.screen'

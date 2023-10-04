@@ -9,7 +9,7 @@ import { useEffect, useState } from "react"
 export const CreateSubscriptionWidget = () => {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
-  const [benefits, setBenefits] = useState<string[]>([])
+  const [benefits, setBenefits] = useState<string[]>(["", ""])
 
   const handleChange = (input: string, index: number) => {
     const newBenefits = [...benefits]
@@ -22,15 +22,14 @@ export const CreateSubscriptionWidget = () => {
     const input = {
       name: name,
       description: description,
+      benefits: benefits
     }
 
     return SubscriptionsService.createSubscription(input)
   }
 
   useEffect(() => {
-    SubscriptionsService.fetchSubscriptions().then((res) => {
-      console.log(res)
-    })
+    SubscriptionsService.fetchSubscriptions()
   }, [])
 
   return <div className="space-y-4 p-8 pt-6">
@@ -50,7 +49,11 @@ export const CreateSubscriptionWidget = () => {
         <Separator />
         <div className="flex mb-6 w-full justify-between">
           <div>Benefits</div>
-          <Button onClick={() => setBenefits(["", ...benefits])}>Add Benefit</Button>
+          <Button onClick={() => {
+            if(benefits.length <= 8) {
+              setBenefits(["", ...benefits])
+            }
+          }}>Add Benefit</Button>
         </div>
         {benefits.map((_item, index) => {
           return <div key={index} className="flex gap-4">   

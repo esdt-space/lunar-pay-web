@@ -10,9 +10,9 @@ import { PublicLayout } from "@/components/layout/public-layout";
 
 import { HomeScreen } from "@/screens/landing/home";
 import { AdminScreen } from '@/screens/admin';
-import { ApproveSubscriptionScreen, SubscriptionsOverviewScreen } from "@/screens/app/subscriptions";
+import { ApproveSubscriptionScreen, SubscriptionsScreen } from "@/screens/app/subscriptions";
 import { AuthenticationScreen } from "@/screens/auth/authentication-screen.tsx";
-import { DashboardScreen } from "@/screens/app/dashboard/dashboard.screen.tsx";
+import { DashboardScreen } from "@/screens/app/dashboard";
 
 export function ApplicationRouter() {
   useScrollToTopHandler()
@@ -47,7 +47,7 @@ export function ApplicationRouter() {
             </Route>
 
             <Route path={RoutesConfig.subscriptions}>
-              <Route index element={<SubscriptionsOverviewScreen />} />
+              <Route index element={<SubscriptionsScreen />} />
             </Route>
           </Route>
         </Route>

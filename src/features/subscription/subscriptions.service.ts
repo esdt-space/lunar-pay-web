@@ -9,7 +9,7 @@ export class SubscriptionsService {
       .then((response) => response.data)
   }
 
-  static fetchSubscriptions() {
+  static async fetchSubscriptions() {
     return this.api
       .get<unknown[]>(`/subscriptions`)
       .then((response) => response.data)
