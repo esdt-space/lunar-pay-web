@@ -4,11 +4,7 @@ import { Separator } from "@/components/ui/separator"
 import { Textarea } from "@/components/ui/textarea"
 import { SubscriptionsService } from "@/features/subscription/subscriptions.service"
 import { useEffect, useState } from "react"
-
-enum ScreenTabs {
-  UserDetails = 'user-details',
-  PaymentDetails = 'payment-details',
-}
+import { ScreenTabs } from "../subscription.screen"
 
 type Props = {
   setSelectedTab: React.Dispatch<React.SetStateAction<ScreenTabs>>
@@ -22,6 +18,9 @@ export const UserDetailsWidget = ({setSelectedTab}: Props) => {
 
   const missingName = isMandatoryField && name === ""
   const missingDescription = isMandatoryField && description === ""
+  
+  const inputStyle = missingName ? "border-red-500" : ""
+  const textAreaStyle = missingDescription ? "border-red-500" : ""
 
   const handleChange = (input: string, index: number) => {
     const newBenefits = [...benefits]
@@ -30,7 +29,7 @@ export const UserDetailsWidget = ({setSelectedTab}: Props) => {
     setBenefits(newBenefits)
   }
 
-  const saveSub = () => {
+  const saveDetails = () => {
     const filteredBenefits = benefits.filter((item) => item !== "")
 
     const input = {
@@ -51,9 +50,6 @@ export const UserDetailsWidget = ({setSelectedTab}: Props) => {
   useEffect(() => {
     SubscriptionsService.fetchSubscriptions()
   }, [])
-
-  const inputStyle = missingName ? "border-red-500" : ""
-  const textAreaStyle = missingDescription ? "border-red-500" : ""
 
   return <div className="space-y-4 pt-6">
     <div>
@@ -105,7 +101,7 @@ export const UserDetailsWidget = ({setSelectedTab}: Props) => {
     <div className="flex w-full">
       <Button 
         className="flex-1 bg-black hover:bg-black"
-        onClick={saveSub} >Save Draft & Continue</Button>
+        onClick={saveDetails} >Save Draft & Continue</Button>
     </div>
   </div>
 }

@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ArrowLeft } from "lucide-react"
 import { Tabs, TabsContent } from "@/components/ui/tabs"
 
-enum ScreenTabs {
+export enum ScreenTabs {
   UserDetails = 'user-details',
   PaymentDetails = 'payment-details',
 }
