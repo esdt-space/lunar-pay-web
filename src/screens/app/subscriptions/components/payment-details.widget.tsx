@@ -20,7 +20,7 @@ export const PaymentDetailsWidget = ({setSelectedTab}: Props) => {
   // const [paymentType, setPaymentType] = useState(PaymentType.FixedAmount)
   // const [address, setAddress] = useState('')
   const [amount, setAmount] = useState('')
-  const [frequency, setFrequency] = useState('')
+  const [frequency, setFrequency] = useState('M')
   const [isMandatoryField, setIsMandatoryField] = useState(false)
 
   const tokens = useTokensList();
@@ -81,7 +81,7 @@ export const PaymentDetailsWidget = ({setSelectedTab}: Props) => {
             setIsMandatoryField(false)
           }} />
         <div className="w-3/12">
-          <Select onValueChange={(item) => setFrequency(item)} defaultValue={"Frequency"}>
+          <Select onValueChange={(item) => setFrequency(item)} defaultValue={frequency}>
             <SelectTrigger id="framework">
               <SelectValue placeholder="Frequency" />
             </SelectTrigger>
