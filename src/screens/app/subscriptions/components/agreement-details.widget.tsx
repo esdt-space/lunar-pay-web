@@ -4,17 +4,16 @@ import { Separator } from "@/components/ui/separator"
 import { Textarea } from "@/components/ui/textarea"
 import { AgreementsService } from "@/features/subscription/subscriptions.service"
 import { useEffect, useState } from "react"
-import { ScreenTabs } from "../agreement.screen"
 
-type Props = {
-  setSelectedTab: React.Dispatch<React.SetStateAction<ScreenTabs>>
-}
-
-export const AgreementDetailsWidget = ({setSelectedTab}: Props) => {
+export const AgreementDetailsWidget = () => {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
-  const [benefits, setBenefits] = useState<string[]>(["", ""])
+  const [benefits, setBenefits] = useState<string[]>([])
   const [isMandatoryField, setIsMandatoryField] = useState(false)
+
+  useEffect(() => {
+    setBenefits(["", ""])
+  }, [])
 
   const missingName = isMandatoryField && name === ""
   const missingDescription = isMandatoryField && description === ""
@@ -29,7 +28,7 @@ export const AgreementDetailsWidget = ({setSelectedTab}: Props) => {
     setBenefits(newBenefits)
   }
 
-  const saveDetails = () => {
+  const updateAgreementDetails = () => {
     const filteredBenefits = benefits.filter((item) => item !== "")
 
     const input = {
@@ -42,14 +41,8 @@ export const AgreementDetailsWidget = ({setSelectedTab}: Props) => {
       return setIsMandatoryField(true)
     }
 
-    setSelectedTab(ScreenTabs.PaymentDetails)
-
-    return AgreementsService.createAgreement(input)
+    return AgreementsService.updateAgreement("651eef737a217f677b32f5dc", input)
   }
-
-  useEffect(() => {
-    AgreementsService.fetchAgreements()
-  }, [])
 
   return <div className="space-y-4 pt-6">
     <div>
@@ -101,7 +94,7 @@ export const AgreementDetailsWidget = ({setSelectedTab}: Props) => {
     <div className="flex w-full">
       <Button 
         className="flex-1"
-        onClick={saveDetails} >Save Draft & Continue</Button>
+        onClick={updateAgreementDetails} >Save Details</Button>
     </div>
   </div>
 }
