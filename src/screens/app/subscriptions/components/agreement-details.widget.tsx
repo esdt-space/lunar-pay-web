@@ -2,15 +2,15 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 import { Textarea } from "@/components/ui/textarea"
-import { SubscriptionsService } from "@/features/subscription/subscriptions.service"
+import { AgreementsService } from "@/features/subscription/subscriptions.service"
 import { useEffect, useState } from "react"
-import { ScreenTabs } from "../subscription.screen"
+import { ScreenTabs } from "../agreement.screen"
 
 type Props = {
   setSelectedTab: React.Dispatch<React.SetStateAction<ScreenTabs>>
 }
 
-export const UserDetailsWidget = ({setSelectedTab}: Props) => {
+export const AgreementDetailsWidget = ({setSelectedTab}: Props) => {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
   const [benefits, setBenefits] = useState<string[]>(["", ""])
@@ -44,11 +44,11 @@ export const UserDetailsWidget = ({setSelectedTab}: Props) => {
 
     setSelectedTab(ScreenTabs.PaymentDetails)
 
-    return SubscriptionsService.createSubscription(input)
+    return AgreementsService.createAgreement(input)
   }
 
   useEffect(() => {
-    SubscriptionsService.fetchSubscriptions()
+    AgreementsService.fetchAgreements()
   }, [])
 
   return <div className="space-y-4 pt-6">
