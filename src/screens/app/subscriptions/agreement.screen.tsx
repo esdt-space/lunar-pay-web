@@ -1,7 +1,6 @@
 import { useState } from "react"
 import { PaymentDetailsWidget, AgreementDetailsWidget } from "./components"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { ArrowLeft } from "lucide-react"
 import { Tabs, TabsContent } from "@/components/ui/tabs"
 
 export enum ScreenTabs {
@@ -16,10 +15,6 @@ export const AgreementScreen = () => {
     <Card className="p-4">
       <CardHeader>
         <CardTitle>
-          {selectedTab === ScreenTabs.AgreementDetails && 
-            <ArrowLeft 
-              onClick={() => setSelectedTab(ScreenTabs.PaymentDetails)}
-              className="cursor-pointer mb-3" />}
           {selectedTab === ScreenTabs.AgreementDetails ? 'Update Agreement' : 'Payment Details'}
         </CardTitle>
       </CardHeader>

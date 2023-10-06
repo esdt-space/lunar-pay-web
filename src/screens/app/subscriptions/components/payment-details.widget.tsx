@@ -5,9 +5,9 @@ import { EsdtTokenSelector } from "@/features/tokens/components"
 import { useTokensList } from "@/features/tokens/hooks/use-tokens";
 import { useState } from "react";
 import { ScreenTabs } from "../agreement.screen";
-import { AgreementsService } from "@/features/subscription/subscriptions.service";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { cn } from "@/theme/utils";
+import { createRecurringAgreementToReceive } from "@/features/vault/contract/interactions/agreement";
+import { useGetSuccessfulTransactions } from "@multiversx/sdk-dapp/hooks";
 
 type Props = {
   setSelectedTab: React.Dispatch<React.SetStateAction<ScreenTabs>>
@@ -16,55 +16,30 @@ type Props = {
 const frequencyList = ["SS", "MM", "HH", "D", "W", "M", "Y"]
 
 export const PaymentDetailsWidget = ({setSelectedTab}: Props) => {
-  const [selectedToken, setSelectedToken] = useState<EsdtToken | undefined>(undefined);
   // const [paymentType, setPaymentType] = useState(PaymentType.FixedAmount)
   // const [address, setAddress] = useState('')
+  const [selectedToken, setSelectedToken] = useState<EsdtToken | undefined>(undefined);
   const [amount, setAmount] = useState('')
   const [frequency, setFrequency] = useState('M')
-  const [isMandatoryField, setIsMandatoryField] = useState(false)
 
   const tokens = useTokensList();
 
-  // const missingAddress = isMandatoryField && address === ""
-  const missingAmount = isMandatoryField && amount === ""
+  const currentTransaction = useGetSuccessfulTransactions()
+  
+  if (currentTransaction.hasSuccessfulTransactions) {
+    setSelectedTab(ScreenTabs.AgreementDetails)
+  }
 
-  // const addressInputStyle = missingAddress ? "border-red-500" : ""
-  const amountInputStyle = missingAmount ? "border-red-500" : ""
+  const missingToken = selectedToken === undefined
+  const missingAmount = amount === ""
 
   const saveAgreement = () => {
-    if (amount === "") {
-      return setIsMandatoryField(true)
+    if (selectedToken !== undefined) {
+      return createRecurringAgreementToReceive(selectedToken, Number(amount), frequency)
     }
-
-    const input = {
-      token: selectedToken,
-      amount: amount,
-      frequency: frequency
-    }
-
-    return AgreementsService.createAgreement(input).then(() => setSelectedTab(ScreenTabs.AgreementDetails))
   }
   
   return <div className="space-y-4 pt-6">
-    {/* <div>
-      <div className={cn([addressInputStyle, "flex w-full justify-between items-center border pr-2 rounded-md"])}>
-        <Input 
-          placeholder="Beneficiary address" 
-          className={'border-none'}
-          value={address}
-          onChange={(e) => {
-            setAddress(e.target.value)
-            setIsMandatoryField(false)
-          }} />
-        <Wallet />
-      </div>
-      {missingAddress && <p className='text-red-500 text-xs ml-2'>Mandatory Field</p>}
-    </div> */}
-      {/* <div>
-        <PaymentTypeSelector
-          value={paymentType}
-          onChange={setPaymentType} />
-      </div> */}
     <EsdtTokenSelector
       tokens={tokens}
       value={selectedToken}
@@ -74,12 +49,10 @@ export const PaymentDetailsWidget = ({setSelectedTab}: Props) => {
       <div className="flex">
         <Input 
           placeholder="Insert amount"
-          className={cn(["w-9/12", amountInputStyle])}
+          type={"number"}
+          className={"w-9/12"}
           value={amount}
-          onChange={(e) => {
-            setAmount(e.target.value)
-            setIsMandatoryField(false)
-          }} />
+          onChange={(e) => setAmount(e.target.value)} />
         <div className="w-3/12">
           <Select onValueChange={(item) => setFrequency(item)} defaultValue={frequency}>
             <SelectTrigger id="framework">
@@ -95,12 +68,28 @@ export const PaymentDetailsWidget = ({setSelectedTab}: Props) => {
           </Select>
         </div>
       </div>
-      {missingAmount && <p className='text-red-500 text-xs ml-2'>Mandatory Field</p>}
     </div>
     <div className="flex w-full">
       <Button 
+        disabled={missingToken || missingAmount}
         className="flex-1"
         onClick={saveAgreement}>Create Payment Agreement</Button>
     </div>
   </div>
 }
+
+{/* <div>
+      <div className={cn([addressInputStyle, "flex w-full justify-between items-center border pr-2 rounded-md"])}>
+        <Input 
+          placeholder="Beneficiary address" 
+          className={'border-none'}
+          value={address}
+          onChange={(e) => setAddress(e.target.value)} />
+        <Wallet />
+      </div>
+    </div> */}
+{/* <div>
+  <PaymentTypeSelector
+    value={paymentType}
+    onChange={setPaymentType} />
+</div> */}

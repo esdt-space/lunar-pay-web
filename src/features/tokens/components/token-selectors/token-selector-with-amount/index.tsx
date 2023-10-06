@@ -41,7 +41,7 @@ export function TokenSelectorWithAmount(props: Props) {
 
   const changeAmountHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if(value !== undefined) {
-      setAmountExceeded(checkTokenHasEnoughBalance(value, e.target.value));
+      setAmountExceeded(!checkTokenHasEnoughBalance(value, e.target.value));
     }
 
     onChangeAmount(e.target.value)

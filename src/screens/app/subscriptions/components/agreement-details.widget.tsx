@@ -9,17 +9,13 @@ export const AgreementDetailsWidget = () => {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
   const [benefits, setBenefits] = useState<string[]>([])
-  const [isMandatoryField, setIsMandatoryField] = useState(false)
 
   useEffect(() => {
     setBenefits(["", ""])
   }, [])
 
-  const missingName = isMandatoryField && name === ""
-  const missingDescription = isMandatoryField && description === ""
-  
-  const inputStyle = missingName ? "border-red-500" : ""
-  const textAreaStyle = missingDescription ? "border-red-500" : ""
+  const missingName = name === ""
+  const missingDescription = description === ""
 
   const handleChange = (input: string, index: number) => {
     const newBenefits = [...benefits]
@@ -37,35 +33,22 @@ export const AgreementDetailsWidget = () => {
       benefits: filteredBenefits
     }
 
-    if (name === "" || description === "") {
-      return setIsMandatoryField(true)
-    }
-
+    // TO DO: Replace the hardcoded id with the proper id
     return AgreementsService.updateAgreement("651eef737a217f677b32f5dc", input)
   }
 
   return <div className="space-y-4 pt-6">
     <div>
       <Input 
-        className={inputStyle}
         value={name} 
-        onChange={(e) => {
-          setIsMandatoryField(false)
-          setName(e.target.value)
-        }} 
+        onChange={(e) => setName(e.target.value)} 
         placeholder="Subscription Name"/>
-      {missingName && <p className='text-red-500 text-xs ml-2'>Mandatory Field</p>}
     </div>
     <div>
       <Textarea
-        className={textAreaStyle}
         value={description} 
-        onChange={(e) => {
-          setIsMandatoryField(false)
-          setDescription(e.target.value)
-        }} 
+        onChange={(e) => setDescription(e.target.value)} 
         placeholder="Description" />
-      {missingDescription && <p className="text-red-500 text-xs ml-2">Mandatory Field</p>}
     </div>
     <Separator />
     <div className="flex mb-6 w-full justify-between">
@@ -93,6 +76,7 @@ export const AgreementDetailsWidget = () => {
 
     <div className="flex w-full">
       <Button 
+        disabled={missingName || missingDescription}
         className="flex-1"
         onClick={updateAgreementDetails} >Save Details</Button>
     </div>
