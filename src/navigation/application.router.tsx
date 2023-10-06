@@ -13,6 +13,7 @@ import { AdminScreen } from '@/screens/admin';
 import { ApproveSubscriptionScreen, AgreementScreen } from "@/screens/app/subscriptions";
 import { AuthenticationScreen } from "@/screens/auth/authentication-screen.tsx";
 import { DashboardScreen } from "@/screens/app/dashboard";
+import { TokensOperationsScreen } from '@/screens/app/operations';
 
 export function ApplicationRouter() {
   useScrollToTopHandler()
@@ -48,6 +49,10 @@ export function ApplicationRouter() {
 
             <Route path={RoutesConfig.subscriptions}>
               <Route index element={<AgreementScreen />} />
+            </Route>
+
+            <Route path={RoutesConfig.tokensOperations}>
+              <Route index element={<TokensOperationsScreen />} />
             </Route>
           </Route>
         </Route>

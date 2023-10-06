@@ -17,6 +17,8 @@ export class RoutesConfig {
   static subscriptions = '/subscriptions'
   static approveSubscription = '/approve-subscription'
 
+  static tokensOperations = '/tokens-operations'
+
   static admin = '/admin'
 
   static getDefaultLoginRoute() {

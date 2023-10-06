@@ -6,8 +6,6 @@ import { useTokensList } from "@/features/tokens/hooks/use-tokens";
 import { useState } from "react";
 import { ScreenTabs } from "../agreement.screen";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { createRecurringAgreementToReceive } from "@/features/vault/contract/interactions/agreement";
-import { useGetSuccessfulTransactions } from "@multiversx/sdk-dapp/hooks";
 
 type Props = {
   setSelectedTab: React.Dispatch<React.SetStateAction<ScreenTabs>>
@@ -24,19 +22,11 @@ export const PaymentDetailsWidget = ({setSelectedTab}: Props) => {
 
   const tokens = useTokensList();
 
-  const currentTransaction = useGetSuccessfulTransactions()
-  
-  if (currentTransaction.hasSuccessfulTransactions) {
-    setSelectedTab(ScreenTabs.AgreementDetails)
-  }
-
   const missingToken = selectedToken === undefined
   const missingAmount = amount === ""
 
   const saveAgreement = () => {
-    if (selectedToken !== undefined) {
-      return createRecurringAgreementToReceive(selectedToken, Number(amount), frequency)
-    }
+    setSelectedTab(ScreenTabs.AgreementDetails)
   }
   
   return <div className="space-y-4 pt-6">
