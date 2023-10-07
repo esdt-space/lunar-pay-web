@@ -1,11 +1,11 @@
 import { useQuery } from "react-query";
 import { ProtocolVaultService } from "@/features/vault";
 
-const queryKey = ['protocol-vault-whitelisted-token-identifiers']
+import { protocolWhitelistedTokensQueryKey } from "@/features/vault/query-keys.ts";
 
 export function useWhitelistedTokenIdentifiersQuery() {
   return useQuery({
-    queryKey: queryKey,
+    queryKey: protocolWhitelistedTokensQueryKey,
     queryFn: ProtocolVaultService.getWhitelistedTokenIdentifiers,
     refetchOnMount: false,
     refetchOnWindowFocus: false,

@@ -1,11 +1,14 @@
 import { useQuery } from "react-query";
-import { ProtocolVaultService } from "@/features/vault";
+import { useGetAccount } from "@multiversx/sdk-dapp/hooks";
 
-const queryKey = ['protocol-vault-account-balances']
+import { ProtocolVaultService } from "@/features/vault";
+import { accountBalancesQueryKey } from "@/features/vault/query-keys.ts";
 
 export function useAccountBalancesQuery() {
+  const { address } = useGetAccount()
+
   return useQuery({
-    queryKey: queryKey,
+    queryKey: accountBalancesQueryKey(address),
     queryFn: ProtocolVaultService.getAccountBalances,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
