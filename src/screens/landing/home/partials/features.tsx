@@ -100,7 +100,7 @@ export function HomeFeaturesPartial() {
             />
             <SolutionCard
               icon={<Wallet2 className={'w-5 h-5 text-primary'}/>}
-              location={RoutesConfig.landingPayroll}
+              location={RoutesConfig.landingPortfolioManagement}
               title={'Portfolio Management'}
               description={'Facilitate token transfers to multiple recipients in just one transaction, ensuring cost efficiency. Delve deeper into investment by granting trusted services the ability to refine your investments.'}
             />
