@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react'
+import {ChangeEvent, useEffect, useState} from 'react'
 
 import { cn, formatTokenBalance } from '@/theme/utils'
 
@@ -13,15 +13,15 @@ import { TokenSelectorDialog } from '../token-selector-dialog'
 
 type Props = {
   tokens: EsdtToken[]
-  value?: EsdtToken
+  token?: EsdtToken
   amount?: string
-  onChange: (token: EsdtToken) => void
-  onChangeAmount: (amount: string) => void
-  showBalances?: boolean
+  onTokenChange: (token: EsdtToken) => void
+  onAmountChange: (amount: string) => void
+  hasMaxButton?: boolean
 }
 
 export function TokenSelectorWithAmount(props: Props) {
-  const { tokens = [], value, amount, onChange, onChangeAmount, showBalances } = props
+  const { tokens = [], token, amount, hasMaxButton = true } = props
 
   const [isOpen, setIsOpen] = useState(false)
   const [amountExceeded, setAmountExceeded] = useState(false)
@@ -29,62 +29,69 @@ export function TokenSelectorWithAmount(props: Props) {
   const closeDialogHandler = () => setIsOpen(false)
 
   const selectTokenHandler = (token: EsdtToken) => {
-    onChange(token)
+    props.onTokenChange(token)
     setIsOpen(false)
   }
 
-  const getBalanceNumber = () => {
-    if(value) {
-      return onChangeAmount(formatTokenBalance(value.balance, value.decimals).toString())
-    }
+  const maxAmountButtonClickHandler = () => {
+    if(!token) return;
+
+    props.onAmountChange(formatTokenBalance(token.balance, token.decimals).toString())
   }
 
   const changeAmountHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    if(value !== undefined) {
-      setAmountExceeded(checkTokenHasEnoughBalance(value, e.target.value));
+    props.onAmountChange(e.target.value)
+  }
+
+  useEffect(() => {
+    if (!token || !amount) {
+      setAmountExceeded(false);
+      return ;
     }
 
-    onChangeAmount(e.target.value)
-  }
+    setAmountExceeded(!checkTokenHasEnoughBalance(token, amount));
+  }, [token, amount]);
   
   const invalidAmountStyle = amountExceeded ? "border-red-500" : ""
 
   return (
-    <Select value={value?.identifier}>
+    <Select value={token?.identifier}>
       <div className={cn(['flex flex-1 items-center border pl-3 pr-3 rounded-md', invalidAmountStyle])}>
-          <div className='cursor-pointer mr-auto lg:w-5/12' onClick={() => setIsOpen(true)}>
-            {value ? <div className={`flex gap-2 items-center`}>
-              <TokenLogo className={'w-4 h-4'} token={value as EsdtToken} />
-              <span className={'text-xs'}>{(value as EsdtToken).name}</span>
-            </div> : <div className={'text-xs'}>Select Token</div>}
-          </div>
+        <div className='cursor-pointer mr-auto lg:w-5/12' onClick={() => setIsOpen(true)}>
+          {token ? <div className={`flex gap-2 items-center`}>
+            <TokenLogo className={'w-4 h-4'} token={token as EsdtToken} />
+            <span className={'text-xs'}>{(token as EsdtToken).name}</span>
+          </div> : <div className={'text-xs'}>Select Token</div>}
+        </div>
 
-          <div className={'ml-5 justify-end lg:w-5/12'}>
-            <Input  
-              value={amount}
-              onChange={changeAmountHandler}
-              style={{
-                boxShadow: 'none'
-              }}
-              className={'border-none text-xs' }
-              type={"number"} 
-              placeholder='Enter Amount' />
-          </div>
+        <div className={'ml-5 justify-end lg:w-5/12'}>
+          <Input
+            value={amount}
+            onChange={changeAmountHandler}
+            style={{
+              boxShadow: 'none'
+            }}
+            className={'border-none text-xs' }
+            type={"number"}
+            placeholder='Enter Amount' />
+        </div>
 
-          <div className={'cursor-pointer justify-end lg:w-2/12'} onClick={getBalanceNumber}>
+        {hasMaxButton && (
+          <div className={'cursor-pointer justify-end lg:w-2/12'} onClick={maxAmountButtonClickHandler}>
             <p className="font-extrabold">MAX</p>
           </div>
+        )}
       </div>
 
       {amountExceeded && <p className={'text-red-500 text-xs ml-2 -mt-4'}>The amount you added exceeds your assets</p>}
 
       <TokenSelectorDialog
-        value={value}
+        value={token}
         tokens={tokens}
         isOpen={isOpen}
         closeDialogHandler={closeDialogHandler}
         selectTokenHandler={selectTokenHandler}
-        showBalances={showBalances}
+        showBalances
       />
     </Select>
   )
