@@ -10,7 +10,7 @@ import { PublicLayout } from "@/components/layout/public-layout";
 
 import { HomeScreen } from "@/screens/landing/home";
 import { AdminScreen } from '@/screens/admin';
-import { ApproveSubscriptionScreen, AgreementScreen } from "@/screens/app/subscriptions";
+import { AgreementsOverviewScreen, ApproveSubscriptionScreen, AgreementScreen } from "@/screens/app/subscriptions";
 import { AuthenticationScreen } from "@/screens/auth/authentication-screen.tsx";
 import { DashboardScreen } from "@/screens/app/dashboard";
 import { TokensOperationsScreen } from '@/screens/app/operations';
@@ -53,6 +53,10 @@ export function ApplicationRouter() {
 
             <Route path={RoutesConfig.tokensOperations}>
               <Route index element={<TokensOperationsScreen />} />
+            </Route>
+
+            <Route path={RoutesConfig.agreementsOverview}>
+              <Route index element={<AgreementsOverviewScreen />} />
             </Route>
           </Route>
         </Route>
