@@ -4,6 +4,7 @@ export class RoutesConfig {
   static landingInvoices = '/solutions/invoices'
   static landingPayroll = '/solutions/payroll'
   static landingSubscriptions = '/solutions/subscriptions'
+  static landingPortfolioManagement = '/solutions/portfolio-management'
   static landingVesting = '/solutions/vesting'
   static landingDonations = '/solutions/donations'
   static landingExpensesAndAllowances = '/solutions/expenses-and-allowances'

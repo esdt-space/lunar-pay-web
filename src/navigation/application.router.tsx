@@ -13,6 +13,10 @@ import { AdminScreen } from '@/screens/admin';
 import { ApproveSubscriptionScreen } from "@/screens/app/subscriptions";
 import { AuthenticationScreen } from "@/screens/auth/authentication-screen.tsx";
 import { DashboardScreen } from "@/screens/app/dashboard/dashboard.screen.tsx";
+import {Payroll} from "@/screens/landing/payroll";
+import {Subscriptions} from "@/screens/landing/subscriptions";
+import {Donations} from "@/screens/landing/donations";
+import {PortfolioManagement} from "@/screens/landing/portfolio-management";
 
 export function ApplicationRouter() {
   useScrollToTopHandler()
@@ -26,10 +30,11 @@ export function ApplicationRouter() {
           <Route index element={<HomeScreen />} />
 
           <Route path={RoutesConfig.landingInvoices} element={<></>} />
-          <Route path={RoutesConfig.landingPayroll} element={<></>} />
-          <Route path={RoutesConfig.landingSubscriptions} element={<></>} />
+          <Route path={RoutesConfig.landingPayroll} element={<Payroll></Payroll>} />
+          <Route path={RoutesConfig.landingSubscriptions} element={<Subscriptions></Subscriptions>} />
           <Route path={RoutesConfig.landingVesting} element={<></>} />
-          <Route path={RoutesConfig.landingDonations} element={<></>} />
+          <Route path={RoutesConfig.landingPortfolioManagement} element={<PortfolioManagement></PortfolioManagement>} />
+          <Route path={RoutesConfig.landingDonations} element={<Donations></Donations>} />
           <Route path={RoutesConfig.landingExpensesAndAllowances} element={<></>} />
         </Route>
 
