@@ -1,24 +1,29 @@
-export type AgreementType = RecurringPayoutToSend 
-  | RecurringPayoutToReceive 
-  | TimeBoundPayoutToSend 
-  | TimeBoundPayoutToReceive;
+type AmountValuePerSubscriber = {
+  address: string;
+  amount: number;
+};
 
-export enum FrequencyType {
-  Weekly = 'W',
-  Monthly = 'M',
-  Yearly = 'Y',
-}
+type BoundedAmountValuePerSubscriber = {
+  address: string;
+  amount: BoundedAmount;
+};
 
-type BoundedAmount = { address: string, amount: number }
-type AmountType = FixedAmount | BoundedAmount | FixedAmountPerSubscriber
+type AnyAmount = undefined;
+type FixedAmount = { amount: number };
+type BoundedAmount = { minimum_amount?: number; maximum_amount: number };
+type SubscriberDefinedAmount = AmountValuePerSubscriber[];
+type FixedAmountPerSubscriber = AmountValuePerSubscriber[];
+type BoundedAmountPerSubscriber = BoundedAmountValuePerSubscriber[];
 
-export type FixedAmount = { amount: number }
-export type AnyAmount = any | undefined
-export type FixedAmountPerSubscriber = BoundedAmount[]
-export type BoundedAmountPerSubscriber = BoundedAmount[]
-export type SubscriberDefinedAmount = BoundedAmount[]
+type AmountType =
+  | AnyAmount
+  | FixedAmount
+  | BoundedAmount
+  | SubscriberDefinedAmount
+  | FixedAmountPerSubscriber;
+type FrequencyType = 'SS' | 'MM' | 'HH' | 'D' | 'W' | 'M' | 'Y';
 
-export type RecurringPayoutToSend = {
+type RecurringPayoutToSend = {
   sender: string;
   receivers: string[];
   amountType: AmountType;
@@ -26,15 +31,19 @@ export type RecurringPayoutToSend = {
   frequency: FrequencyType;
 };
 
-export type RecurringPayoutToReceive = {
+type RecurringPayoutToReceive = {
   receiver: string;
   senders: string[];
   amountType: AmountType;
 
   frequency: FrequencyType;
+
+  can_subscribe?: boolean;
+  whitelistEnabled?: boolean;
+  whitelistedAddresses?: [];
 };
 
-export type TimeBoundPayoutToSend = {
+type TimeBoundPayoutToSend = {
   sender: string;
   receivers: string[];
   amountType: AmountType;
@@ -42,10 +51,86 @@ export type TimeBoundPayoutToSend = {
   frequency: FrequencyType;
 };
 
-export type TimeBoundPayoutToReceive = {
+type TimeBoundPayoutToReceive = {
   receiver: string;
   senders: string[];
 
   frequency: FrequencyType;
   amountType: AnyAmount | BoundedAmount | BoundedAmountPerSubscriber;
+};
+
+export type AgreementType =
+  | RecurringPayoutToSend
+  | RecurringPayoutToReceive
+  | TimeBoundPayoutToSend
+  | TimeBoundPayoutToReceive;
+
+type Agreement<T extends AgreementType> = {
+  owner: string;
+  agreementType: T;
+
+  token_nonce?: string;
+  token_identifier?: string;
+
+  whitelist_enabled?: boolean;
+  whitelist?: string[];
+};
+
+export const subscriptionAgreement: Agreement<RecurringPayoutToReceive> = {
+  owner: 'owner-address',
+  agreementType: {
+    receiver: 'owner-address',
+    senders: ['sender-one', 'sender-two'],
+    frequency: 'M',
+    amountType: { amount: 200 } as FixedAmount,
+  },
+};
+
+export const donationAgreement: Agreement<RecurringPayoutToReceive> = {
+  owner: 'owner-address',
+  agreementType: {
+    receiver: 'receiver-address',
+    senders: ['sender-one', 'sender-two'],
+    frequency: 'W',
+    amountType: [
+      { address: 'sender-one', amount: 500 },
+      { address: 'sender-two', amount: 200 },
+    ] as SubscriberDefinedAmount,
+  },
+};
+
+export const payrollAgreement: Agreement<RecurringPayoutToSend> = {
+  owner: 'owner-address',
+  agreementType: {
+    sender: 'owner-address',
+    receivers: ['receiver-one', 'receiver-two'],
+    frequency: 'M',
+    amountType: [
+      { address: 'receiver-one', amount: 500 },
+      { address: 'receiver-two', amount: 200 },
+    ] as FixedAmountPerSubscriber,
+  },
+};
+
+export const teamBudgetAgreement: Agreement<TimeBoundPayoutToSend> = {
+  owner: 'owner-address',
+  agreementType: {
+    sender: 'owner-address',
+    receivers: ['receiver-one', 'receiver-two'],
+    frequency: 'Y',
+    amountType: [
+      { address: 'receiver-one', amount: 150000 },
+      { address: 'receiver-two', amount: 200000 },
+    ] as FixedAmountPerSubscriber,
+  },
+};
+
+export const dcaAgreement: Agreement<TimeBoundPayoutToReceive> = {
+  owner: 'owner-address',
+  agreementType: {
+    receiver: 'receiver-address',
+    senders: ['sender-one', 'sender-two'],
+    amountType: undefined as AnyAmount,
+    frequency: 'M',
+  },
 };

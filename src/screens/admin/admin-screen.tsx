@@ -1,6 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs.tsx";
 
 import { ProtocolSettings } from "./partials/protocol-settings.tsx";
+import { SubscriptionsListScreen } from "../app/subscriptions/index.ts";
 
 export function AdminScreen() {
   return (
@@ -10,7 +11,7 @@ export function AdminScreen() {
           <TabsTrigger value="protocol-settings">
             Protocol Settings
           </TabsTrigger>
-          <TabsTrigger value="password">
+          <TabsTrigger value="subscriptions">
             Subscriptions
           </TabsTrigger>
         </TabsList>
@@ -19,6 +20,7 @@ export function AdminScreen() {
           <ProtocolSettings />
         </TabsContent>
         <TabsContent value="subscriptions">
+          <SubscriptionsListScreen />
         </TabsContent>
       </Tabs>
     </div>

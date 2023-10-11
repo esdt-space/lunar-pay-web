@@ -18,7 +18,6 @@ export class RoutesConfig {
   static approveSubscription = '/approve-subscription'
 
   static tokensOperations = '/tokens-operations'
-  static agreementsOverview = '/agreements-overview'
 
   static admin = '/admin'
 
