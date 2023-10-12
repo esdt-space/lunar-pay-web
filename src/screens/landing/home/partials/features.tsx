@@ -83,7 +83,7 @@ export function HomeFeaturesPartial() {
           initial="offscreen"
           whileInView="onscreen"
           variants={container}
-          viewport={{ once: false, amount: 0.3 }}
+          viewport={{ once: true, amount: 0.3 }}
           className={'grid grid-cols-2 gap-4 lg:gap-6 xl:pr-60'}
         >
             <SolutionCard
@@ -100,7 +100,7 @@ export function HomeFeaturesPartial() {
             />
             <SolutionCard
               icon={<Wallet2 className={'w-5 h-5 text-primary'}/>}
-              location={RoutesConfig.landingPayroll}
+              location={RoutesConfig.landingPortfolioManagement}
               title={'Portfolio Management'}
               description={'Facilitate token transfers to multiple recipients in just one transaction, ensuring cost efficiency. Delve deeper into investment by granting trusted services the ability to refine your investments.'}
             />

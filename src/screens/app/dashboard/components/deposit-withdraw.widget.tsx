@@ -70,12 +70,11 @@ export const DepositWithdrawWidget = () => {
         <CardContent className={'p-8'}>
           <TabsContent className={'flex flex-1 flex-col gap-4 mt-0'} value="deposit">
             <TokenSelectorWithAmount
-              showBalances
-              value={selectedToken}
+              token={selectedToken}
               tokens={depositTokensList}
-              onChange={(token) => setSelectedToken(token)}
+              onTokenChange={(token) => setSelectedToken(token)}
               amount={amount}
-              onChangeAmount={(amount) => setAmount(amount)}
+              onAmountChange={(amount) => setAmount(amount)}
             />
             <div className={'text-sm text-muted-foreground'}>
               Deposit assets into the Lunar Pay Vault.
@@ -85,12 +84,11 @@ export const DepositWithdrawWidget = () => {
 
           <TabsContent className={'flex flex-col flex-1 gap-4 mt-0'} value="withdraw">
             <TokenSelectorWithAmount
-              showBalances
-              value={selectedToken}
+              token={selectedToken}
               tokens={userVaultTokens}
-              onChange={(token) => setSelectedToken(token)}
+              onTokenChange={(token) => setSelectedToken(token)}
               amount={amount}
-              onChangeAmount={(amount) => setAmount(amount)}
+              onAmountChange={(amount) => setAmount(amount)}
             />
             <div className={'text-sm text-muted-foreground'}>
               Withdraw assets from the Lunar Pay Vault.
