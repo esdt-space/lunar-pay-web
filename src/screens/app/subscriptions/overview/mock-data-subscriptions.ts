@@ -1,4 +1,4 @@
-export const mockAgreements = [
+export const mockSubscriptions = [
     {
         name: "Netflix",
         owner: "id12345id67891id12345id67891",
@@ -8,7 +8,6 @@ export const mockAgreements = [
         totalAmount: "12",
         frequency: "Monthly",
         subscriptionCost: "2 EGLD",
-        subscribers: "10",
         agreementType: {
             receiver: 'owner-address',
             senders: ['sender-one', 'sender-two'],
@@ -17,7 +16,7 @@ export const mockAgreements = [
         },
     },
     {
-        name: "Spotify",
+        name: "Netflix Plus",
         owner: "id22345id78912id12345id67891",
         benefits: ["Listen without ads", "Offline playback", "Unlimited skips"],
         description: "Get access to millions of songs and podcasts without ads with Spotify Premium.",
@@ -25,7 +24,6 @@ export const mockAgreements = [
         totalAmount: "10",
         frequency: "Monthly",
         subscriptionCost: "2 EGLD",
-        subscribers: "10",
         agreementType: {
             receiver: 'owner-address',
             senders: ['sender-one', 'sender-two'],
@@ -34,24 +32,7 @@ export const mockAgreements = [
         },
     },
     {
-        name: "Amazon Prime",
-        owner: "id22345id78912id12345id67891",
-        benefits: ["Free shipping", "Exclusive deals", "Prime Video access"],
-        description: "Experience unlimited fast, free shipping and enjoy exclusive access to movies, TV shows, ad-free music, and more.",
-        createdAt: "10/06/2023",
-        totalAmount: "15",
-        frequency: "Monthly",
-        subscriptionCost: "2 EGLD",
-        subscribers: "10",
-        agreementType: {
-            receiver: 'owner-address',
-            senders: ['sender-one', 'sender-two'],
-            frequency: 'M',
-            amountType: { amount: 200 },
-        },
-    },
-    {
-        name: "Disney+",
+        name: "Netflix Pro",
         owner: "id22345id78912id12345id67891",
         benefits: ["Exclusive Disney content", "Multiple streams", "High-quality resolution"],
         description: "Get access to exclusive Disney, Pixar, Marvel, Star Wars, and National Geographic content.",
@@ -59,7 +40,6 @@ export const mockAgreements = [
         totalAmount: "8",
         frequency: "Monthly",
         subscriptionCost: "2 EGLD",
-        subscribers: "10",
         agreementType: {
             receiver: 'owner-address',
             senders: ['sender-one', 'sender-two'],

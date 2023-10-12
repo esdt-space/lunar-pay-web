@@ -21,10 +21,10 @@ export const OperationsTable = ({ operationsList, operations }: Props) => {
       <TableRow className="flex justify-between">
         <TableHead className="flex-1">Token</TableHead>
         <TableHead className="flex-1">Amount</TableHead>
-        <TableHead className="flex-1">Status</TableHead>
+        <TableHead className="flex-1">Type</TableHead>
         <TableHead className="flex-1">From</TableHead>
         <TableHead className="flex-1">To</TableHead>
-        <TableHead className="flex-1">Created</TableHead>
+        <TableHead className="flex-1">Date</TableHead>
       </TableRow>
     </TableHeader>
     <TableBody>

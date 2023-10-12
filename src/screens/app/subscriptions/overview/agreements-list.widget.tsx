@@ -1,10 +1,13 @@
 import { AgreementsService } from "@/features/subscription/subscriptions.service"
 import { useEffect, useState } from "react"
-import { mockAgreements } from "./mock-data"
 import { Dot, Star, Users } from "lucide-react"
 import { Switch } from "@/components/ui/switch"
 
-export const SubscriptionsListScreen = () => {
+type Props = {
+  subscriptionsList: any[];
+}
+
+export const SubscriptionsListScreen = ({subscriptionsList}: Props) => {
   const [agreementsList, setAgreementsList] = useState<any[]>([])
 
   useEffect(() => {
@@ -12,7 +15,7 @@ export const SubscriptionsListScreen = () => {
       console.log(res)
     })
 
-    setAgreementsList(mockAgreements)
+    setAgreementsList(subscriptionsList)
   }, [])
 
   return <div className={'container mx-auto space-y-4 sm:p-12 xl:p-16'}>
@@ -24,11 +27,11 @@ export const SubscriptionsListScreen = () => {
             <div>{item.name}</div>
             <div className="flex text-sm text-muted-foreground">
               <div className="flex">
-                {item.frequency}
+                {item.agreementType.frequency}
                 <Dot />
               </div>
               <div>
-                {item.subscriptionCost}
+                {item.agreementType.amountType.amount}
               </div>
             </div>
           </div>
@@ -38,7 +41,7 @@ export const SubscriptionsListScreen = () => {
         <div className="flex items-center mr-2 gap-4">
           <div className="mr-8">
             <Users />
-            {item.subscribers}
+            {item.agreementType.senders.length}
           </div>
           <div className="flex space-x-2">
             <Switch id="airplane-mode" />
