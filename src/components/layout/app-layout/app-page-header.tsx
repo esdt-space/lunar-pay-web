@@ -62,7 +62,7 @@ export function AppPageHeader() {
                 isMobileMenuOpen ? "visible opacity-100 translate-y-0 scale-100" : "invisible opacity-0 translate-y-1 scale-90"
               ])}
             >
-              <div className="text-gray-600 dark:text-gray-300 lg:pr-4">
+              <div onClick={() => setIsMobileMenuOpen(false)} className="text-gray-600 dark:text-gray-300 lg:pr-4">
                 <ul className="space-y-6 text-base font-medium tracking-wide lg:flex lg:space-y-0 lg:text-sm">
                   <HeaderLink text={'Admin'} location={RoutesConfig.admin} />
                   <HeaderLink text={'Subscriptions'} location={RoutesConfig.subscriptions} />
