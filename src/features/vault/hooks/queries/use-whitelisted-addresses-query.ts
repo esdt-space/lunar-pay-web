@@ -1,11 +1,11 @@
 import { useQuery } from "react-query";
-import { ProtocolVaultService } from "@/features/vault";
 
-const queryKey = ['protocol-vault-whitelisted-addresses']
+import { ProtocolVaultService } from "@/features/vault";
+import { protocolWhitelistedAddressesQueryKey } from "@/features/vault/query-keys.ts";
 
 export function useWhitelistedAddressesQuery() {
   return useQuery({
-    queryKey: queryKey,
+    queryKey: protocolWhitelistedAddressesQueryKey,
     queryFn: ProtocolVaultService.getWhitelistedAddresses,
     refetchOnMount: false,
     refetchOnWindowFocus: false,

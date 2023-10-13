@@ -12,11 +12,11 @@ import { useTokensList } from "@/features/tokens/hooks/use-tokens.ts";
 import { TokenItem, EsdtTokenSelector } from "@/features/tokens/components";
 import { useWhitelistedVaultAddresses, useWhitelistedVaultTokens } from "@/features/vault/hooks";
 import {
-  addAddressToWhitelistInteraction,
-  addTokenToWhitelistInteraction,
-  removeAddressFromWhitelistInteraction,
-  removeTokenFromWhitelistInteraction
-} from "@/features/vault/contract/interactions";
+  useWhitelistTokenIdentifierMutation,
+  useRemoveWhitelistedTokenIdentifierMutation,
+  useAddAddressToWhitelistMutation,
+  useRemoveAddressFromWhitelistMutation
+} from "@/features/vault/hooks/mutations";
 
 export function ProtocolSettings() {
   const tokens = useTokensList();
@@ -47,25 +47,21 @@ export function ProtocolSettings() {
     );
   }, [whitelistedAddresses, addressSearchValue]);
 
+  const { mutate: addTokenToWhitelist } = useWhitelistTokenIdentifierMutation();
+  const { mutate: removeTokenFromWhitelist } = useRemoveWhitelistedTokenIdentifierMutation();
+  const { mutate: addAddressToWhitelist } = useAddAddressToWhitelistMutation();
+  const { mutate: removeAddressFromWhitelist } = useRemoveAddressFromWhitelistMutation();
 
   const addTokenToWhitelistButtonHandler = () => {
     if(!selectedToken) return false;
 
-    addTokenToWhitelistInteraction(selectedToken);
-  }
-
-  const removeTokenFromWhitelist = (token: EsdtToken) => {
-    removeTokenFromWhitelistInteraction(token);
+    addTokenToWhitelist(selectedToken);
   }
 
   const addAddressToWhitelistButtonHandler = () => {
     if(!addressToWhitelist) return false;
 
-    addAddressToWhitelistInteraction(addressToWhitelist);
-  }
-
-  const removeAddressFromWhitelist = (address: string) => {
-    removeAddressFromWhitelistInteraction(address);
+    addAddressToWhitelist(addressToWhitelist);
   }
 
   return (
