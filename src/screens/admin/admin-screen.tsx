@@ -10,7 +10,7 @@ export function AdminScreen() {
           <TabsTrigger value="protocol-settings">
             Protocol Settings
           </TabsTrigger>
-          <TabsTrigger value="password">
+          <TabsTrigger value="subscriptions">
             Subscriptions
           </TabsTrigger>
         </TabsList>
@@ -18,8 +18,7 @@ export function AdminScreen() {
         <TabsContent value="protocol-settings">
           <ProtocolSettings />
         </TabsContent>
-        <TabsContent value="subscriptions">
-        </TabsContent>
+        <TabsContent value="subscriptions"></TabsContent>
       </Tabs>
     </div>
   )

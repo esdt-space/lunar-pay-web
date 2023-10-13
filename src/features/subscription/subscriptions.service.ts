@@ -1,17 +1,35 @@
 import { ProtocolApi } from "@/lib/protocol-api";
 
-export class SubscriptionsService {
+export class AgreementsService {
   private static api = new ProtocolApi()
 
-  static async subscriptionById(id: string) {
+  static async agreementById(id: string) {
     return this.api
-      .get<unknown>(`/subscriptions/${id}`)
+      .get<unknown>(`/agreements/${id}`)
       .then((response) => response.data)
   }
 
-  static fetchSubscriptions() {
+  static async fetchAgreements() {
     return this.api
-      .get<unknown[]>(`/subscriptions`)
+      .get<unknown[]>(`/agreements`)
+      .then((response) => response.data)
+  }
+
+  static async createAgreement(input: any) {
+    return this.api
+      .post('/agreements', input)
+      .then((response) => response.data)
+  }
+
+  static async deleteAgreement(id: string) {
+    return this.api
+      .delete(`/agreements/${id}`)
+      .then((response) => response.data)
+  }
+
+  static async updateAgreement(id: string, input: any) {
+    return this.api
+      .put(`/agreements/${id}`, input)
       .then((response) => response.data)
   }
 }

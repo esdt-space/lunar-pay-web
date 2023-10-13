@@ -10,9 +10,10 @@ import { PublicLayout } from "@/components/layout/public-layout";
 
 import { HomeScreen } from "@/screens/landing/home";
 import { AdminScreen } from '@/screens/admin';
-import { ApproveSubscriptionScreen } from "@/screens/app/subscriptions";
+import { ApproveSubscriptionScreen, AgreementScreen } from "@/screens/app/subscriptions";
 import { AuthenticationScreen } from "@/screens/auth/authentication-screen.tsx";
-import { DashboardScreen } from "@/screens/app/dashboard/dashboard.screen.tsx";
+import { DashboardScreen } from "@/screens/app/dashboard";
+import { TokensOperationsScreen } from '@/screens/app/operations';
 import {Payroll} from "@/screens/landing/payroll";
 import {Subscriptions} from "@/screens/landing/subscriptions";
 import {Donations} from "@/screens/landing/donations";
@@ -49,6 +50,14 @@ export function ApplicationRouter() {
 
             <Route path={RoutesConfig.admin}>
               <Route index element={<AdminScreen />} />
+            </Route>
+
+            <Route path={RoutesConfig.subscriptions}>
+              <Route index element={<AgreementScreen />} />
+            </Route>
+
+            <Route path={RoutesConfig.tokensOperations}>
+              <Route index element={<TokensOperationsScreen />} />
             </Route>
           </Route>
         </Route>

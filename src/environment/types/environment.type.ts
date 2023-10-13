@@ -15,9 +15,10 @@ export type EnvironmentType = {
   }
 
   mvx: {
+    apiUrl: string
+    explorerUrl: string
     apiTimeout: number
     transactionSize: number
-    apiUrl: string
     toolsApiUrl: string
     nativeAuthDomains: string[]
   }

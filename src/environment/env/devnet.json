@@ -1,7 +1,8 @@
 {
   "type": "devnet",
   "mvx": {
-    "apiUrl": "https://devnet-api.multiversx.com"
+    "apiUrl": "https://devnet-api.multiversx.com",
+    "explorerUrl": "https://devnet-explorer.multiversx.com"
   },
   "contracts": {
     "lunarPay": "erd1qqqqqqqqqqqqqpgqpt9mvmz3hm7p8vzkmrjrm62m5wtafdnrttdqtma5nf"
