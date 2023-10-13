@@ -1,8 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs.tsx";
 
 import { ProtocolSettings } from "./partials/protocol-settings.tsx";
-import { SubscriptionsListScreen } from "../app/subscriptions/index.ts";
-import { mockAgreements } from "../app/subscriptions/mock-data-agreements.ts";
 
 export function AdminScreen() {
   return (
@@ -20,9 +18,7 @@ export function AdminScreen() {
         <TabsContent value="protocol-settings">
           <ProtocolSettings />
         </TabsContent>
-        <TabsContent value="subscriptions">
-          <SubscriptionsListScreen subscriptionsList={mockAgreements} />
-        </TabsContent>
+        <TabsContent value="subscriptions"></TabsContent>
       </Tabs>
     </div>
   )
