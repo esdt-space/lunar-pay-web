@@ -1,6 +1,7 @@
 import moment from "moment/moment";
-import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
+
+import AppEnvironment from "@/environment/app.environment.ts";
 
 import {
   Table,
@@ -54,10 +55,14 @@ export const TokenOperationsTable = (props: Props) => {
             <TableCell className={'max-lg:hidden text-muted-foreground'}>{moment(item.createdAt).format('ll')}</TableCell>
             <TableCell className="truncate text-right">
               <Button asChild variant={'ghost'} size={'sm'}>
-                <Link className={'text-xs'} to={{pathname: item.txHash}}>
+                <a
+                  target={'_blank'}
+                  className={'text-xs'}
+                  href={`${AppEnvironment.mvx.explorerUrl}/transactions/${item.txHash}`}
+                >
                   Explorer
                   <ArrowUpRight className={'ml-1 w-4 h-4'} />
-                </Link>
+                </a>
               </Button>
             </TableCell>
           </TableRow>
