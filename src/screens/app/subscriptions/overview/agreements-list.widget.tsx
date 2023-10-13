@@ -18,11 +18,10 @@ export const SubscriptionsListScreen = () => {
                 <Dot />
               </div>
               <div>
-                {item.agreementType.amountType.amount}
+                {item.agreementType.amountType.amount} {item.tokenIdentifier}
               </div>
             </div>
           </div>
-          
         </div>
 
         <div className="flex items-center mr-2 gap-4">
