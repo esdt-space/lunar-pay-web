@@ -9,12 +9,13 @@ import { EsdtToken } from "@/features/tokens";
 import { TokenSelectorWithAmount } from "@/features/tokens/components";
 import { useAccountTokensList } from "@/features/account-tokens/hooks";
 import { useWhitelistedVaultTokens, useAccountVaultTokens } from "@/features/vault/hooks";
+
 import {
-  depositEsdtInteraction,
-  depositEgldInteraction,
-  withdrawEsdtInteraction,
-  withdrawEgldInteraction
-} from "@/features/vault/contract/interactions";
+  useDepositEgldMutation,
+  useDepositEsdtMutation,
+  useWithdrawEgldMutation,
+  useWithdrawEsdtMutation
+} from "@/features/vault/hooks/mutations";
 
 export const DepositWithdrawWidget = () => {
   const [amount, setAmount] = useState('');
@@ -30,22 +31,27 @@ export const DepositWithdrawWidget = () => {
     return accountTokens.filter(item => whitelistedTokenIds.includes(item.identifier));
   }, [accountTokens, whitelistedTokens]);
 
+  const { mutate: depositEgldHandler } = useDepositEgldMutation();
+  const { mutate: depositEsdtHandler } = useDepositEsdtMutation();
+  const { mutate: withdrawEgldHandler } = useWithdrawEgldMutation();
+  const { mutate: withdrawEsdtHandler } = useWithdrawEsdtMutation();
+
   const depositToken = () => {
     if (!selectedToken) return
     
     if(selectedToken.identifier !== "EGLD")
-      return depositEsdtInteraction(selectedToken, Number(amount))
+      return depositEsdtHandler({token: selectedToken, amount: Number(amount)})
 
-    return depositEgldInteraction(Number(amount))
+    return depositEgldHandler(Number(amount))
   }
     
   const withdrawToken = () => {
     if(!selectedToken) return
     
     if(selectedToken.identifier !== "EGLD")
-      return withdrawEsdtInteraction(selectedToken, Number(amount))
+      return withdrawEsdtHandler({token: selectedToken, amount: Number(amount)})
     
-    return withdrawEgldInteraction(Number(amount))
+    return withdrawEgldHandler(Number(amount))
   }
 
   const onTabChange = () => {

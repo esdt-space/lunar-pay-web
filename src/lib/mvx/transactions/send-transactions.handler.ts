@@ -28,8 +28,7 @@ export async function sendTransactionWithWatcher(
   await sendTransactions({
     transactions: transaction,
     transactionsDisplayInfo: displayInfo,
-    redirectAfterSign: false,
-    signWithoutSending: true,
+    redirectAfterSign: false
   })
 
   const watcher = new TransactionWatcher(provider);

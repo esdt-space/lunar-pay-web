@@ -1,39 +1,26 @@
-import BigNumber from "bignumber.js";
-import { BigUIntValue, ContractCallPayloadBuilder, ContractFunction } from '@multiversx/sdk-core/out'
+import { Address, BigUIntValue, TokenTransfer } from '@multiversx/sdk-core/out'
 
-import { Egld } from "@/features/tokens";
-import { AppEnvironment } from '@/environment'
-import { sendTransactionsHandler } from '@/lib/mvx'
+import { sendTransactionWithWatcher } from '@/lib/mvx'
+import { getAddress, getNetworkConfig } from "@multiversx/sdk-dapp/utils";
+import { lunarPaySmartContract } from "@/contracts/lunar-pay/contract-utils.ts";
 
 export async function withdrawEgldInteraction(amount: number) {
-  const payload = getTransactionData(amount)
+  const sender = await getAddress();
+  const { chainId } = getNetworkConfig()
 
-  const transaction = {
-    value: '0',
-    gasLimit: 10000000,
-    data: payload.toString(),
-    receiver: AppEnvironment.contracts.lunarPay,
-  }
+  const args = [
+    new BigUIntValue(TokenTransfer.egldFromAmount(amount).valueOf())
+  ]
 
-  return sendTransactionsHandler(transaction, {
+  const transaction = lunarPaySmartContract.methods.withdrawEgld(args)
+    .withChainID(chainId)
+    .withSender(new Address(sender))
+    .withGasLimit(10_000_000)
+    .buildTransaction()
+
+  return sendTransactionWithWatcher(transaction, {
     processingMessage: 'Withdrawing EGLD from the vault',
     errorMessage: 'An error has occurred',
     successMessage: 'Finished withdrawing EGLD from the vault',
-  }).then(({ sessionId }) => sessionId)
-}
-
-const getTransactionData = (amount: number) => {
-  const token = new Egld();
-
-  const transactionPayload = new ContractCallPayloadBuilder()
-
-  /** Set the function to call on the smart contract **/
-  transactionPayload.setFunction(new ContractFunction('withdrawEgld'))
-
-  /** Add the EGLD amount argument **/
-  transactionPayload.addArg(new BigUIntValue(
-    new BigNumber(amount).multipliedBy(Math.pow(10, token.decimals))
-  ))
-
-  return transactionPayload.build()
+  })
 }

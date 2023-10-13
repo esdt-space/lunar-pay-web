@@ -1,30 +1,26 @@
-import {ContractCallPayloadBuilder, ContractFunction, TokenTransfer} from '@multiversx/sdk-core/out'
+import {
+  Address,
+  TokenTransfer
+} from '@multiversx/sdk-core/out'
 
-import { AppEnvironment } from '@/environment'
-import { sendTransactionsHandler } from '@/lib/mvx'
+import { sendTransactionWithWatcher } from '@/lib/mvx'
+import { getAddress, getNetworkConfig } from "@multiversx/sdk-dapp/utils";
+import { lunarPaySmartContract } from "@/contracts/lunar-pay/contract-utils.ts";
 
 export async function depositEgldInteraction(amount: number) {
-  const payload = getTransactionData()
+  const sender = await getAddress();
+  const { chainId } = getNetworkConfig()
 
-  const transaction = {
-    gasLimit: 10000000,
-    data: payload.toString(),
-    value: TokenTransfer.egldFromAmount(amount).toString(),
-    receiver: AppEnvironment.contracts.lunarPay,
-  }
+  const transaction = lunarPaySmartContract.methods.depositEgld([])
+    .withChainID(chainId)
+    .withSender(new Address(sender))
+    .withGasLimit(10_000_000)
+    .withValue(TokenTransfer.egldFromAmount(amount))
+    .buildTransaction()
 
-  return sendTransactionsHandler(transaction, {
+  return sendTransactionWithWatcher(transaction, {
     processingMessage: 'Depositing EGLD into vault',
     errorMessage: 'An error has occurred',
     successMessage: 'Finished depositing EGLD into vault',
-  }).then(({ sessionId }) => sessionId)
-}
-
-const getTransactionData = () => {
-  const transactionPayload = new ContractCallPayloadBuilder()
-
-  /** Set the function to call on the smart contract **/
-  transactionPayload.setFunction(new ContractFunction('depositEgld'))
-
-  return transactionPayload.build()
+  })
 }

@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button"
 
 import { EsdtToken } from "@/features/tokens";
 import { TokenLogo } from "@/features/tokens/components";
-import { transferTokenInteraction } from "@/features/vault/contract/interactions";
+import { useTokenTransferMutation } from "@/features/vault/hooks/mutations";
 
 type Props = {
   finishCallback: () => void
@@ -27,6 +27,8 @@ export const TransferAssetComponent = ( props: Props ) => {
   const invalidAmountStyle = amountExceeded ? "border-red-500" : ""
   const invalidAddressStyle = addressIsInvalid ? "border-red-500" : ""
 
+  const { mutate: tokenTransferHandler } = useTokenTransferMutation();
+
   const changeAddressHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if(!checkIsValidAddress(e.target.value)) {
       setAddressIsInvalid(true)
@@ -39,7 +41,7 @@ export const TransferAssetComponent = ( props: Props ) => {
 
   const changeAmountHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if(selectedToken !== undefined) {
-      setAmountExceeded(checkTokenHasEnoughBalance(selectedToken, parseInt(e.target.value)));
+      setAmountExceeded(!checkTokenHasEnoughBalance(selectedToken, parseInt(e.target.value)));
     }
 
     setAmount(e.target.value)
@@ -56,7 +58,11 @@ export const TransferAssetComponent = ( props: Props ) => {
       return
     }
 
-    return transferTokenInteraction(selectedToken, Number(amount), address)
+    return tokenTransferHandler({
+      token: selectedToken,
+      amount: Number(amount),
+      receiver: address
+    })
   }
 
   return <div className={'flex flex-1 flex-col gap-4'}>

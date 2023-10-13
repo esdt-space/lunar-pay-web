@@ -1,58 +1,41 @@
-import BigNumber from "bignumber.js";
 import {
   Address,
   AddressValue,
   BigUIntValue,
-  BytesValue,
-  ContractCallPayloadBuilder,
-  ContractFunction
+  TokenIdentifierValue,
+  TokenTransfer
 } from '@multiversx/sdk-core/out'
 
 import { EsdtToken } from "@/features/tokens";
-import { AppEnvironment } from '@/environment'
-import { sendTransactionsHandler } from '@/lib/mvx'
+import { sendTransactionWithWatcher } from '@/lib/mvx'
+import { getAddress, getNetworkConfig} from "@multiversx/sdk-dapp/utils";
+import { lunarPaySmartContract } from "@/contracts/lunar-pay/contract-utils.ts";
 
-export async function transferTokenInteraction(token: EsdtToken, amount: number, receiver: string, isInternalTransfer = false) {
-  const payload = getTransactionData(token, amount, receiver, isInternalTransfer)
+export async function transferTokenInteraction(token: EsdtToken, amount: number, receiver: string, _isInternalTransfer = false) {
+  const sender = await getAddress();
+  const { chainId } = getNetworkConfig()
 
-  const transaction = {
-    value: '0',
-    gasLimit: 10000000,
-    data: payload.toString(),
-    receiver: AppEnvironment.contracts.lunarPay,
-  }
+  const tokenTransfer = TokenTransfer.fungibleFromAmount(token.identifier, amount, token.decimals);
 
-  return sendTransactionsHandler(transaction, {
+  const args = [
+    new TokenIdentifierValue(token.identifier),
+    new BigUIntValue(tokenTransfer.valueOf()),
+    new AddressValue(new Address(receiver)),
+    // TODO: Uncomment after it's implemented on the SC
+    // Add the internal transfer argument
+    // new OptionalType(new BooleanType), new BooleanValue(isInternalTransfer)
+  ]
+
+  const transaction = lunarPaySmartContract.methods.transferTokens(args)
+    .withValue(0)
+    .withChainID(chainId)
+    .withSender(new Address(sender))
+    .withGasLimit(10_000_000)
+    .buildTransaction()
+
+  return sendTransactionWithWatcher(transaction, {
     processingMessage: `Transferring ${token.name} from the vault`,
     errorMessage: 'An error has occurred while transferring the token',
     successMessage: `Finished transferring ${token.name} from the vault`,
-  }).then(({ sessionId }) => sessionId)
-}
-
-const getTransactionData = (token: EsdtToken, amount: number, receiver: string, _isInternalTransfer: boolean) => {
-  const transactionPayload = new ContractCallPayloadBuilder()
-
-  /** Set the function to call on the smart contract **/
-  transactionPayload.setFunction(new ContractFunction('transferTokens'))
-
-  /** Add the token argument **/
-  transactionPayload.addArg(BytesValue.fromUTF8(token.identifier))
-
-  /** Add the amount argument **/
-  transactionPayload.addArg(new BigUIntValue(
-    new BigNumber(amount).multipliedBy(Math.pow(10, token.decimals))
-  ))
-
-  /** Add the receiver argument **/
-  transactionPayload.addArg(new AddressValue(
-    new Address(receiver)
-  ))
-
-  //TODO: Uncomment after it's implemented on the SC
-  // /** Add the internal transfer argument **/
-  // transactionPayload.addArg(new OptionalValue(
-  //   new OptionalType(new BooleanType), new BooleanValue(isInternalTransfer)
-  // ))
-
-  return transactionPayload.build()
+  })
 }

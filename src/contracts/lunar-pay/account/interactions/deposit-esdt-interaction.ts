@@ -1,45 +1,27 @@
-import BigNumber from "bignumber.js";
-import {
-  BigUIntValue,
-  BytesValue,
-  ContractCallPayloadBuilder,
-  ContractFunction,
-} from '@multiversx/sdk-core/out'
+import { Address, TokenTransfer } from '@multiversx/sdk-core/out'
+import { getAddress, getNetworkConfig } from "@multiversx/sdk-dapp/utils";
 
 import { EsdtToken } from "@/features/tokens";
-import { AppEnvironment } from '@/environment'
-import { sendTransactionsHandler } from '@/lib/mvx'
+import { sendTransactionWithWatcher } from '@/lib/mvx'
+import { lunarPaySmartContract } from "@/contracts/lunar-pay/contract-utils.ts";
 
 export async function depositEsdtInteraction(token: EsdtToken, amount: number) {
-  const payload = getTransactionData(token, amount)
+  const sender = await getAddress();
+  const { chainId } = getNetworkConfig()
 
-  const transaction = {
-    value: '0',
-    gasLimit: 10000000,
-    data: payload.toString(),
-    receiver: AppEnvironment.contracts.lunarPay,
-  }
+  const tokenTransfer = TokenTransfer.fungibleFromAmount(token.identifier, amount, token.decimals);
 
-  return sendTransactionsHandler(transaction, {
+  const transaction = lunarPaySmartContract.methods.depositEsdt([])
+    .withValue(0)
+    .withChainID(chainId)
+    .withSender(new Address(sender))
+    .withGasLimit(10_000_000)
+    .withSingleESDTTransfer(tokenTransfer)
+    .buildTransaction()
+
+  return sendTransactionWithWatcher(transaction, {
     processingMessage: `Depositing ${token.name} into vault`,
     errorMessage: 'An error has occurred',
     successMessage: `Finished depositing ${token.name} into vault`,
-  }).then(({ sessionId }) => sessionId)
-}
-
-const getTransactionData = (token: EsdtToken, amount: number) => {
-  const transactionPayload = new ContractCallPayloadBuilder()
-
-  /** Set the function to call on the smart contract **/
-  transactionPayload.setFunction(new ContractFunction('depositEsdt'))
-
-  /** Add the ESDT token argument **/
-  transactionPayload.addArg(BytesValue.fromUTF8(token.identifier))
-
-  /** Add the ESDT payment value argument **/
-  transactionPayload.addArg(new BigUIntValue(
-    new BigNumber(amount).multipliedBy(Math.pow(10, token.decimals))
-  ))
-
-  return transactionPayload.build()
+  })
 }
