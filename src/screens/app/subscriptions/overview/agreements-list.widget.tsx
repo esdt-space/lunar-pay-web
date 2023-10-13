@@ -1,9 +1,20 @@
 import { Dot, Star, Users } from "lucide-react"
 import { Switch } from "@/components/ui/switch"
 import { useAgreementsQuery } from "@/features/subscription/hooks"
+import { ScreenTabs } from "../agreement.screen"
 
-export const SubscriptionsListScreen = () => {
+type Props = {
+  setSelectedTab: React.Dispatch<React.SetStateAction<ScreenTabs>>
+  setAgreementMembers: React.Dispatch<React.SetStateAction<string[]>>
+}
+
+export const SubscriptionsListScreen = ({setSelectedTab, setAgreementMembers}: Props) => {
   const { data: agreementsList = []} = useAgreementsQuery();
+
+  const getMembers = (members: string[]) => {
+    setAgreementMembers(members)
+    setSelectedTab(ScreenTabs.AgreementMembersList)
+  }
 
   return <div className={'container mx-auto space-y-4 sm:p-12 xl:p-16'}>
     {agreementsList.map((item: any, index: number) => {
@@ -25,7 +36,7 @@ export const SubscriptionsListScreen = () => {
         </div>
 
         <div className="flex items-center mr-2 gap-4">
-          <div className="mr-8">
+          <div className="mr-8 cursor-pointer" onClick={() => getMembers(item.agreementType.senders)}>
             <Users />
             {item.agreementType.senders.length}
           </div>

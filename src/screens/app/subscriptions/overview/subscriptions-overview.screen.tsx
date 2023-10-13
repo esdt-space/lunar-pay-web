@@ -4,9 +4,10 @@ import { ScreenTabs } from "../agreement.screen"
 
 type Props = {
   setSelectedTab: React.Dispatch<React.SetStateAction<ScreenTabs>>
+  setAgreementMembers: React.Dispatch<React.SetStateAction<string[]>>
 }
 
-export const SubscriptionsOverviewScreen = ({setSelectedTab}: Props) => {
+export const SubscriptionsOverviewScreen = ({setSelectedTab, setAgreementMembers}: Props) => {
   return <div>
     <div className="flex justify-between pl-10 pr-10">
       <h1>Subscriptions List</h1>
@@ -14,6 +15,6 @@ export const SubscriptionsOverviewScreen = ({setSelectedTab}: Props) => {
         Create Subscription
       </Button>
     </div>
-    <SubscriptionsListScreen />
+    <SubscriptionsListScreen setSelectedTab={setSelectedTab} setAgreementMembers={setAgreementMembers}/>
   </div>
 }
