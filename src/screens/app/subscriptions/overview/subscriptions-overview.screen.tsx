@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { SubscriptionsListScreen } from "."
-import { ScreenTabs } from ".."
+import { ScreenTabs } from "../agreement.screen"
 import { mockSubscriptions } from "./mock-data-subscriptions"
 
 type Props = {

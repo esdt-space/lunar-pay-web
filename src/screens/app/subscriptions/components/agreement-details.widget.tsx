@@ -34,7 +34,7 @@ export const AgreementDetailsWidget = () => {
     }
 
     // TO DO: Replace the hardcoded id with the proper id
-    return AgreementsService.updateAgreement("651eef737a217f677b32f5dc", input)
+    return AgreementsService.updateAgreement("6529262b943bf981919f1d5c", input)
   }
 
   return <div className="space-y-4 pt-6">

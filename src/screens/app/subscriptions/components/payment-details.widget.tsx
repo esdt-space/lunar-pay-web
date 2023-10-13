@@ -2,11 +2,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { EsdtToken } from "@/features/tokens";
 import { EsdtTokenSelector } from "@/features/tokens/components"
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { ScreenTabs } from "../agreement.screen";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { checkTokenHasEnoughBalance } from "@/utils";
-import { useWhitelistedVaultTokens } from "@/features/vault/hooks";
+import { useAccountTokensList } from "@/features/account-tokens/hooks";
+import { AgreementsService } from "@/features/subscription/subscriptions.service";
 
 type Props = {
   setSelectedTab: React.Dispatch<React.SetStateAction<ScreenTabs>>
@@ -22,22 +23,39 @@ export const PaymentDetailsWidget = ({setSelectedTab}: Props) => {
   const [frequency, setFrequency] = useState('M')
   const [amountExceeded, setAmountExceeded] = useState(false)
 
-  const tokens = useWhitelistedVaultTokens();
+  const tokens = useAccountTokensList();
 
   const missingToken = selectedToken === undefined
   const missingAmount = amount === ""
 
   const saveAgreement = () => {
-    setSelectedTab(ScreenTabs.AgreementDetails)
+    if ( selectedToken === undefined ) {
+      return;
+    }
+
+    const input = {
+      token: selectedToken,
+      amount: Number(amount),
+      frequency: frequency
+    }
+
+    AgreementsService.createAgreement(input).then(() => {
+      setSelectedTab(ScreenTabs.AgreementDetails)
+    })
   }
 
   const changeAmountHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    if(selectedToken !== undefined) {
-      setAmountExceeded(!checkTokenHasEnoughBalance(selectedToken, e.target.value));
-    }
-
     setAmount(e.target.value)
   }
+
+  useEffect(() => {
+    if (!selectedToken || !amount) {
+      setAmountExceeded(false);
+      return ;
+    }
+
+    setAmountExceeded(!checkTokenHasEnoughBalance(selectedToken, amount));
+  }, [selectedToken, amount]);
 
   const invalidAmountStyle = amountExceeded ? "border-red-500" : ""
   
@@ -46,9 +64,10 @@ export const PaymentDetailsWidget = ({setSelectedTab}: Props) => {
       tokens={tokens}
       value={selectedToken}
       onChange={(token) => setSelectedToken(token)}
+      showBalances
     />
     <div>
-      <div className="flex">
+      <div className="flex space-x-4">
         <div className="w-9/12">
           <Input 
             placeholder="Insert amount"
@@ -60,7 +79,7 @@ export const PaymentDetailsWidget = ({setSelectedTab}: Props) => {
           {amountExceeded && <p className={'text-red-500 text-xs ml-2'}>The amount you added exceeds your assets</p>}
         </div>
         <div className="w-3/12">
-          <Select onValueChange={(item) => setFrequency(item)} defaultValue={frequency}>
+          <Select onValueChange={(item: string) => setFrequency(item)} defaultValue={frequency}>
             <SelectTrigger id="framework">
               <SelectValue placeholder="Frequency" />
             </SelectTrigger>
