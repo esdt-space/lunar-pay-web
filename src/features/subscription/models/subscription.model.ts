@@ -1,4 +1,4 @@
-import { EsdtToken } from "@/features/tokens";
+import { AgreementType } from "./agreement-types.model";
 
 export class SubscriptionModel {
   // id: string;
@@ -19,7 +19,6 @@ export type SubscriptionDetails = {
 
 // TO DO: Remove from usage after SC functionality implementation
 export type SubscriptionCreate = {
-  token: EsdtToken;
-  amount: number;
-  frequency: string;
+  tokenIdentifier: string;
+  agreementType: AgreementType
 }

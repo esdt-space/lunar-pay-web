@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { checkTokenHasEnoughBalance } from "@/utils";
 import { useAccountTokensList } from "@/features/account-tokens/hooks";
 import { AgreementsService } from "@/features/subscription/subscriptions.service";
+import { FrequencyType } from "@/features/subscription/models/agreement-types.model";
 
 type Props = {
   setSelectedTab: React.Dispatch<React.SetStateAction<ScreenTabs>>
@@ -20,7 +21,7 @@ export const PaymentDetailsWidget = ({setSelectedTab}: Props) => {
   // const [address, setAddress] = useState('')
   const [selectedToken, setSelectedToken] = useState<EsdtToken | undefined>(undefined);
   const [amount, setAmount] = useState('')
-  const [frequency, setFrequency] = useState('M')
+  const [frequency, setFrequency] = useState<FrequencyType>('M')
   const [amountExceeded, setAmountExceeded] = useState(false)
 
   const tokens = useAccountTokensList();
@@ -28,15 +29,20 @@ export const PaymentDetailsWidget = ({setSelectedTab}: Props) => {
   const missingToken = selectedToken === undefined
   const missingAmount = amount === ""
 
+  // TO DO: Remove saveAgreement function after SC functionality implementation
   const saveAgreement = () => {
     if ( selectedToken === undefined ) {
       return;
     }
 
     const input = {
-      token: selectedToken,
-      amount: Number(amount),
-      frequency: frequency
+      tokenIdentifier: selectedToken.identifier,
+      agreementType: {
+        receiver: 'owner-address',
+        senders: ['sender-one', 'sender-two', 'sender-three', 'sender-four'],
+        frequency: frequency,
+        amountType: { amount: Number(amount) },
+      }
     }
 
     AgreementsService.createAgreement(input).then(() => {
@@ -79,7 +85,7 @@ export const PaymentDetailsWidget = ({setSelectedTab}: Props) => {
           {amountExceeded && <p className={'text-red-500 text-xs ml-2'}>The amount you added exceeds your assets</p>}
         </div>
         <div className="w-3/12">
-          <Select onValueChange={(item: string) => setFrequency(item)} defaultValue={frequency}>
+          <Select onValueChange={(item: FrequencyType) => setFrequency(item)} defaultValue={frequency}>
             <SelectTrigger id="framework">
               <SelectValue placeholder="Frequency" />
             </SelectTrigger>

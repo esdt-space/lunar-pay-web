@@ -11,7 +11,7 @@ export class AgreementsService {
   }
 
   static async fetchAgreements() {
-    return this.api
+    return AgreementsService.api
       .get<unknown[]>(`/agreements`)
       .then((response) => response.data)
   }

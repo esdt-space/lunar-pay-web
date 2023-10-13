@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { SubscriptionsListScreen } from "."
 import { ScreenTabs } from "../agreement.screen"
-import { mockSubscriptions } from "./mock-data-subscriptions"
 
 type Props = {
   setSelectedTab: React.Dispatch<React.SetStateAction<ScreenTabs>>
@@ -15,6 +14,6 @@ export const SubscriptionsOverviewScreen = ({setSelectedTab}: Props) => {
         Create Subscription
       </Button>
     </div>
-    <SubscriptionsListScreen subscriptionsList={mockSubscriptions} />
+    <SubscriptionsListScreen />
   </div>
 }

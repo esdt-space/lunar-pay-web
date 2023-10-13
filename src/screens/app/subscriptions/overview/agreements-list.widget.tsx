@@ -1,22 +1,9 @@
-import { AgreementsService } from "@/features/subscription/subscriptions.service"
-import { useEffect, useState } from "react"
 import { Dot, Star, Users } from "lucide-react"
 import { Switch } from "@/components/ui/switch"
+import { useAgreementsQuery } from "@/features/subscription/hooks"
 
-type Props = {
-  subscriptionsList: any[];
-}
-
-export const SubscriptionsListScreen = ({subscriptionsList}: Props) => {
-  const [agreementsList, setAgreementsList] = useState<any[]>([])
-
-  useEffect(() => {
-    AgreementsService.fetchAgreements().then((res) => {
-      console.log(res)
-    })
-
-    setAgreementsList(subscriptionsList)
-  }, [])
+export const SubscriptionsListScreen = () => {
+  const { data: agreementsList = []} = useAgreementsQuery();
 
   return <div className={'container mx-auto space-y-4 sm:p-12 xl:p-16'}>
     {agreementsList.map((item: any, index: number) => {
