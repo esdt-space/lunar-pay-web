@@ -1,10 +1,10 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import { AppIcon } from "@/components/shared/app-icon.tsx";
 
 import { cn } from "@/theme/utils.ts";
 import { RoutesConfig } from "@/navigation";
-import {useState} from "react";
 
 type NavItemProps = {
   text: string;
