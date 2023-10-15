@@ -3,6 +3,7 @@ import _ from 'lodash'
 import { EnvironmentEnum } from './enums'
 import * as commonVariables from './env/common.json'
 import * as devnetVariables from './env/devnet.json'
+import * as localVariables from './env/local.json'
 import * as mainnetVariables from './env/mainnet.json'
 import * as testnetVariables from './env/testnet.json'
 import { EnvironmentType } from './types'
@@ -18,6 +19,9 @@ const computedVariables: Partial<EnvironmentType> = {
 }
 
 switch (environmentName) {
+  case EnvironmentEnum.Local:
+    environment = _.merge(computedVariables, commonVariables, localVariables) as EnvironmentType
+    break
   case EnvironmentEnum.Testnet:
     environment = _.merge(computedVariables, commonVariables, testnetVariables) as EnvironmentType
     break

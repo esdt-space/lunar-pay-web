@@ -1,5 +1,5 @@
 {
-  "type": "local",
+  "type": "devnet",
   "mvx": {
     "apiUrl": "https://devnet-api.multiversx.com",
     "explorerUrl": "https://devnet-explorer.multiversx.com"
