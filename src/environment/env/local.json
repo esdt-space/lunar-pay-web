@@ -1,5 +1,5 @@
 {
-  "type": "devnet",
+  "type": "local",
   "mvx": {
     "apiUrl": "https://devnet-api.multiversx.com",
     "explorerUrl": "https://devnet-explorer.multiversx.com"
@@ -8,11 +8,11 @@
     "lunarPay": "erd1qqqqqqqqqqqqqpgqpt9mvmz3hm7p8vzkmrjrm62m5wtafdnrttdqtma5nf"
   },
   "microservice": {
-    "apiUrl": "https://devnet-api.lunarpay.finance"
+    "apiUrl": "http://localhost:3001"
   },
   "auth": {
     "nativeAuthDomains": [
-      "https://lunarpay.finance"
+      "http://localhost:3001"
     ]
   }
 }
