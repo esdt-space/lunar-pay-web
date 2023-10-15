@@ -22,15 +22,12 @@ export async function sendTransactionWithWatcher(
   displayInfo: TransactionsDisplayInfoType
 ) {
   await refreshAccount()
-  const { apiAddress } = getNetworkConfig()
-  const provider = new ApiNetworkProvider(apiAddress)
 
-  await sendTransactions({
+  const { sessionId } = await sendTransactions({
     transactions: transaction,
     transactionsDisplayInfo: displayInfo,
     redirectAfterSign: false
-  })
+  });
 
-  const watcher = new TransactionWatcher(provider);
-  return watcher.awaitCompleted(transaction);
+  return sessionId;
 }
