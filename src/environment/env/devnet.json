@@ -12,7 +12,7 @@
   },
   "auth": {
     "nativeAuthDomains": [
-      "https://lunarpay.finance"
+      "https://devnet-api.lunarpay.finance"
     ]
   }
 }
