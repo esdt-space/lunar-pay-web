@@ -1,5 +1,5 @@
 import moment from "moment/moment";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowDown, ArrowUp, ArrowUpRight } from "lucide-react";
 
 import AppEnvironment from "@/environment/app.environment.ts";
 
@@ -19,6 +19,8 @@ import { TokenOperationType } from "../../enums";
 import { AddressCell } from "./address-cell.tsx";
 import { TokenOperationIcon } from "./token-operation-icon.tsx";
 import { TokenOperationValueCell } from "./token-operation-value-cell.tsx";
+import { useSortByDate } from "../../hooks/useSortByDate.ts";
+import { useState } from "react";
 
 type Props = {
   operations: TokenOperation[]
@@ -29,6 +31,31 @@ export const TokenOperationsTable = (props: Props) => {
   const { operations, operationType } = props;
   const isAllOrTransfer = [TokenOperationType.Transfer, "all", undefined].includes(operationType);
 
+  const [triggerSorting, setTriggerSorting] = useState(false)
+  const [sortAscending, setSortAscending] = useState(false)
+  const [sortOrder, setSortOrder] = useState('asc')
+  const sortedOperations = useSortByDate(operations, sortOrder)
+
+  const renderValues = triggerSorting ? sortedOperations : operations
+
+  const handleSorting = () => {
+    const updateSortOrder = sortAscending ? "asc" : "desc"
+
+    setTriggerSorting(true)
+    setSortAscending(!sortAscending)
+    setSortOrder(updateSortOrder)
+  }
+
+  const SortingArrow = () => {
+    if(!triggerSorting) {
+      return
+    }
+
+    return <>
+      {sortAscending ? <ArrowUp /> : <ArrowDown />}
+    </>
+  }
+
   return (
     <Table>
       <TableHeader>
@@ -38,12 +65,12 @@ export const TokenOperationsTable = (props: Props) => {
           {isAllOrTransfer && <TableHead className={'max-md:hidden'}>Type</TableHead>}
           {isAllOrTransfer && <TableHead>From</TableHead>}
           {isAllOrTransfer && <TableHead>To</TableHead>}
-          <TableHead className={'max-lg:hidden'}>Date</TableHead>
+          <TableHead className={'max-lg:hidden flex items-center cursor-pointer space-x-2'} onClick={handleSorting}><div>Date</div> <SortingArrow /> </TableHead>
           <TableHead className="max-w-[150px]"></TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {operations.map((item, index) => (
+        {renderValues.map((item, index) => (
           <TableRow key={index}>
             <TableCell>
               <TokenOperationIcon operation={item} />
