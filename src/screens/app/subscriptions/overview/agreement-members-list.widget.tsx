@@ -19,7 +19,7 @@ export const AgreementMembersList = ({setSelectedTab, agreementMembers}: Props) 
     <div className="flex flex-col space-y-4 rounded-md border border-blue-500 bg-gradiant-to-r from-blue-500 to-red-500 p-4 shadow">
       <div className="flex justify-between">
         <div>{agreementMembers.agreementDetails.name}</div>
-        <div className="flex text-sm text-muted-foreground">
+        <div className="flex">
           <div className="flex">
             {agreementMembers.agreementDetails.frequency}
             <Dot />
@@ -30,9 +30,15 @@ export const AgreementMembersList = ({setSelectedTab, agreementMembers}: Props) 
         </div>
       </div>
       <Separator />
-      <div>{agreementMembers.agreementDetails.benefits.map((item, index) => {
-        return <div key={index} className="flex"><Dot /> {item}</div>
-      })}</div>
+      <div className="flex justify-between">
+        <div>{agreementMembers.agreementDetails.benefits.map((item, index) => {
+          return <div key={index} className="flex"><Dot /> {item}</div>
+        })}</div>
+        <div className="flex space-x-2 items-center">
+          <div>Total Amount</div>
+          <Button>Claim</Button>
+        </div>
+      </div>
     </div>
     
     {agreementMembers.membersList.map((item: any, index: number) => {
@@ -40,8 +46,10 @@ export const AgreementMembersList = ({setSelectedTab, agreementMembers}: Props) 
         <div className="flex flex-1 items-center ml-2 gap-4">
           <div>{item}</div>
         </div>
-        <div>
-            <Button className="bg-red-500 hover:bg-red-500">Remove</Button>
+        <div className="flex items-center space-x-2">
+          <div>Display User Amount</div>
+          <Button>Claim</Button>
+          <Button className="bg-red-500 hover:bg-red-500">Remove</Button>
         </div>
       </div>
     })}
