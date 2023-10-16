@@ -112,7 +112,7 @@ export const VaultAssetsWidget = () => {
 
           <TabsContent className={'mt-0'} value="transfer-asset">
             <TransferAssetComponent
-              selectedToken={selectedToken}
+              selectedToken={selectedToken as EsdtToken}
               finishCallback={() => setSelectedTab(ScreenTabs.ViewAssets)}
             />
           </TabsContent>

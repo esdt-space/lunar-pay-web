@@ -1,5 +1,4 @@
 import { ChangeEvent, useState } from "react";
-import { FormatAmount } from "@multiversx/sdk-dapp/UI";
 
 import { cn, formatTokenBalance } from "@/theme/utils"
 import { checkIsValidAddress, checkTokenHasEnoughBalance } from "@/utils"
@@ -8,12 +7,12 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 
 import { EsdtToken } from "@/features/tokens";
-import { TokenLogo } from "@/features/tokens/components";
+import { TokenItem } from "@/features/tokens/components";
 import { useTokenTransferMutation } from "@/features/vault/hooks/mutations";
 
 type Props = {
   finishCallback: () => void
-  selectedToken: EsdtToken | undefined
+  selectedToken: EsdtToken
 }
 
 export const TransferAssetComponent = ( props: Props ) => {
@@ -67,24 +66,7 @@ export const TransferAssetComponent = ( props: Props ) => {
 
   return <div className={'flex flex-1 flex-col gap-4'}>
     <div className={'flex flex-1 flex-col gap-2'}>
-      <div className={'flex flex-1 justify-between items-center p-2'}>
-        <div className={'flex gap-1'}>
-          <TokenLogo token={selectedToken ? selectedToken : new EsdtToken()} />
-          <div>
-            <div className={'text-sm font-medium'}>{selectedToken && selectedToken.name}</div>
-            <div className={'text-xs text-muted-foreground'}>{selectedToken && selectedToken.identifier}</div>
-          </div>
-        </div>
-        <div>
-          <FormatAmount
-            value={selectedToken ? selectedToken.balance : ""}
-            token={selectedToken && selectedToken.identifier}
-            decimals={selectedToken && selectedToken.decimals}
-            digits={5}
-            showLabel={false}
-          />
-        </div>
-      </div>
+      <TokenItem token={selectedToken} showBalances />
 
       <div className={cn(['flex flex-1 justify-between items-center border rounded-md', invalidAmountStyle])}>
         <Input
@@ -113,11 +95,11 @@ export const TransferAssetComponent = ( props: Props ) => {
       {addressIsInvalid && <p className={'text-red-500 text-xs ml-2 -mt-2'}>Address is Invalid</p>}
     </div>
 
-    <div className={'flex flex-1 justify-between'}>
-      <Button size={'sm'} variant={'outline'} onClick={finishCallback} >
+    <div className={'flex flex-1 gap-2'}>
+      <Button size={'sm'} className={'flex-1'} onClick={finishCallback} >
         Cancel
       </Button>
-      <Button size={'sm'} variant={'outline'} onClick={sendToken} >
+      <Button size={'sm'} variant={'primary'} className={'flex-1'} onClick={sendToken} >
         Confirm
       </Button>
     </div>
