@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowUpRight, Minus, Plus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -7,8 +7,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs.t
 
 import { EsdtToken } from "@/features/tokens";
 import { TokenSelectorWithAmount } from "@/features/tokens/components";
-import { useAccountTokensList } from "@/features/account-tokens/hooks";
-import { useWhitelistedVaultTokens, useAccountVaultTokens } from "@/features/vault/hooks";
+import { useAccountTokensAvailableToDeposit } from "@/features/account-tokens/hooks";
+import { useAccountVaultTokens } from "@/features/vault/hooks";
 
 import {
   useDepositEgldMutation,
@@ -27,15 +27,8 @@ export const DepositWithdrawWidget = () => {
   const [selectedToken, setSelectedToken] = useState<EsdtToken | undefined>(undefined);
   const [selectedTab, setSelectedTab] = useState<WidgetTabs>(WidgetTabs.Deposit)
 
-  const accountTokens = useAccountTokensList();
   const { vaultTokens} = useAccountVaultTokens();
-  const whitelistedTokens = useWhitelistedVaultTokens();
-
-  const depositTokensList = useMemo(() => {
-    const whitelistedTokenIds = whitelistedTokens.map(item => item.identifier);
-
-    return accountTokens.filter(item => whitelistedTokenIds.includes(item.identifier));
-  }, [accountTokens, whitelistedTokens]);
+  const depositTokensList = useAccountTokensAvailableToDeposit();
 
   const { mutate: depositEgldHandler } = useDepositEgldMutation();
   const { mutate: depositEsdtHandler } = useDepositEsdtMutation();
