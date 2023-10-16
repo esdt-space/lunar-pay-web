@@ -4,7 +4,8 @@ import { useAccountBalancesQuery } from "./queries/use-account-balances-query.ts
 
 export function useAccountVaultTokens() {
   const tokens = useTokensList();
-  const { data: accountBalancesList = [] } = useAccountBalancesQuery();
+  const props = useAccountBalancesQuery();
+  const { data: accountBalancesList = [] } = props;
 
   const accountVaultTokensMap: Record<string, string> = {};
   const accountVaultTokenIdentifiers = accountBalancesList.map(item => {
@@ -13,9 +14,11 @@ export function useAccountVaultTokens() {
     return item.identifier
   });
 
-  return tokens.filter(token => accountVaultTokenIdentifiers.includes(token.identifier)).map(item => {
+  const vaultTokens = tokens.filter(token => accountVaultTokenIdentifiers.includes(token.identifier)).map(item => {
     item.balance = accountVaultTokensMap[item.identifier];
 
     return item;
   })
+
+  return { vaultTokens, ...props };
 }

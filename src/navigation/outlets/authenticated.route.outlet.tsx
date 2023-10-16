@@ -13,12 +13,12 @@ export function AuthenticatedRouteOutlet() {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      navigate(redirectRoute)
+      navigate(redirectRoute, { replace: true })
     }
   }, [isLoggedIn])
 
   if (!isLoggedIn) {
-    return <Navigate to={redirectRoute} />
+    return <Navigate to={redirectRoute} replace />
   }
 
   return <Outlet />

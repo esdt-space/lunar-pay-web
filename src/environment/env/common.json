@@ -1,6 +1,6 @@
 {
   "appName": "LunarPay",
-  "appUrl": "https://localhost",
+  "appUrl": "https://lunarpay.finance",
   "auth": {
     "walletConnectProjectId": "38542af6040379fb7ba2a23d644b58cd",
     "nativeAuthDomains": []

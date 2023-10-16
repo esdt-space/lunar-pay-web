@@ -1,17 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
+import { useTokensPrice } from "@/features/tokens";
 import { useAccountVaultTokens } from "@/features/vault/hooks";
 
 export const DashboardLunarBalanceWidget = () => {
-  const vaultTokens = useAccountVaultTokens();
-
-  const lunarBalance = vaultTokens.reduce((acc, val) => {
-    if(val.valueUsd !== undefined) {
-      acc += val.valueUsd
-    }
-
-    return acc
-  }, 0)
+  const { vaultTokens } = useAccountVaultTokens();
+  const lunarBalance = useTokensPrice(vaultTokens);
 
   return (
     <Card className={'flex-1 shadow p-2'}>

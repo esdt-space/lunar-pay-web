@@ -54,9 +54,9 @@ export function PublicPageHeader() {
               <div className="text-gray-600 lg:pr-4">
                 <ul className={cn("space-y-6 text-base font-medium tracking-wide", "lg:flex lg:space-y-0 lg:text-sm")}>
                   <NavItem text="Solutions" location="/pages/solution" />
-                  <NavItem text="Customers" location="/pages/customers" />
-                  <NavItem text="Pricing" location="/pages/pricing" />
-                  <NavItem text="Company" location="/pages/about" />
+                  {/*<NavItem text="Customers" location="/pages/customers" />*/}
+                  {/*<NavItem text="Pricing" location="/pages/pricing" />*/}
+                  <NavItem text="About" location="/pages/about" />
                 </ul>
               </div>
 

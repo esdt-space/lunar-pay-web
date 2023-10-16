@@ -1,5 +1,6 @@
 {
   "type": "testnet",
+  "appUrl": "https://testnet.lunarpay.finance",
   "mvx": {
     "apiUrl": "https://testnet-api.multiversx.com",
     "explorerUrl": "https://testnet-explorer.multiversx.com"
