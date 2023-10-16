@@ -1,14 +1,15 @@
-import { Egld, useEsdtTokensList, useEsdtTokensMap } from "@/features/tokens";
+import { useEgld, useEsdtTokensList, useEsdtTokensMap } from "@/features/tokens";
 
 export function useTokensList() {
+  const egld = useEgld()
   const ESDTs = useEsdtTokensList()
 
-  return [new Egld(), ...ESDTs];
+  return [egld, ...ESDTs];
 }
 
 export function useTokensMap() {
+  const egld = useEgld()
   const ESDTs = useEsdtTokensMap();
-  const egldToken = new Egld();
 
-  return {...ESDTs, [egldToken.identifier]: egldToken}
+  return {...ESDTs, [egld.identifier]: egld}
 }
