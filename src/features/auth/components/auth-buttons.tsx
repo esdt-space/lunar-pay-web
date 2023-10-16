@@ -29,7 +29,7 @@ export function AuthButtons(props: Props) {
       <Button
         className={cn([
           'justify-between',
-          'bg-gradient-to-r from-primary to-secondary'
+          'bg-gradient-to-r from-primary to-secondary text-white hover:text-slate-200'
         ])}
         onClick={mobileAppButtonClickHandler}
       >
@@ -40,7 +40,7 @@ export function AuthButtons(props: Props) {
       <Button
         className={cn([
           'justify-between',
-          'bg-gradient-to-r from-primary to-secondary'
+          'bg-gradient-to-r from-primary to-secondary text-white hover:text-slate-200'
         ])}
         onClick={initiateExtensionLogin}
       >
@@ -51,7 +51,7 @@ export function AuthButtons(props: Props) {
       <Button
         className={cn([
           'justify-between',
-          'bg-gradient-to-r from-primary to-secondary'
+          'bg-gradient-to-r from-primary to-secondary text-white hover:text-slate-200'
         ])}
         onClick={initiateWebWalletLogin}
       >
