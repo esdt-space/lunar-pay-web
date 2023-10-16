@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useAccountVaultTokens } from "@/features/vault/hooks";
 
 export const DashboardLunarBalanceWidget = () => {
-  const vaultTokens = useAccountVaultTokens();
+  const { vaultTokens } = useAccountVaultTokens();
 
   const lunarBalance = vaultTokens.reduce((acc, val) => {
     if(val.valueUsd !== undefined) {
