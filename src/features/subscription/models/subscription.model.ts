@@ -17,8 +17,15 @@ export type SubscriptionDetails = {
   benefits: string[];
 }
 
+export type SubscriptionItem = SubscriptionDetails & {
+  agreementType?: AgreementType;
+  tokenIdentifier: string;
+  owner: string;
+  _id: string;
+}
+
 // TO DO: Remove from usage after SC functionality implementation
 export type SubscriptionCreate = {
   tokenIdentifier: string;
-  agreementType: AgreementType
+  agreementType: AgreementType;
 }

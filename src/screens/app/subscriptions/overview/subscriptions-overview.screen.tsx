@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button"
 import { SubscriptionsListScreen } from "."
-import { ScreenTabs } from "../agreement.screen"
+import { MembersSection, ScreenTabs } from "../agreement.screen"
 
 type Props = {
   setSelectedTab: React.Dispatch<React.SetStateAction<ScreenTabs>>
-  setAgreementMembers: React.Dispatch<React.SetStateAction<string[]>>
+  setAgreementMembers: React.Dispatch<React.SetStateAction<MembersSection>>
 }
 
 export const SubscriptionsOverviewScreen = ({setSelectedTab, setAgreementMembers}: Props) => {

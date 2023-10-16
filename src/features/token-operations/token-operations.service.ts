@@ -6,7 +6,7 @@ export class TokenOperationsService {
   private static api = new ProtocolApi()
 
   static async getAllTokenOperations(): Promise<TokenOperation[]> {
-    return TokenOperationsService.api.get<TokenOperation[]>('/token-operations/all?limit=1000')
+    return TokenOperationsService.api.get<TokenOperation[]>('/token-operations/all?skip=10&limit=10')
       .then((response) => response.data)
       .then(data => data.map(item => new TokenOperation(item)))
   }

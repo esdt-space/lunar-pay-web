@@ -1,18 +1,29 @@
 import { Dot, Star, Users } from "lucide-react"
 import { Switch } from "@/components/ui/switch"
 import { useAgreementsQuery } from "@/features/subscription/hooks"
-import { ScreenTabs } from "../agreement.screen"
+import { MembersSection, ScreenTabs } from "../agreement.screen"
 
 type Props = {
   setSelectedTab: React.Dispatch<React.SetStateAction<ScreenTabs>>
-  setAgreementMembers: React.Dispatch<React.SetStateAction<string[]>>
+  setAgreementMembers: React.Dispatch<React.SetStateAction<MembersSection>>
 }
 
 export const SubscriptionsListScreen = ({setSelectedTab, setAgreementMembers}: Props) => {
   const { data: agreementsList = []} = useAgreementsQuery();
 
-  const getMembers = (members: string[]) => {
-    setAgreementMembers(members)
+  const getMembers = (subName: string, subFrequency: string, subPrice: number, subToken: string, benefits: string[], members: string[]) => {
+    const input = {
+      agreementDetails: {
+        name: subName,
+        frequency: subFrequency,
+        price: subPrice,
+        tokenIdentifier: subToken,
+        benefits: benefits,
+      },
+      membersList: members
+    }
+
+    setAgreementMembers(input)
     setSelectedTab(ScreenTabs.AgreementMembersList)
   }
 
@@ -36,7 +47,7 @@ export const SubscriptionsListScreen = ({setSelectedTab, setAgreementMembers}: P
         </div>
 
         <div className="flex items-center mr-2 gap-4">
-          <div className="mr-8 cursor-pointer" onClick={() => getMembers(item.agreementType.senders)}>
+          <div className="mr-8 cursor-pointer" onClick={() => getMembers(item.name, item.agreementType.frequency, item.agreementType.amountType.amount, item.tokenIdentifier, item.benefits, item.agreementType.senders)}>
             <Users />
             {item.agreementType.senders.length}
           </div>

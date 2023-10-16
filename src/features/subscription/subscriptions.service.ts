@@ -1,5 +1,5 @@
 import { ProtocolApi } from "@/lib/protocol-api";
-import { SubscriptionCreate, SubscriptionDetails } from "./models/subscription.model";
+import { SubscriptionCreate, SubscriptionDetails, SubscriptionItem } from "./models/subscription.model";
 
 export class AgreementsService {
   private static api = new ProtocolApi()
@@ -12,7 +12,7 @@ export class AgreementsService {
 
   static async fetchAgreements() {
     return AgreementsService.api
-      .get<unknown[]>(`/agreements`)
+      .get<SubscriptionItem[]>(`/agreements`)
       .then((response) => response.data)
   }
 

@@ -11,9 +11,26 @@ export enum ScreenTabs {
   AgreementMembersList = 'agreement-members-list'
 }
 
+export type MembersSection = {
+  agreementDetails: {
+    name: string;
+    frequency: string;
+    tokenIdentifier: string;
+    price: number | undefined
+    benefits: string[];
+  };
+  membersList: string[];
+}
+
 export const AgreementScreen = () => {
   const [selectedTab, setSelectedTab] = useState<ScreenTabs>(ScreenTabs.AgreementsList)
-  const [agreementMembers, setAgreementMembers] = useState<string[]>([])
+  const [agreementMembers, setAgreementMembers] = useState<MembersSection>({agreementDetails: {
+    name: '',
+    frequency: '',
+    tokenIdentifier: "",
+    price: undefined,
+    benefits: []
+  }, membersList: []})
   
   return <div className={'container mx-auto sm:p-12 xl:p-16'}>
     {selectedTab === ScreenTabs.AgreementsList 
