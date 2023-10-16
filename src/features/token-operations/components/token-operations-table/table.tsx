@@ -1,5 +1,5 @@
 import moment from "moment/moment";
-import { ArrowDown, ArrowUp, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 import AppEnvironment from "@/environment/app.environment.ts";
 
@@ -21,6 +21,10 @@ import { TokenOperationIcon } from "./token-operation-icon.tsx";
 import { TokenOperationValueCell } from "./token-operation-value-cell.tsx";
 import { useSortByDate } from "../../hooks/useSortByDate.ts";
 import { useState } from "react";
+import { DatePickerWithRange } from "./date-range-picker.tsx";
+import { DateRange } from "react-day-picker";
+import { addDays } from "date-fns";
+import { useFilterByDateRange } from "../../hooks/useFilterByDate.tsx";
 
 type Props = {
   operations: TokenOperation[]
@@ -30,6 +34,13 @@ type Props = {
 export const TokenOperationsTable = (props: Props) => {
   const { operations, operationType } = props;
   const isAllOrTransfer = [TokenOperationType.Transfer, "all", undefined].includes(operationType);
+
+  const [date, setDate] = useState<DateRange | undefined>({
+    from: new Date(2022, 0, 20),
+    to: addDays(new Date(2022, 0, 20), 20),
+  })
+
+  // const filteredData = useFilterByDateRange(operations, date)
 
   const [triggerSorting, setTriggerSorting] = useState(false)
   const [sortAscending, setSortAscending] = useState(false)
@@ -46,16 +57,6 @@ export const TokenOperationsTable = (props: Props) => {
     setSortOrder(updateSortOrder)
   }
 
-  const SortingArrow = () => {
-    if(!triggerSorting) {
-      return
-    }
-
-    return <>
-      {sortAscending ? <ArrowUp /> : <ArrowDown />}
-    </>
-  }
-
   return (
     <Table>
       <TableHeader>
@@ -65,7 +66,13 @@ export const TokenOperationsTable = (props: Props) => {
           {isAllOrTransfer && <TableHead className={'max-md:hidden'}>Type</TableHead>}
           {isAllOrTransfer && <TableHead>From</TableHead>}
           {isAllOrTransfer && <TableHead>To</TableHead>}
-          <TableHead className={'max-lg:hidden flex items-center cursor-pointer space-x-2'} onClick={handleSorting}><div>Date</div> <SortingArrow /> </TableHead>
+          <TableHead 
+            className={'max-lg:hidden flex items-center cursor-pointer space-x-4'}>
+              <div onClick={handleSorting}>
+                Date
+              </div>
+              <DatePickerWithRange date={date} setDate={setDate} />
+          </TableHead>
           <TableHead className="max-w-[150px]"></TableHead>
         </TableRow>
       </TableHeader>
