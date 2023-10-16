@@ -42,6 +42,8 @@ export const DepositWithdrawWidget = () => {
   const { mutate: withdrawEgldHandler } = useWithdrawEgldMutation();
   const { mutate: withdrawEsdtHandler } = useWithdrawEsdtMutation();
 
+  const canPerformOperation = Number(amount) > 0 && selectedToken !== undefined;
+
   const depositToken = () => {
     if (!selectedToken) return
     
@@ -98,7 +100,7 @@ export const DepositWithdrawWidget = () => {
             <div className={'text-sm text-muted-foreground'}>
               Deposit assets into the Lunar Pay Vault.
             </div>
-            <Button size={'sm'} onClick={depositToken}>
+            <Button size={'sm'} onClick={depositToken} disabled={!canPerformOperation}>
               Deposit
               <Plus className={'ml-1 w-4 h-4'} />
             </Button>
@@ -115,7 +117,7 @@ export const DepositWithdrawWidget = () => {
             <div className={'text-sm text-muted-foreground'}>
               Withdraw assets from the Lunar Pay Vault.
             </div>
-            <Button size={'sm'} onClick={withdrawToken}>
+            <Button size={'sm'} onClick={withdrawToken} disabled={!canPerformOperation}>
               Withdraw
               <Minus className={'ml-1 w-4 h-4'} />
             </Button>
