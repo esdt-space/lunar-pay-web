@@ -7,10 +7,13 @@ import { TokenOperationType } from "@/features/token-operations/enums";
 import { TokenOperationsTable } from "@/features/token-operations/components";
 import { useTokenOperationsQuery } from "@/features/token-operations/hooks/queries";
 import { useLoadingStateContent, useEmptyStateContent } from "@/screens/app/operations/hooks";
+import { usePagination } from "@/screens/app/operations/hooks/use-pagination";
+import { PaginationButtons } from "./pagination";
 
 export const TokensOperationsScreen = () => {
   const { data: operations = [], isFetching, isFetched } = useTokenOperationsQuery();
   const [operationType, setOperationType] = useState<TokenOperationType | "all">("all");
+  const itemsPerPage = 10;
 
   const operationsFilteredByType = useMemo(() => {
     if(operationType === "all") return operations;
@@ -24,6 +27,14 @@ export const TokensOperationsScreen = () => {
 
   const emptyStateContent = useEmptyStateContent(isLoadedAndHasNoData);
   const loadingStateContent = useLoadingStateContent(isLoadingFirstTime);
+
+  const {
+    next,
+    prev,
+    currentPage,
+    currentData,
+    maxPage
+  } = usePagination(operationsFilteredByType, itemsPerPage);
 
   return (
     <div className={'container mx-auto p-4 sm:p-12 xl:p-16 space-y-3'}>
@@ -42,7 +53,10 @@ export const TokensOperationsScreen = () => {
           {loadingStateContent}
 
           {isLoadedAndHasData && (
-            <TokenOperationsTable operationType={operationType} operations={operationsFilteredByType}/>
+            <div>
+              <TokenOperationsTable operationType={operationType} operations={currentData}/>
+              <PaginationButtons currentPage={currentPage} maxPage={maxPage} prev={prev} next={next} />
+            </div>
           )}
         </CardContent>
       </Card>
