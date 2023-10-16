@@ -42,7 +42,8 @@ export function TokenSelectorWithAmount(props: Props) {
   }
 
   const changeAmountHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    props.onAmountChange(e.target.value)
+    console.log(e.target.value);
+    props.onAmountChange(e.target.value.replace(',', '.'))
   }
 
   useEffect(() => {
@@ -83,9 +84,7 @@ export function TokenSelectorWithAmount(props: Props) {
             onChange={changeAmountHandler}
             disabled={token === undefined}
             className={'border-none text-xs'}
-            style={{
-              boxShadow: 'none'
-            }}
+            style={{ boxShadow: 'none' }}
           />
         </div>
 

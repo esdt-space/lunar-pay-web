@@ -1,13 +1,16 @@
 import { ChangeEvent, useState } from "react";
 
+import { checkIsValidAddress } from "@/utils"
 import { cn, formatTokenBalance } from "@/theme/utils"
-import { checkIsValidAddress, checkTokenHasEnoughBalance } from "@/utils"
 
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 
 import { EsdtToken } from "@/features/tokens";
 import { TokenItem } from "@/features/tokens/components";
+import { TokenValueError } from "@/features/tokens/enums";
+import { tokenErrorToText } from "@/features/tokens/utils";
+import { getTokenErrorForValue } from "@/features/tokens/validation";
 import { useTokenTransferMutation } from "@/features/vault/hooks/mutations";
 
 type Props = {
@@ -21,9 +24,9 @@ export const TransferAssetComponent = ( props: Props ) => {
   const [amount, setAmount] = useState("")
   const [address, setAddress] = useState("")
   const [addressIsInvalid, setAddressIsInvalid] = useState(false)
-  const [amountExceeded, setAmountExceeded] = useState(false)
+  const [tokenValueError, setTokenValueError] = useState<null | TokenValueError>(null)
 
-  const invalidAmountStyle = amountExceeded ? "border-red-500" : ""
+  const invalidAmountStyle = tokenValueError ? "border-red-500" : ""
   const invalidAddressStyle = addressIsInvalid ? "border-red-500" : ""
 
   const { mutate: tokenTransferHandler } = useTokenTransferMutation();
@@ -40,7 +43,7 @@ export const TransferAssetComponent = ( props: Props ) => {
 
   const changeAmountHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if(selectedToken !== undefined) {
-      setAmountExceeded(!checkTokenHasEnoughBalance(selectedToken, parseInt(e.target.value)));
+      setTokenValueError(getTokenErrorForValue(selectedToken, parseInt(e.target.value)));
     }
 
     setAmount(e.target.value)
@@ -83,7 +86,7 @@ export const TransferAssetComponent = ( props: Props ) => {
         </div>
       </div>
 
-      {amountExceeded && <p className={'text-red-500 text-xs ml-2 -mt-2'}>The amount you added exceeds your assets</p>}
+      {tokenValueError && <p className={'text-red-500 text-xs ml-2 -mt-2'}>{tokenErrorToText(tokenValueError)}</p>}
 
       <Input
         type={"text"}
