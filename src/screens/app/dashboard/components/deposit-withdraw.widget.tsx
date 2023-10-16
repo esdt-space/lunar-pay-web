@@ -9,6 +9,7 @@ import { EsdtToken } from "@/features/tokens";
 import { TokenSelectorWithAmount } from "@/features/tokens/components";
 import { useAccountTokensAvailableToDeposit } from "@/features/account-tokens/hooks";
 import { useAccountVaultTokens } from "@/features/vault/hooks";
+import { getTokenErrorForValue } from "@/features/tokens/validation";
 
 import {
   useDepositEgldMutation,
@@ -35,7 +36,7 @@ export const DepositWithdrawWidget = () => {
   const { mutate: withdrawEgldHandler } = useWithdrawEgldMutation();
   const { mutate: withdrawEsdtHandler } = useWithdrawEsdtMutation();
 
-  const canPerformOperation = Number(amount) > 0 && selectedToken !== undefined;
+  const canPerformOperation = selectedToken !== undefined && !getTokenErrorForValue(selectedToken, amount);
 
   const depositToken = () => {
     if (!selectedToken) return

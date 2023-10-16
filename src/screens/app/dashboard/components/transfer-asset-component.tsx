@@ -28,6 +28,7 @@ export const TransferAssetComponent = ( props: Props ) => {
 
   const invalidAmountStyle = tokenValueError ? "border-red-500" : ""
   const invalidAddressStyle = addressIsInvalid ? "border-red-500" : ""
+  const canPerformOperation = checkIsValidAddress(address) && !getTokenErrorForValue(selectedToken, amount);
 
   const { mutate: tokenTransferHandler } = useTokenTransferMutation();
 
@@ -95,14 +96,15 @@ export const TransferAssetComponent = ( props: Props ) => {
         onChange={changeAddressHandler}
         className={cn(['text-xs', invalidAddressStyle])}
       />
+
       {addressIsInvalid && <p className={'text-red-500 text-xs ml-2 -mt-2'}>Address is Invalid</p>}
     </div>
 
     <div className={'flex flex-1 gap-2'}>
-      <Button size={'sm'} className={'flex-1'} onClick={finishCallback} >
+      <Button size={'sm'} className={'flex-1'} onClick={finishCallback}>
         Cancel
       </Button>
-      <Button size={'sm'} variant={'primary'} className={'flex-1'} onClick={sendToken} >
+      <Button size={'sm'} variant={'primary'} className={'flex-1'} onClick={sendToken} disabled={!canPerformOperation}>
         Confirm
       </Button>
     </div>
