@@ -3,6 +3,7 @@ import { MembersSection, ScreenTabs } from "../agreement.screen"
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { PaginationButtons, usePagination } from "@/components/shared/pagination";
 
 type Props = {
   setSelectedTab: React.Dispatch<React.SetStateAction<ScreenTabs>>
@@ -10,9 +11,12 @@ type Props = {
 }
 
 export const AgreementMembersList = ({setSelectedTab, agreementMembers}: Props) => {
+  const { data: membersList, ...rest} =
+    usePagination(agreementMembers.membersList, 5);
+    
   return <Card className="p-6">
 
-    <div className="flex space-x-2 cursor-pointer" onClick={() => setSelectedTab(ScreenTabs.AgreementsList)}>
+    <div className="flex space-x-2 cursor-pointer w-[100px]" onClick={() => setSelectedTab(ScreenTabs.AgreementsList)}>
       <ArrowLeft />
       <div>Back</div>
     </div>
@@ -44,18 +48,19 @@ export const AgreementMembersList = ({setSelectedTab, agreementMembers}: Props) 
           })}</div>
         </div>
 
-        {agreementMembers.membersList.map((item: any, index: number) => {
+        {membersList.map((item: string, index: number) => {
           return <div key={index} className="flex flex-1 justify-between p-4 shadow">
             <div className="flex flex-1 items-center ml-2 gap-4">
               <div>{item}</div>
             </div>
             <div className="flex items-center space-x-2">
-              <div>Display User Amount</div>
+              <div>Subscriber Amount To Claim</div>
               <Button>Claim</Button>
               <Button className="bg-red-500 hover:bg-red-500">Remove</Button>
             </div>
           </div>
         })}
+        <PaginationButtons {...{...rest}} />
     </CardContent>
   </Card>
 }
