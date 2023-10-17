@@ -1,20 +1,21 @@
-import {cn} from "@/theme/utils.ts";
-import {Badge} from "@/components/ui/badge.tsx";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+
+import { cn } from "@/theme/utils.ts";
+import { Badge } from "@/components/ui/badge.tsx";
 
 import subscriptionIllustration from "@/assets/media/subscription-illustration.svg";
 
 export function HeroPartial() {
   return (
     <div className={cn([
-      "relative container flex-col-reverse lg:flex-row flex flex-1 isolate lg:mx-auto mt-48 lg:mt-60 gap-12 lg:items-center",
+      "relative container flex-col lg:flex-row flex flex-1 isolate lg:mx-auto mt-48 lg:mt-60 gap-12 lg:items-center",
     ])}>
       <div className="flex flex-col w-full max-w-[700px] lg:max-w-none lg:w-1/2">
         <Badge variant={'outline'} className={'mb-2 py-1.5 px-4 font-bold self-start text-gray-500 animate-pulse'}>
           Coming soon on MultiversX
         </Badge>
 
-        <h1 className="text-5xl font-bold text-gray-800 leading-tight">
+        <h1 className="text-4xl font-bold text-gray-800 leading-tight">
           <span className={'font-black'}>Unlock Recurring Crypto Subscription with Lunar Pay</span>.
         </h1>
 
