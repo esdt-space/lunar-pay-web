@@ -4,4 +4,5 @@ export type TransactionItem = {
   token: string;
   date: string;
   status: string;
+  txHash: string;
 }
