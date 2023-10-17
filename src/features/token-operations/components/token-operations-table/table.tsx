@@ -19,19 +19,14 @@ import { TokenOperationType } from "../../enums";
 import { AddressCell } from "./address-cell.tsx";
 import { TokenOperationIcon } from "./token-operation-icon.tsx";
 import { TokenOperationValueCell } from "./token-operation-value-cell.tsx";
-import { DatePickerWithRange } from "./date-range-picker.tsx";
-import { DateRange } from "react-day-picker";
 
 type Props = {
   operations: TokenOperation[];
   operationType?: TokenOperationType | 'all';
-  handleSorting: () => void;
-  date: DateRange | undefined;
-  setDate: React.Dispatch<React.SetStateAction<DateRange | undefined>>;
 }
 
 export const TokenOperationsTable = (props: Props) => {
-  const { operations, operationType, handleSorting, date, setDate } = props;
+  const { operations, operationType } = props;
   const isAllOrTransfer = [TokenOperationType.Transfer, "all", undefined].includes(operationType);
 
   return (
@@ -43,13 +38,7 @@ export const TokenOperationsTable = (props: Props) => {
           {isAllOrTransfer && <TableHead className={'max-md:hidden'}>Type</TableHead>}
           {isAllOrTransfer && <TableHead>From</TableHead>}
           {isAllOrTransfer && <TableHead>To</TableHead>}
-          <TableHead 
-            className={'max-lg:hidden flex items-center cursor-pointer space-x-4'}>
-              <div onClick={handleSorting}>
-                Date
-              </div>
-              <DatePickerWithRange date={date} setDate={setDate} />
-          </TableHead>
+          <TableHead className={'max-lg:hidden'}>Date</TableHead>
           <TableHead className="max-w-[150px]"></TableHead>
         </TableRow>
       </TableHeader>

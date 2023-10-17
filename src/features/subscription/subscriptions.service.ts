@@ -16,12 +16,6 @@ export class AgreementsService {
       .then((response) => response.data)
   }
 
-  static async deleteAgreement(id: string) {
-    return this.api
-    .delete(`/agreements/${id}`)
-    .then((response) => response.data)
-  }
-  
   static async updateAgreement(id: string, input: SubscriptionDetails) {
     return this.api
     .put(`/agreements/${id}`, input)
