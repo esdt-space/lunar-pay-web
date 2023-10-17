@@ -18,7 +18,6 @@ export function HeroPartial() {
           <span className={'font-black'}>Digital Payroll, Simplified with LunarPay.</span>
         </h1>
 
-
         <p className="mt-4 mb-12 text-gray-700">
           Automating your payroll has never been easier with Lunar Pay. Our cutting-edge platform leverages the
           MultiversX blockchain to help you create and distribute salaries and bonuses seamlessly, securely, and in
