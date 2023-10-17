@@ -32,7 +32,7 @@ export const AgreementMembersList = ({setSelectedTab, agreementMembers}: Props) 
             <CardTitle>{agreementMembers.agreementDetails.name}</CardTitle>
           </div>
           <div>
-            <Button className="w-full">Edit Subscription</Button>
+            <Button className="bg-red-500 text-white hover:bg-red-500 hover:text-white">Cancel Subscription</Button>
           </div>
         </div>
       </CardHeader>
@@ -40,6 +40,7 @@ export const AgreementMembersList = ({setSelectedTab, agreementMembers}: Props) 
       <CardContent>
         <AgreementDetails currentAgreement={agreementMembers.agreementDetails} />
       </CardContent>
+      <Button className="w-full">Edit Subscription</Button>
     </Card>
 
     <Card className="p-6">
