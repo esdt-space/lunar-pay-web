@@ -18,6 +18,7 @@ import {Payroll} from "@/screens/landing/payroll";
 import {Subscriptions} from "@/screens/landing/subscriptions";
 import {Donations} from "@/screens/landing/donations";
 import {PortfolioManagement} from "@/screens/landing/portfolio-management";
+import { TransactionsScreen } from '@/screens/app/transactions';
 
 export function ApplicationRouter() {
   useScrollToTopHandler()
@@ -58,6 +59,10 @@ export function ApplicationRouter() {
 
             <Route path={RoutesConfig.tokensOperations}>
               <Route index element={<TokensOperationsScreen />} />
+            </Route>
+
+            <Route path={RoutesConfig.transactions}>
+              <Route index element={<TransactionsScreen />} />
             </Route>
           </Route>
         </Route>
