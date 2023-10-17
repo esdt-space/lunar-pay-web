@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { getPaymentFrequency } from "@/utils";
 import { Dot } from "lucide-react";
 
 export type AgreementBasicDetails = {
@@ -16,14 +17,14 @@ type Props = {
 
 export const AgreementDetails = ({currentAgreement}: Props) => {
   return <div className="flex justify-between space-x-4">
-    <div className="flex flex-col w-6/12">
-      <div className="flex">
+    <div className="flex justify-between w-6/12">
+      <div className="flex items-center">
         <div className="flex">
-          {currentAgreement.frequency}
+          {currentAgreement.price} {currentAgreement.tokenIdentifier}
           <Dot />
         </div>
         <div>
-          {currentAgreement.price} {currentAgreement.tokenIdentifier}
+          {getPaymentFrequency(currentAgreement.frequency)}
         </div>
       </div>
       <div className="flex space-x-2 items-center">

@@ -32,6 +32,7 @@ export const AgreementScreen = () => {
       && <SubscriptionsOverviewScreen setSelectedTab={setSelectedTab} setAgreementMembers={setAgreementMembers}/>}
     {selectedTab === ScreenTabs.AgreementMembersList 
       && <AgreementMembersList setSelectedTab={setSelectedTab} agreementMembers={agreementMembers} />}
+      
     {(selectedTab !== ScreenTabs.AgreementsList && selectedTab !== ScreenTabs.AgreementMembersList) 
       && <Card className="p-4">
       <CardHeader>
