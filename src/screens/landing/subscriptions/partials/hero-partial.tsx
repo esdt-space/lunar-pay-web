@@ -15,7 +15,7 @@ export function HeroPartial() {
           Coming soon on MultiversX
         </Badge>
 
-        <h1 className="text-4xl font-bold text-gray-800 leading-tight">
+        <h1 className="text-4xl font-bold text-gray-800 leading-tight max-w-xl">
           <span className={'font-black'}>Unlock Recurring Crypto Subscription with Lunar Pay</span>.
         </h1>
 

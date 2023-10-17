@@ -14,7 +14,7 @@ export function HeroPartial() {
           Coming soon on MultiversX
         </Badge>
 
-        <h1 className="text-4xl font-bold text-gray-800 leading-tight">
+        <h1 className="text-4xl font-bold text-gray-800 leading-tight max-w-md">
           <span className={'font-black'}>Digital Payroll, Simplified with LunarPay.</span>
         </h1>
 
