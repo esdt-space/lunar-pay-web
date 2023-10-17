@@ -1,10 +1,9 @@
-import { ArrowLeft, Dot } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { MembersSection, ScreenTabs } from "../agreement.screen"
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PaginationButtons, usePagination } from "@/components/shared/pagination";
 import { MembersList } from "./membes-list";
+import { AgreementDetails } from "./agreement-details";
 
 type Props = {
   setSelectedTab: React.Dispatch<React.SetStateAction<ScreenTabs>>
@@ -27,27 +26,7 @@ export const AgreementMembersList = ({setSelectedTab, agreementMembers}: Props) 
       </CardHeader>
 
       <CardContent>
-        <div className="flex flex-col space-y-4 p-4 shadow">
-          <div className="flex justify-between">
-            <div className="flex">
-              <div className="flex">
-                {agreementMembers.agreementDetails.frequency}
-                <Dot />
-              </div>
-              <div>
-                {agreementMembers.agreementDetails.price} {agreementMembers.agreementDetails.tokenIdentifier}
-              </div>
-            </div>
-            <div className="flex space-x-2 items-center">
-              <div>Total Amount</div>
-              <Button>Claim</Button>
-            </div>
-          </div>
-          <Separator />
-          <div>{agreementMembers.agreementDetails.benefits.map((item, index) => {
-            return <div key={index} className="flex"><Dot /> {item}</div>
-          })}</div>
-        </div>
+        <AgreementDetails currentAgreement={agreementMembers.agreementDetails} />
       </CardContent>
     </Card>
 

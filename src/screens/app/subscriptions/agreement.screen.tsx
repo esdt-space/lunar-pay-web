@@ -3,6 +3,7 @@ import { PaymentDetailsWidget, AgreementDetailsWidget } from "./components"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent } from "@/components/ui/tabs"
 import { AgreementMembersList, SubscriptionsOverviewScreen } from "./overview"
+import { AgreementBasicDetails } from "./overview/agreement-details"
 
 export enum ScreenTabs {
   AgreementsList = 'agreements-list',
@@ -12,13 +13,7 @@ export enum ScreenTabs {
 }
 
 export type MembersSection = {
-  agreementDetails: {
-    name: string;
-    frequency: string;
-    tokenIdentifier: string;
-    price: number | undefined
-    benefits: string[];
-  };
+  agreementDetails: AgreementBasicDetails;
   membersList: string[];
 }
 

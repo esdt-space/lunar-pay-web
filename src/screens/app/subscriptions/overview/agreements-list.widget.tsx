@@ -47,7 +47,16 @@ export const SubscriptionsListScreen = ({setSelectedTab, setAgreementMembers}: P
         </div>
 
         <div className="flex items-center mr-2 gap-4">
-          <div className="mr-8 cursor-pointer" onClick={() => getMembers(item.name, item.agreementType.frequency, item.agreementType.amountType.amount, item.tokenIdentifier, item.benefits, item.agreementType.senders)}>
+          <div 
+            className="mr-8 cursor-pointer" 
+            onClick={() => getMembers(
+              item.name, 
+              item.agreementType.frequency, 
+              item.agreementType.amountType.amount, 
+              item.tokenIdentifier, 
+              item.benefits, 
+              item.agreementType.senders)}
+          >
             <Users />
             {item.agreementType.senders.length}
           </div>
