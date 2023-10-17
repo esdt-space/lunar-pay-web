@@ -6,20 +6,20 @@ import { AppIcon } from "@/components/shared/app-icon.tsx";
 import { cn } from "@/theme/utils.ts";
 import { RoutesConfig } from "@/navigation";
 
-type NavItemProps = {
-  text: string;
-  location: string;
-};
+// type NavItemProps = {
+//   text: string;
+//   location: string;
+// };
 
-function NavItem(props: NavItemProps) {
-  return (
-    <li>
-      <Link to={props.location} className='block transition hover:text-primary md:px-4'>
-        {props.text}
-      </Link>
-    </li>
-  );
-}
+// function NavItem(props: NavItemProps) {
+//   return (
+//     <li>
+//       <Link to={props.location} className='block transition hover:text-primary md:px-4'>
+//         {props.text}
+//       </Link>
+//     </li>
+//   );
+// }
 
 export function PublicPageHeader() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -53,16 +53,16 @@ export function PublicPageHeader() {
             ])}>
               <div className="text-gray-600 lg:pr-4">
                 <ul className={cn("space-y-6 text-base font-medium tracking-wide", "lg:flex lg:space-y-0 lg:text-sm")}>
-                  <NavItem text="Solutions" location="/pages/solution" />
+                  {/*<NavItem text="Solutions" location="/pages/solution" />*/}
                   {/*<NavItem text="Customers" location="/pages/customers" />*/}
                   {/*<NavItem text="Pricing" location="/pages/pricing" />*/}
-                  <NavItem text="About" location="/pages/about" />
+                  {/*<NavItem text="About" location="/pages/about" />*/}
                 </ul>
               </div>
 
               <div className={cn(
                 "mt-12 -ml-1 flex w-full flex-col space-y-2",
-                "sm:flex-row md:w-max lg:mt-0 lg:mr-6 lg:space-y-0 lg:border-l lg:pl-6"
+                "sm:flex-row md:w-max lg:mt-0 lg:mr-6 lg:space-y-0 _lg:border-l lg:pl-6"
               )}>
                 <Link to={RoutesConfig.dashboard} className={cn(
                   "relative ml-auto flex h-9 w-full items-center justify-center",
