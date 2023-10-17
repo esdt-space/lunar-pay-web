@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PaginationButtons, usePagination } from "@/components/shared/pagination";
+import { MembersList } from "./membes-list";
 
 type Props = {
   setSelectedTab: React.Dispatch<React.SetStateAction<ScreenTabs>>
@@ -14,18 +15,18 @@ export const AgreementMembersList = ({setSelectedTab, agreementMembers}: Props) 
   const { data: membersList, ...rest} =
     usePagination(agreementMembers.membersList, 5);
     
-  return <Card className="p-6">
+  return <div className="space-y-4">
+    <Card className="p-6">
+      <div className="flex space-x-2 cursor-pointer w-[100px]" onClick={() => setSelectedTab(ScreenTabs.AgreementsList)}>
+        <ArrowLeft />
+        <div>Back</div>
+      </div>
 
-    <div className="flex space-x-2 cursor-pointer w-[100px]" onClick={() => setSelectedTab(ScreenTabs.AgreementsList)}>
-      <ArrowLeft />
-      <div>Back</div>
-    </div>
+      <CardHeader className="p-6">
+        <CardTitle>{agreementMembers.agreementDetails.name}</CardTitle>
+      </CardHeader>
 
-    <CardHeader className="p-6">
-      <CardTitle>{agreementMembers.agreementDetails.name}</CardTitle>
-    </CardHeader>
-
-    <CardContent className="space-y-4">
+      <CardContent>
         <div className="flex flex-col space-y-4 p-4 shadow">
           <div className="flex justify-between">
             <div className="flex">
@@ -47,20 +48,14 @@ export const AgreementMembersList = ({setSelectedTab, agreementMembers}: Props) 
             return <div key={index} className="flex"><Dot /> {item}</div>
           })}</div>
         </div>
+      </CardContent>
+    </Card>
 
-        {membersList.map((item: string, index: number) => {
-          return <div key={index} className="flex flex-1 justify-between p-4 shadow">
-            <div className="flex flex-1 items-center ml-2 gap-4">
-              <div>{item}</div>
-            </div>
-            <div className="flex items-center space-x-2">
-              <div>Subscriber Amount To Claim</div>
-              <Button>Claim</Button>
-              <Button className="bg-red-500 hover:bg-red-500">Remove</Button>
-            </div>
-          </div>
-        })}
+    <Card className="p-6">
+      <CardContent className="space-y-4">
+        <MembersList membersList={membersList}/>
         <PaginationButtons {...{...rest}} />
-    </CardContent>
-  </Card>
+      </CardContent>
+    </Card>
+  </div>
 }

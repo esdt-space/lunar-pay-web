@@ -29,7 +29,7 @@ export const SubscriptionsListScreen = ({setSelectedTab, setAgreementMembers}: P
 
   return <div className={'container mx-auto space-y-4 sm:p-12 xl:p-16'}>
     {agreementsList.map((item: any, index: number) => {
-      return <div key={index} className="flex flex-1 justify-between rounded-md border border-blue-500 bg-gradiant-to-r from-blue-500 to-red-500 p-4 shadow">
+      return <div key={index} className="flex flex-1 justify-between rounded-md border p-4 shadow">
         <div className="flex flex-1 items-center ml-2 gap-4">
           <Star className="cursor-pointer" />
           <div className="flex flex-col">
