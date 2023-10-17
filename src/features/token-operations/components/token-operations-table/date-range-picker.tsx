@@ -9,8 +9,8 @@ import {
 } from "@/components/ui/popover"
 
 type Props = {
-    date: DateRange | undefined;
-    setDate: React.Dispatch<React.SetStateAction<DateRange | undefined>>;
+  date: DateRange | undefined;
+  setDate: React.Dispatch<React.SetStateAction<DateRange | undefined>>;
 }
  
 export function DatePickerWithRange({date, setDate}: Props) {
