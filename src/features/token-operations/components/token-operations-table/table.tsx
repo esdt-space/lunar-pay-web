@@ -19,35 +19,20 @@ import { TokenOperationType } from "../../enums";
 import { AddressCell } from "./address-cell.tsx";
 import { TokenOperationIcon } from "./token-operation-icon.tsx";
 import { TokenOperationValueCell } from "./token-operation-value-cell.tsx";
-import { useSortByDate } from "../../hooks/useSortByDate.ts";
-import { useState } from "react";
 import { DatePickerWithRange } from "./date-range-picker.tsx";
 import { DateRange } from "react-day-picker";
-import { useFilterByDateRange } from "../../hooks/useFilterByDate.tsx";
 
 type Props = {
-  operations: TokenOperation[]
-  operationType?: TokenOperationType | 'all'
+  operations: TokenOperation[];
+  operationType?: TokenOperationType | 'all';
+  handleSorting: () => void;
+  date: DateRange | undefined;
+  setDate: React.Dispatch<React.SetStateAction<DateRange | undefined>>;
 }
 
 export const TokenOperationsTable = (props: Props) => {
-  const { operations, operationType } = props;
+  const { operations, operationType, handleSorting, date, setDate } = props;
   const isAllOrTransfer = [TokenOperationType.Transfer, "all", undefined].includes(operationType);
-
-  const [date, setDate] = useState<DateRange | undefined>(undefined)
-
-  const filteredData = useFilterByDateRange(operations, date)
-
-  const [sortDescending, setSortDescending] = useState(false)
-  const [sortOrder, setSortOrder] = useState('desc')
-  const renderValues = useSortByDate(date !== undefined ? filteredData : operations, sortOrder)
-
-  const handleSorting = () => {
-    const updateSortOrder = sortDescending ? "desc" : "asc"
-
-    setSortDescending(!sortDescending)
-    setSortOrder(updateSortOrder)
-  }
 
   return (
     <Table>
@@ -69,7 +54,7 @@ export const TokenOperationsTable = (props: Props) => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {renderValues.map((item, index) => (
+        {operations.map((item, index) => (
           <TableRow key={index}>
             <TableCell>
               <TokenOperationIcon operation={item} />

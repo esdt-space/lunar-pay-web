@@ -9,6 +9,9 @@ import { useTokenOperationsQuery } from "@/features/token-operations/hooks/queri
 import { useLoadingStateContent, useEmptyStateContent } from "@/screens/app/operations/hooks";
 import { usePagination } from "@/screens/app/operations/hooks/use-pagination";
 import { PaginationButtons } from "./pagination";
+import { DateRange } from "react-day-picker";
+import { useFilterByDateRange } from "@/features/token-operations/hooks/useFilterByDate";
+import { useSortByDate } from "@/features/token-operations/hooks/useSortByDate";
 
 export const TokensOperationsScreen = () => {
   const { data: operations = [], isFetching, isFetched } = useTokenOperationsQuery();
@@ -28,13 +31,28 @@ export const TokensOperationsScreen = () => {
   const emptyStateContent = useEmptyStateContent(isLoadedAndHasNoData);
   const loadingStateContent = useLoadingStateContent(isLoadingFirstTime);
 
+  const [date, setDate] = useState<DateRange | undefined>(undefined)
+
+  const filteredData = useFilterByDateRange(operationsFilteredByType, date)
+
+  const [sortDescending, setSortDescending] = useState(false)
+  const [sortOrder, setSortOrder] = useState('desc')
+  const sortedData = useSortByDate(date !== undefined ? filteredData : operationsFilteredByType, sortOrder)
+
+  const handleSorting = () => {
+    const updateSortOrder = sortDescending ? "desc" : "asc"
+
+    setSortDescending(!sortDescending)
+    setSortOrder(updateSortOrder)
+  }
+
   const {
     next,
     prev,
     currentPage,
     currentData,
     maxPage
-  } = usePagination(operationsFilteredByType, itemsPerPage);
+  } = usePagination(sortedData, itemsPerPage);
 
   return (
     <div className={'container mx-auto p-4 sm:p-12 xl:p-16 space-y-3'}>
@@ -54,7 +72,12 @@ export const TokensOperationsScreen = () => {
 
           {isLoadedAndHasData && (
             <div>
-              <TokenOperationsTable operationType={operationType} operations={currentData}/>
+              <TokenOperationsTable 
+                operationType={operationType} 
+                operations={currentData}
+                date={date}
+                setDate={setDate}
+                handleSorting={handleSorting} />
               <PaginationButtons currentPage={currentPage} maxPage={maxPage} prev={prev} next={next} />
             </div>
           )}
