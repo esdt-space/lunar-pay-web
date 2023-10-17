@@ -2,13 +2,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { EsdtToken } from "@/features/tokens";
 import { EsdtTokenSelector } from "@/features/tokens/components"
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { ScreenTabs } from "../agreement.screen";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { checkTokenHasEnoughBalance } from "@/utils";
+import {TokenValueError} from "@/features/tokens/enums";
+import {getTokenErrorForValue} from "@/features/tokens/validation";
+import {tokenErrorToText} from "@/features/tokens/utils";
 import { useAccountTokensList } from "@/features/account-tokens/hooks";
-import { AgreementsService } from "@/features/subscription/subscriptions.service";
 import { FrequencyType } from "@/features/subscription/models/agreement-types.model";
+import { AgreementsService } from "@/features/subscription/subscriptions.service";
 
 type Props = {
   setSelectedTab: React.Dispatch<React.SetStateAction<ScreenTabs>>
@@ -22,7 +24,7 @@ export const PaymentDetailsWidget = ({setSelectedTab}: Props) => {
   const [selectedToken, setSelectedToken] = useState<EsdtToken | undefined>(undefined);
   const [amount, setAmount] = useState('')
   const [frequency, setFrequency] = useState<FrequencyType>('M')
-  const [amountExceeded, setAmountExceeded] = useState(false)
+  const [tokenValueError, setTokenValueError] = useState<null | TokenValueError>(null)
 
   const tokens = useAccountTokensList();
 
@@ -51,19 +53,14 @@ export const PaymentDetailsWidget = ({setSelectedTab}: Props) => {
   }
 
   const changeAmountHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    if(selectedToken !== undefined) {
+      setTokenValueError(getTokenErrorForValue(selectedToken, e.target.value));
+    }
+
     setAmount(e.target.value)
   }
 
-  useEffect(() => {
-    if (!selectedToken || !amount) {
-      setAmountExceeded(false);
-      return ;
-    }
-
-    setAmountExceeded(!checkTokenHasEnoughBalance(selectedToken, amount));
-  }, [selectedToken, amount]);
-
-  const invalidAmountStyle = amountExceeded ? "border-red-500" : ""
+  const invalidAmountStyle = tokenValueError ? "border-red-500" : ""
   
   return <div className="space-y-4 pt-6">
     <EsdtTokenSelector
@@ -82,7 +79,7 @@ export const PaymentDetailsWidget = ({setSelectedTab}: Props) => {
             value={amount}
             onChange={changeAmountHandler} />
 
-          {amountExceeded && <p className={'text-red-500 text-xs ml-2'}>The amount you added exceeds your assets</p>}
+          {tokenValueError && <p className={'text-red-500 text-xs ml-2'}>{tokenErrorToText(tokenValueError)}</p>}
         </div>
         <div className="w-3/12">
           <Select onValueChange={(item: FrequencyType) => setFrequency(item)} defaultValue={frequency}>

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowUpRight, Minus, Plus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -7,8 +7,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs.t
 
 import { EsdtToken } from "@/features/tokens";
 import { TokenSelectorWithAmount } from "@/features/tokens/components";
-import { useAccountTokensList } from "@/features/account-tokens/hooks";
-import { useWhitelistedVaultTokens, useAccountVaultTokens } from "@/features/vault/hooks";
+import { useAccountTokensAvailableToDeposit } from "@/features/account-tokens/hooks";
+import { useAccountVaultTokens } from "@/features/vault/hooks";
+import { getTokenErrorForValue } from "@/features/tokens/validation";
 
 import {
   useDepositEgldMutation,
@@ -27,20 +28,15 @@ export const DepositWithdrawWidget = () => {
   const [selectedToken, setSelectedToken] = useState<EsdtToken | undefined>(undefined);
   const [selectedTab, setSelectedTab] = useState<WidgetTabs>(WidgetTabs.Deposit)
 
-  const accountTokens = useAccountTokensList();
   const { vaultTokens} = useAccountVaultTokens();
-  const whitelistedTokens = useWhitelistedVaultTokens();
-
-  const depositTokensList = useMemo(() => {
-    const whitelistedTokenIds = whitelistedTokens.map(item => item.identifier);
-
-    return accountTokens.filter(item => whitelistedTokenIds.includes(item.identifier));
-  }, [accountTokens, whitelistedTokens]);
+  const depositTokensList = useAccountTokensAvailableToDeposit();
 
   const { mutate: depositEgldHandler } = useDepositEgldMutation();
   const { mutate: depositEsdtHandler } = useDepositEsdtMutation();
   const { mutate: withdrawEgldHandler } = useWithdrawEgldMutation();
   const { mutate: withdrawEsdtHandler } = useWithdrawEsdtMutation();
+
+  const canPerformOperation = selectedToken !== undefined && !getTokenErrorForValue(selectedToken, amount);
 
   const depositToken = () => {
     if (!selectedToken) return
@@ -98,7 +94,7 @@ export const DepositWithdrawWidget = () => {
             <div className={'text-sm text-muted-foreground'}>
               Deposit assets into the Lunar Pay Vault.
             </div>
-            <Button size={'sm'} onClick={depositToken}>
+            <Button size={'sm'} onClick={depositToken} disabled={!canPerformOperation}>
               Deposit
               <Plus className={'ml-1 w-4 h-4'} />
             </Button>
@@ -115,7 +111,7 @@ export const DepositWithdrawWidget = () => {
             <div className={'text-sm text-muted-foreground'}>
               Withdraw assets from the Lunar Pay Vault.
             </div>
-            <Button size={'sm'} onClick={withdrawToken}>
+            <Button size={'sm'} onClick={withdrawToken} disabled={!canPerformOperation}>
               Withdraw
               <Minus className={'ml-1 w-4 h-4'} />
             </Button>

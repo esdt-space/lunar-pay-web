@@ -16,6 +16,12 @@ module.exports = {
       },
     },
     extend: {
+      transitionDuration: {
+        '0': '0ms',
+        '2000': '2000ms',
+        '10000': '10000ms',
+        '20000': '20000ms',
+      },
       screens: {
         "2xl": "1400px",
       },

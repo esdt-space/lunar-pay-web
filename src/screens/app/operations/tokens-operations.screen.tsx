@@ -1,28 +1,40 @@
 import { useMemo, useState } from "react";
 
+import { Input } from "@/components/ui/input.tsx";
 import { Card, CardContent } from "@/components/ui/card.tsx";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { usePagination, PaginationButtons } from "@/components/shared/pagination";
 
 import { TokenOperationType } from "@/features/token-operations/enums";
 import { TokenOperationsTable } from "@/features/token-operations/components";
 import { useTokenOperationsQuery } from "@/features/token-operations/hooks/queries";
 import { useLoadingStateContent, useEmptyStateContent } from "@/screens/app/operations/hooks";
-import { usePagination } from "@/screens/app/operations/hooks/use-pagination";
-import { PaginationButtons } from "./pagination";
 import { DateRange } from "react-day-picker";
 import { useFilterByDateRange } from "@/features/token-operations/hooks/useFilterByDate";
 import { useSortByDate } from "@/features/token-operations/hooks/useSortByDate";
 
 export const TokensOperationsScreen = () => {
   const { data: operations = [], isFetching, isFetched } = useTokenOperationsQuery();
+
+  const [filterValue, setFilterValue] = useState("")
   const [operationType, setOperationType] = useState<TokenOperationType | "all">("all");
-  const itemsPerPage = 10;
 
   const operationsFilteredByType = useMemo(() => {
     if(operationType === "all") return operations;
 
     return operations.filter(item => item.type === operationType);
   }, [operations, operationType]);
+
+  const operationsFilteredByValue = useMemo(() => {
+    if(filterValue === "") return operationsFilteredByType;
+    const lowercaseFilterValue = filterValue.toLocaleLowerCase();
+
+    return operationsFilteredByType.filter(item =>
+      item.sender.toLocaleLowerCase().includes(lowercaseFilterValue) ||
+      item.receiver.toLocaleLowerCase().includes(lowercaseFilterValue) ||
+      item.tokenIdentifier.toLocaleLowerCase().includes(lowercaseFilterValue)
+    );
+  }, [operationsFilteredByType, filterValue]);
 
   const isLoadingFirstTime = !isFetched && isFetching;
   const isLoadedAndHasData = isFetched && operations.length > 0;
@@ -33,11 +45,11 @@ export const TokensOperationsScreen = () => {
 
   const [date, setDate] = useState<DateRange | undefined>(undefined)
 
-  const filteredData = useFilterByDateRange(operationsFilteredByType, date)
+  const filteredData = useFilterByDateRange(operationsFilteredByValue, date)
 
   const [sortDescending, setSortDescending] = useState(false)
   const [sortOrder, setSortOrder] = useState('desc')
-  const sortedData = useSortByDate(date !== undefined ? filteredData : operationsFilteredByType, sortOrder)
+  const sortedData = useSortByDate(date !== undefined ? filteredData : operationsFilteredByValue, sortOrder)
 
   const handleSorting = () => {
     const updateSortOrder = sortDescending ? "desc" : "asc"
@@ -46,24 +58,28 @@ export const TokensOperationsScreen = () => {
     setSortOrder(updateSortOrder)
   }
 
-  const {
-    next,
-    prev,
-    currentPage,
-    currentData,
-    maxPage
-  } = usePagination(sortedData, itemsPerPage);
+  const { data: paginatedOperations, ...rest} =
+    usePagination(sortedData, 5);
 
   return (
     <div className={'container mx-auto p-4 sm:p-12 xl:p-16 space-y-3'}>
-      <Tabs defaultValue="all" onValueChange={(value) => setOperationType(value as TokenOperationType)}>
-        <TabsList className={'self-start mb-2'}>
-          <TabsTrigger value={'all'} disabled={isLoadingFirstTime}>All</TabsTrigger>
-          <TabsTrigger value={TokenOperationType.Deposit} disabled={isLoadingFirstTime}>Deposits</TabsTrigger>
-          <TabsTrigger value={TokenOperationType.Withdraw} disabled={isLoadingFirstTime}>Withdrawals</TabsTrigger>
-          <TabsTrigger value={TokenOperationType.Transfer} disabled={isLoadingFirstTime}>Transfers</TabsTrigger>
-        </TabsList>
-      </Tabs>
+      <div className={'flex justify-between gap-12'}>
+        <Tabs defaultValue="all" onValueChange={(value) => setOperationType(value as TokenOperationType)}>
+          <TabsList className={'self-start mb-2'}>
+            <TabsTrigger value={'all'} disabled={isLoadingFirstTime}>All</TabsTrigger>
+            <TabsTrigger value={TokenOperationType.Deposit} disabled={isLoadingFirstTime}>Deposits</TabsTrigger>
+            <TabsTrigger value={TokenOperationType.Withdraw} disabled={isLoadingFirstTime}>Withdrawals</TabsTrigger>
+            <TabsTrigger value={TokenOperationType.Transfer} disabled={isLoadingFirstTime}>Transfers</TabsTrigger>
+          </TabsList>
+        </Tabs>
+
+        <Input
+          value={filterValue}
+          onChange={e => setFilterValue(e.target.value)}
+          placeholder={'Filter ...'}
+          className={'justify-self-end max-w-sm'}
+        />
+      </div>
 
       <Card>
         <CardContent className={'p-0'}>
@@ -74,11 +90,11 @@ export const TokensOperationsScreen = () => {
             <div>
               <TokenOperationsTable 
                 operationType={operationType} 
-                operations={currentData}
+                operations={paginatedOperations}
                 date={date}
                 setDate={setDate}
                 handleSorting={handleSorting} />
-              <PaginationButtons currentPage={currentPage} maxPage={maxPage} prev={prev} next={next} />
+              <PaginationButtons {...{...rest}} />
             </div>
           )}
         </CardContent>

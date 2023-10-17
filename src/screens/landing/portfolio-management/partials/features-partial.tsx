@@ -30,27 +30,27 @@ export function FeaturesPartial() {
       <div className="container mx-auto p-10 pb-40 z-[3]">
         <section className="text-center">
           <h2 className="text-4xl font-bold text-gray-900 mb-4 pt-10">
-            Features
+            Why Choose Lunar Pay Portfolio Management?
           </h2>
-          <ul className="grid grid-cols-1 md:grid-cols-2 gap-16 mt-16">
+          <ul className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-16">
             <Item
-              title={'Customizable Donation Pages'}
-              description={'Design your donation pages to match your brand, cause, or campaign, creating a unique and engaging giving experience.'}
+              title={'Multi-Recipient Transfers'}
+              description={'Streamline your transactions by distributing tokens to multiple recipients simultaneously. Our efficient system ensures both time and cost savings, simplifying your asset management.'}
             />
 
             <Item
-              title={'Easy Integration'}
-              description={'Easily integrate Lunar Pay Donations into your website, social media, or blog with our developer-friendly tools and plugins.'}
+              title={'Comprehensive Analytics'}
+              description={'Stay ahead of the curve with real-time tracking and reporting. Lunar Pay provides you with a comprehensive view of your portfolio\'s performance, allowing you to make data-driven investment choices.'}
             />
 
             <Item
-              title={'Real-time Donation Tracking'}
-              description={'Stay updated with real-time insights into your fundraising progress, enabling you to adjust your strategy and reach your goals effectively.'}
+              title={'Adaptable and Future-Ready'}
+              description={'Our platform grows and evolves with the dynamic crypto world, keeping you always ahead of the curve.'}
             />
 
             <Item
-              title={'Donor Analytics'}
-              description={'Understand your donors better with in-depth analytics, helping you tailor your communication and engagement strategies.'}
+              title={'Security and Trust'}
+              description={'Rest easy knowing that your assets are secure. Lunar Pay prioritizes the highest security standards, ensuring your investments are protected against threats.'}
             />
           </ul>
         </section>

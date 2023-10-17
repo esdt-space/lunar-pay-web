@@ -1,9 +1,8 @@
-import { Link } from "react-router-dom";
-
 import { cn } from "@/theme/utils.ts";
+import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge.tsx";
 
-import subscriptionIllustration from "@/assets/media/subscription-illustration.svg";
+import payrollIllustration from "@/assets/media/payroll-illustration.svg";
 
 export function HeroPartial() {
   return (
@@ -15,12 +14,15 @@ export function HeroPartial() {
           Coming soon on MultiversX
         </Badge>
 
-        <h1 className="text-4xl font-bold text-gray-800 leading-tight max-w-xl">
-          <span className={'font-black'}>Unlock Recurring Crypto Subscription with Lunar Pay</span>.
+        <h1 className="text-4xl font-bold text-gray-800 leading-tight max-w-md">
+          <span className={'font-black'}>Digital Payroll, Simplified with LunarPay.</span>
         </h1>
 
         <p className="mt-4 mb-12 text-gray-700">
-          Generate subscription revenue in seconds with Lunar Pay's cutting-edge crypto subscription solution. Elevate your business, maximize conversion, and ensure long-term customer retention.
+          Automating your payroll has never been easier with Lunar Pay. Our cutting-edge platform leverages the
+          MultiversX blockchain to help you create and distribute salaries and bonuses seamlessly, securely, and in
+          full compliance. Say goodbye to manual crypto payments and hello to a more efficient and hassle-free payroll
+          experience.
         </p>
 
         <Link
@@ -31,8 +33,8 @@ export function HeroPartial() {
         </Link>
       </div>
 
-      <div className={cn(["w-3/2 lg:w-1/2 max-w-2xl"])}>
-        <img alt={'donation-widget'} src={subscriptionIllustration} className={'object-cover'}/>
+      <div className={cn(["w-3/2 lg:w-1/2"])}>
+        <img alt={'donation-widget'} src={payrollIllustration} className={'object-cover hover:scale-[1.1] duration-2000'}/>
       </div>
     </div>
   )

@@ -2,8 +2,8 @@ import { Address } from '@multiversx/sdk-core/out'
 
 function isValidAddress(address: string) {
   try {
-    new Address(address)
-    return true
+    const addressObj = new Address(address)
+    return !addressObj.isEmpty();
   } catch (error) {
     return false
   }

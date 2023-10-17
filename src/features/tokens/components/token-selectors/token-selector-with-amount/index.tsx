@@ -7,7 +7,9 @@ import { Select } from '@/components/ui/select'
 
 import { EsdtToken } from '@/features/tokens'
 import { TokenLogo } from '@/features/tokens/components'
-import { checkTokenHasEnoughBalance } from "@/utils/validation";
+import { TokenValueError } from "@/features/tokens/enums";
+import { tokenErrorToText } from "@/features/tokens/utils";
+import { getTokenErrorForValue } from "@/features/tokens/validation";
 
 import { TokenSelectorDialog } from '../token-selector-dialog'
 
@@ -24,7 +26,7 @@ export function TokenSelectorWithAmount(props: Props) {
   const { tokens = [], token, amount, hasMaxButton = true } = props
 
   const [isOpen, setIsOpen] = useState(false)
-  const [amountExceeded, setAmountExceeded] = useState(false)
+  const [tokenError, setTokenError] = useState<null | TokenValueError>(null)
 
   const closeDialogHandler = () => setIsOpen(false)
 
@@ -40,19 +42,20 @@ export function TokenSelectorWithAmount(props: Props) {
   }
 
   const changeAmountHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    props.onAmountChange(e.target.value)
+    console.log(e.target.value);
+    props.onAmountChange(e.target.value.replace(',', '.'))
   }
 
   useEffect(() => {
     if (!token || !amount) {
-      setAmountExceeded(false);
+      setTokenError(null);
       return ;
     }
 
-    setAmountExceeded(!checkTokenHasEnoughBalance(token, amount));
+    setTokenError(getTokenErrorForValue(token, amount));
   }, [token, amount]);
   
-  const invalidAmountStyle = amountExceeded ? "border-red-500" : ""
+  const invalidAmountStyle = tokenError ? "border-red-500" : ""
   const hasTokens = tokens.length > 0;
 
   return (
@@ -61,7 +64,7 @@ export function TokenSelectorWithAmount(props: Props) {
         <div className='cursor-pointer mr-auto lg:w-5/12' onClick={() => hasTokens && setIsOpen(true)}>
           {token !== undefined && (
             <div className={`flex gap-2 items-center`}>
-              <TokenLogo className={'w-4 h-4'} token={token as EsdtToken}/>
+              <TokenLogo className={'w-4 h-4'} token={token}/>
               <span className={'text-xs'}>{(token as EsdtToken).name}</span>
             </div>
           )}
@@ -81,9 +84,7 @@ export function TokenSelectorWithAmount(props: Props) {
             onChange={changeAmountHandler}
             disabled={token === undefined}
             className={'border-none text-xs'}
-            style={{
-              boxShadow: 'none'
-            }}
+            style={{ boxShadow: 'none' }}
           />
         </div>
 
@@ -97,7 +98,7 @@ export function TokenSelectorWithAmount(props: Props) {
         )}
       </div>
 
-      {amountExceeded && <p className={'text-red-500 text-xs ml-2 -mt-4'}>The amount you added exceeds your assets</p>}
+      {tokenError && <p className={'text-red-500 text-xs ml-2 -mt-4'}>{tokenErrorToText(tokenError)}</p>}
 
       <TokenSelectorDialog
         value={token}
