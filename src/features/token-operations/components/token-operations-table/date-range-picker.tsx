@@ -1,4 +1,3 @@
-import * as React from "react"
 import { Calendar as CalendarIcon } from "lucide-react"
 import { DateRange } from "react-day-picker"
 
@@ -25,7 +24,6 @@ export function DatePickerWithRange({date, setDate}: Props) {
           <Calendar
             initialFocus
             mode="range"
-            defaultMonth={date?.from}
             selected={date}
             onSelect={setDate}
             numberOfMonths={1}

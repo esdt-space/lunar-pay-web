@@ -1,40 +1,34 @@
 import { useState, useEffect } from 'react';
 import { TokenOperation } from '../models';
+import { DateRange } from 'react-day-picker';
 
-type DateFilterParams = {
-  startDate?: string | null;
-  endDate?: string | null;
-}
-
-export const useFilterByDateRange = (initialObjects: TokenOperation[], { startDate, endDate }: DateFilterParams): TokenOperation[] => {
-  const [filteredData, setFilteredData] = useState<TokenOperation[]>(initialObjects);
+export const useFilterByDateRange = (initialData: TokenOperation[], dateRange: DateRange | undefined): TokenOperation[] => {
+  const [filteredData, setFilteredData] = useState<TokenOperation[]>(initialData);
 
   useEffect(() => {
     function filterByDateRange() {
-      if (!startDate && !endDate) {
-        setFilteredData(initialObjects);
+      if (!dateRange || (!dateRange.from && !dateRange.to)) {
+        setFilteredData(initialData);
+
         return;
       }
 
-      let start = startDate ? new Date(startDate).getTime() : -Infinity;
-      let end = endDate ? new Date(endDate).getTime() : Infinity;
+      let start = dateRange.from ? dateRange.from : -Infinity;
+      let end = dateRange.to ? dateRange.to : Infinity;
 
-      if ((startDate && isNaN(start)) || (endDate && isNaN(end))) {
-        throw new Error('Invalid date format');
-      }
+      const result = initialData.filter((item) => {
+        const objTime = new Date(item.createdAt);
 
-      const result = initialObjects.filter((obj) => {
-        const objTime = new Date(obj.createdAt).getTime();
         return objTime >= start && objTime <= end;
       });
 
       setFilteredData(result);
     }
 
-    if (initialObjects) {
+    if (initialData) {
       filterByDateRange();
     }
-  }, [initialObjects, startDate, endDate]);
+  }, [initialData, dateRange]);
 
   return filteredData;
 }

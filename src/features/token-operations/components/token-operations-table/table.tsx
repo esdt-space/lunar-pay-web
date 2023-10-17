@@ -23,7 +23,6 @@ import { useSortByDate } from "../../hooks/useSortByDate.ts";
 import { useState } from "react";
 import { DatePickerWithRange } from "./date-range-picker.tsx";
 import { DateRange } from "react-day-picker";
-import { addDays } from "date-fns";
 import { useFilterByDateRange } from "../../hooks/useFilterByDate.tsx";
 
 type Props = {
@@ -35,25 +34,18 @@ export const TokenOperationsTable = (props: Props) => {
   const { operations, operationType } = props;
   const isAllOrTransfer = [TokenOperationType.Transfer, "all", undefined].includes(operationType);
 
-  const [date, setDate] = useState<DateRange | undefined>({
-    from: new Date(2022, 0, 20),
-    to: addDays(new Date(2022, 0, 20), 20),
-  })
+  const [date, setDate] = useState<DateRange | undefined>(undefined)
 
-  // const filteredData = useFilterByDateRange(operations, date)
+  const filteredData = useFilterByDateRange(operations, date)
 
-  const [triggerSorting, setTriggerSorting] = useState(false)
-  const [sortAscending, setSortAscending] = useState(false)
-  const [sortOrder, setSortOrder] = useState('asc')
-  const sortedOperations = useSortByDate(operations, sortOrder)
-
-  const renderValues = triggerSorting ? sortedOperations : operations
+  const [sortDescending, setSortDescending] = useState(false)
+  const [sortOrder, setSortOrder] = useState('desc')
+  const renderValues = useSortByDate(date !== undefined ? filteredData : operations, sortOrder)
 
   const handleSorting = () => {
-    const updateSortOrder = sortAscending ? "asc" : "desc"
+    const updateSortOrder = sortDescending ? "desc" : "asc"
 
-    setTriggerSorting(true)
-    setSortAscending(!sortAscending)
+    setSortDescending(!sortDescending)
     setSortOrder(updateSortOrder)
   }
 
