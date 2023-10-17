@@ -24,7 +24,7 @@ export const MembersList = ({ membersList }: Props) => {
             <TableCell>
               <Button>Claim</Button>
             </TableCell>
-            <TableCell>
+            <TableCell className="text-right">
               <Button className="bg-red-500 hover:bg-red-500">Remove</Button>
             </TableCell>
           </TableRow>

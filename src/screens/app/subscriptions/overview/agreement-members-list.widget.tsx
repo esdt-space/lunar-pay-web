@@ -2,8 +2,9 @@ import { ArrowLeft } from "lucide-react";
 import { MembersSection, ScreenTabs } from "../agreement.screen"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PaginationButtons, usePagination } from "@/components/shared/pagination";
-import { MembersList } from "./membes-list";
-import { AgreementDetails } from "./agreement-details";
+import { MembersList } from ".";
+import { AgreementDetails } from ".";
+import { Button } from "@/components/ui/button";
 
 type Props = {
   setSelectedTab: React.Dispatch<React.SetStateAction<ScreenTabs>>
@@ -22,7 +23,14 @@ export const AgreementMembersList = ({setSelectedTab, agreementMembers}: Props) 
       </div>
 
       <CardHeader className="p-6">
-        <CardTitle>{agreementMembers.agreementDetails.name}</CardTitle>
+        <div className="flex justify-between">
+          <div>
+            <CardTitle>{agreementMembers.agreementDetails.name}</CardTitle>
+          </div>
+          <div>
+            <Button className="w-full">Edit Subscription</Button>
+          </div>
+        </div>
       </CardHeader>
 
       <CardContent>
