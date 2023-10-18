@@ -10,10 +10,20 @@ import { useWhitelistedVaultTokens } from "@/features/vault/hooks";
 import { useCreatePaymentAgreementMutation } from "@/features/payment-agreements/hooks";
 
 import {AgreementAmountType, AgreementType} from "@/contracts/lunar-pay/agreements/enums";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { FrequencyType } from "@/features/subscription/models/agreement-types.model";
+import { getPaymentFrequency } from "@/utils";
+import { PaymentAgreementsService } from "@/features/payment-agreements/payment-agreements.service";
+import { useNavigate } from "react-router-dom";
+import { RoutesConfig } from "@/navigation";
+
+const frequencyList = ["Per Minute", "Per Hour", "Daily", "Weekly", "Monthly", "Per Year"]
 
 export function CreatePaymentAgreementScreen() {
-  // const [frequency, setFrequency] = useState();
+  const [frequency, setFrequency] = useState('Monthly');
   const [selectedToken, setSelectedToken] = useState<EsdtToken | undefined>(undefined);
+
+  const navigate = useNavigate()
 
   const tokens = useWhitelistedVaultTokens();
   const [amount, setAmount] = useState('')
@@ -35,12 +45,18 @@ export function CreatePaymentAgreementScreen() {
     if(!selectedToken || !amount) return;
 
     mutate({
-      frequency: 120,
+      frequency: getPaymentFrequency(frequency),
       token: selectedToken,
       type: AgreementType.RecurringPayoutToReceive,
       amountType: AgreementAmountType.FixedAmount,
       amount: { fixedAmount: amount },
-    })
+    }, { onSuccess: () => {
+      PaymentAgreementsService.fetchAgreementsCreated().then(() => {
+        const currentAgreementId = "652d53d6148139683bc3612b" // get the id from the latest agreement created
+
+        navigate(RoutesConfig.updatePaymentAgreement, { state: { currentAgreementId } })
+      })
+    }})
   }
 
   return (
@@ -72,18 +88,18 @@ export function CreatePaymentAgreementScreen() {
                   {/*{tokenValueError && <p className={'text-red-500 text-xs ml-2'}>{tokenErrorToText(tokenValueError)}</p>}*/}
                 </div>
                 <div className="w-3/12">
-                  {/*<Select onValueChange={(item: FrequencyType) => setFrequency(item)} defaultValue={frequency}>*/}
-                  {/*  <SelectTrigger id="framework">*/}
-                  {/*    <SelectValue placeholder="Frequency" />*/}
-                  {/*  </SelectTrigger>*/}
-                  {/*  <SelectContent position="popper">*/}
-                  {/*    /!*{frequencyList.map((item, index) => {*!/*/}
-                  {/*    /!*  return <div key={index}>*!/*/}
-                  {/*    /!*    <SelectItem value={item}>/{item}</SelectItem>*!/*/}
-                  {/*    /!*  </div>*!/*/}
-                  {/*    /!*})}*!/*/}
-                  {/*  </SelectContent>*/}
-                  {/*</Select>*/}
+                  <Select onValueChange={(item: FrequencyType) => setFrequency(item)} defaultValue={frequency}>
+                    <SelectTrigger id="framework">
+                      <SelectValue placeholder="Frequency" />
+                    </SelectTrigger>
+                    <SelectContent position="popper">
+                      {frequencyList.map((item, index) => {
+                        return <div key={index}>
+                            <SelectItem value={item}>{item}</SelectItem>
+                          </div>
+                        })}
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
             </div>
@@ -98,5 +114,4 @@ export function CreatePaymentAgreementScreen() {
       </Card>
     </div>
   );
-
 }

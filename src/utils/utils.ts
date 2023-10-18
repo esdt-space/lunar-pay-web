@@ -1,25 +1,25 @@
 export const getPaymentFrequency = (input: string) => {
   switch(input) {
-    case('SS'): {
-      return "Per Second"
+    case('Per Minute'): {
+      return 60
     }
-    case('MM'): {
-      return "Per Minute"
+    case('Per Hour'): {
+      return 3600
     }
-    case('HH'): {
-      return "Hourly"
+    case('Daily'): {
+      return 3600 * 24
     }
-    case('D'): {
-      return "Daily"
+    case('Weekly'): {
+      return 3600 * 24 * 7
     }
-    case('W'): {
-      return "Weekly"
+    case('Monthly'): {
+      return 3600 * 24 * 7 * 30
     }
-    case('M'): {
-      return "Monthly"
+    case('Per Year'): {
+      return 3600 * 24 * 7 * 30 * 12
     }
-    case('Y'): {
-      return "Per Year"
+    default: {
+      return 120
     }
   }
 }

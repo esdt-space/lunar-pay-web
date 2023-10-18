@@ -25,6 +25,7 @@ import {
   CreatePaymentAgreementIndexScreen
 } from "@/screens/app/payment-agreements/create-payment-agreement/create-payment-agreement-index.screen.tsx";
 import {ListPaymentAgreementsScreen} from "@/screens/app/payment-agreements/list-payment-agreements.screen.tsx";
+import { UpdatePaymentAgreementScreen } from '@/screens/app/payment-agreements/update-payment-agreement.screen';
 
 export function ApplicationRouter() {
   useScrollToTopHandler()
@@ -67,6 +68,7 @@ export function ApplicationRouter() {
               <Route index element={<ListPaymentAgreementsScreen />} />
               <Route path={RoutesConfig.createPaymentAgreementIndex} element={<CreatePaymentAgreementIndexScreen />} />
               <Route path={RoutesConfig.createPaymentAgreementSubscription} element={<CreatePaymentAgreementScreen />} />
+              <Route path={RoutesConfig.updatePaymentAgreement} element={<UpdatePaymentAgreementScreen />} />
             </Route>
 
             <Route path={RoutesConfig.tokensOperations}>
