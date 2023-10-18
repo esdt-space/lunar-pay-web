@@ -4,6 +4,7 @@ import moment from "moment/moment";
 import { AppEnvironment } from "@/environment";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRight } from "lucide-react";
+import { AddressCell } from "./address-cell";
 
 type Props = {
   transactions: TransactionItem[];
@@ -14,9 +15,10 @@ export const AgreementsTransactionsTable = ({transactions}: Props) => {
     <TableHeader>
         <TableRow>
           <TableHead />
-          <TableHead>Address</TableHead>
-          <TableHead>Token</TableHead>
           <TableHead>Amount</TableHead>
+          <TableHead>Type</TableHead>
+          <TableHead>From</TableHead>
+          <TableHead>To</TableHead>
           <TableHead className={'max-lg:hidden'}>Date</TableHead>
           <TableHead className="max-w-[150px]"></TableHead>
         </TableRow>
@@ -25,9 +27,10 @@ export const AgreementsTransactionsTable = ({transactions}: Props) => {
         {transactions.map((item, index) => (
           <TableRow key={index}>
             <TableCell>{item.status}</TableCell>
-            <TableCell>{item.address}</TableCell>
-            <TableCell>{item.token}</TableCell>
-            <TableCell>{item.amount}</TableCell>
+            <TableCell>{item.amount} {item.token}</TableCell>
+            <TableCell>Charge</TableCell>
+            <AddressCell value={item.address} />
+            <AddressCell value={item.address} />
             <TableCell className={'max-lg:hidden text-muted-foreground'}>{moment(item.date).format('ll')}</TableCell>
             <TableCell className="truncate text-right">
               <Button asChild variant={'ghost'} size={'sm'}>

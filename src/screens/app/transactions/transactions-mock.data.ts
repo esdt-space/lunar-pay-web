@@ -1,7 +1,7 @@
 export const transactionsMockData = [
   {
     address: "4b3403665fea6",
-    amount: 475,
+    amount: 4,
     token: "ETH",
     date: "2023-10-14T15:03:01.000Z",
     status: "completed",
@@ -9,7 +9,7 @@ export const transactionsMockData = [
   },
   {
     address: "30f39a1c3d1a7",
-    amount: 192,
+    amount: 1,
     token: "BTC",
     date: "2023-10-14T15:04:12.000Z",
     status: "pending",
@@ -17,7 +17,7 @@ export const transactionsMockData = [
   },
   {
     address: "e9c6d914c4b8d",
-    amount: 826,
+    amount: 8,
     token: "LTC",
     date: "2023-10-14T15:05:23.000Z",
     status: "failed",
@@ -25,7 +25,7 @@ export const transactionsMockData = [
   },
   {
     address: "a5ae1f3e7e21b",
-    amount: 358,
+    amount: 3,
     token: "ETH",
     date: "2023-10-14T15:06:34.000Z",
     status: "completed",
@@ -33,7 +33,7 @@ export const transactionsMockData = [
   },
   {
     address: "4e20be547d525",
-    amount: 419,
+    amount: 4,
     token: "BTC",
     date: "2023-10-14T15:07:45.000Z",
     status: "pending",
@@ -41,7 +41,7 @@ export const transactionsMockData = [
   },
   {
     address: "4b3403665fea6",
-    amount: 475,
+    amount: 4,
     token: "ETH",
     date: "2023-10-14T15:03:01.000Z",
     status: "completed",
@@ -49,7 +49,7 @@ export const transactionsMockData = [
   },
   {
     address: "30f39a1c3d1a7",
-    amount: 192,
+    amount: 1,
     token: "BTC",
     date: "2023-10-14T15:04:12.000Z",
     status: "pending",
@@ -57,7 +57,7 @@ export const transactionsMockData = [
   },
   {
     address: "e9c6d914c4b8d",
-    amount: 826,
+    amount: 8,
     token: "LTC",
     date: "2023-10-14T15:05:23.000Z",
     status: "failed",
@@ -65,7 +65,7 @@ export const transactionsMockData = [
   },
   {
     address: "a5ae1f3e7e21b",
-    amount: 358,
+    amount: 3,
     token: "ETH",
     date: "2023-10-14T15:06:34.000Z",
     status: "completed",
@@ -73,7 +73,7 @@ export const transactionsMockData = [
   },
   {
     address: "4e20be547d525",
-    amount: 419,
+    amount: 4,
     token: "BTC",
     date: "2023-10-14T15:07:45.000Z",
     status: "pending",
@@ -81,7 +81,7 @@ export const transactionsMockData = [
   },
   {
     address: "b839647f8d6c1",
-    amount: 274,
+    amount: 2,
     token: "ETH",
     date: "2023-10-14T15:08:56.000Z",
     status: "failed",
@@ -89,7 +89,7 @@ export const transactionsMockData = [
   },
   {
     address: "748927d3f3e8a",
-    amount: 583,
+    amount: 5,
     token: "LTC",
     date: "2023-10-14T15:10:07.000Z",
     status: "completed",
@@ -97,7 +97,7 @@ export const transactionsMockData = [
   },
   {
     address: "edb8a2e1a87e8",
-    amount: 194,
+    amount: 1,
     token: "BTC",
     date: "2023-10-14T15:11:18.000Z",
     status: "pending",
@@ -105,7 +105,7 @@ export const transactionsMockData = [
   },
   {
     address: "7d6aee0b0d9a3",
-    amount: 684,
+    amount: 6,
     token: "ETH",
     date: "2023-10-14T15:12:29.000Z",
     status: "completed",
@@ -113,7 +113,7 @@ export const transactionsMockData = [
   },
   {
     address: "5f8d48e3a7311",
-    amount: 392,
+    amount: 3,
     token: "LTC",
     date: "2023-10-14T15:13:40.000Z",
     status: "failed",
@@ -121,7 +121,7 @@ export const transactionsMockData = [
   },
   {
     address: "6e311c7c8b5c9",
-    amount: 123,
+    amount: 1,
     token: "BTC",
     date: "2023-10-14T15:14:51.000Z",
     status: "completed",
@@ -129,7 +129,7 @@ export const transactionsMockData = [
   },
   {
     address: "1627b2b319bd5",
-    amount: 956,
+    amount: 9,
     token: "ETH",
     date: "2023-10-14T15:16:02.000Z",
     status: "pending",
@@ -137,7 +137,7 @@ export const transactionsMockData = [
   },
   {
     address: "a6c5a1e2e09e6",
-    amount: 222,
+    amount: 2,
     token: "BTC",
     date: "2023-10-14T15:17:13.000Z",
     status: "failed",
@@ -145,7 +145,7 @@ export const transactionsMockData = [
   },
   {
     address: "3b3c56e5f6bf1",
-    amount: 789,
+    amount: 7,
     token: "LTC",
     date: "2023-10-14T15:18:24.000Z",
     status: "completed",
@@ -153,7 +153,7 @@ export const transactionsMockData = [
   },
   {
     address: "d9c8faff3b1e7",
-    amount: 444,
+    amount: 4,
     token: "ETH",
     date: "2023-10-14T15:19:35.000Z",
     status: "pending",
