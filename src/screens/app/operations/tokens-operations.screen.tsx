@@ -69,10 +69,12 @@ export const TokensOperationsScreen = () => {
           {loadingStateContent}
 
           {isLoadedAndHasData && (
-            <>
-              <TokenOperationsTable operationType={operationType} operations={paginatedOperations}/>
+            <div>
+              <TokenOperationsTable 
+                operationType={operationType} 
+                operations={paginatedOperations} />
               <PaginationButtons {...{...rest}} />
-            </>
+            </div>
           )}
         </CardContent>
       </Card>

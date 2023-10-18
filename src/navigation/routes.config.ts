@@ -16,6 +16,9 @@ export class RoutesConfig {
   static payroll = '/payroll'
 
   static subscriptions = '/subscriptions'
+  static paymentAgreements = '/payment-agreements'
+  static createPaymentAgreementIndex = '/payment-agreements/new'
+  static createPaymentAgreementSubscription = '/payment-agreements/new/subscription'
   static approveSubscription = '/approve-subscription'
 
   static tokensOperations = '/tokens-operations'

@@ -21,7 +21,7 @@ type AmountType =
   | BoundedAmount
   | SubscriberDefinedAmount
   | FixedAmountPerSubscriber;
-type FrequencyType = 'SS' | 'MM' | 'HH' | 'D' | 'W' | 'M' | 'Y';
+export type FrequencyType = 'SS' | 'MM' | 'HH' | 'D' | 'W' | 'M' | 'Y';
 
 type RecurringPayoutToSend = {
   sender: string;

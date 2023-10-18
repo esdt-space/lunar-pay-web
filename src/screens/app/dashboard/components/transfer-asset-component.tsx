@@ -44,7 +44,7 @@ export const TransferAssetComponent = ( props: Props ) => {
 
   const changeAmountHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if(selectedToken !== undefined) {
-      setTokenValueError(getTokenErrorForValue(selectedToken, parseInt(e.target.value)));
+      setTokenValueError(getTokenErrorForValue(selectedToken, e.target.value));
     }
 
     setAmount(e.target.value)

@@ -5,10 +5,12 @@ import { EsdtTokenSelector } from "@/features/tokens/components"
 import { ChangeEvent, useState } from "react";
 import { ScreenTabs } from "../agreement.screen";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useWhitelistedVaultTokens } from "@/features/vault/hooks";
 import {TokenValueError} from "@/features/tokens/enums";
 import {getTokenErrorForValue} from "@/features/tokens/validation";
 import {tokenErrorToText} from "@/features/tokens/utils";
+import { useAccountTokensList } from "@/features/account-tokens/hooks";
+import { FrequencyType } from "@/features/subscription/models/agreement-types.model";
+import { AgreementsService } from "@/features/subscription/subscriptions.service";
 
 type Props = {
   setSelectedTab: React.Dispatch<React.SetStateAction<ScreenTabs>>
@@ -21,16 +23,33 @@ export const PaymentDetailsWidget = ({setSelectedTab}: Props) => {
   // const [address, setAddress] = useState('')
   const [selectedToken, setSelectedToken] = useState<EsdtToken | undefined>(undefined);
   const [amount, setAmount] = useState('')
-  const [frequency, setFrequency] = useState('M')
+  const [frequency, setFrequency] = useState<FrequencyType>('M')
   const [tokenValueError, setTokenValueError] = useState<null | TokenValueError>(null)
 
-  const tokens = useWhitelistedVaultTokens();
+  const tokens = useAccountTokensList();
 
   const missingToken = selectedToken === undefined
   const missingAmount = amount === ""
 
+  // TO DO: Remove saveAgreement function after SC functionality implementation
   const saveAgreement = () => {
-    setSelectedTab(ScreenTabs.AgreementDetails)
+    if ( selectedToken === undefined ) {
+      return;
+    }
+
+    const input = {
+      tokenIdentifier: selectedToken.identifier,
+      agreementType: {
+        receiver: 'owner-address',
+        senders: ['sender-one', 'sender-two', 'sender-three', 'sender-four'],
+        frequency: frequency,
+        amountType: { amount: Number(amount) },
+      }
+    }
+
+    AgreementsService.createAgreement(input).then(() => {
+      setSelectedTab(ScreenTabs.AgreementDetails)
+    })
   }
 
   const changeAmountHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -48,9 +67,10 @@ export const PaymentDetailsWidget = ({setSelectedTab}: Props) => {
       tokens={tokens}
       value={selectedToken}
       onChange={(token) => setSelectedToken(token)}
+      showBalances
     />
     <div>
-      <div className="flex">
+      <div className="flex space-x-4">
         <div className="w-9/12">
           <Input 
             placeholder="Insert amount"
@@ -62,7 +82,7 @@ export const PaymentDetailsWidget = ({setSelectedTab}: Props) => {
           {tokenValueError && <p className={'text-red-500 text-xs ml-2'}>{tokenErrorToText(tokenValueError)}</p>}
         </div>
         <div className="w-3/12">
-          <Select onValueChange={(item) => setFrequency(item)} defaultValue={frequency}>
+          <Select onValueChange={(item: FrequencyType) => setFrequency(item)} defaultValue={frequency}>
             <SelectTrigger id="framework">
               <SelectValue placeholder="Frequency" />
             </SelectTrigger>

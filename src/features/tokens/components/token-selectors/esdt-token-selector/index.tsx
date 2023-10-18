@@ -11,10 +11,11 @@ type Props = {
   tokens: EsdtToken[]
   value?: EsdtToken
   onChange: (token: EsdtToken) => void
+  showBalances?: boolean
 }
 
 export function EsdtTokenSelector(props: Props) {
-  const { tokens = [], value, onChange } = props
+  const { tokens = [], value, onChange, showBalances } = props
   const [isOpen, setIsOpen] = useState(false)
 
   const closeDialogHandler = () => setIsOpen(false)
@@ -42,6 +43,7 @@ export function EsdtTokenSelector(props: Props) {
         isOpen={isOpen}
         closeDialogHandler={closeDialogHandler}
         selectTokenHandler={selectTokenHandler}
+        showBalances={showBalances}
       />
     </Select>
   )

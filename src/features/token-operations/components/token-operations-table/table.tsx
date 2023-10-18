@@ -21,8 +21,8 @@ import { TokenOperationIcon } from "./token-operation-icon.tsx";
 import { TokenOperationValueCell } from "./token-operation-value-cell.tsx";
 
 type Props = {
-  operations: TokenOperation[]
-  operationType?: TokenOperationType | 'all'
+  operations: TokenOperation[];
+  operationType?: TokenOperationType | 'all';
 }
 
 export const TokenOperationsTable = (props: Props) => {

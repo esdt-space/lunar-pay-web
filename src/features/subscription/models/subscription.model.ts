@@ -1,3 +1,5 @@
+import { AgreementType } from "./agreement-types.model";
+
 export class SubscriptionModel {
   // id: string;
   // universalChargeCode: string;
@@ -7,4 +9,23 @@ export class SubscriptionModel {
   // title: string;
   // price: string;
   // features: string[];
+}
+
+export type SubscriptionDetails = {
+  name: string;
+  description: string;
+  benefits: string[];
+}
+
+export type SubscriptionItem = SubscriptionDetails & {
+  agreementType?: AgreementType;
+  tokenIdentifier: string;
+  owner: string;
+  _id: string;
+}
+
+// TO DO: Remove from usage after SC functionality implementation
+export type SubscriptionCreate = {
+  tokenIdentifier: string;
+  agreementType: AgreementType;
 }
