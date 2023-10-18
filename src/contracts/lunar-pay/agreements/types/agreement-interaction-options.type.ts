@@ -1,38 +1,64 @@
 import BigNumber from "bignumber.js";
 
 import { Token } from "@/features/tokens";
-import { AgreementAmountType, AgreementFrequency, AgreementType } from "@/contracts/lunar-pay/agreements/enums";
+import {AgreementAmountType, AgreementType} from "@/contracts/lunar-pay/agreements/enums";
 
 export type AmountValue = string | number | BigNumber;
 
-type AnyAmountInteractionType = {
-  type: AgreementAmountType.AnyAmount;
-};
-
-type FixedAmountType = {
-  type: AgreementAmountType.FixedAmount;
-  amount: AmountValue;
-}
-
-type BoundedAmountType = {
-  type: AgreementAmountType.BoundedAmount;
+type Amount = {
+  fixedAmount: AmountValue;
   minimumAmount: AmountValue;
   maximumAmount: AmountValue;
 }
 
-type SubscriberDefinedAmountType =  {
-  type: AgreementAmountType.SubscriberDefinedAmount;
-}
+type FixedAmount = Pick<Amount, 'fixedAmount'>;
+type BoundedAmount = Omit<Amount, 'fixedAmount'>;
 
-type CreatorDefinedAmountPerSubscriberType = {
-  type: AgreementAmountType.CreatorDefinedAmountPerSubscriber;
-}
-
-type AmountType = AnyAmountInteractionType | FixedAmountType | BoundedAmountType | SubscriberDefinedAmountType | CreatorDefinedAmountPerSubscriberType;
-
-export type AgreementInteractionOptions = {
-  token: Token,
+type BaseAgreementInteractionOptions = {
+  token: Token;
   type: AgreementType;
-  amountType: AmountType;
-  frequency: AgreementFrequency;
-};
+  frequency: number;
+}
+
+type AnyAmountInteractionType = BaseAgreementInteractionOptions & {
+  amountType: AgreementAmountType.AnyAmount,
+  amount: never
+}
+
+type FixedAmountInteractionType = BaseAgreementInteractionOptions & {
+  amountType: AgreementAmountType.FixedAmount,
+  amount: FixedAmount
+}
+
+type BoundedAmountInteractionType = BaseAgreementInteractionOptions & {
+  amountType: AgreementAmountType.BoundedAmount,
+  amount: BoundedAmount
+}
+
+type SenderDefinedFixedAmountInteractionType = BaseAgreementInteractionOptions & {
+  amountType: AgreementAmountType.SenderDefinedFixedAmount,
+  amount: FixedAmount
+}
+
+type SenderDefinedBoundedAmountInteractionType = BaseAgreementInteractionOptions & {
+  amountType: AgreementAmountType.SenderDefinedBoundedAmount,
+  amount: FixedAmount
+}
+
+type CreatorDefinedFixedAmountInteractionType = BaseAgreementInteractionOptions & {
+  amountType: AgreementAmountType.SenderDefinedBoundedAmount,
+  amount: FixedAmount
+}
+
+type CreatorDefinedBoundedAmountInteractionType = BaseAgreementInteractionOptions & {
+  amountType: AgreementAmountType.SenderDefinedBoundedAmount,
+  amount: FixedAmount
+}
+
+export type AgreementInteractionOptions = AnyAmountInteractionType |
+  FixedAmountInteractionType |
+  BoundedAmountInteractionType |
+  SenderDefinedFixedAmountInteractionType |
+  SenderDefinedBoundedAmountInteractionType |
+  CreatorDefinedFixedAmountInteractionType |
+  CreatorDefinedBoundedAmountInteractionType;

@@ -8,7 +8,7 @@
             "short": "rustc 1.71.0-nightly (a2b1646c5 2023-05-25)"
         },
         "contractCrate": {
-            "name": "lunar-pay",
+            "name": "lunarpay",
             "version": "0.0.1"
         },
         "framework": {
@@ -84,40 +84,6 @@
             ]
         },
         {
-            "name": "agreement_subscriber_defined_amount",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "aggreement_id",
-                    "type": "u64"
-                },
-                {
-                    "name": "address",
-                    "type": "Address"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "AmountType"
-                }
-            ]
-        },
-        {
-            "name": "getAgreementWhitelistEnabled",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "agreement_id",
-                    "type": "u64"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "bool"
-                }
-            ]
-        },
-        {
             "name": "getAgreementWhitelist",
             "mutability": "readonly",
             "inputs": [
@@ -137,7 +103,7 @@
             "docs": [
                 "Stores all the agreement IDs that belong to an account *"
             ],
-            "name": "getAccountCreatedAgreementsListByAddress",
+            "name": "getAgreementsCreatedByAccount",
             "mutability": "readonly",
             "inputs": [
                 {
@@ -154,9 +120,9 @@
         },
         {
             "docs": [
-                "Stores all the agreement IDs that belong to an account *"
+                "Stores all the agreement IDs that were signed by an account *"
             ],
-            "name": "getAgreementsListByAddress",
+            "name": "getAgreementsSignedByAccount",
             "mutability": "readonly",
             "inputs": [
                 {
@@ -302,7 +268,7 @@
             "outputs": []
         },
         {
-            "name": "createRecurringPaymentAgreementToSend",
+            "name": "createPaymentAgreement",
             "mutability": "mutable",
             "inputs": [
                 {
@@ -310,27 +276,8 @@
                     "type": "EgldOrEsdtTokenIdentifier"
                 },
                 {
-                    "name": "amount_type",
-                    "type": "AgreementAmountType"
-                },
-                {
-                    "name": "frequency",
-                    "type": "FrequencyType"
-                },
-                {
-                    "name": "_whitelisted_addresses",
-                    "type": "Option<List<Address>>"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "createRecurringPaymentAgreementToReceive",
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "token_identifier",
-                    "type": "EgldOrEsdtTokenIdentifier"
+                    "name": "agreement_type",
+                    "type": "AgreementType"
                 },
                 {
                     "name": "amount_type",
@@ -338,16 +285,19 @@
                 },
                 {
                     "name": "frequency",
-                    "type": "FrequencyType"
+                    "type": "u64"
                 },
                 {
-                    "name": "_whitelisted_addresses",
-                    "type": "Option<List<Address>>"
+                    "name": "_amount",
+                    "type": "Option<Amount>"
                 }
             ],
             "outputs": []
         },
         {
+            "docs": [
+                "\\n     * Subscribe to an agreement\\n     "
+            ],
             "name": "signAgreement",
             "mutability": "mutable",
             "inputs": [
@@ -359,22 +309,7 @@
             "outputs": []
         },
         {
-            "name": "chargeAgreement",
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "agreement_id",
-                    "type": "u64"
-                },
-                {
-                    "name": "address",
-                    "type": "Option<Address>"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "claimAgreement",
+            "name": "triggerAgreement",
             "mutability": "mutable",
             "inputs": [
                 {
@@ -473,15 +408,127 @@
         },
         {
             "identifier": "createPaymentAgreement",
-            "inputs": []
+            "inputs": [
+                {
+                    "name": "agreement_id",
+                    "type": "u64",
+                    "indexed": true
+                },
+                {
+                    "name": "owner",
+                    "type": "Address",
+                    "indexed": true
+                },
+                {
+                    "name": "token_nonce",
+                    "type": "u64",
+                    "indexed": true
+                },
+                {
+                    "name": "token_identifier",
+                    "type": "EgldOrEsdtTokenIdentifier",
+                    "indexed": true
+                },
+                {
+                    "name": "frequency",
+                    "type": "u64",
+                    "indexed": true
+                },
+                {
+                    "name": "time_created",
+                    "type": "u64",
+                    "indexed": true
+                },
+                {
+                    "name": "agreement_type",
+                    "type": "AgreementType",
+                    "indexed": true
+                },
+                {
+                    "name": "amount_type",
+                    "type": "AgreementAmountType",
+                    "indexed": true
+                },
+                {
+                    "name": "amount",
+                    "type": "Option<Amount>",
+                    "indexed": true
+                }
+            ]
+        },
+        {
+            "identifier": "signPaymentAgreement",
+            "inputs": [
+                {
+                    "name": "agreement_id",
+                    "type": "u64",
+                    "indexed": true
+                },
+                {
+                    "name": "signer",
+                    "type": "Address",
+                    "indexed": true
+                },
+                {
+                    "name": "sign_time",
+                    "type": "u64",
+                    "indexed": true
+                }
+            ]
         },
         {
             "identifier": "cancelPaymentAgreement",
             "inputs": []
         },
         {
-            "identifier": "chargePaymentAgreement",
-            "inputs": []
+            "identifier": "successfulAgreementCharges",
+            "inputs": [
+                {
+                    "name": "agreement_id",
+                    "type": "u64",
+                    "indexed": true
+                },
+                {
+                    "name": "accounts",
+                    "type": "List<Address>",
+                    "indexed": true
+                },
+                {
+                    "name": "amounts",
+                    "type": "List<BigUint>",
+                    "indexed": true
+                },
+                {
+                    "name": "cycles",
+                    "type": "List<u64>",
+                    "indexed": true
+                }
+            ]
+        },
+        {
+            "identifier": "failedAgreementCharges",
+            "inputs": [
+                {
+                    "name": "agreement_id",
+                    "type": "u64",
+                    "indexed": true
+                },
+                {
+                    "name": "accounts",
+                    "type": "List<Address>",
+                    "indexed": true
+                },
+                {
+                    "name": "amounts",
+                    "type": "List<BigUint>",
+                    "indexed": true
+                },
+                {
+                    "name": "cycles",
+                    "type": "List<u64>",
+                    "indexed": true
+                }
+            ]
         }
     ],
     "hasCallback": false,
@@ -495,106 +542,65 @@
                 },
                 {
                     "name": "FixedAmount",
-                    "discriminant": 1,
-                    "fields": [
-                        {
-                            "name": "0",
-                            "type": "BigUint"
-                        }
-                    ]
-                },
-                {
-                    "name": "BoundedAmount",
-                    "discriminant": 2,
-                    "fields": [
-                        {
-                            "name": "0",
-                            "type": "BoundedAmount"
-                        }
-                    ]
-                },
-                {
-                    "name": "SubscriberDefinedAmount",
-                    "discriminant": 3
-                },
-                {
-                    "name": "CreatorDefinedAmountPerSubscriber",
-                    "discriminant": 4
-                }
-            ]
-        },
-        "AmountType": {
-            "type": "enum",
-            "variants": [
-                {
-                    "name": "AnyAmount",
-                    "discriminant": 0
-                },
-                {
-                    "name": "FixedAmount",
-                    "discriminant": 1,
-                    "fields": [
-                        {
-                            "name": "0",
-                            "type": "BigUint"
-                        }
-                    ]
-                },
-                {
-                    "name": "BoundedAmount",
-                    "discriminant": 2,
-                    "fields": [
-                        {
-                            "name": "0",
-                            "type": "BoundedAmount"
-                        }
-                    ]
-                }
-            ]
-        },
-        "BoundedAmount": {
-            "type": "struct",
-            "fields": [
-                {
-                    "name": "minimum_amount",
-                    "type": "BigUint"
-                },
-                {
-                    "name": "maximum_amount",
-                    "type": "BigUint"
-                }
-            ]
-        },
-        "FrequencyType": {
-            "type": "enum",
-            "variants": [
-                {
-                    "name": "SECOND",
-                    "discriminant": 0
-                },
-                {
-                    "name": "MINUTE",
                     "discriminant": 1
                 },
                 {
-                    "name": "HOUR",
+                    "name": "BoundedAmount",
                     "discriminant": 2
                 },
                 {
-                    "name": "DAY",
+                    "name": "SenderDefinedFixedAmount",
                     "discriminant": 3
                 },
                 {
-                    "name": "WEEK",
+                    "name": "SenderDefinedBoundedAmount",
                     "discriminant": 4
                 },
                 {
-                    "name": "MONTH",
+                    "name": "CreatorDefinedFixedAmountPerReceiver",
                     "discriminant": 5
                 },
                 {
-                    "name": "YEAR",
+                    "name": "CreatorDefinedBoundedAmountPerReceiver",
                     "discriminant": 6
+                }
+            ]
+        },
+        "AgreementType": {
+            "type": "enum",
+            "variants": [
+                {
+                    "name": "RecurringPayoutToSend",
+                    "discriminant": 0
+                },
+                {
+                    "name": "RecurringPayoutToReceive",
+                    "discriminant": 1
+                },
+                {
+                    "name": "TermRestrictedPayoutToSend",
+                    "discriminant": 2
+                },
+                {
+                    "name": "TermRestrictedPayoutToReceive",
+                    "discriminant": 3
+                }
+            ]
+        },
+        "Amount": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "fixed_amount",
+                    "type": "Option<BigUint>"
+                },
+                {
+                    "name": "minimum_amount",
+                    "type": "Option<BigUint>"
+                },
+                {
+                    "name": "maximum_amount",
+                    "type": "Option<BigUint>"
                 }
             ]
         }

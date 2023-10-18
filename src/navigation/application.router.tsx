@@ -18,6 +18,13 @@ import {Payroll} from "@/screens/landing/payroll";
 import {Subscriptions} from "@/screens/landing/subscriptions";
 import {Donations} from "@/screens/landing/donations";
 import {PortfolioManagement} from "@/screens/landing/portfolio-management";
+import {
+  CreatePaymentAgreementScreen
+} from "@/screens/app/payment-agreements/create-payment-agreement/create-payment-agreement.screen.tsx";
+import {
+  CreatePaymentAgreementIndexScreen
+} from "@/screens/app/payment-agreements/create-payment-agreement/create-payment-agreement-index.screen.tsx";
+import {ListPaymentAgreementsScreen} from "@/screens/app/payment-agreements/list-payment-agreements.screen.tsx";
 
 export function ApplicationRouter() {
   useScrollToTopHandler()
@@ -54,6 +61,12 @@ export function ApplicationRouter() {
 
             <Route path={RoutesConfig.subscriptions}>
               <Route index element={<AgreementScreen />} />
+            </Route>
+
+            <Route path={RoutesConfig.paymentAgreements}>
+              <Route index element={<ListPaymentAgreementsScreen />} />
+              <Route path={RoutesConfig.createPaymentAgreementIndex} element={<CreatePaymentAgreementIndexScreen />} />
+              <Route path={RoutesConfig.createPaymentAgreementSubscription} element={<CreatePaymentAgreementScreen />} />
             </Route>
 
             <Route path={RoutesConfig.tokensOperations}>
