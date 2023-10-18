@@ -8,12 +8,14 @@ import { Input } from "@/components/ui/input";
 export const TransactionsScreen = () => {
   const [filterValue, setFilterValue] = useState("")
 
+  // TODO: Replace the mock data with the with the data that comes from the db
   const filteredTransactions = useMemo(() => {
     if(filterValue === "") return transactionsMockData;
     const lowercaseFilterValue = filterValue.toLocaleLowerCase();
 
     return transactionsMockData.filter(item =>
-      item.address.toLocaleLowerCase().includes(lowercaseFilterValue)
+      item.address.toLocaleLowerCase().includes(lowercaseFilterValue) ||
+      item.status.toLocaleLowerCase().includes(lowercaseFilterValue)
     );
   }, [transactionsMockData, filterValue]);
 
