@@ -2,7 +2,7 @@ import { sendTransactionWithWatcher } from "@/lib/mvx";
 import { Address, TokenIdentifierValue } from "@multiversx/sdk-core/out";
 import { getAddress, getNetworkConfig } from "@multiversx/sdk-dapp/utils";
 
-import { lunarPaySmartContract, lunarPayAbiRegistry } from "@/contracts/lunar-pay/contract-utils.ts";
+import { lunarPaySmartContract } from "@/contracts/lunar-pay/contract-utils.ts";
 
 import { AgreementInteractionOptions } from "../types";
 import { getAgreementTypeInteractionValue } from "../agreement-type-helper.ts";
@@ -12,8 +12,6 @@ import { getAgreementAmountTypeInteractionValue, getCreateAgreementAmountInterac
 export async function createPaymentAgreementInteraction (options: AgreementInteractionOptions) {
   const sender = await getAddress();
   const { chainId } = getNetworkConfig()
-
-  console.log(lunarPayAbiRegistry.getEndpoint('createPaymentAgreement'));
 
   const interaction = lunarPaySmartContract.methods.createPaymentAgreement([
     new TokenIdentifierValue(options.token.identifier),

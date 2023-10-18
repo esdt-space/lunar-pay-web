@@ -1,13 +1,12 @@
 import { useMutation, useQueryClient } from "react-query";
 import { useGetAccount } from "@multiversx/sdk-dapp/hooks";
 
+import { AgreementInteractionOptions } from "@/contracts/lunar-pay/agreements/types";
+
 import { accountBalancesQueryKey } from "@/features/vault/query-keys.ts";
 import { accountTokenOperationsQueryKey } from "@/features/token-operations/query-keys.ts";
+import { createPaymentAgreementInteraction } from "@/contracts/lunar-pay/agreements/interactions";
 import { useSuccessfulTransactionCallback } from "@/utils/hooks/use-successful-transaction-callback.ts";
-import {
-  createPaymentAgreementInteraction
-} from "@/contracts/lunar-pay/agreements/interactions/create-payment-agreement-interaction.ts";
-import {AgreementInteractionOptions} from "@/contracts/lunar-pay/agreements/types";
 
 export function useCreatePaymentAgreementMutation() {
   const client = useQueryClient();

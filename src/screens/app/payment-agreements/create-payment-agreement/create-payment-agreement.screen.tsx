@@ -12,7 +12,7 @@ import { useCreatePaymentAgreementMutation } from "@/features/payment-agreements
 import {AgreementAmountType, AgreementType} from "@/contracts/lunar-pay/agreements/enums";
 
 export function CreatePaymentAgreementScreen() {
-  const [frequency, setFrequency] = useState();
+  // const [frequency, setFrequency] = useState();
   const [selectedToken, setSelectedToken] = useState<EsdtToken | undefined>(undefined);
 
   const tokens = useWhitelistedVaultTokens();
