@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { getPaymentFrequency } from "@/utils";
 import { Dot } from "lucide-react";
+import { Subscription } from "../components/mock-subscription";
 
 export type AgreementBasicDetails = {
   name: string;
@@ -12,7 +13,7 @@ export type AgreementBasicDetails = {
 }
 
 type Props = {
-  currentAgreement: AgreementBasicDetails;
+  currentAgreement: Subscription;
 }
 
 export const AgreementDetails = ({currentAgreement}: Props) => {
@@ -20,11 +21,11 @@ export const AgreementDetails = ({currentAgreement}: Props) => {
     <div className="flex justify-between w-6/12">
       <div className="flex items-center">
         <div className="flex">
-          {currentAgreement.price} {currentAgreement.tokenIdentifier}
+          {currentAgreement.agreementType.amountType.amount} {currentAgreement.tokenIdentifier}
           <Dot />
         </div>
         <div>
-          {getPaymentFrequency(currentAgreement.frequency)}
+          {getPaymentFrequency(currentAgreement.agreementType.frequency)}
         </div>
       </div>
       <div className="flex space-x-2 items-center">
