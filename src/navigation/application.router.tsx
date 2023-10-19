@@ -19,14 +19,12 @@ import {Subscriptions} from "@/screens/landing/subscriptions";
 import {Donations} from "@/screens/landing/donations";
 import {PortfolioManagement} from "@/screens/landing/portfolio-management";
 import { TransactionsScreen } from '@/screens/app/transactions';
-import {
-  CreatePaymentAgreementScreen
-} from "@/screens/app/payment-agreements/create-payment-agreement/create-payment-agreement.screen.tsx";
-import {
-  CreatePaymentAgreementIndexScreen
-} from "@/screens/app/payment-agreements/create-payment-agreement/create-payment-agreement-index.screen.tsx";
-import {ListPaymentAgreementsScreen} from "@/screens/app/payment-agreements/list-payment-agreements.screen.tsx";
-import { UpdatePaymentAgreementScreen } from '@/screens/app/payment-agreements/update-payment-agreement.screen';
+import { 
+  CreatePaymentAgreementIndexScreen, 
+  CreatePaymentAgreementScreen, 
+  ListMembersAgreementScreen, 
+  ListPaymentAgreementsScreen, 
+  UpdatePaymentAgreementScreen } from "@/screens/app/payment-agreements";
 
 export function ApplicationRouter() {
   useScrollToTopHandler()
@@ -68,6 +66,7 @@ export function ApplicationRouter() {
 
             <Route path={RoutesConfig.paymentAgreements}>
               <Route index element={<ListPaymentAgreementsScreen />} />
+              <Route path={':id'} element={<ListMembersAgreementScreen />} />
               <Route path={RoutesConfig.createPaymentAgreementIndex} element={<CreatePaymentAgreementIndexScreen />} />
               <Route path={RoutesConfig.createPaymentAgreementSubscription} element={<CreatePaymentAgreementScreen />} />
               <Route path={RoutesConfig.updatePaymentAgreement} element={<UpdatePaymentAgreementScreen />} />
