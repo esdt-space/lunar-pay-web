@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 import { Textarea } from "@/components/ui/textarea"
-import { AgreementsService } from "@/features/subscription/subscriptions.service"
+import { PaymentAgreementsService } from "@/features/payment-agreements/payment-agreements.service"
 import { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
 
@@ -36,7 +36,7 @@ export function UpdatePaymentAgreementScreen() {
       benefits: filteredBenefits
     }
 
-    return AgreementsService.updateAgreement(location.state.currentAgreementId, input)
+    return PaymentAgreementsService.updateAgreement(location.state.currentAgreementId, input)
   }
   
   return (

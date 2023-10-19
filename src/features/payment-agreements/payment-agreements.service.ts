@@ -1,6 +1,7 @@
 import { ProtocolApi } from "@/lib/protocol-api";
 
 import { PaymentAgreement } from "./models";
+import { UpdateAgreementDto } from "./dto";
 
 export class PaymentAgreementsService {
   private static api = new ProtocolApi()
@@ -26,9 +27,9 @@ export class PaymentAgreementsService {
       .then(data => data.map(item => new PaymentAgreement(item)))
   }
 
-  // static async updateAgreement(id: string, input: SubscriptionDetails) {
-  //   return this.api
-  //   .put(`/agreements/${id}`, input)
-  //   .then((response) => response.data)
-  // }
+  static async updateAgreement(id: string, input: UpdateAgreementDto) {
+    return this.api
+    .put(`/payment-agreements/${id}`, input)
+    .then((response) => response.data)
+  }
 }
