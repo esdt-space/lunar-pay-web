@@ -7,13 +7,23 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card.t
 import { EsdtToken } from "@/features/tokens";
 import { EsdtTokenSelector } from "@/features/tokens/components";
 import { useWhitelistedVaultTokens } from "@/features/vault/hooks";
-import { useCreatePaymentAgreementMutation } from "@/features/payment-agreements/hooks";
+import { useCreatePaymentAgreementMutation, usePaymentAgreementsCreatedQuery } from "@/features/payment-agreements/hooks";
 
 import {AgreementAmountType, AgreementType} from "@/contracts/lunar-pay/agreements/enums";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { FrequencyType } from "@/features/subscription/models/agreement-types.model";
+import { getPaymentFrequency } from "@/utils";
+import { useNavigate } from "react-router-dom";
+import { RoutesConfig } from "@/navigation";
+
+const frequencyList = ["Per Minute", "Per Hour", "Daily", "Weekly", "Monthly", "Per Year"]
 
 export function CreatePaymentAgreementScreen() {
-  // const [frequency, setFrequency] = useState();
+  const [frequency, setFrequency] = useState('Monthly');
   const [selectedToken, setSelectedToken] = useState<EsdtToken | undefined>(undefined);
+  const { data: agreements, isFetched } = usePaymentAgreementsCreatedQuery()
+
+  const navigate = useNavigate()
 
   const tokens = useWhitelistedVaultTokens();
   const [amount, setAmount] = useState('')
@@ -35,12 +45,21 @@ export function CreatePaymentAgreementScreen() {
     if(!selectedToken || !amount) return;
 
     mutate({
-      frequency: 120,
+      frequency: getPaymentFrequency(frequency),
       token: selectedToken,
       type: AgreementType.RecurringPayoutToReceive,
       amountType: AgreementAmountType.FixedAmount,
       amount: { fixedAmount: amount },
-    })
+    }, { onSuccess: () => {
+      const sortedAgreements = agreements?.sort((a,b) => b.createdAt.getTime() - a.createdAt.getTime())
+      
+      if(isFetched && sortedAgreements !== undefined) {
+        const latestAgreement = sortedAgreements[0]
+        const currentAgreementId = latestAgreement.id
+
+        navigate(RoutesConfig.updatePaymentAgreement, { state: { currentAgreementId } })
+      }
+    }})
   }
 
   return (
@@ -72,18 +91,18 @@ export function CreatePaymentAgreementScreen() {
                   {/*{tokenValueError && <p className={'text-red-500 text-xs ml-2'}>{tokenErrorToText(tokenValueError)}</p>}*/}
                 </div>
                 <div className="w-3/12">
-                  {/*<Select onValueChange={(item: FrequencyType) => setFrequency(item)} defaultValue={frequency}>*/}
-                  {/*  <SelectTrigger id="framework">*/}
-                  {/*    <SelectValue placeholder="Frequency" />*/}
-                  {/*  </SelectTrigger>*/}
-                  {/*  <SelectContent position="popper">*/}
-                  {/*    /!*{frequencyList.map((item, index) => {*!/*/}
-                  {/*    /!*  return <div key={index}>*!/*/}
-                  {/*    /!*    <SelectItem value={item}>/{item}</SelectItem>*!/*/}
-                  {/*    /!*  </div>*!/*/}
-                  {/*    /!*})}*!/*/}
-                  {/*  </SelectContent>*/}
-                  {/*</Select>*/}
+                  <Select onValueChange={(item: FrequencyType) => setFrequency(item)} defaultValue={frequency}>
+                    <SelectTrigger id="framework">
+                      <SelectValue placeholder="Frequency" />
+                    </SelectTrigger>
+                    <SelectContent position="popper">
+                      {frequencyList.map((item, index) => {
+                        return <div key={index}>
+                            <SelectItem value={item}>{item}</SelectItem>
+                          </div>
+                        })}
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
             </div>
@@ -98,5 +117,4 @@ export function CreatePaymentAgreementScreen() {
       </Card>
     </div>
   );
-
 }

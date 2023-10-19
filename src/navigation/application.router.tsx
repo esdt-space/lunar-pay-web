@@ -10,7 +10,7 @@ import { PublicLayout } from "@/components/layout/public-layout";
 
 import { HomeScreen } from "@/screens/landing/home";
 import { AdminScreen } from '@/screens/admin';
-import { ApproveSubscriptionScreen, AgreementScreen } from "@/screens/app/subscriptions";
+import { ApproveSubscriptionScreen, SubscriptionMembersList, SubscriptionsOverviewScreen } from "@/screens/app/subscriptions";
 import { AuthenticationScreen } from "@/screens/auth/authentication-screen.tsx";
 import { DashboardScreen } from "@/screens/app/dashboard";
 import { TokensOperationsScreen } from '@/screens/app/operations';
@@ -18,6 +18,7 @@ import {Payroll} from "@/screens/landing/payroll";
 import {Subscriptions} from "@/screens/landing/subscriptions";
 import {Donations} from "@/screens/landing/donations";
 import {PortfolioManagement} from "@/screens/landing/portfolio-management";
+import { TransactionsScreen } from '@/screens/app/transactions';
 import {
   CreatePaymentAgreementScreen
 } from "@/screens/app/payment-agreements/create-payment-agreement/create-payment-agreement.screen.tsx";
@@ -25,6 +26,7 @@ import {
   CreatePaymentAgreementIndexScreen
 } from "@/screens/app/payment-agreements/create-payment-agreement/create-payment-agreement-index.screen.tsx";
 import {ListPaymentAgreementsScreen} from "@/screens/app/payment-agreements/list-payment-agreements.screen.tsx";
+import { UpdatePaymentAgreementScreen } from '@/screens/app/payment-agreements/update-payment-agreement.screen';
 
 export function ApplicationRouter() {
   useScrollToTopHandler()
@@ -60,17 +62,23 @@ export function ApplicationRouter() {
             </Route>
 
             <Route path={RoutesConfig.subscriptions}>
-              <Route index element={<AgreementScreen />} />
+              <Route index element={<SubscriptionsOverviewScreen />} />
+              <Route path={RoutesConfig.subscriptionMembers} element={<SubscriptionMembersList />} />
             </Route>
 
             <Route path={RoutesConfig.paymentAgreements}>
               <Route index element={<ListPaymentAgreementsScreen />} />
               <Route path={RoutesConfig.createPaymentAgreementIndex} element={<CreatePaymentAgreementIndexScreen />} />
               <Route path={RoutesConfig.createPaymentAgreementSubscription} element={<CreatePaymentAgreementScreen />} />
+              <Route path={RoutesConfig.updatePaymentAgreement} element={<UpdatePaymentAgreementScreen />} />
             </Route>
 
             <Route path={RoutesConfig.tokensOperations}>
               <Route index element={<TokensOperationsScreen />} />
+            </Route>
+
+            <Route path={RoutesConfig.transactions}>
+              <Route index element={<TransactionsScreen />} />
             </Route>
           </Route>
         </Route>
