@@ -19,7 +19,33 @@ export const getPaymentFrequency = (input: string) => {
       return 3600 * 24 * 7 * 30 * 12
     }
     default: {
-      return 120
+      return 60
+    }
+  }
+}
+
+export const formatFrequency = (input: number) => {
+  switch(input) {
+    case(60): {
+      return 'Per Minute'
+    }
+    case(3600): {
+      return 'Per Hour'
+    }
+    case(3600 * 24): {
+      return 'Daily'
+    }
+    case(3600 * 24 * 7): {
+      return 'Weekly'
+    }
+    case(3600 * 24 * 7 * 30): {
+      return 'Monthly'
+    }
+    case(3600 * 24 * 7 * 30 * 12): {
+      return 'Per Year'
+    }
+    default: {
+      return "Per Minute"
     }
   }
 }

@@ -4,14 +4,13 @@ import { Separator } from "@/components/ui/separator"
 import { Textarea } from "@/components/ui/textarea"
 import { PaymentAgreementsService } from "@/features/payment-agreements/payment-agreements.service"
 import { useEffect, useState } from "react"
-import { useLocation } from "react-router-dom"
+import {  useParams } from "react-router-dom"
 
 export function UpdatePaymentAgreementScreen() {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
   const [benefits, setBenefits] = useState<string[]>([])
-
-  const location = useLocation()
+  const { id } = useParams()
 
   useEffect(() => {
     setBenefits(["", ""])
@@ -36,7 +35,9 @@ export function UpdatePaymentAgreementScreen() {
       benefits: filteredBenefits
     }
 
-    return PaymentAgreementsService.updateAgreement(location.state.currentAgreementId, input)
+    if(id !== undefined) {
+      return PaymentAgreementsService.updateAgreement(id, input)
+    }
   }
   
   return (
