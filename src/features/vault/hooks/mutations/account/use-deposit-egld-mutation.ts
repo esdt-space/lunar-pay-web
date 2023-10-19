@@ -10,17 +10,22 @@ export function useDepositEgldMutation() {
   const client = useQueryClient();
   const { address } = useGetAccount();
 
-  const invalidateQueries = () => {
-    client.invalidateQueries({queryKey: accountBalancesQueryKey(address)})
-    client.invalidateQueries({queryKey: accountTokenOperationsQueryKey(address)})
-  }
+  const registerSessionId =  useSuccessfulTransactionCallback()
 
-  const registerSessionId =  useSuccessfulTransactionCallback(invalidateQueries)
+  const getCallback = (callback: () => void) => async () => {
+    await client.invalidateQueries({queryKey: accountBalancesQueryKey(address)})
+    await client.invalidateQueries({queryKey: accountTokenOperationsQueryKey(address)})
+    callback();
+  }
 
   return useMutation({
     mutationFn: (amount: number) => depositEgldInteraction(amount),
     onSuccess(sessionId) {
-      registerSessionId(sessionId)
+      if(!sessionId) return Promise.reject();
+
+      return new Promise((resolve) => {
+        registerSessionId(sessionId, getCallback(resolve));
+      });
     },
   });
 }

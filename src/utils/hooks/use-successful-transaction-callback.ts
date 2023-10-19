@@ -1,25 +1,29 @@
 import { useEffect, useState } from "react";
 import { useGetSuccessfulTransactions } from "@multiversx/sdk-dapp/hooks";
 
-export function useSuccessfulTransactionCallback(callback: () => unknown) {
+export function useSuccessfulTransactionCallback() {
   const { successfulTransactionsArray } = useGetSuccessfulTransactions();
-  const [lastSessionIds, setLastSessionIds] = useState<string[]>([]);
+  const [sessionIds, setSessionIds] = useState<string[]>([]);
+  const [callbacks, setCallbacks] = useState<Record<string, unknown>>([]);
 
-  const registerSessionId = (sessionId: string | undefined) => {
+  const registerSessionId = (sessionId: string | undefined, callback: (sessionId) => void) => {
     if(!sessionId) return;
 
-    setLastSessionIds(values => [...values, sessionId])
+    setSessionIds(values => [...values, sessionId])
+    setCallbacks(callbacks => ({...callbacks, [sessionId]: callback}));
   };
 
   useEffect(() => {
-    const matchedSessionIds = lastSessionIds.filter(sessionId =>
+    const matchedSessionIds = sessionIds.filter(sessionId =>
       successfulTransactionsArray.find(([id]) => id === sessionId)
     );
 
     if (matchedSessionIds.length > 0) {
-      callback();
+      for(const sessionId of matchedSessionIds) {
+        if(callbacks[sessionId]) callbacks[sessionId]();
+      }
 
-      setLastSessionIds(prevIds => prevIds.filter(id => !matchedSessionIds.includes(id)));
+      setSessionIds(prevIds => prevIds.filter(id => !matchedSessionIds.includes(id)));
     }
   }, [successfulTransactionsArray]);
 

@@ -13,15 +13,22 @@ export function useTokenTransferMutation() {
   const { address } = useGetAccount();
   const client = useQueryClient();
 
-  const invalidateQueries = () => {
-    client.invalidateQueries({queryKey: accountBalancesQueryKey(address)})
-    client.invalidateQueries({queryKey: accountTokenOperationsQueryKey(address)})
-  }
+  const registerSessionId =  useSuccessfulTransactionCallback()
 
-  const registerSessionId =  useSuccessfulTransactionCallback(invalidateQueries)
+  const getCallback = (callback: () => void) => async () => {
+    await client.invalidateQueries({queryKey: accountBalancesQueryKey(address)})
+    await client.invalidateQueries({queryKey: accountTokenOperationsQueryKey(address)})
+    callback();
+  }
 
   return useMutation({
     mutationFn: (props: MutationProps) => transferTokenInteraction(props.token, props.amount, props.receiver),
-    onSuccess: (sessionId) => registerSessionId(sessionId),
+    onSuccess: (sessionId) => {
+      if(!sessionId) return Promise.reject();
+
+      return new Promise((resolve) => {
+        registerSessionId(sessionId, getCallback(resolve));
+      });
+    }
   });
 }

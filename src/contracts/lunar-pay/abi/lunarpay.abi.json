@@ -450,8 +450,18 @@
                     "indexed": true
                 },
                 {
-                    "name": "amount",
-                    "type": "Option<Amount>",
+                    "name": "fixed_amount",
+                    "type": "BigUint",
+                    "indexed": true
+                },
+                {
+                    "name": "minimum_amount",
+                    "type": "BigUint",
+                    "indexed": true
+                },
+                {
+                    "name": "maximum_amount",
+                    "type": "BigUint",
                     "indexed": true
                 }
             ]
