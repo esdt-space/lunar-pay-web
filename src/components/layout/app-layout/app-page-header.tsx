@@ -67,7 +67,6 @@ export function AppPageHeader() {
                   <HeaderLink text={'Admin'} location={RoutesConfig.admin} />
                   <HeaderLink text={'Agreements'} location={RoutesConfig.paymentAgreements} />
                   <HeaderLink text={'Token Operations'} location={RoutesConfig.tokensOperations} />
-                  <HeaderLink text={'Transactions'} location={RoutesConfig.transactions} />
                 </ul>
               </div>
 
