@@ -17,8 +17,8 @@ export function AgreementCallbacksPartial() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      http_callback: true,
-      sc_callback: true,
+      http_callback: false,
+      sc_callback: false,
     },
   })
 

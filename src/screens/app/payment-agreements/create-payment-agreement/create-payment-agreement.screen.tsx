@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import React, { ChangeEvent, useState } from "react";
+import React, { useState } from "react";
 
 import { Button } from "@/components/ui/button.tsx";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card.tsx";
@@ -13,6 +13,7 @@ import { useWhitelistedVaultTokens } from "@/features/vault/hooks";
 import { FrequencyType } from "@/features/subscription/models/agreement-types.model";
 import { useCreatePaymentAgreementMutation } from "@/features/payment-agreements/hooks";
 import { AgreementAmountType, AgreementType } from "@/contracts/lunar-pay/agreements/enums";
+import { PaymentAgreementsService } from "@/features/payment-agreements/payment-agreements.service.ts";
 
 import { AgreementCallbacksPartial } from "./partials/agreement-callbacks-partial.tsx";
 

@@ -12,6 +12,7 @@ type Props = {
   value?: EsdtToken
   onChange: (token: EsdtToken) => void
   showBalances?: boolean
+  triggerClassname?: string
 }
 
 export function EsdtTokenSelector(props: Props) {
@@ -26,12 +27,12 @@ export function EsdtTokenSelector(props: Props) {
 
   return (
     <Select value={value?.identifier}>
-      <SelectTrigger onClick={() => setIsOpen(true)}>
+      <SelectTrigger onClick={() => setIsOpen(true)} className={props.triggerClassname}>
         <SelectValue placeholder="Select token">
           {value && (
-            <div className={`flex gap-2 items-center`}>
+            <div className={`flex gap-1 items-center`}>
               <TokenLogo className={'w-4 h-4'} token={value as EsdtToken} />
-              <span className={'text-xs'}>{(value as EsdtToken).name}</span>
+              <span className={'text-xs truncate'}>{(value as EsdtToken).name}</span>
             </div>
           )}
         </SelectValue>
