@@ -1,9 +1,9 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { PaymentAgreement } from "../../models"
 import moment from "moment";
-import { AddressCell } from "@/features/token-operations/components/token-operations-table/address-cell";
 import { useNavigate } from "react-router-dom";
 import { RoutesConfig } from "@/navigation";
+import { formatFrequency } from "@/utils";
 
 type Props = {
   agreementsList: PaymentAgreement[] | undefined;
@@ -17,9 +17,9 @@ export const PaymentAgreementListTable = ({ agreementsList }: Props) => {
       <TableHeader>
         <TableRow>
           <TableHead>Name</TableHead>
-          <TableHead>Owner</TableHead>
           <TableHead>Frequency</TableHead>
           <TableHead>Token</TableHead>
+          <TableHead>Accounts Count</TableHead>
           <TableHead>Date</TableHead>
         </TableRow>
       </TableHeader>
@@ -30,9 +30,9 @@ export const PaymentAgreementListTable = ({ agreementsList }: Props) => {
               onClick={() => navigate(`${RoutesConfig.paymentAgreements}/${item.id}`)}
             >
             <TableCell>{item.name}</TableCell>
-            <AddressCell value={item.owner} />
-            <TableCell>{item.frequency}</TableCell>
+            <TableCell>{formatFrequency(item.frequency)}</TableCell>
             <TableCell>{item.tokenIdentifier}</TableCell>
+            <TableCell>{item.accountsCount}</TableCell>
             <TableCell>{moment(item.createdAt).format('ll')}</TableCell>
           </TableRow>
         })}

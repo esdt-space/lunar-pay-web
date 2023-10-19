@@ -7,23 +7,18 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card.t
 import { EsdtToken } from "@/features/tokens";
 import { EsdtTokenSelector } from "@/features/tokens/components";
 import { useWhitelistedVaultTokens } from "@/features/vault/hooks";
-import { useCreatePaymentAgreementMutation, usePaymentAgreementsCreatedQuery } from "@/features/payment-agreements/hooks";
+import { useCreatePaymentAgreementMutation } from "@/features/payment-agreements/hooks";
 
 import {AgreementAmountType, AgreementType} from "@/contracts/lunar-pay/agreements/enums";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { FrequencyType } from "@/features/subscription/models/agreement-types.model";
 import { getPaymentFrequency } from "@/utils";
-import { useNavigate } from "react-router-dom";
-import { RoutesConfig } from "@/navigation";
 
 const frequencyList = ["Per Minute", "Per Hour", "Daily", "Weekly", "Monthly", "Per Year"]
 
 export function CreatePaymentAgreementScreen() {
   const [frequency, setFrequency] = useState('Monthly');
   const [selectedToken, setSelectedToken] = useState<EsdtToken | undefined>(undefined);
-  const { data: agreements, isFetched } = usePaymentAgreementsCreatedQuery()
-
-  const navigate = useNavigate()
 
   const tokens = useWhitelistedVaultTokens();
   const [amount, setAmount] = useState('')
@@ -50,16 +45,7 @@ export function CreatePaymentAgreementScreen() {
       type: AgreementType.RecurringPayoutToReceive,
       amountType: AgreementAmountType.FixedAmount,
       amount: { fixedAmount: amount },
-    }, { onSuccess: () => {
-      const sortedAgreements = agreements?.sort((a,b) => b.createdAt.getTime() - a.createdAt.getTime())
-      
-      if(isFetched && sortedAgreements !== undefined) {
-        const latestAgreement = sortedAgreements[0]
-        const currentAgreementId = latestAgreement.id
-
-        navigate(RoutesConfig.updatePaymentAgreement, { state: { currentAgreementId } })
-      }
-    }})
+    }, { onSuccess: () => { console.log("Great Success!") }})
   }
 
   return (

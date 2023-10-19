@@ -67,6 +67,7 @@ export function ApplicationRouter() {
             <Route path={RoutesConfig.paymentAgreements}>
               <Route index element={<ListPaymentAgreementsScreen />} />
               <Route path={':id'} element={<ListMembersAgreementScreen />} />
+              <Route path={':id/edit'} element={<UpdatePaymentAgreementScreen />} />
               <Route path={RoutesConfig.createPaymentAgreementIndex} element={<CreatePaymentAgreementIndexScreen />} />
               <Route path={RoutesConfig.createPaymentAgreementSubscription} element={<CreatePaymentAgreementScreen />} />
               <Route path={RoutesConfig.updatePaymentAgreement} element={<UpdatePaymentAgreementScreen />} />
