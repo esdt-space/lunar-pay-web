@@ -13,17 +13,12 @@ import {AgreementAmountType, AgreementType} from "@/contracts/lunar-pay/agreemen
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { FrequencyType } from "@/features/subscription/models/agreement-types.model";
 import { getPaymentFrequency } from "@/utils";
-import { PaymentAgreementsService } from "@/features/payment-agreements/payment-agreements.service";
-import { useNavigate } from "react-router-dom";
-import { RoutesConfig } from "@/navigation";
 
 const frequencyList = ["Per Minute", "Per Hour", "Daily", "Weekly", "Monthly", "Per Year"]
 
 export function CreatePaymentAgreementScreen() {
   const [frequency, setFrequency] = useState('Monthly');
   const [selectedToken, setSelectedToken] = useState<EsdtToken | undefined>(undefined);
-
-  const navigate = useNavigate()
 
   const tokens = useWhitelistedVaultTokens();
   const [amount, setAmount] = useState('')
@@ -51,11 +46,11 @@ export function CreatePaymentAgreementScreen() {
       amountType: AgreementAmountType.FixedAmount,
       amount: { fixedAmount: amount },
     }, { onSuccess: () => {
-      PaymentAgreementsService.fetchAgreementsCreated().then(() => {
-        const currentAgreementId = "652d53d6148139683bc3612b" // get the id from the latest agreement created
+      // PaymentAgreementsService.fetchAgreementsCreated().then(() => {
+      //   const currentAgreementId = "652d53d6148139683bc3612b" // get the id from the latest agreement created
 
-        navigate(RoutesConfig.updatePaymentAgreement, { state: { currentAgreementId } })
-      })
+      //   navigate(RoutesConfig.updatePaymentAgreement, { state: { currentAgreementId } })
+      // })
     }})
   }
 
