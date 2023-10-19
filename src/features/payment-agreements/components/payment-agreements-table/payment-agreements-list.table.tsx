@@ -25,11 +25,9 @@ export const PaymentAgreementListTable = ({ agreementsList }: Props) => {
       </TableHeader>
       <TableBody>
         {agreementsList?.map((item, index) => {
-          const selectedAgreement = item
-
           return <TableRow 
               key={index} 
-              onClick={() => navigate(`${RoutesConfig.paymentAgreements}/${item.id}`, { state: { selectedAgreement }})}
+              onClick={() => navigate(`${RoutesConfig.paymentAgreements}/${item.id}`)}
             >
             <TableCell>{item.name}</TableCell>
             <AddressCell value={item.owner} />
