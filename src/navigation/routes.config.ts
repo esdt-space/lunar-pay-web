@@ -20,7 +20,7 @@ export class RoutesConfig {
   static paymentAgreements = '/payment-agreements'
   static createPaymentAgreementIndex = '/payment-agreements/new'
   static createPaymentAgreementSubscription = '/payment-agreements/new/subscription'
-  static updatePaymentAgreement = '/payment-agreements/new/subscription/update'
+  static updatePaymentAgreement = '/payment-agreements/:id/edit'
   static approveSubscription = '/approve-subscription'
 
   static tokensOperations = '/tokens-operations'

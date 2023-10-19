@@ -20,10 +20,11 @@ type Props = {
   onTokenChange: (token: EsdtToken) => void
   onAmountChange: (amount: string) => void
   hasMaxButton?: boolean
+  showBalances?: boolean
 }
 
 export function TokenSelectorWithAmount(props: Props) {
-  const { tokens = [], token, amount, hasMaxButton = true } = props
+  const { tokens = [], token, amount, hasMaxButton = true, showBalances = true } = props
 
   const [isOpen, setIsOpen] = useState(false)
   const [tokenError, setTokenError] = useState<null | TokenValueError>(null)
@@ -42,7 +43,6 @@ export function TokenSelectorWithAmount(props: Props) {
   }
 
   const changeAmountHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
     props.onAmountChange(e.target.value.replace(',', '.'))
   }
 
@@ -106,7 +106,7 @@ export function TokenSelectorWithAmount(props: Props) {
         isOpen={isOpen}
         closeDialogHandler={closeDialogHandler}
         selectTokenHandler={selectTokenHandler}
-        showBalances
+        showBalances={showBalances}
       />
     </Select>
   )

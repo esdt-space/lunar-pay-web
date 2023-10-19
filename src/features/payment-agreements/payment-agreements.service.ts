@@ -13,6 +13,13 @@ export class PaymentAgreementsService {
       .then(data => new PaymentAgreement(data))
   }
 
+  static async fetchLatestAgreementCreatedByAccount() {
+    return PaymentAgreementsService.api
+      .get<PaymentAgreement>(`/payment-agreements/created/latest`)
+      .then((response) => response.data)
+      .then(item => new PaymentAgreement(item))
+  }
+
   static async fetchAgreementsCreated() {
     return PaymentAgreementsService.api
       .get<PaymentAgreement[]>(`/payment-agreements/created`)
