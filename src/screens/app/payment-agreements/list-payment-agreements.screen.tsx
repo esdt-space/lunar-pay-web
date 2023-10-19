@@ -8,7 +8,7 @@ import { usePaymentAgreementsCreatedQuery } from "@/features/payment-agreements/
 import { PaymentAgreementListTable } from "@/features/payment-agreements/components/payment-agreements-table";
 
 export function ListPaymentAgreementsScreen() {
-  const { data: agreements, isFetched, isFetching } = usePaymentAgreementsCreatedQuery()
+  const { data: agreements = [], isFetched, isFetching } = usePaymentAgreementsCreatedQuery()
   
   return (
     <div className={'container mx-auto sm:p-12 xl:p-16 space-y-12'}>

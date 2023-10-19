@@ -3,16 +3,15 @@ import {ChangeEvent, useState} from "react";
 import { Input } from "@/components/ui/input.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card.tsx";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
+import { getPaymentFrequency } from "@/utils";
 import { EsdtToken } from "@/features/tokens";
 import { EsdtTokenSelector } from "@/features/tokens/components";
 import { useWhitelistedVaultTokens } from "@/features/vault/hooks";
-import { useCreatePaymentAgreementMutation } from "@/features/payment-agreements/hooks";
-
-import {AgreementAmountType, AgreementType} from "@/contracts/lunar-pay/agreements/enums";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { FrequencyType } from "@/features/subscription/models/agreement-types.model";
-import { getPaymentFrequency } from "@/utils";
+import { useCreatePaymentAgreementMutation } from "@/features/payment-agreements/hooks";
+import { AgreementAmountType, AgreementType } from "@/contracts/lunar-pay/agreements/enums";
 
 const frequencyList = ["Per Minute", "Per Hour", "Daily", "Weekly", "Monthly", "Per Year"]
 
@@ -27,6 +26,10 @@ export function CreatePaymentAgreementScreen() {
 
   const missingToken = selectedToken === undefined
   const missingAmount = amount === ""
+
+  const agreementCreatedHandler = () => {
+    // TODO: Implement
+  }
 
   const changeAmountHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if(selectedToken !== undefined) {
@@ -45,7 +48,7 @@ export function CreatePaymentAgreementScreen() {
       type: AgreementType.RecurringPayoutToReceive,
       amountType: AgreementAmountType.FixedAmount,
       amount: { fixedAmount: amount },
-    }, { onSuccess: () => { console.log("Great Success!") }})
+    }, { onSuccess: agreementCreatedHandler})
   }
 
   return (

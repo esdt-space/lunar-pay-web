@@ -2,14 +2,13 @@ import { useQuery } from "react-query";
 import { useGetAccount } from "@multiversx/sdk-dapp/hooks";
 
 import { PaymentAgreementsService } from "../../payment-agreements.service.ts";
-
-const queryKey = (address: string) => ['account-agreements-signed', address]
+import { accountPaymentAgreementsSignedQueryKey } from "@/features/payment-agreements/query-keys.ts";
 
 export function usePaymentAgreementsSignedQuery() {
   const { address } = useGetAccount();
 
   return useQuery({
-    queryKey: queryKey(address),
+    queryKey: accountPaymentAgreementsSignedQueryKey(address),
     queryFn: PaymentAgreementsService.fetchAgreementsSigned,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
