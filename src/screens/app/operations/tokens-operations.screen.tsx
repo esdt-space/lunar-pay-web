@@ -47,7 +47,7 @@ export const TokensOperationsScreen = () => {
     <div className={'container mx-auto p-4 sm:p-12 xl:p-16 space-y-3'}>
       <div className={'flex justify-between max-sm:flex-col max-sm:space-y-2'}>
         <Tabs defaultValue="all" onValueChange={(value) => setOperationType(value as TokenOperationType)}>
-          <TabsList className={'self-start mb-2 mr-2'}>
+          <TabsList className={'self-start mb-2 mr-2 max-sm:w-full'}>
             <TabsTrigger value={'all'} disabled={isLoadingFirstTime}>All</TabsTrigger>
             <TabsTrigger value={TokenOperationType.Deposit} disabled={isLoadingFirstTime}>Deposits</TabsTrigger>
             <TabsTrigger value={TokenOperationType.Withdraw} disabled={isLoadingFirstTime}>Withdrawals</TabsTrigger>
