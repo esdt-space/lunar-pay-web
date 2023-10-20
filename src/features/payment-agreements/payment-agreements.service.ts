@@ -1,6 +1,6 @@
 import { ProtocolApi } from "@/lib/protocol-api";
 
-import { PaymentAgreement } from "./models";
+import {AgreementMember, PaymentAgreement} from "./models";
 import { UpdateAgreementDto } from "./dto";
 
 export class PaymentAgreementsService {
@@ -11,6 +11,14 @@ export class PaymentAgreementsService {
       .get<PaymentAgreement>(`/payment-agreements/${id}`)
       .then((response) => response.data)
       .then(data => new PaymentAgreement(data))
+  }
+
+  static async getAgreementMembers(id: string) {
+    return this.api
+      .get<PaymentAgreement[]>(`/payment-agreements/${id}/members`)
+      .then((response) => response.data)
+      .then(data => data.map(item => new AgreementMember(item)))
+
   }
 
   static async fetchLatestAgreementCreatedByAccount() {

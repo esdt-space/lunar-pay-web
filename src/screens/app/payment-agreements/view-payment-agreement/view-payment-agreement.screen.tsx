@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom"
 
 import { RoutesConfig } from "@/navigation"
 import { useCreatedPaymentAgreement } from "@/features/payment-agreements/hooks";
+import { usePaymentAgreementMembers } from "@/features/payment-agreements/hooks";
 
 import { Card } from "@/components/ui/card.tsx"
 import { Button } from "@/components/ui/button.tsx"
@@ -18,13 +19,14 @@ export const ViewPaymentAgreementScreen = () => {
   const navigate = useNavigate()
 
   const { data: agreement } = useCreatedPaymentAgreement(id);
+  const { data: members = [] } = usePaymentAgreementMembers(id);
 
   if(!agreement) return;
 
   if(agreement && agreement.owner !== address) {
     navigate(RoutesConfig.dashboard, { replace: true });
   }
- 
+
   return (
     <div className="container mx-auto p-4 sm:p-12 xl:p-16 space-y-6">
       <div className={'flex justify-between items-top'}>
@@ -60,7 +62,7 @@ export const ViewPaymentAgreementScreen = () => {
           <Card className={'p-6'}>
             <AgreementDetails agreement={agreement} />
           </Card>
-          <MembersListPartial members={[]}/>
+          <MembersListPartial members={members}/>
         </TabsContent>
       </Tabs>
     </div>
