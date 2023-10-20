@@ -20,6 +20,7 @@ export function UpdatePaymentAgreementScreen() {
   const navigate = useNavigate()
 
   const [name, setName] = useState("")
+  const [itemName, setItemName] = useState("")
   const [description, setDescription] = useState("")
   const [benefits, setBenefits] = useState<string[]>([""])
   const [formInitialized, setFormInitialized] = useState(false);
@@ -29,7 +30,7 @@ export function UpdatePaymentAgreementScreen() {
   useEffect(() => {
     if(agreement === undefined || formInitialized) return;
 
-    setName(agreement.name ?? "");
+    setName(agreement.ownerName ?? "");
     setDescription(agreement.description ?? "");
     setBenefits(agreement.benefits ?? [""]);
 
@@ -62,7 +63,8 @@ export function UpdatePaymentAgreementScreen() {
     const filteredBenefits = benefits.filter((item) => item !== "")
 
     const input = {
-      name: name,
+      ownerName: name,
+      itemName: itemName,
       description: description,
       benefits: filteredBenefits
     }
@@ -81,9 +83,15 @@ export function UpdatePaymentAgreementScreen() {
         </div>
 
         <Input
-          value={name ?? agreement.name}
-          placeholder="Agreement name"
+          value={name ?? agreement.ownerName}
+          placeholder="Name e.g.: MultiversX"
           onChange={(e) => setName(e.target.value)}
+        />
+
+        <Input
+          value={itemName ?? agreement.itemName}
+          placeholder="Product or service name"
+          onChange={(e) => setItemName(e.target.value)}
         />
 
         <Textarea

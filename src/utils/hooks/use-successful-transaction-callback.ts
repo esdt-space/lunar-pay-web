@@ -4,9 +4,9 @@ import { useGetSuccessfulTransactions } from "@multiversx/sdk-dapp/hooks";
 export function useSuccessfulTransactionCallback() {
   const { successfulTransactionsArray } = useGetSuccessfulTransactions();
   const [sessionIds, setSessionIds] = useState<string[]>([]);
-  const [callbacks, setCallbacks] = useState<Record<string, unknown>>([]);
+  const [callbacks, setCallbacks] = useState<Record<string, unknown>>({});
 
-  const registerSessionId = (sessionId: string | undefined, callback: (sessionId) => void) => {
+  const registerSessionId = (sessionId: string | undefined, callback: (sessionId: string) => void) => {
     if(!sessionId) return;
 
     setSessionIds(values => [...values, sessionId])
@@ -20,7 +20,10 @@ export function useSuccessfulTransactionCallback() {
 
     if (matchedSessionIds.length > 0) {
       for(const sessionId of matchedSessionIds) {
-        if(callbacks[sessionId]) callbacks[sessionId]();
+        if(callbacks[sessionId]) {
+          // @ts-ignore
+          callbacks[sessionId]();
+        }
       }
 
       setSessionIds(prevIds => prevIds.filter(id => !matchedSessionIds.includes(id)));

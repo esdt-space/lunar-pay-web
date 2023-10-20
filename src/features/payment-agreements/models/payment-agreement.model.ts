@@ -23,8 +23,9 @@ export class PaymentAgreement {
 
   activeAccountsCount: number;
 
+  ownerName?: string;
 
-  name?: string;
+  itemName?: string;
 
   description?: string;
 

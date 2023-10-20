@@ -1,5 +1,6 @@
 export type UpdateAgreementDto = {
-  name: string;
+  ownerName: string;
+  itemName: string;
   description: string;
   benefits: string[];
   content?: string;

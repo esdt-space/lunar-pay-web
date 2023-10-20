@@ -10,7 +10,7 @@ export function AgreementDetailsPartial(props: Props) {
 
   return (
     <section className={'flex flex-col gap-8'}>
-      <h1 className={'text-3xl font-bold'}>{agreement.name}</h1>
+      <h1 className={'text-3xl font-bold'}>{agreement.ownerName}</h1>
 
       <div className={''}>
         <h3 className={'text-slate-600'}>{agreement.description}</h3>

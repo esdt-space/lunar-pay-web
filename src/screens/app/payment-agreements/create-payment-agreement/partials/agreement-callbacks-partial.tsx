@@ -1,5 +1,4 @@
 import * as z from "zod";
-import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver} from "@hookform/resolvers/zod";
 
@@ -46,11 +45,11 @@ export function AgreementCallbacksPartial() {
             {field.value && (
               <div className={'space-y-2'}>
                 <div className={'space-y-1'}>
-                  <Label for={'http-register-field'} className={'text-slate-500'}>New Subscriber Endpoint</Label>
+                  <Label className={'text-slate-500'}>New Subscriber Endpoint</Label>
                   <Input readOnly={true} id={'http-register-field'} placeholder={'e.g.: https://example.com'}/>
                 </div>
                 <div className={'space-y-1'}>
-                  <Label for={'http-cancel-field'} className={'text-slate-500'}>Cancel Agreement Endpoint</Label>
+                  <Label className={'text-slate-500'}>Cancel Agreement Endpoint</Label>
                   <Input readOnly={true} id={'http-cancel-field'} placeholder={'e.g.: https://example.com'}/>
                 </div>
               </div>
@@ -82,11 +81,11 @@ export function AgreementCallbacksPartial() {
             {field.value && (
               <div className={'space-y-2'}>
                 <div className={'space-y-1'}>
-                  <Label for={'sc-address'} className={'text-slate-500'}>Smart contract address</Label>
+                  <Label className={'text-slate-500'}>Smart contract address</Label>
                   <Input readOnly={true} id={'sc-address'} placeholder={'e.g.: erd1qqq...'}/>
                 </div>
                 <div className={'space-y-1'}>
-                  <Label for={'sc-function'} className={'text-slate-500'}>Smart contract address</Label>
+                  <Label className={'text-slate-500'}>Smart contract address</Label>
                   <Input readOnly={true} id={'sc-function'} placeholder={'e.g.: registerSubscriber'}/>
                 </div>
               </div>

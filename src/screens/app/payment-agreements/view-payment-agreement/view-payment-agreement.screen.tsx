@@ -29,7 +29,7 @@ export const ViewPaymentAgreementScreen = () => {
     <div className="container mx-auto p-4 sm:p-12 xl:p-16 space-y-6">
       <div className={'flex justify-between items-top'}>
         <h2 className={'text-lg font-medium'}>
-          {agreement.name ?? 'Unnamed agreement'}
+          {agreement.ownerName ?? 'Unnamed agreement'}
         </h2>
 
         <div className={'flex gap-2'}>

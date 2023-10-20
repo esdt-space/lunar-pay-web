@@ -22,7 +22,7 @@ export const SubscriptionMembersList = () => {
       <CardHeader className="p-6">
         <div className="flex justify-between">
           <div>
-            <CardTitle>{currentSub.name}</CardTitle>
+            <CardTitle>{currentSub.ownerName}</CardTitle>
           </div>
           <div>
             <Button className="bg-red-500 text-white hover:bg-red-500 hover:text-white">Cancel Subscription</Button>

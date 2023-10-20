@@ -1,7 +1,6 @@
 import { ArrowLeft } from "lucide-react"
+import { Link, useParams } from "react-router-dom"
 import { FormatAmount } from "@multiversx/sdk-dapp/UI"
-import { useGetAccount } from "@multiversx/sdk-dapp/hooks"
-import { Link, useNavigate, useParams } from "react-router-dom"
 
 import { cn } from "@/theme/utils.ts"
 import { RoutesConfig } from "@/navigation"
@@ -16,9 +15,9 @@ import { useCreatedPaymentAgreement, useSignPaymentAgreementMutation} from "@/fe
 import { AgreementDetailsPartial } from "./partials/agreement-details-partial.tsx"
 
 export const SignPaymentAgreementScreen = () => {
-  const { address } = useGetAccount()
+  // const { address } = useGetAccount()
   const { id } = useParams()
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   const isLoggedIn = useIsAuthenticated()
 
   const {mutate: signPaymentAgreement} = useSignPaymentAgreementMutation(id);
@@ -68,7 +67,7 @@ export const SignPaymentAgreementScreen = () => {
 
                 <div className={'ring-1 ring-slate-200 rounded'}>
                   <div className={'flex justify-between p-4 py-6'}>
-                    <div>1 x {agreement.name}</div>
+                    <div>1 x {agreement.ownerName}</div>
                     <div>
                       <FormatAmount value={agreement.fixedAmount as string} token={agreement.tokenIdentifier}/>
                       /mo
