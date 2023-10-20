@@ -8,8 +8,11 @@ import { RoutesConfig } from "@/navigation"
 import { Button } from "@/components/ui/button.tsx"
 import { AppIcon } from "@/components/shared/app-icon.tsx"
 
+import { useTokensMap } from "@/features/tokens"
 import { useIsAuthenticated } from "@/features/auth"
 import { AuthForm } from "@/features/auth/components"
+import { TokenItem } from "@/features/tokens/components"
+import { useAccountVaultTokens } from "@/features/vault/hooks"
 import { useCreatedPaymentAgreement, useSignPaymentAgreementMutation} from "@/features/payment-agreements/hooks"
 
 import { AgreementDetailsPartial } from "./partials/agreement-details-partial.tsx"
@@ -19,12 +22,16 @@ export const SignPaymentAgreementScreen = () => {
   const { id } = useParams()
   // const navigate = useNavigate()
   const isLoggedIn = useIsAuthenticated()
-
-  const {mutate: signPaymentAgreement} = useSignPaymentAgreementMutation(id);
+  const {vaultTokens} = useAccountVaultTokens()
+  const tokensMap = useTokensMap();
 
   const { data: agreement } = useCreatedPaymentAgreement(id);
+  const { mutate: signPaymentAgreement} = useSignPaymentAgreementMutation(id);
 
   if(!agreement) return;
+
+  const token = tokensMap[agreement.tokenIdentifier];
+  const vaultToken = vaultTokens.find(item => item.identifier === agreement.tokenIdentifier);
 
   const signPaymentAgreementButtonHandler = () => {
     signPaymentAgreement(agreement.agreementIdentifier)
@@ -50,6 +57,7 @@ export const SignPaymentAgreementScreen = () => {
           </div>
 
           <AgreementDetailsPartial agreement={agreement}/>
+
           <div className={'flex items-center self-center gap-2'}>
             <div className={'text-sm'}>Powered by</div>
             <Link to={RoutesConfig.dashboard}>
@@ -62,33 +70,51 @@ export const SignPaymentAgreementScreen = () => {
           <div className={'flex flex-col gap-2 w-full max-w-[500px]'}>
             {!isLoggedIn && <AuthForm callbackRoute={window.location.href}/>}
             {isLoggedIn && (
-              <div className={'space-y-4'}>
-                <h2 className={'text-lg font-medium'}>Payment Details</h2>
-
-                <div className={'ring-1 ring-slate-200 rounded'}>
-                  <div className={'flex justify-between p-4 py-6'}>
-                    <div>1 x {agreement.ownerName}</div>
-                    <div>
-                      <FormatAmount value={agreement.fixedAmount as string} token={agreement.tokenIdentifier}/>
-                      /mo
+              <div className={'space-y-6'}>
+                <div className={'space-y-1'}>
+                  <h2 className={'text-lg font-medium'}>Payment Details</h2>
+                  <div className={'ring-1 ring-slate-200 rounded'}>
+                    <div className={'flex justify-between p-4 py-6'}>
+                      <div>1 x {agreement.itemName}</div>
+                      <div>
+                        <FormatAmount
+                          digits={2}
+                          decimals={token.decimals}
+                          token={agreement.tokenIdentifier}
+                          value={agreement.fixedAmount as string}
+                        />
+                        /mo
+                      </div>
                     </div>
-                  </div>
 
-                  <div className={'flex justify-between bg-slate-100 p-4 text-lg'}>
-                    <div className={'font-bold'}>Total due today</div>
-                    <div className={'font-black'}>
-                      <FormatAmount value={agreement.fixedAmount as string} token={agreement.tokenIdentifier}/>
+                    <div className={'flex justify-between bg-slate-100 p-4 text-lg'}>
+                      <div className={'font-bold'}>Total due today</div>
+                      <div className={'font-black'}>
+                        <FormatAmount
+                          digits={2}
+                          decimals={token.decimals}
+                          token={agreement.tokenIdentifier}
+                          value={agreement.fixedAmount as string}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                <div className={'text-sm p-3 bg-slate-100 rounded'}>
+                <div className={'bg-slate-50 p-4 rounded space-y-2'}>
+                  <div className={'text-sm font-medium'}>Vault balance</div>
+                  {vaultToken && (
+                    <TokenItem token={vaultToken} showBalances/>
+                  )}
+                </div>
+
+                <div className={'text-sm p-3 ring-1 ring-slate-100 rounded shadow-sm'}>
                   By confirming this subscription, you allow Netflix to charge your wallet for this payment and future
                   payments in accordance with their terms. Your first monthly payment will be made today, and then every
                   30 days.
                 </div>
 
-                <Button onClick={signPaymentAgreementButtonHandler}>
+                <Button variant={'primary'} onClick={signPaymentAgreementButtonHandler}>
                   Sign Payment Agreement
                 </Button>
               </div>

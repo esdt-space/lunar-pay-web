@@ -1,5 +1,7 @@
 import { Check } from "lucide-react";
 import { PaymentAgreement } from "@/features/payment-agreements/models";
+import {FormatAmount} from "@multiversx/sdk-dapp/UI";
+import {useTokensMap} from "@/features/tokens";
 
 type Props = {
   agreement: PaymentAgreement
@@ -7,14 +9,28 @@ type Props = {
 
 export function AgreementDetailsPartial(props: Props) {
   const { agreement } = props;
+  const tokensMap = useTokensMap();
+  const token = tokensMap[agreement.tokenIdentifier];
 
   return (
     <section className={'flex flex-col gap-8'}>
       <h1 className={'text-3xl font-bold'}>{agreement.ownerName}</h1>
 
       <div className={''}>
-        <h3 className={'text-slate-600'}>{agreement.description}</h3>
-        <div className={'text-4xl font-black'}>1 EGLD<span className={'font-medium'}>/month</span></div>
+        <h3 className={'text-slate-600'}>
+          Subscribe to {agreement.itemName}
+        </h3>
+        <div className={'flex text-4xl font-black items-end'}>
+          <div>
+            <FormatAmount
+              digits={2}
+              token={token.identifier}
+              decimals={token.decimals}
+              value={agreement.fixedAmount as string}
+            />
+          </div>
+          <span className={'font-medium'}>/month</span>
+        </div>
       </div>
 
       <div className={'flex flex-col gap-3'}>
