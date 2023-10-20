@@ -1,4 +1,3 @@
-import moment from "moment";
 import { Link2, Pencil } from "lucide-react";
 import { useGetAccount } from "@multiversx/sdk-dapp/hooks";
 import { Link, useNavigate, useParams } from "react-router-dom"
@@ -10,6 +9,7 @@ import { Card } from "@/components/ui/card.tsx"
 import { Button } from "@/components/ui/button.tsx"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs.tsx"
 
+import { AgreementDetails } from "./partials/agreement-details.tsx";
 import { MembersListPartial } from "./partials/members-list-partial.tsx";
 
 export const ViewPaymentAgreementScreen = () => {
@@ -29,7 +29,7 @@ export const ViewPaymentAgreementScreen = () => {
     <div className="container mx-auto p-4 sm:p-12 xl:p-16 space-y-6">
       <div className={'flex justify-between items-top'}>
         <h2 className={'text-lg font-medium'}>
-          {agreement.ownerName ?? 'Unnamed agreement'}
+          {agreement.itemName ?? 'Unnamed agreement'}
         </h2>
 
         <div className={'flex gap-2'}>
@@ -58,11 +58,8 @@ export const ViewPaymentAgreementScreen = () => {
 
         <TabsContent value="overview" className={'space-y-4'}>
           <Card className={'p-6'}>
-            {agreement.description}
-            {agreement.accountsCount}
-            {moment(agreement.createdAt).format('ll')}
+            <AgreementDetails agreement={agreement} />
           </Card>
-
           <MembersListPartial members={[]}/>
         </TabsContent>
       </Tabs>
