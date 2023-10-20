@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button.tsx";
 import { EmptyStateWithAction } from "@/components/shared/empty-states";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs.tsx";
 
-import { PaymentAgreementListTable } from "@/features/payment-agreements/components/payment-agreements-table";
+import { PaymentAgreementListTable } from "@/features/payment-agreements/components";
 import { usePaymentAgreementsCreatedQuery, useSignedPaymentAgreements } from "@/features/payment-agreements/hooks";
 
 enum ScreenTabs {
