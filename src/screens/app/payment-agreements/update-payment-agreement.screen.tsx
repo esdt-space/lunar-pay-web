@@ -1,20 +1,46 @@
-import { Button } from "@/components/ui/button"
+import {useEffect, useState} from "react"
+import { Plus } from "lucide-react"
+import { useNavigate, useParams } from "react-router-dom"
+import { useGetAccount } from "@multiversx/sdk-dapp/hooks"
+
+import { RoutesConfig } from "@/navigation";
+
 import { Input } from "@/components/ui/input"
-import { Separator } from "@/components/ui/separator"
+import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card.tsx"
 import { Textarea } from "@/components/ui/textarea"
+import { Separator } from "@/components/ui/separator"
+
+import { useCreatedPaymentAgreement } from "@/features/payment-agreements/hooks"
 import { PaymentAgreementsService } from "@/features/payment-agreements/payment-agreements.service"
-import { useEffect, useState } from "react"
-import {  useParams } from "react-router-dom"
 
 export function UpdatePaymentAgreementScreen() {
+  const { address } = useGetAccount()
+  const { id } = useParams()
+  const navigate = useNavigate()
+
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
   const [benefits, setBenefits] = useState<string[]>([])
-  const { id } = useParams()
+  const [formInitialized, setFormInitialized] = useState(false);
+
+  const { data: agreement } = useCreatedPaymentAgreement(id);
 
   useEffect(() => {
-    setBenefits(["", ""])
-  }, [])
+    if(agreement === undefined || formInitialized) return;
+
+    setName(agreement.name);
+    setDescription(agreement.description);
+    setBenefits(agreement.benefits);
+
+    setFormInitialized(true);
+  }, [agreement]);
+
+  if(!agreement) return;
+
+  if(agreement && agreement.owner !== address) {
+    navigate(RoutesConfig.dashboard, { replace: true });
+  }
 
   const missingName = name === ""
   const missingDescription = description === ""
@@ -24,6 +50,12 @@ export function UpdatePaymentAgreementScreen() {
     newBenefits[index] = input
 
     setBenefits(newBenefits)
+  }
+
+  const removeBenefitAtIndex = (index: number) => {
+    setBenefits(benefits =>
+      benefits.filter((item, _index) => _index !== index)
+    );
   }
 
   const updateAgreementDetails = () => {
@@ -41,49 +73,55 @@ export function UpdatePaymentAgreementScreen() {
   }
   
   return (
-    <div className="container mx-auto sm:p-12 xl:p-16 space-y-4 pt-6">
-      <div>
-        <Input 
-          value={name} 
-          onChange={(e) => setName(e.target.value)} 
-          placeholder="Subscription Name"/>
-      </div>
-      <div>
+    <div className="container mx-auto sm:p-12 xl:p-16">
+      <Card className={'p-6 shadow-sm space-y-4'}>
+        <Input
+          value={name ?? agreement.name}
+          placeholder="Agreement name"
+          onChange={(e) => setName(e.target.value)}
+        />
+
         <Textarea
-          value={description} 
-          onChange={(e) => setDescription(e.target.value)} 
-          placeholder="Description" />
-      </div>
-      <Separator />
-      <div className="flex mb-6 w-full justify-between">
-        <div>Benefits</div>
-        <Button onClick={() => {
-          if(benefits.length <= 8) {
-            setBenefits(["", ...benefits])
-          }
-        }}>Add Benefit</Button>
-      </div>
+          value={description ?? agreement.description}
+          placeholder="Description"
+          onChange={(e) => setDescription(e.target.value)}
+        />
 
-      {benefits.map((_item, index) => {
-        return <div key={index} className="flex gap-4">   
-          <Input 
-            placeholder="Enter benefit text..."
-            onChange={(e) => handleChange(e.target.value, index)} />
-          <Button 
-            className="bg-red-500 hover:bg-red-500" 
-            onClick={() => setBenefits(benefits.filter((_el, elIndex) => {
-              return elIndex !== index
-            }))}
-          >Remove</Button>
+        <Separator />
+
+        <div className="flex mb-6 w-full justify-between">
+          <div>Benefits</div>
+          <Button
+            disabled={benefits.length >= 6}
+            onClick={() => setBenefits([...benefits, ""])}
+          >
+            Add Benefit
+            <Plus className={'ml-2 w-4 h-4'} />
+          </Button>
         </div>
-      })}
 
-      <div className="flex w-full">
-        <Button 
-          disabled={missingName || missingDescription}
-          className="flex-1"
-          onClick={updateAgreementDetails} >Save Details</Button>
-      </div>
+        {benefits.map((item, index) => (
+          <div key={index} className="flex gap-4">
+            <Input
+              value={item}
+              placeholder="Enter benefit text..."
+              onChange={(e) => handleChange(e.target.value, index)}
+            />
+
+            <Button
+              variant={'destructive'}
+              onClick={() => removeBenefitAtIndex(index)}
+            >Remove</Button>
+          </div>
+        ))}
+
+        <div className="flex w-full">
+          <Button
+            disabled={missingName || missingDescription}
+            className="flex-1"
+            onClick={updateAgreementDetails}>Save Details</Button>
+        </div>
+      </Card>
     </div>
   );
 }

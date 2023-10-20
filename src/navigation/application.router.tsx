@@ -22,7 +22,7 @@ import { TransactionsScreen } from '@/screens/app/transactions';
 import { 
   CreatePaymentAgreementIndexScreen, 
   CreatePaymentAgreementScreen, 
-  ListMembersAgreementScreen, 
+  ViewPaymentAgreementScreen,
   ListPaymentAgreementsScreen, 
   UpdatePaymentAgreementScreen } from "@/screens/app/payment-agreements";
 
@@ -66,7 +66,7 @@ export function ApplicationRouter() {
 
             <Route path={RoutesConfig.paymentAgreements}>
               <Route index element={<ListPaymentAgreementsScreen />} />
-              <Route path={':id'} element={<ListMembersAgreementScreen />} />
+              <Route path={':id'} element={<ViewPaymentAgreementScreen />} />
               <Route path={':id/edit'} element={<UpdatePaymentAgreementScreen />} />
               <Route path={RoutesConfig.createPaymentAgreementIndex} element={<CreatePaymentAgreementIndexScreen />} />
               <Route path={RoutesConfig.createPaymentAgreementSubscription} element={<CreatePaymentAgreementScreen />} />
