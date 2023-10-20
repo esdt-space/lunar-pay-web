@@ -122,7 +122,7 @@ export const SignPaymentAgreementScreen = () => {
 
                 <div className={'text-sm p-3 ring-1 ring-slate-100 rounded shadow-sm'}>
                   By confirming this subscription, you allow {agreement.ownerName} to charge your wallet for this payment and future
-                  payments in accordance with their terms. Your first monthly payment will be made today, and then every
+                  payments in accordance with their terms. Your first {formatFrequencyForSignAgreement(agreement.frequency)} payment will be made today, and then every
                   { formatFrequencyForSignAgreement(agreement.frequency)}.
                 </div>
 
