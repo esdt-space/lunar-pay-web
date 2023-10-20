@@ -9,6 +9,7 @@ import { Separator } from "@/components/ui/separator.tsx";
 import { formatFrequency } from "@/utils";
 import { useTokensMap } from "@/features/tokens";
 import { PaymentAgreement } from "@/features/payment-agreements/models";
+import { useTriggerPaymentAgreementMutation } from "@/features/payment-agreements/hooks";
 
 type Props = {
   agreement: PaymentAgreement;
@@ -19,6 +20,12 @@ export function AgreementDetails(props: Props){
 
   const tokensMap = useTokensMap();
   const token = tokensMap[agreement.tokenIdentifier];
+
+  const { mutate: triggerAgreement, isLoading} = useTriggerPaymentAgreementMutation(agreement.id);
+
+  const triggerAgreementButtonHandler = () => {
+    triggerAgreement(agreement.agreementIdentifier)
+  }
 
   return (
     <div className="flex max-lg:flex-col justify-between gap-4">
@@ -44,7 +51,11 @@ export function AgreementDetails(props: Props){
           </div>
 
           <div className="flex space-x-2 items-center">
-            <Button size={'sm'}>
+            <Button
+              size={'sm'}
+              disabled={isLoading}
+              onClick={triggerAgreementButtonHandler}
+            >
               Claim
               <Wallet className={'ml-2 w-3 h-3'} />
             </Button>

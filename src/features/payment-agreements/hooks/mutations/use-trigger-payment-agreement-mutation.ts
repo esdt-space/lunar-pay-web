@@ -11,7 +11,7 @@ import {
   accountPaymentAgreementsCreatedQueryKey,
 } from "@/features/payment-agreements/query-keys.ts";
 
-export function useTriggerPaymentAgreementMutation(internalAgreementId: string) {
+export function useTriggerPaymentAgreementMutation(internalAgreementId: string | undefined) {
   const client = useQueryClient();
   const { address } = useGetAccount();
 
