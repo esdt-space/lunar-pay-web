@@ -15,7 +15,7 @@ export class PaymentAgreementsService {
 
   static async getAgreementMembers(id: string) {
     return this.api
-      .get<PaymentAgreement[]>(`/payment-agreements/${id}/members`)
+      .get<PaymentAgreement[]>(`/payment-agreements/${id}/members?limit=1000`)
       .then((response) => response.data)
       .then(data => data.map(item => new AgreementMember(item)))
 
@@ -30,7 +30,7 @@ export class PaymentAgreementsService {
 
   static async fetchAgreementsCreated() {
     return PaymentAgreementsService.api
-      .get<PaymentAgreement[]>(`/payment-agreements/created`)
+      .get<PaymentAgreement[]>(`/payment-agreements/created?limit=1000`)
       .then((response) => response.data)
       .then(data => data.map(item => new PaymentAgreement(item)))
   }
