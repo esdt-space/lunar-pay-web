@@ -49,7 +49,9 @@ export const TokenOperationsTable = (props: Props) => {
               <TokenOperationIcon operation={item} />
             </TableCell>
             <TokenOperationValueCell operation={item} />
-            {isAllOrTransfer && <TableCell className={'max-md:hidden'}>{item.type}</TableCell>}
+            {isAllOrTransfer && <TableCell className={'max-md:hidden'}>
+              {item.type === TokenOperationType.Charge ? "charge" : item.type}
+            </TableCell>}
             {isAllOrTransfer && <AddressCell value={item.sender} />}
             {isAllOrTransfer && <AddressCell value={item.receiver} />}
             <TableCell className={'max-lg:hidden text-muted-foreground'}>{moment(item.createdAt).format('ll')}</TableCell>
