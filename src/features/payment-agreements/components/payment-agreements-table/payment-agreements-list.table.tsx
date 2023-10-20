@@ -28,7 +28,7 @@ function AgreementRow(props: AgreementRowProps) {
     <TableRow
       onClick={() => navigate(`${RoutesConfig.paymentAgreements}/${agreement.id}`)}
     >
-      <TableCell>{agreement.ownerName}</TableCell>
+      <TableCell>{agreement.itemName}</TableCell>
       <TableCell>
         <FormatAmount value={agreement.fixedAmount as string} decimals={token.decimals} />
       </TableCell>

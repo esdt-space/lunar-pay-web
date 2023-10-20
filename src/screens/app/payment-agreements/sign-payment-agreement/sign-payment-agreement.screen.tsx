@@ -72,7 +72,7 @@ export const SignPaymentAgreementScreen = () => {
             {isLoggedIn && (
               <div className={'space-y-6'}>
                 <div className={'space-y-1'}>
-                  <h2 className={'text-lg font-medium'}>Payment Details</h2>
+                  <h2 className={'text-lg font-bold'}>Payment Details</h2>
                   <div className={'ring-1 ring-slate-200 rounded'}>
                     <div className={'flex justify-between p-4 py-6'}>
                       <div>1 x {agreement.itemName}</div>
