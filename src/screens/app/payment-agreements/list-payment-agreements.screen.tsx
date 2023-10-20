@@ -37,7 +37,7 @@ export function ListPaymentAgreementsScreen() {
       <h1 className={'text-xl font-bold'}>Payment Agreements</h1>
 
       <Tabs className={'space-y-4'} defaultValue={ScreenTabs.Created}>
-        <div className={'flex justify-between'}>
+        <div className={'flex justify-between max-sm:flex-col max-sm:space-y-2'}>
           <TabsList>
             <TabsTrigger value={ScreenTabs.Created}>Agreements Created</TabsTrigger>
             <TabsTrigger
