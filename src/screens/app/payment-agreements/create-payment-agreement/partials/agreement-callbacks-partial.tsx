@@ -50,7 +50,7 @@ export function AgreementCallbacksPartial() {
                   <Input readOnly={true} id={'http-register-field'} placeholder={'e.g.: https://example.com'}/>
                 </div>
                 <div className={'space-y-1'}>
-                  <Label for={'http-cancel-field'} className={'text-slate-500'}>Smart contract address</Label>
+                  <Label for={'http-cancel-field'} className={'text-slate-500'}>Cancel Agreement Endpoint</Label>
                   <Input readOnly={true} id={'http-cancel-field'} placeholder={'e.g.: https://example.com'}/>
                 </div>
               </div>
