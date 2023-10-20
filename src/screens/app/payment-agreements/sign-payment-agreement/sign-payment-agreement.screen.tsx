@@ -1,5 +1,5 @@
 import { ArrowLeft } from "lucide-react"
-import { Link, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import { FormatAmount } from "@multiversx/sdk-dapp/UI"
 
 import { cn } from "@/theme/utils.ts"
@@ -20,7 +20,7 @@ import { AgreementDetailsPartial } from "./partials/agreement-details-partial.ts
 export const SignPaymentAgreementScreen = () => {
   // const { address } = useGetAccount()
   const { id } = useParams()
-  // const navigate = useNavigate()
+  const navigate = useNavigate()
   const isLoggedIn = useIsAuthenticated()
   const {vaultTokens} = useAccountVaultTokens()
   const tokensMap = useTokensMap();
@@ -40,7 +40,7 @@ export const SignPaymentAgreementScreen = () => {
   return (
     <div className="flex flex-1 flex-col">
       <div className={'pl-8 py-4'}>
-        <Button variant={'ghost'} className={'gap-2'}>
+        <Button onClick={() => navigate(`${RoutesConfig.paymentAgreements}/${agreement.id}`)} variant={'ghost'} className={'gap-2'}>
           <ArrowLeft />
           Back
         </Button>
