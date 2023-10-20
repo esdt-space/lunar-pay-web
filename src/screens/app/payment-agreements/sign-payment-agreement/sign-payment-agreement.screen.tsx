@@ -114,7 +114,7 @@ export const SignPaymentAgreementScreen = () => {
                   30 days.
                 </div>
 
-                <Button variant={'primary'} onClick={signPaymentAgreementButtonHandler}>
+                <Button variant={'primary'} className={'bg-gradient-to-r from-primary to-secondary text-white hover:text-slate-200'} onClick={signPaymentAgreementButtonHandler}>
                   Sign Payment Agreement
                 </Button>
               </div>
