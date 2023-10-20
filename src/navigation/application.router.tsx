@@ -10,7 +10,7 @@ import { PublicLayout } from "@/components/layout/public-layout";
 
 import { HomeScreen } from "@/screens/landing/home";
 import { AdminScreen } from '@/screens/admin';
-import { SubscriptionMembersList, SubscriptionsOverviewScreen } from "@/screens/app/subscriptions";
+import { SubscriptionMembersList } from "@/screens/app/subscriptions";
 import { AuthenticationScreen } from "@/screens/auth/authentication-screen.tsx";
 import { DashboardScreen } from "@/screens/app/dashboard";
 import { TokensOperationsScreen } from '@/screens/app/operations';
@@ -18,7 +18,6 @@ import {Payroll} from "@/screens/landing/payroll";
 import {Subscriptions} from "@/screens/landing/subscriptions";
 import {Donations} from "@/screens/landing/donations";
 import {PortfolioManagement} from "@/screens/landing/portfolio-management";
-import { TransactionsScreen } from '@/screens/app/transactions';
 import {
   CreatePaymentAgreementIndexScreen,
   CreatePaymentAgreementScreen,
@@ -61,7 +60,6 @@ export function ApplicationRouter() {
             </Route>
 
             <Route path={RoutesConfig.subscriptions}>
-              <Route index element={<SubscriptionsOverviewScreen />} />
               <Route path={RoutesConfig.subscriptionMembers} element={<SubscriptionMembersList />} />
             </Route>
 
@@ -76,10 +74,6 @@ export function ApplicationRouter() {
 
             <Route path={RoutesConfig.tokensOperations}>
               <Route index element={<TokensOperationsScreen />} />
-            </Route>
-
-            <Route path={RoutesConfig.transactions}>
-              <Route index element={<TransactionsScreen />} />
             </Route>
           </Route>
         </Route>

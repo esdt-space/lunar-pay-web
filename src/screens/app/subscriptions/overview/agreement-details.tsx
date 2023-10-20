@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { getPaymentFrequency } from "@/utils";
+import {formatFrequency,} from "@/utils";
 import { Dot } from "lucide-react";
-import { Subscription } from "../components/mock-subscription";
+import {PaymentAgreement} from "@/features/payment-agreements/models";
 
 export type AgreementBasicDetails = {
   name: string;
@@ -13,7 +13,7 @@ export type AgreementBasicDetails = {
 }
 
 type Props = {
-  currentAgreement: Subscription;
+  currentAgreement: PaymentAgreement;
 }
 
 export const AgreementDetails = ({currentAgreement}: Props) => {
@@ -21,11 +21,11 @@ export const AgreementDetails = ({currentAgreement}: Props) => {
     <div className="flex justify-between w-6/12">
       <div className="flex items-center">
         <div className="flex">
-          {currentAgreement.agreementType.amountType.amount} {currentAgreement.tokenIdentifier}
+          {currentAgreement.fixedAmount} {currentAgreement.tokenIdentifier}
           <Dot />
         </div>
         <div>
-          {getPaymentFrequency(currentAgreement.agreementType.frequency)}
+          {formatFrequency(currentAgreement.frequency)}
         </div>
       </div>
       <div className="flex space-x-2 items-center">
@@ -38,7 +38,7 @@ export const AgreementDetails = ({currentAgreement}: Props) => {
         <Separator orientation="vertical" />
       </div>
       <div className="ml-6">
-        {currentAgreement.benefits.map((item, index) => {
+        {(currentAgreement.benefits ?? []).map((item, index) => {
           return <div key={index} className="flex"><Dot /> {item}</div>
         })}
       </div>
