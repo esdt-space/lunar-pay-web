@@ -11,24 +11,26 @@ import {
   accountPaymentAgreementsCreatedQueryKey,
 } from "@/features/payment-agreements/query-keys.ts";
 
-export function useTriggerPaymentAgreementMutation(agreementId: string) {
+export function useTriggerPaymentAgreementMutation(internalAgreementId: string) {
   const client = useQueryClient();
   const { address } = useGetAccount();
 
   const registerSessionId =  useSuccessfulTransactionCallback()
 
-  const getCallback = (callback: () => void) => async () => {
+  const getCallback = (callback: (value: unknown) => void) => async (value: unknown) => {
+    if(!internalAgreementId) return;
+    
     await client.invalidateQueries({queryKey: accountBalancesQueryKey(address)})
     await client.invalidateQueries({queryKey: accountTokenOperationsQueryKey(address)})
-    await client.invalidateQueries({queryKey: accountPaymentAgreementById(address, agreementId)})
+    await client.invalidateQueries({queryKey: accountPaymentAgreementById(address, internalAgreementId)})
     await client.invalidateQueries({queryKey: accountPaymentAgreementsSignedQueryKey(address)})
     await client.invalidateQueries({queryKey: accountPaymentAgreementsCreatedQueryKey(address)})
 
-    callback();
+    callback(value);
   }
 
   return useMutation({
-    mutationFn: () => triggerPaymentAgreementInteraction(agreementId),
+    mutationFn: (id: number) => triggerPaymentAgreementInteraction(id),
     onSuccess(sessionId) {
       if(!sessionId) return Promise.reject();
 

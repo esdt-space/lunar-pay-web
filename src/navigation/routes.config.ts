@@ -17,6 +17,10 @@ export class RoutesConfig {
 
   static subscriptions = '/subscriptions'
   static subscriptionMembers = '/subscriptions/members'
+
+  static agreement = '/agreement'
+  static signAgreement = '/agreement/:id'
+
   static paymentAgreements = '/payment-agreements'
   static createPaymentAgreementIndex = '/payment-agreements/new'
   static createPaymentAgreementSubscription = '/payment-agreements/new/subscription'

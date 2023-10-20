@@ -4,12 +4,13 @@ import { useGetAccount } from "@multiversx/sdk-dapp/hooks";
 import { PaymentAgreementsService } from "../../payment-agreements.service.ts";
 import { accountPaymentAgreementById } from "@/features/payment-agreements/query-keys.ts";
 
-export function usePaymentAgreementByIdQuery(id: string) {
+export function usePaymentAgreementByIdQuery(id: string | undefined) {
   const { address } = useGetAccount();
 
   return useQuery({
-    queryKey: accountPaymentAgreementById(address, id),
-    queryFn: () => PaymentAgreementsService.agreementById(id),
+    enabled: id !== undefined,
+    queryKey: accountPaymentAgreementById(address, id as string),
+    queryFn: () => PaymentAgreementsService.agreementById(id as string),
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     refetchInterval: 60 * 1000, // 1 minute

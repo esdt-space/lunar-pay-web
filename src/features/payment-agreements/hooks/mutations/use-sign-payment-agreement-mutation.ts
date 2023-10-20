@@ -10,23 +10,25 @@ import {
   accountPaymentAgreementsSignedQueryKey
 } from "@/features/payment-agreements/query-keys.ts";
 
-export function useSignPaymentAgreementMutation(agreementId: string) {
+export function useSignPaymentAgreementMutation(internalAgreementId: string | undefined) {
   const client = useQueryClient();
   const { address } = useGetAccount();
 
   const registerSessionId =  useSuccessfulTransactionCallback()
 
-  const getCallback = (callback: () => void) => async () => {
+  const getCallback = (callback: (value: unknown) => void) => async (value: unknown) => {
+    if(!internalAgreementId) return;
+
     await client.invalidateQueries({queryKey: accountBalancesQueryKey(address)})
     await client.invalidateQueries({queryKey: accountTokenOperationsQueryKey(address)})
-    await client.invalidateQueries({queryKey: accountPaymentAgreementById(address, agreementId)})
+    await client.invalidateQueries({queryKey: accountPaymentAgreementById(address, internalAgreementId)})
     await client.invalidateQueries({queryKey: accountPaymentAgreementsSignedQueryKey(address)})
 
-    callback();
+    callback(value);
   }
 
   return useMutation({
-    mutationFn: () => signPaymentAgreementInteraction(agreementId),
+    mutationFn: (id: number) => signPaymentAgreementInteraction(id),
     onSuccess(sessionId) {
       if(!sessionId) return Promise.reject();
 

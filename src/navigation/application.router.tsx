@@ -10,7 +10,7 @@ import { PublicLayout } from "@/components/layout/public-layout";
 
 import { HomeScreen } from "@/screens/landing/home";
 import { AdminScreen } from '@/screens/admin';
-import { ApproveSubscriptionScreen, SubscriptionMembersList, SubscriptionsOverviewScreen } from "@/screens/app/subscriptions";
+import { SubscriptionMembersList, SubscriptionsOverviewScreen } from "@/screens/app/subscriptions";
 import { AuthenticationScreen } from "@/screens/auth/authentication-screen.tsx";
 import { DashboardScreen } from "@/screens/app/dashboard";
 import { TokensOperationsScreen } from '@/screens/app/operations';
@@ -19,12 +19,13 @@ import {Subscriptions} from "@/screens/landing/subscriptions";
 import {Donations} from "@/screens/landing/donations";
 import {PortfolioManagement} from "@/screens/landing/portfolio-management";
 import { TransactionsScreen } from '@/screens/app/transactions';
-import { 
-  CreatePaymentAgreementIndexScreen, 
-  CreatePaymentAgreementScreen, 
+import {
+  CreatePaymentAgreementIndexScreen,
+  CreatePaymentAgreementScreen,
   ViewPaymentAgreementScreen,
-  ListPaymentAgreementsScreen, 
-  UpdatePaymentAgreementScreen } from "@/screens/app/payment-agreements";
+  ListPaymentAgreementsScreen,
+  UpdatePaymentAgreementScreen, SignPaymentAgreementScreen
+} from "@/screens/app/payment-agreements";
 
 export function ApplicationRouter() {
   useScrollToTopHandler()
@@ -46,11 +47,11 @@ export function ApplicationRouter() {
           <Route path={RoutesConfig.landingExpensesAndAllowances} element={<></>} />
         </Route>
 
-        <Route element={<AuthenticatedRouteOutlet />}>
-          <Route path={RoutesConfig.approveSubscription}>
-            <Route path={`:id`} element={<ApproveSubscriptionScreen />} />
-          </Route>
+        <Route path={RoutesConfig.agreement}>
+          <Route path={RoutesConfig.signAgreement} element={<SignPaymentAgreementScreen />} />
+        </Route>
 
+        <Route element={<AuthenticatedRouteOutlet />}>
           <Route element={<AppLayout />}>
             <Route index element={<DashboardScreen />} />
             <Route path={RoutesConfig.dashboard} element={<DashboardScreen />} />

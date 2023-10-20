@@ -1,0 +1,1 @@
+export * from './sign-payment-agreement.screen.tsx'

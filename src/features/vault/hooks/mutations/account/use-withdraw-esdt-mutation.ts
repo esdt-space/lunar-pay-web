@@ -15,10 +15,10 @@ export function useWithdrawEsdtMutation() {
 
   const registerSessionId =  useSuccessfulTransactionCallback()
 
-  const getCallback = (callback: () => void) => async () => {
+  const getCallback = (callback: (value: unknown) => void) => async (value: unknown) => {
     await client.invalidateQueries({queryKey: accountBalancesQueryKey(address)})
     await client.invalidateQueries({queryKey: accountTokenOperationsQueryKey(address)})
-    callback();
+    callback(value);
   }
 
   return useMutation({

@@ -34,7 +34,7 @@ export const ViewPaymentAgreementScreen = () => {
 
         <div className={'flex gap-2'}>
           <Button asChild variant={'ghost'} size={'sm'} className={'ml-2'}>
-            <Link to={''}>
+            <Link to={`${RoutesConfig.agreement}/${agreement.id}`}>
               Preview
               <Link2 className={'ml-2 w-4 h-4'} />
             </Link>

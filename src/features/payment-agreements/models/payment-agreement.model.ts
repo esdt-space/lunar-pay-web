@@ -32,7 +32,7 @@ export class PaymentAgreement {
 
   content: string;
 
-  amount?: string;
+  fixedAmount?: string;
 
   minimumAmount?: string;
 

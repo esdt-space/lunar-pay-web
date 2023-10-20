@@ -1,5 +1,5 @@
-import {useEffect, useState} from "react"
 import { Plus } from "lucide-react"
+import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { useGetAccount } from "@multiversx/sdk-dapp/hooks"
 
@@ -21,7 +21,7 @@ export function UpdatePaymentAgreementScreen() {
 
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
-  const [benefits, setBenefits] = useState<string[]>([])
+  const [benefits, setBenefits] = useState<string[]>([""])
   const [formInitialized, setFormInitialized] = useState(false);
 
   const { data: agreement } = useCreatedPaymentAgreement(id);
@@ -29,9 +29,9 @@ export function UpdatePaymentAgreementScreen() {
   useEffect(() => {
     if(agreement === undefined || formInitialized) return;
 
-    setName(agreement.name);
-    setDescription(agreement.description);
-    setBenefits(agreement.benefits);
+    setName(agreement.name ?? "");
+    setDescription(agreement.description ?? "");
+    setBenefits(agreement.benefits ?? [""]);
 
     setFormInitialized(true);
   }, [agreement]);
@@ -54,7 +54,7 @@ export function UpdatePaymentAgreementScreen() {
 
   const removeBenefitAtIndex = (index: number) => {
     setBenefits(benefits =>
-      benefits.filter((item, _index) => _index !== index)
+      benefits.filter((_, _index) => _index !== index)
     );
   }
 
@@ -75,6 +75,11 @@ export function UpdatePaymentAgreementScreen() {
   return (
     <div className="container mx-auto sm:p-12 xl:p-16">
       <Card className={'p-6 shadow-sm space-y-4'}>
+        <div className={'space-y-1'}>
+          <h2 className={'font-semibold'}>Update Agreement Details</h2>
+          <div className={'text-muted-foreground text-sm'}>These details will be shown when someone wants to sign this agreement</div>
+        </div>
+
         <Input
           value={name ?? agreement.name}
           placeholder="Agreement name"
