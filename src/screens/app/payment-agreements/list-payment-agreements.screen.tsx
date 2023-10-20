@@ -20,10 +20,13 @@ export function ListPaymentAgreementsScreen() {
   const {
     data: signedAgreements = [],
     isFetched: isFetchedSignedAgreement,
+    isFetching: isFetchingSignedAgreement,
   } = useSignedPaymentAgreements()
 
-  const emptyAgreementsCreated = isFetched || agreements.length === 0;
-  const emptyAgreementsSigned = isFetchedSignedAgreement || signedAgreements.length === 0;
+  const emptyAgreementsCreated = isFetched && agreements.length === 0;
+
+  const emptyAgreementsSigned = isFetchedSignedAgreement && signedAgreements.length === 0;
+  const isFetchingFirstTimeSignedAgreement = !isFetchedSignedAgreement && isFetchingSignedAgreement;
 
   return (
     <div className={'container mx-auto sm:p-12 xl:p-16 space-y-8'}>
@@ -33,8 +36,12 @@ export function ListPaymentAgreementsScreen() {
         <div className={'flex justify-between'}>
           <TabsList>
             <TabsTrigger value={ScreenTabs.Created}>Agreements Created</TabsTrigger>
-            <TabsTrigger value={ScreenTabs.Signed} disabled={emptyAgreementsSigned}>
+            <TabsTrigger
+              value={ScreenTabs.Signed}
+              disabled={emptyAgreementsSigned || isFetchingFirstTimeSignedAgreement}
+            >
               Agreements Signed
+              {!emptyAgreementsSigned && !isFetchingFirstTimeSignedAgreement && ` (${signedAgreements.length})`}
             </TabsTrigger>
           </TabsList>
 
