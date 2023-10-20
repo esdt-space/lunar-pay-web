@@ -34,7 +34,7 @@ function AgreementRow(props: AgreementRowProps) {
       </TableCell>
       <TableCell>{formatFrequency(agreement.frequency)}</TableCell>
       <TableCell>{agreement.accountsCount}</TableCell>
-      <TableCell>{moment(agreement.createdAt).format('ll')}</TableCell>
+      <TableCell className="max-sm:hidden">{moment(agreement.createdAt).format('ll')}</TableCell>
     </TableRow>
   )
 }
@@ -48,7 +48,7 @@ export const PaymentAgreementListTable = ({ agreementsList }: Props) => {
           <TableHead>Value</TableHead>
           <TableHead>Frequency</TableHead>
           <TableHead>Subscribers</TableHead>
-          <TableHead>Date</TableHead>
+          <TableHead className="max-sm:hidden">Date</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
