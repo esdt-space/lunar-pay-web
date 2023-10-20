@@ -7,8 +7,9 @@ import { Button } from "@/components/ui/button.tsx";
 import { EmptyStateWithAction } from "@/components/shared/empty-states";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs.tsx";
 
-import { PaymentAgreementListTable } from "@/features/payment-agreements/components/payment-agreements-table";
+import { PaymentAgreementListTable } from "@/features/payment-agreements/components";
 import { usePaymentAgreementsCreatedQuery, useSignedPaymentAgreements } from "@/features/payment-agreements/hooks";
+import { PaginationButtons, usePagination } from "@/components/shared/pagination";
 
 enum ScreenTabs {
   Created = 'agreements-created',
@@ -27,6 +28,9 @@ export function ListPaymentAgreementsScreen() {
 
   const emptyAgreementsSigned = isFetchedSignedAgreement && signedAgreements.length === 0;
   const isFetchingFirstTimeSignedAgreement = !isFetchedSignedAgreement && isFetchingSignedAgreement;
+
+  const { data: paginatedAgreements, ...rest} =
+    usePagination(agreements, 5);
 
   return (
     <div className={'container mx-auto sm:p-12 xl:p-16 space-y-8'}>
@@ -66,7 +70,10 @@ export function ListPaymentAgreementsScreen() {
                 </div>
               )}
               {!emptyAgreementsCreated && (
-                <PaymentAgreementListTable agreementsList={agreements} />
+                <div>
+                  <PaymentAgreementListTable agreementsList={paginatedAgreements} />
+                  <PaginationButtons {...{...rest}} />
+                </div>
               )}
             </CardContent>
           </Card>
