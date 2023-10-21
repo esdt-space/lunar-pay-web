@@ -1,6 +1,7 @@
 import { ArrowLeft } from "lucide-react"
-import { Link, useNavigate, useParams } from "react-router-dom"
 import { FormatAmount } from "@multiversx/sdk-dapp/UI"
+import { useGetAccount } from "@multiversx/sdk-dapp/hooks"
+import { Link, useNavigate, useParams } from "react-router-dom"
 
 import { cn, formatTokenBalance } from "@/theme/utils.ts"
 import { RoutesConfig } from "@/navigation"
@@ -13,11 +14,10 @@ import { useIsAuthenticated } from "@/features/auth"
 import { AuthForm } from "@/features/auth/components"
 import { TokenItem } from "@/features/tokens/components"
 import { useAccountVaultTokens } from "@/features/vault/hooks"
+import { formatFrequencyForSignAgreement } from "@/utils/utils.ts"
 import { useCreatedPaymentAgreement, useSignPaymentAgreementMutation} from "@/features/payment-agreements/hooks"
 
 import { AgreementDetailsPartial } from "./partials/agreement-details-partial.tsx"
-import { useGetAccount } from "@multiversx/sdk-dapp/hooks/index"
-import { formatFrequencyForSignAgreement } from "@/utils/utils.ts"
 
 export const SignPaymentAgreementScreen = () => {
   const { address } = useGetAccount()
@@ -126,14 +126,22 @@ export const SignPaymentAgreementScreen = () => {
                   { formatFrequencyForSignAgreement(agreement.frequency)}.
                 </div>
 
-                <Button 
-                  disabled={userIsOwner || notEnoughAssets}
-                  variant={'primary'} 
-                  className={'bg-gradient-to-r from-primary to-secondary text-white hover:text-slate-200'} 
-                  onClick={signPaymentAgreementButtonHandler}
-                >
-                  Sign Payment Agreement
-                </Button>
+                <div className={'flex flex-col'}>
+                  <Button
+                    variant={'primary'}
+                    disabled={userIsOwner || notEnoughAssets}
+                    className={'bg-gradient-to-r from-primary to-secondary text-white hover:text-slate-200'}
+                    onClick={signPaymentAgreementButtonHandler}
+                  >
+                    Sign Payment Agreement
+                  </Button>
+
+                  {userIsOwner && (
+                    <div className={'text-sm text-muted-foreground text-center'}>
+                      You cannot accept your own agreement
+                    </div>
+                  )}
+                </div>
               </div>
             )}
           </div>
