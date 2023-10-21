@@ -18,6 +18,7 @@ import { formatFrequencyForSignAgreement } from "@/utils/utils.ts"
 import { useCreatedPaymentAgreement, useSignPaymentAgreementMutation} from "@/features/payment-agreements/hooks"
 
 import { AgreementDetailsPartial } from "./partials/agreement-details-partial.tsx"
+import {formatAddress} from "@/utils/address";
 
 export const SignPaymentAgreementScreen = () => {
   const { address } = useGetAccount()
@@ -121,9 +122,9 @@ export const SignPaymentAgreementScreen = () => {
                 </div>
 
                 <div className={'text-sm p-3 ring-1 ring-slate-100 rounded shadow-sm'}>
-                  By confirming this subscription, you allow {agreement.ownerName} to charge your wallet for this payment and future
-                  payments in accordance with their terms. Your first {formatFrequencyForSignAgreement(agreement.frequency)} payment will be made today, and then every
-                  { formatFrequencyForSignAgreement(agreement.frequency)}.
+                  By confirming this subscription, you allow <span className={'font-bold'}>{agreement.ownerName ?? formatAddress(agreement.owner)}</span> to charge your wallet for this payment and future
+                  payments in accordance with their terms. Your first payment will be made <span className={'font-bold'}>today</span>, and then
+                  <span className={'font-bold'}> every {formatFrequencyForSignAgreement(agreement.frequency)}</span>.
                 </div>
 
                 <div className={'flex flex-col'}>
