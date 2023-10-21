@@ -96,7 +96,7 @@ export const SignPaymentAgreementScreen = () => {
                           token={agreement.tokenIdentifier}
                           value={agreement.fixedAmount as string}
                         />
-                        /mo
+                        /{formatFrequencyForSignAgreement(agreement.frequency)}
                       </div>
                     </div>
 

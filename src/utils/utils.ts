@@ -53,25 +53,25 @@ export const formatFrequency = (input: number) => {
 export const formatFrequencyForSignAgreement = (input: number) => {
   switch(input) {
     case(60): {
-      return ' minute'
+      return 'minute'
     }
     case(3600): {
-      return ' hour'
+      return 'hour'
     }
     case(3600 * 24): {
-      return ' day'
+      return 'day'
     }
     case(3600 * 24 * 7): {
-      return ' 7 days'
+      return 'week'
     }
     case(3600 * 24 * 7 * 30): {
-      return  ' 30 days'
+      return  'month'
     }
     case(3600 * 24 * 7 * 30 * 12): {
-      return ' year'
+      return 'year'
     }
     default: {
-      return " minute"
+      return "minute"
     }
   }
 }
