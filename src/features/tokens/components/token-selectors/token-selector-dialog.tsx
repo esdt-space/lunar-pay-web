@@ -49,7 +49,7 @@ export function TokenSelectorDialog(props: Props) {
 
   return (
     <Dialog open={isOpen} onOpenChange={closeDialogHandler}>
-      <DialogContent className="sm:max-w-[500px]">
+      <DialogContent className="flex flex-col sm:max-w-[500px] max-sm:h-full">
         <DialogHeader>
           <DialogTitle>Select Token</DialogTitle>
         </DialogHeader>
