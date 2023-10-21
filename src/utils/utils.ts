@@ -49,3 +49,29 @@ export const formatFrequency = (input: number) => {
     }
   }
 }
+
+export const formatFrequencyForSignAgreement = (input: number) => {
+  switch(input) {
+    case(60): {
+      return ' Minute'
+    }
+    case(3600): {
+      return ' Hour'
+    }
+    case(3600 * 24): {
+      return ' Day'
+    }
+    case(3600 * 24 * 7): {
+      return ' 7 days'
+    }
+    case(3600 * 24 * 7 * 30): {
+      return  ' 30 days'
+    }
+    case(3600 * 24 * 7 * 30 * 12): {
+      return ' Year'
+    }
+    default: {
+      return " Minute"
+    }
+  }
+}

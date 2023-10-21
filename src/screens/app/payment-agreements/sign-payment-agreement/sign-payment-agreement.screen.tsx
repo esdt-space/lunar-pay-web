@@ -1,8 +1,9 @@
 import { ArrowLeft } from "lucide-react"
-import { Link, useNavigate, useParams } from "react-router-dom"
 import { FormatAmount } from "@multiversx/sdk-dapp/UI"
+import { useGetAccount } from "@multiversx/sdk-dapp/hooks"
+import { Link, useNavigate, useParams } from "react-router-dom"
 
-import { cn } from "@/theme/utils.ts"
+import { cn, formatTokenBalance } from "@/theme/utils.ts"
 import { RoutesConfig } from "@/navigation"
 
 import { Button } from "@/components/ui/button.tsx"
@@ -13,12 +14,13 @@ import { useIsAuthenticated } from "@/features/auth"
 import { AuthForm } from "@/features/auth/components"
 import { TokenItem } from "@/features/tokens/components"
 import { useAccountVaultTokens } from "@/features/vault/hooks"
+import { formatFrequencyForSignAgreement } from "@/utils/utils.ts"
 import { useCreatedPaymentAgreement, useSignPaymentAgreementMutation} from "@/features/payment-agreements/hooks"
 
 import { AgreementDetailsPartial } from "./partials/agreement-details-partial.tsx"
 
 export const SignPaymentAgreementScreen = () => {
-  // const { address } = useGetAccount()
+  const { address } = useGetAccount()
   const { id } = useParams()
   const navigate = useNavigate()
   const isLoggedIn = useIsAuthenticated()
@@ -32,10 +34,20 @@ export const SignPaymentAgreementScreen = () => {
 
   const token = tokensMap[agreement.tokenIdentifier];
   const vaultToken = vaultTokens.find(item => item.identifier === agreement.tokenIdentifier);
+  
+  const currentTokenBalance = vaultToken !== undefined ? vaultToken.balance : ""
+  const currentTokenDecimals = vaultToken !== undefined ? vaultToken.decimals : 0
+  const currentBalance = formatTokenBalance(currentTokenBalance, currentTokenDecimals)
+
+  const currentAgreementBalance = agreement.fixedAmount !== undefined ? agreement.fixedAmount : ""
+  const agreementRequiredBalance = formatTokenBalance(currentAgreementBalance, token.decimals)
 
   const signPaymentAgreementButtonHandler = () => {
     signPaymentAgreement(agreement.agreementIdentifier)
   }
+
+  const userIsOwner = address === agreement.owner
+  const notEnoughAssets = Number(currentBalance.toString()) < Number(agreementRequiredBalance.toString())
  
   return (
     <div className="flex flex-1 flex-col">
@@ -109,14 +121,27 @@ export const SignPaymentAgreementScreen = () => {
                 </div>
 
                 <div className={'text-sm p-3 ring-1 ring-slate-100 rounded shadow-sm'}>
-                  By confirming this subscription, you allow Netflix to charge your wallet for this payment and future
-                  payments in accordance with their terms. Your first monthly payment will be made today, and then every
-                  30 days.
+                  By confirming this subscription, you allow {agreement.ownerName} to charge your wallet for this payment and future
+                  payments in accordance with their terms. Your first {formatFrequencyForSignAgreement(agreement.frequency)} payment will be made today, and then every
+                  { formatFrequencyForSignAgreement(agreement.frequency)}.
                 </div>
 
-                <Button variant={'primary'} className={'bg-gradient-to-r from-primary to-secondary text-white hover:text-slate-200'} onClick={signPaymentAgreementButtonHandler}>
-                  Sign Payment Agreement
-                </Button>
+                <div className={'flex flex-col'}>
+                  <Button
+                    variant={'primary'}
+                    disabled={userIsOwner || notEnoughAssets}
+                    className={'bg-gradient-to-r from-primary to-secondary text-white hover:text-slate-200'}
+                    onClick={signPaymentAgreementButtonHandler}
+                  >
+                    Sign Payment Agreement
+                  </Button>
+
+                  {userIsOwner && (
+                    <div className={'text-sm text-muted-foreground text-center'}>
+                      You cannot accept your own agreement
+                    </div>
+                  )}
+                </div>
               </div>
             )}
           </div>
