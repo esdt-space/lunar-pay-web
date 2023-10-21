@@ -83,6 +83,13 @@
     @apply border-border;
   }
 
+  ::-moz-selection, ::selection {
+    color: white !important;
+  }
+
+  ::-moz-selection { @apply bg-primary/20 text-slate-700; }
+  ::selection { @apply bg-primary/20 text-slate-700; }
+
   html {
     overflow-x: hidden;
     @apply flex w-full h-full;
