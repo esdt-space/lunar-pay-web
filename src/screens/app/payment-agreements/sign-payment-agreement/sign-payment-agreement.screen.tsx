@@ -142,6 +142,12 @@ export const SignPaymentAgreementScreen = () => {
                       You cannot accept your own agreement
                     </div>
                   )}
+
+                  {!userIsOwner && notEnoughAssets && (
+                    <div className={'text-sm text-red-500 text-center'}>
+                      You don't have enough tokens to accept this agreement
+                    </div>
+                  )}
                 </div>
               </div>
             )}
