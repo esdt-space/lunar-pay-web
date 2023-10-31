@@ -24,8 +24,6 @@ export function ListPaymentAgreementsScreen() {
     isFetching: isFetchingSignedAgreement,
   } = useSignedPaymentAgreements()
 
-  console.log(agreements)
-
   const emptyAgreementsCreated = isFetched && agreements.length === 0;
 
   const emptyAgreementsSigned = isFetchedSignedAgreement && signedAgreements.length === 0;
