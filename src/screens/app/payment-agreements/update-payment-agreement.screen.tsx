@@ -11,7 +11,7 @@ import { Card } from "@/components/ui/card.tsx"
 import { Textarea } from "@/components/ui/textarea"
 import { Separator } from "@/components/ui/separator"
 
-import { useCreatedPaymentAgreement } from "@/features/payment-agreements/hooks"
+import { useCreatedPaymentAgreement, useUpdatePaymentAgreementMutation } from "@/features/payment-agreements/hooks"
 import { PaymentAgreementsService } from "@/features/payment-agreements/payment-agreements.service"
 
 export function UpdatePaymentAgreementScreen() {
@@ -31,6 +31,7 @@ export function UpdatePaymentAgreementScreen() {
     if(agreement === undefined || formInitialized) return;
 
     setName(agreement.ownerName ?? "");
+    setItemName(agreement.itemName ?? "");
     setDescription(agreement.description ?? "");
     setBenefits(agreement.benefits ?? [""]);
 
@@ -44,7 +45,6 @@ export function UpdatePaymentAgreementScreen() {
   }
 
   const missingName = name === ""
-  const missingDescription = description === ""
 
   const handleChange = (input: string, index: number) => {
     const newBenefits = [...benefits]
@@ -59,19 +59,32 @@ export function UpdatePaymentAgreementScreen() {
     );
   }
 
+  const { mutate} = useUpdatePaymentAgreementMutation();
+
+  const agreementUpdatedHandler = () => {
+    PaymentAgreementsService
+      .fetchAgreementsCreated()
+      .then(() => {
+        navigate(RoutesConfig.paymentAgreements)
+    });
+  }
+
   const updateAgreementDetails = () => {
     const filteredBenefits = benefits.filter((item) => item !== "")
 
+    if (!id) return
+    
     const input = {
       ownerName: name,
       itemName: itemName,
       description: description,
       benefits: filteredBenefits
     }
-
-    if(id !== undefined) {
-      return PaymentAgreementsService.updateAgreement(id, input)
-    }
+    
+    mutate({
+      id: id,
+      input: input
+    }, { onSuccess: agreementUpdatedHandler})
   }
   
   return (
@@ -130,7 +143,7 @@ export function UpdatePaymentAgreementScreen() {
 
         <div className="flex w-full">
           <Button
-            disabled={missingName || missingDescription}
+            disabled={missingName}
             className="flex-1"
             onClick={updateAgreementDetails}>Save Details</Button>
         </div>

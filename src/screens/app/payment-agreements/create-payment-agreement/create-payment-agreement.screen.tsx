@@ -9,7 +9,7 @@ import { RoutesConfig } from "@/navigation";
 import { getPaymentFrequency } from "@/utils";
 import { EsdtToken } from "@/features/tokens";
 import { TokenSelectorWithAmount } from "@/features/tokens/components";
-import { useWhitelistedVaultTokens } from "@/features/vault/hooks";
+import { useAccountTokensAvailableToDeposit } from "@/features/account-tokens/hooks";
 import { FrequencyType } from "@/features/subscription/models/agreement-types.model";
 import { useCreatePaymentAgreementMutation } from "@/features/payment-agreements/hooks";
 import { AgreementAmountType, AgreementType } from "@/contracts/lunar-pay/agreements/enums";
@@ -24,7 +24,7 @@ export function CreatePaymentAgreementScreen() {
   const [frequency, setFrequency] = useState('Monthly');
   const [selectedToken, setSelectedToken] = useState<EsdtToken | undefined>(undefined);
 
-  const tokens = useWhitelistedVaultTokens();
+  const tokens = useAccountTokensAvailableToDeposit();
   const [amount, setAmount] = useState('')
 
   const { mutate} = useCreatePaymentAgreementMutation();
@@ -38,14 +38,6 @@ export function CreatePaymentAgreementScreen() {
       .then(agreement => {
         navigate(RoutesConfig.updatePaymentAgreement.replace(":id", agreement.id))
     });
-  }
-
-  const changeAmountHandler = (value: string) => {
-    if(selectedToken !== undefined) {
-      // setTokenValueError(getTokenErrorForValue(selectedToken, e.target.value));
-    }
-
-    setAmount(value)
   }
 
   const buttonHandler = () => {
@@ -71,14 +63,14 @@ export function CreatePaymentAgreementScreen() {
 
         <CardContent>
           <div className="space-y-4 pt-6">
-            <div className={'flex gap-4'}>
+            <div className={'flex gap-4 max-sm:flex-col'}>
               <div className={'flex-1'}>
                 <TokenSelectorWithAmount
                   tokens={tokens}
                   token={selectedToken}
-                  onTokenChange={setSelectedToken}
+                  onTokenChange={(token) => setSelectedToken(token)}
                   amount={amount}
-                  onAmountChange={changeAmountHandler}
+                  onAmountChange={(amount) => setAmount(amount)}
                   hasMaxButton={false}
                   showBalances={false}
                 />
