@@ -1,4 +1,4 @@
-import { ArrowLeft } from "lucide-react"
+import { ArrowLeft, Plus } from "lucide-react"
 import { FormatAmount } from "@multiversx/sdk-dapp/UI"
 import { useGetAccount } from "@multiversx/sdk-dapp/hooks"
 import { Link, useNavigate, useParams } from "react-router-dom"
@@ -9,16 +9,20 @@ import { RoutesConfig } from "@/navigation"
 import { Button } from "@/components/ui/button.tsx"
 import { AppIcon } from "@/components/shared/app-icon.tsx"
 
-import { useTokensMap } from "@/features/tokens"
+import { EsdtToken, useTokensMap } from "@/features/tokens"
 import { useIsAuthenticated } from "@/features/auth"
 import { AuthForm } from "@/features/auth/components"
-import { TokenItem } from "@/features/tokens/components"
+import { TokenItem, TokenSelectorWithAmount } from "@/features/tokens/components"
 import { useAccountVaultTokens } from "@/features/vault/hooks"
+import { useAccountTokensAvailableToDeposit } from "@/features/account-tokens/hooks"
+import { useDepositEgldMutation, useDepositEsdtMutation } from "@/features/vault/hooks/mutations"
 import { formatFrequencyForSignAgreement } from "@/utils/utils.ts"
 import { useCreatedPaymentAgreement, useSignPaymentAgreementMutation} from "@/features/payment-agreements/hooks"
+import { getTokenErrorForValue } from "@/features/tokens/validation"
 
 import { AgreementDetailsPartial } from "./partials/agreement-details-partial.tsx"
 import {formatAddress} from "@/utils/address";
+import { useState } from "react"
 
 export const SignPaymentAgreementScreen = () => {
   const { address } = useGetAccount()
@@ -27,6 +31,25 @@ export const SignPaymentAgreementScreen = () => {
   const isLoggedIn = useIsAuthenticated()
   const {vaultTokens} = useAccountVaultTokens()
   const tokensMap = useTokensMap();
+
+  const { mutate: depositEgldHandler } = useDepositEgldMutation();
+  const { mutate: depositEsdtHandler } = useDepositEsdtMutation();
+  
+  const [amount, setAmount] = useState('');
+  const [selectedToken, setSelectedToken] = useState<EsdtToken | undefined>(undefined);
+  
+  const canPerformOperation = selectedToken !== undefined && !getTokenErrorForValue(selectedToken, amount);
+
+  const depositTokensList = useAccountTokensAvailableToDeposit();
+
+  const depositToken = () => {
+    if (!selectedToken) return
+    
+    if(selectedToken.identifier !== "EGLD")
+      return depositEsdtHandler({token: selectedToken, amount: Number(amount)})
+
+    return depositEgldHandler(Number(amount))
+  }
 
   const { data: agreement } = useCreatedPaymentAgreement(id);
   const { mutate: signPaymentAgreement} = useSignPaymentAgreementMutation(id);
@@ -48,7 +71,7 @@ export const SignPaymentAgreementScreen = () => {
   }
 
   const userIsOwner = address === agreement.owner
-  const notEnoughAssets = Number(currentBalance.toString()) < Number(agreementRequiredBalance.toString())
+  const enoughAssets = Number(currentBalance.toString()) > Number(agreementRequiredBalance.toString())
  
   return (
     <div className="flex flex-1 flex-col">
@@ -121,6 +144,23 @@ export const SignPaymentAgreementScreen = () => {
                   )}
                 </div>
 
+                {!enoughAssets && <div className="flex flex-1 flex-col gap-4 mt-0">
+                  <TokenSelectorWithAmount
+                    token={selectedToken}
+                    tokens={depositTokensList}
+                    onTokenChange={(token) => setSelectedToken(token)}
+                    amount={amount}
+                    onAmountChange={(amount) => setAmount(amount)}
+                  />
+                  <div className={'text-sm text-muted-foreground'}>
+                    Deposit assets into the Lunar Pay Vault.
+                  </div>
+                  <Button size={'sm'} onClick={depositToken} disabled={!canPerformOperation}>
+                    Deposit
+                    <Plus className={'ml-1 w-4 h-4'} />
+                  </Button>
+                </div>}
+
                 <div className={'text-sm p-3 ring-1 ring-slate-100 rounded shadow-sm'}>
                   By confirming this subscription, you allow <span className={'font-bold'}>{agreement.ownerName ?? formatAddress(agreement.owner)}</span> to charge your wallet for this payment and future
                   payments in accordance with their terms. Your first payment will be made <span className={'font-bold'}>today</span>, and then
@@ -130,7 +170,7 @@ export const SignPaymentAgreementScreen = () => {
                 <div className={'flex flex-col'}>
                   <Button
                     variant={'primary'}
-                    disabled={userIsOwner || notEnoughAssets}
+                    disabled={userIsOwner || !enoughAssets}
                     className={'bg-gradient-to-r from-primary to-secondary text-white hover:text-slate-200'}
                     onClick={signPaymentAgreementButtonHandler}
                   >
@@ -143,7 +183,7 @@ export const SignPaymentAgreementScreen = () => {
                     </div>
                   )}
 
-                  {!userIsOwner && notEnoughAssets && (
+                  {!userIsOwner && !enoughAssets && (
                     <div className={'text-sm text-red-500 text-center'}>
                       You don't have enough tokens to accept this agreement
                     </div>
