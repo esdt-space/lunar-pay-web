@@ -23,11 +23,13 @@ export function CreatePaymentAgreementScreen() {
   const navigate = useNavigate();
   const [frequency, setFrequency] = useState('Monthly');
   const [selectedToken, setSelectedToken] = useState<EsdtToken | undefined>(undefined);
+  const [newMemberUrl, setNewMemberUrl] = useState("")
+  const [cancelAgreementUrl, setCancelAgreementUrl] = useState("")
 
   const tokens = useAccountTokensAvailableToDeposit();
   const [amount, setAmount] = useState('')
 
-  const { mutate} = useCreatePaymentAgreementMutation();
+  const { mutate } = useCreatePaymentAgreementMutation();
 
   const missingToken = selectedToken === undefined
   const missingAmount = amount === ""
@@ -36,7 +38,7 @@ export function CreatePaymentAgreementScreen() {
     PaymentAgreementsService
       .fetchLatestAgreementCreatedByAccount()
       .then(agreement => {
-        navigate(RoutesConfig.updatePaymentAgreement.replace(":id", agreement.id))
+        navigate(RoutesConfig.updatePaymentAgreement.replace(":id", agreement.id), { state: { newMemberUrl, cancelAgreementUrl } })
     });
   }
 
@@ -92,7 +94,12 @@ export function CreatePaymentAgreementScreen() {
               </div>
             </div>
 
-            <AgreementCallbacksPartial />
+            <AgreementCallbacksPartial
+              newMemberUrl={newMemberUrl}
+              cancelAgreementUrl={cancelAgreementUrl}
+              onNewMemberUrlChange={(newMemberUrl) => setNewMemberUrl(newMemberUrl)}
+              onCancelAgreementUrlChange={(cancelAgreementUrl) => setCancelAgreementUrl(cancelAgreementUrl)}
+            />
 
             <div className="flex w-full">
               <Button

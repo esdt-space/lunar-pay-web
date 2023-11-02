@@ -1,6 +1,6 @@
 import { Plus } from "lucide-react"
 import { useEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { useLocation, useNavigate, useParams } from "react-router-dom"
 import { useGetAccount } from "@multiversx/sdk-dapp/hooks"
 
 import { RoutesConfig } from "@/navigation";
@@ -18,6 +18,7 @@ export function UpdatePaymentAgreementScreen() {
   const { address } = useGetAccount()
   const { id } = useParams()
   const navigate = useNavigate()
+  const location = useLocation()
 
   const [name, setName] = useState("")
   const [itemName, setItemName] = useState("")
@@ -59,7 +60,7 @@ export function UpdatePaymentAgreementScreen() {
     );
   }
 
-  const { mutate} = useUpdatePaymentAgreementMutation();
+  const { mutate } = useUpdatePaymentAgreementMutation();
 
   const agreementUpdatedHandler = () => {
     PaymentAgreementsService
@@ -78,7 +79,9 @@ export function UpdatePaymentAgreementScreen() {
       ownerName: name,
       itemName: itemName,
       description: description,
-      benefits: filteredBenefits
+      benefits: filteredBenefits,
+      newMemberUrl: location.state.newMemberUrl,
+      cancelAgreementUrl: location.state.cancelAgreementUrl,
     }
     
     mutate({

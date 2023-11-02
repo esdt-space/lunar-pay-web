@@ -6,13 +6,23 @@ import { Label} from "@/components/ui/label.tsx";
 import { Input} from "@/components/ui/input.tsx";
 import { Switch} from "@/components/ui/switch.tsx";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel } from "@/components/ui/form.tsx";
+import { ChangeEvent } from "react";
+
+type Props = {
+  newMemberUrl: string;
+  cancelAgreementUrl: string;
+  onNewMemberUrlChange: (input: string) => void;
+  onCancelAgreementUrlChange: (input: string) => void;
+}
 
 const FormSchema = z.object({
   http_callback: z.boolean(),
   sc_callback: z.boolean(),
 })
 
-export function AgreementCallbacksPartial() {
+export function AgreementCallbacksPartial(props: Props) {
+  const { newMemberUrl, cancelAgreementUrl, onNewMemberUrlChange, onCancelAgreementUrlChange } = props;
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -20,6 +30,15 @@ export function AgreementCallbacksPartial() {
       sc_callback: false,
     },
   })
+
+  const handleChangeNewMemberUrl = (e: ChangeEvent<HTMLInputElement>) => {
+    onNewMemberUrlChange(e.target.value)
+  }
+
+  const handleChangeCancelAgreementUrl = (e: ChangeEvent<HTMLInputElement>) => {
+    onCancelAgreementUrlChange(e.target.value)
+  }
+
 
   return (
     <Form {...form}>
@@ -46,11 +65,21 @@ export function AgreementCallbacksPartial() {
               <div className={'space-y-2'}>
                 <div className={'space-y-1'}>
                   <Label className={'text-slate-500'}>New Subscriber Endpoint</Label>
-                  <Input readOnly={true} id={'http-register-field'} placeholder={'e.g.: https://example.com'}/>
+                  <Input 
+                    id={'http-register-field'} 
+                    placeholder={'e.g.: https://example.com'}
+                    value={newMemberUrl}
+                    onChange={handleChangeNewMemberUrl}
+                  />
                 </div>
                 <div className={'space-y-1'}>
                   <Label className={'text-slate-500'}>Cancel Agreement Endpoint</Label>
-                  <Input readOnly={true} id={'http-cancel-field'} placeholder={'e.g.: https://example.com'}/>
+                  <Input
+                    id={'http-cancel-field'} 
+                    placeholder={'e.g.: https://example.com'}
+                    value={cancelAgreementUrl}
+                    onChange={handleChangeCancelAgreementUrl}
+                  />
                 </div>
               </div>
             )}

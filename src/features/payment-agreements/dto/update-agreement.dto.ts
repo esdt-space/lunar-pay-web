@@ -4,4 +4,6 @@ export type UpdateAgreementDto = {
   description: string;
   benefits: string[];
   content?: string;
+  newMemberUrl?: string;
+  cancelAgreementUrl?: string;
 }

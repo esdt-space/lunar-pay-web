@@ -39,6 +39,10 @@ export class PaymentAgreement {
 
   maximumAmount?: string;
 
+  newMemberUrl?: string;
+  
+  cancelAgreementUrl?: string;
+
   createdAt: Date;
 
   constructor(params: Partial<PaymentAgreement>) {
