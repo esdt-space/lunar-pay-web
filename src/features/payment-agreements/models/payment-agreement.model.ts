@@ -39,9 +39,9 @@ export class PaymentAgreement {
 
   maximumAmount?: string;
 
-  newMemberUrl?: string;
+  signAgreementHttpCallbackUrl?: string;
   
-  cancelAgreementUrl?: string;
+  cancelAgreementHttpCallbackUrl?: string;
 
   createdAt: Date;
 
