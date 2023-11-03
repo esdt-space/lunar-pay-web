@@ -5,14 +5,21 @@ import { zodResolver} from "@hookform/resolvers/zod";
 import { Label} from "@/components/ui/label.tsx";
 import { Input} from "@/components/ui/input.tsx";
 import { Switch} from "@/components/ui/switch.tsx";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel } from "@/components/ui/form.tsx";
+import { 
+  Form, 
+  FormControl, 
+  FormDescription, 
+  FormField, 
+  FormItem, 
+  FormLabel 
+} from "@/components/ui/form.tsx";
 import { ChangeEvent } from "react";
 
 type Props = {
-  newMemberUrl: string;
-  cancelAgreementUrl: string;
-  onNewMemberUrlChange: (input: string) => void;
-  onCancelAgreementUrlChange: (input: string) => void;
+  signAgreementHttpCallbackUrl: string;
+  cancelAgreementHttpCallbackUrl: string;
+  onSignAgreementHttpCallbackUrlChange: (input: string) => void;
+  onCancelAgreementHttpCallbackUrlChange: (input: string) => void;
 }
 
 const FormSchema = z.object({
@@ -21,7 +28,12 @@ const FormSchema = z.object({
 })
 
 export function AgreementCallbacksPartial(props: Props) {
-  const { newMemberUrl, cancelAgreementUrl, onNewMemberUrlChange, onCancelAgreementUrlChange } = props;
+  const { 
+    signAgreementHttpCallbackUrl, 
+    cancelAgreementHttpCallbackUrl, 
+    onSignAgreementHttpCallbackUrlChange, 
+    onCancelAgreementHttpCallbackUrlChange 
+  } = props;
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -31,12 +43,12 @@ export function AgreementCallbacksPartial(props: Props) {
     },
   })
 
-  const handleChangeNewMemberUrl = (e: ChangeEvent<HTMLInputElement>) => {
-    onNewMemberUrlChange(e.target.value)
+  const handleChangeSignAgreementCallback = (e: ChangeEvent<HTMLInputElement>) => {
+    onSignAgreementHttpCallbackUrlChange(e.target.value)
   }
 
-  const handleChangeCancelAgreementUrl = (e: ChangeEvent<HTMLInputElement>) => {
-    onCancelAgreementUrlChange(e.target.value)
+  const handleChangeCancelAgreementCallback = (e: ChangeEvent<HTMLInputElement>) => {
+    onCancelAgreementHttpCallbackUrlChange(e.target.value)
   }
 
 
@@ -68,8 +80,8 @@ export function AgreementCallbacksPartial(props: Props) {
                   <Input 
                     id={'http-register-field'} 
                     placeholder={'e.g.: https://example.com'}
-                    value={newMemberUrl}
-                    onChange={handleChangeNewMemberUrl}
+                    value={signAgreementHttpCallbackUrl}
+                    onChange={handleChangeSignAgreementCallback}
                   />
                 </div>
                 <div className={'space-y-1'}>
@@ -77,8 +89,8 @@ export function AgreementCallbacksPartial(props: Props) {
                   <Input
                     id={'http-cancel-field'} 
                     placeholder={'e.g.: https://example.com'}
-                    value={cancelAgreementUrl}
-                    onChange={handleChangeCancelAgreementUrl}
+                    value={cancelAgreementHttpCallbackUrl}
+                    onChange={handleChangeCancelAgreementCallback}
                   />
                 </div>
               </div>

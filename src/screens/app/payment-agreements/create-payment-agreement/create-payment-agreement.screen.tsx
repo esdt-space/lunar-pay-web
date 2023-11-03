@@ -23,8 +23,8 @@ export function CreatePaymentAgreementScreen() {
   const navigate = useNavigate();
   const [frequency, setFrequency] = useState('Monthly');
   const [selectedToken, setSelectedToken] = useState<EsdtToken | undefined>(undefined);
-  const [newMemberUrl, setNewMemberUrl] = useState("")
-  const [cancelAgreementUrl, setCancelAgreementUrl] = useState("")
+  const [signAgreementHttpCallbackUrl, setSignAgreementHttpCallbackUrl] = useState("")
+  const [cancelAgreementHttpCallbackUrl, setCancelAgreementHttpCallbackUrl] = useState("")
 
   const tokens = useAccountTokensAvailableToDeposit();
   const [amount, setAmount] = useState('')
@@ -38,7 +38,7 @@ export function CreatePaymentAgreementScreen() {
     PaymentAgreementsService
       .fetchLatestAgreementCreatedByAccount()
       .then(agreement => {
-        navigate(RoutesConfig.updatePaymentAgreement.replace(":id", agreement.id), { state: { newMemberUrl, cancelAgreementUrl } })
+        navigate(RoutesConfig.updatePaymentAgreement.replace(":id", agreement.id), { state: { signAgreementHttpCallbackUrl, cancelAgreementHttpCallbackUrl } })
     });
   }
 
@@ -95,10 +95,10 @@ export function CreatePaymentAgreementScreen() {
             </div>
 
             <AgreementCallbacksPartial
-              newMemberUrl={newMemberUrl}
-              cancelAgreementUrl={cancelAgreementUrl}
-              onNewMemberUrlChange={(newMemberUrl) => setNewMemberUrl(newMemberUrl)}
-              onCancelAgreementUrlChange={(cancelAgreementUrl) => setCancelAgreementUrl(cancelAgreementUrl)}
+              signAgreementHttpCallbackUrl={signAgreementHttpCallbackUrl}
+              cancelAgreementHttpCallbackUrl={cancelAgreementHttpCallbackUrl}
+              onSignAgreementHttpCallbackUrlChange={(signAgreementHttpCallbackUrl) => setSignAgreementHttpCallbackUrl(signAgreementHttpCallbackUrl)}
+              onCancelAgreementHttpCallbackUrlChange={(cancelAgreementHttpCallbackUrl) => setCancelAgreementHttpCallbackUrl(cancelAgreementHttpCallbackUrl)}
             />
 
             <div className="flex w-full">

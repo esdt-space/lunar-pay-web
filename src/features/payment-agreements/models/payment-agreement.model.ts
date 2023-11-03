@@ -43,6 +43,8 @@ export class PaymentAgreement {
   
   cancelAgreementHttpCallbackUrl?: string;
 
+  newMemberRedirectUrl?: string;
+
   createdAt: Date;
 
   constructor(params: Partial<PaymentAgreement>) {

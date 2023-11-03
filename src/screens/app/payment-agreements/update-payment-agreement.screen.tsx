@@ -13,6 +13,7 @@ import { Separator } from "@/components/ui/separator"
 
 import { useCreatedPaymentAgreement, useUpdatePaymentAgreementMutation } from "@/features/payment-agreements/hooks"
 import { PaymentAgreementsService } from "@/features/payment-agreements/payment-agreements.service"
+import { AgreementRedirectPartial } from "./create-payment-agreement/partials/agreement-redirect-partial";
 
 export function UpdatePaymentAgreementScreen() {
   const { address } = useGetAccount()
@@ -25,6 +26,7 @@ export function UpdatePaymentAgreementScreen() {
   const [description, setDescription] = useState("")
   const [benefits, setBenefits] = useState<string[]>([""])
   const [formInitialized, setFormInitialized] = useState(false);
+  const [newMemberRedirectUrl, setNewMemberRedirectUrl] = useState("")
 
   const { data: agreement } = useCreatedPaymentAgreement(id);
 
@@ -80,8 +82,9 @@ export function UpdatePaymentAgreementScreen() {
       itemName: itemName,
       description: description,
       benefits: filteredBenefits,
-      signAgreementHttpCallbackUrl: location.state.newMemberUrl,
-      cancelAgreementHttpCallbackUrl: location.state.cancelAgreementUrl,
+      signAgreementHttpCallbackUrl: location.state.signAgreementHttpCallbackUrl,
+      cancelAgreementHttpCallbackUrl: location.state.cancelAgreementHttpCallbackUrl,
+      newMemberRedirectUrl: newMemberRedirectUrl,
     }
     
     mutate({
@@ -114,6 +117,11 @@ export function UpdatePaymentAgreementScreen() {
           value={description ?? agreement.description}
           placeholder="Description"
           onChange={(e) => setDescription(e.target.value)}
+        />
+
+        <AgreementRedirectPartial 
+          newMemberRedirectUrl={newMemberRedirectUrl}
+          onNewMemberRedirectUrlChange={setNewMemberRedirectUrl}
         />
 
         <Separator />
