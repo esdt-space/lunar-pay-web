@@ -43,8 +43,12 @@ export const SignPaymentAgreementScreen = () => {
   const currentAgreementBalance = agreement.fixedAmount !== undefined ? agreement.fixedAmount : ""
   const agreementRequiredBalance = formatTokenBalance(currentAgreementBalance, token.decimals)
 
+  const redirect = () => {
+    window.open(agreement.newMemberRedirectUrl, '_blank')
+  }
+
   const signPaymentAgreementButtonHandler = () => {
-    signPaymentAgreement(agreement.agreementIdentifier)
+    signPaymentAgreement(agreement.agreementIdentifier, { onSuccess: redirect })
   }
 
   const userIsOwner = address === agreement.owner
