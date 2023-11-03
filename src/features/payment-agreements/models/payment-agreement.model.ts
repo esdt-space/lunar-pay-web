@@ -39,6 +39,12 @@ export class PaymentAgreement {
 
   maximumAmount?: string;
 
+  signAgreementHttpCallbackUrl?: string;
+  
+  cancelAgreementHttpCallbackUrl?: string;
+
+  signAgreementRedirectUrl?: string;
+
   createdAt: Date;
 
   constructor(params: Partial<PaymentAgreement>) {

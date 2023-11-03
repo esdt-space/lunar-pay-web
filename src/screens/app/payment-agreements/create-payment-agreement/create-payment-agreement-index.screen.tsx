@@ -48,9 +48,9 @@ export function CreatePaymentAgreementIndexScreen() {
               className={'grayscale cursor-not-allowed bg-slate-100 opacity-80'}
               title={
                 <span>
-                    <span>Period-Bound Allocation</span>
-                    <span className={'ml-2 text-sm text-muted-foreground'}>coming soon</span>
-                  </span>
+                  <span>Period-Bound Allocation</span>
+                  <span className={'ml-2 text-sm text-muted-foreground'}>coming soon</span>
+                </span>
               }
               description={'For allocations set within specific timeframes. Unclaimed amounts during a cycle don\'t carry over to the next, ensuring consistent budgeting each period. Ideal for operational budgets and set departmental allocations.'}
             />

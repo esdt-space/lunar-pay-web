@@ -1,6 +1,6 @@
 import { Plus } from "lucide-react"
 import { useEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { useLocation, useNavigate, useParams } from "react-router-dom"
 import { useGetAccount } from "@multiversx/sdk-dapp/hooks"
 
 import { RoutesConfig } from "@/navigation";
@@ -11,19 +11,22 @@ import { Card } from "@/components/ui/card.tsx"
 import { Textarea } from "@/components/ui/textarea"
 import { Separator } from "@/components/ui/separator"
 
-import { useCreatedPaymentAgreement } from "@/features/payment-agreements/hooks"
+import { useCreatedPaymentAgreement, useUpdatePaymentAgreementMutation } from "@/features/payment-agreements/hooks"
 import { PaymentAgreementsService } from "@/features/payment-agreements/payment-agreements.service"
+import { AgreementRedirectPartial } from "./create-payment-agreement/partials/agreement-redirect-partial";
 
 export function UpdatePaymentAgreementScreen() {
   const { address } = useGetAccount()
   const { id } = useParams()
   const navigate = useNavigate()
+  const location = useLocation()
 
   const [name, setName] = useState("")
   const [itemName, setItemName] = useState("")
   const [description, setDescription] = useState("")
   const [benefits, setBenefits] = useState<string[]>([""])
   const [formInitialized, setFormInitialized] = useState(false);
+  const [newMemberRedirectUrl, setNewMemberRedirectUrl] = useState("")
 
   const { data: agreement } = useCreatedPaymentAgreement(id);
 
@@ -31,6 +34,7 @@ export function UpdatePaymentAgreementScreen() {
     if(agreement === undefined || formInitialized) return;
 
     setName(agreement.ownerName ?? "");
+    setItemName(agreement.itemName ?? "");
     setDescription(agreement.description ?? "");
     setBenefits(agreement.benefits ?? [""]);
 
@@ -44,7 +48,6 @@ export function UpdatePaymentAgreementScreen() {
   }
 
   const missingName = name === ""
-  const missingDescription = description === ""
 
   const handleChange = (input: string, index: number) => {
     const newBenefits = [...benefits]
@@ -59,19 +62,35 @@ export function UpdatePaymentAgreementScreen() {
     );
   }
 
+  const { mutate } = useUpdatePaymentAgreementMutation();
+
+  const agreementUpdatedHandler = () => {
+    PaymentAgreementsService
+      .fetchAgreementsCreated()
+      .then(() => {
+        navigate(RoutesConfig.paymentAgreements)
+    });
+  }
+
   const updateAgreementDetails = () => {
     const filteredBenefits = benefits.filter((item) => item !== "")
 
+    if (!id) return
+    
     const input = {
       ownerName: name,
       itemName: itemName,
       description: description,
-      benefits: filteredBenefits
+      benefits: filteredBenefits,
+      signAgreementHttpCallbackUrl: location.state.signAgreementHttpCallbackUrl,
+      cancelAgreementHttpCallbackUrl: location.state.cancelAgreementHttpCallbackUrl,
+      signAgreementRedirectUrl: newMemberRedirectUrl,
     }
-
-    if(id !== undefined) {
-      return PaymentAgreementsService.updateAgreement(id, input)
-    }
+    
+    mutate({
+      id: id,
+      input: input
+    }, { onSuccess: agreementUpdatedHandler})
   }
   
   return (
@@ -98,6 +117,11 @@ export function UpdatePaymentAgreementScreen() {
           value={description ?? agreement.description}
           placeholder="Description"
           onChange={(e) => setDescription(e.target.value)}
+        />
+
+        <AgreementRedirectPartial 
+          newMemberRedirectUrl={newMemberRedirectUrl}
+          onNewMemberRedirectUrlChange={setNewMemberRedirectUrl}
         />
 
         <Separator />
@@ -130,7 +154,7 @@ export function UpdatePaymentAgreementScreen() {
 
         <div className="flex w-full">
           <Button
-            disabled={missingName || missingDescription}
+            disabled={missingName}
             className="flex-1"
             onClick={updateAgreementDetails}>Save Details</Button>
         </div>

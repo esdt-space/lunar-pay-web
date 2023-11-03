@@ -4,4 +4,7 @@ export type UpdateAgreementDto = {
   description: string;
   benefits: string[];
   content?: string;
+  signAgreementHttpCallbackUrl?: string;
+  cancelAgreementHttpCallbackUrl?: string;
+  signAgreementRedirectUrl?: string;
 }
