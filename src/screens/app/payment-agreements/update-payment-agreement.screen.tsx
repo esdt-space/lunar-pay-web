@@ -1,6 +1,6 @@
 import { Plus } from "lucide-react"
 import { useEffect, useState } from "react"
-import { useLocation, useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useGetAccount } from "@multiversx/sdk-dapp/hooks"
 
 import { RoutesConfig } from "@/navigation";
@@ -14,12 +14,12 @@ import { Separator } from "@/components/ui/separator"
 import { useCreatedPaymentAgreement, useUpdatePaymentAgreementMutation } from "@/features/payment-agreements/hooks"
 import { PaymentAgreementsService } from "@/features/payment-agreements/payment-agreements.service"
 import { AgreementRedirectPartial } from "./create-payment-agreement/partials/agreement-redirect-partial";
+import { AgreementCallbacksPartial } from "./create-payment-agreement/partials/agreement-callbacks-partial";
 
 export function UpdatePaymentAgreementScreen() {
   const { address } = useGetAccount()
   const { id } = useParams()
   const navigate = useNavigate()
-  const location = useLocation()
 
   const [name, setName] = useState("")
   const [itemName, setItemName] = useState("")
@@ -27,6 +27,9 @@ export function UpdatePaymentAgreementScreen() {
   const [benefits, setBenefits] = useState<string[]>([""])
   const [formInitialized, setFormInitialized] = useState(false);
   const [newMemberRedirectUrl, setNewMemberRedirectUrl] = useState("")
+
+  const [signAgreementHttpCallbackUrl, setSignAgreementHttpCallbackUrl] = useState("")
+  const [cancelAgreementHttpCallbackUrl, setCancelAgreementHttpCallbackUrl] = useState("")
 
   const { data: agreement } = useCreatedPaymentAgreement(id);
 
@@ -82,8 +85,8 @@ export function UpdatePaymentAgreementScreen() {
       itemName: itemName,
       description: description,
       benefits: filteredBenefits,
-      signAgreementHttpCallbackUrl: location.state.signAgreementHttpCallbackUrl,
-      cancelAgreementHttpCallbackUrl: location.state.cancelAgreementHttpCallbackUrl,
+      signAgreementHttpCallbackUrl: signAgreementHttpCallbackUrl,
+      cancelAgreementHttpCallbackUrl: cancelAgreementHttpCallbackUrl,
       signAgreementRedirectUrl: newMemberRedirectUrl,
     }
     
@@ -122,6 +125,13 @@ export function UpdatePaymentAgreementScreen() {
         <AgreementRedirectPartial 
           newMemberRedirectUrl={newMemberRedirectUrl}
           onNewMemberRedirectUrlChange={setNewMemberRedirectUrl}
+        />
+
+        <AgreementCallbacksPartial
+          signAgreementHttpCallbackUrl={signAgreementHttpCallbackUrl}
+          cancelAgreementHttpCallbackUrl={cancelAgreementHttpCallbackUrl}
+          onSignAgreementHttpCallbackUrlChange={(signAgreementHttpCallbackUrl) => setSignAgreementHttpCallbackUrl(signAgreementHttpCallbackUrl)}
+          onCancelAgreementHttpCallbackUrlChange={(cancelAgreementHttpCallbackUrl) => setCancelAgreementHttpCallbackUrl(cancelAgreementHttpCallbackUrl)}
         />
 
         <Separator />
