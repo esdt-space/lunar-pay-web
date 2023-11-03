@@ -5,14 +5,36 @@ import { zodResolver} from "@hookform/resolvers/zod";
 import { Label} from "@/components/ui/label.tsx";
 import { Input} from "@/components/ui/input.tsx";
 import { Switch} from "@/components/ui/switch.tsx";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel } from "@/components/ui/form.tsx";
+import { 
+  Form, 
+  FormControl, 
+  FormDescription, 
+  FormField, 
+  FormItem, 
+  FormLabel 
+} from "@/components/ui/form.tsx";
+import { ChangeEvent } from "react";
+
+type Props = {
+  signAgreementHttpCallbackUrl: string;
+  cancelAgreementHttpCallbackUrl: string;
+  onSignAgreementHttpCallbackUrlChange: (input: string) => void;
+  onCancelAgreementHttpCallbackUrlChange: (input: string) => void;
+}
 
 const FormSchema = z.object({
   http_callback: z.boolean(),
   sc_callback: z.boolean(),
 })
 
-export function AgreementCallbacksPartial() {
+export function AgreementCallbacksPartial(props: Props) {
+  const { 
+    signAgreementHttpCallbackUrl, 
+    cancelAgreementHttpCallbackUrl, 
+    onSignAgreementHttpCallbackUrlChange, 
+    onCancelAgreementHttpCallbackUrlChange 
+  } = props;
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -20,6 +42,15 @@ export function AgreementCallbacksPartial() {
       sc_callback: false,
     },
   })
+
+  const handleChangeSignAgreementCallback = (e: ChangeEvent<HTMLInputElement>) => {
+    onSignAgreementHttpCallbackUrlChange(e.target.value)
+  }
+
+  const handleChangeCancelAgreementCallback = (e: ChangeEvent<HTMLInputElement>) => {
+    onCancelAgreementHttpCallbackUrlChange(e.target.value)
+  }
+
 
   return (
     <Form {...form}>
@@ -46,11 +77,21 @@ export function AgreementCallbacksPartial() {
               <div className={'space-y-2'}>
                 <div className={'space-y-1'}>
                   <Label className={'text-slate-500'}>New Subscriber Endpoint</Label>
-                  <Input readOnly={true} id={'http-register-field'} placeholder={'e.g.: https://example.com'}/>
+                  <Input 
+                    id={'http-register-field'} 
+                    placeholder={'e.g.: https://example.com'}
+                    value={signAgreementHttpCallbackUrl}
+                    onChange={handleChangeSignAgreementCallback}
+                  />
                 </div>
                 <div className={'space-y-1'}>
                   <Label className={'text-slate-500'}>Cancel Agreement Endpoint</Label>
-                  <Input readOnly={true} id={'http-cancel-field'} placeholder={'e.g.: https://example.com'}/>
+                  <Input
+                    id={'http-cancel-field'} 
+                    placeholder={'e.g.: https://example.com'}
+                    value={cancelAgreementHttpCallbackUrl}
+                    onChange={handleChangeCancelAgreementCallback}
+                  />
                 </div>
               </div>
             )}

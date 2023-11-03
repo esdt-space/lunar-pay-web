@@ -9,7 +9,7 @@ import { RoutesConfig } from "@/navigation";
 import { getPaymentFrequency } from "@/utils";
 import { EsdtToken } from "@/features/tokens";
 import { TokenSelectorWithAmount } from "@/features/tokens/components";
-import { useWhitelistedVaultTokens } from "@/features/vault/hooks";
+import { useAccountTokensAvailableToDeposit } from "@/features/account-tokens/hooks";
 import { FrequencyType } from "@/features/subscription/models/agreement-types.model";
 import { useCreatePaymentAgreementMutation } from "@/features/payment-agreements/hooks";
 import { AgreementAmountType, AgreementType } from "@/contracts/lunar-pay/agreements/enums";
@@ -23,11 +23,13 @@ export function CreatePaymentAgreementScreen() {
   const navigate = useNavigate();
   const [frequency, setFrequency] = useState('Monthly');
   const [selectedToken, setSelectedToken] = useState<EsdtToken | undefined>(undefined);
+  const [signAgreementHttpCallbackUrl, setSignAgreementHttpCallbackUrl] = useState("")
+  const [cancelAgreementHttpCallbackUrl, setCancelAgreementHttpCallbackUrl] = useState("")
 
-  const tokens = useWhitelistedVaultTokens();
+  const tokens = useAccountTokensAvailableToDeposit();
   const [amount, setAmount] = useState('')
 
-  const { mutate} = useCreatePaymentAgreementMutation();
+  const { mutate } = useCreatePaymentAgreementMutation();
 
   const missingToken = selectedToken === undefined
   const missingAmount = amount === ""
@@ -36,16 +38,8 @@ export function CreatePaymentAgreementScreen() {
     PaymentAgreementsService
       .fetchLatestAgreementCreatedByAccount()
       .then(agreement => {
-        navigate(RoutesConfig.updatePaymentAgreement.replace(":id", agreement.id))
+        navigate(RoutesConfig.updatePaymentAgreement.replace(":id", agreement.id), { state: { signAgreementHttpCallbackUrl, cancelAgreementHttpCallbackUrl } })
     });
-  }
-
-  const changeAmountHandler = (value: string) => {
-    if(selectedToken !== undefined) {
-      // setTokenValueError(getTokenErrorForValue(selectedToken, e.target.value));
-    }
-
-    setAmount(value)
   }
 
   const buttonHandler = () => {
@@ -71,14 +65,14 @@ export function CreatePaymentAgreementScreen() {
 
         <CardContent>
           <div className="space-y-4 pt-6">
-            <div className={'flex gap-4'}>
+            <div className={'flex gap-4 max-sm:flex-col'}>
               <div className={'flex-1'}>
                 <TokenSelectorWithAmount
                   tokens={tokens}
                   token={selectedToken}
-                  onTokenChange={setSelectedToken}
+                  onTokenChange={(token) => setSelectedToken(token)}
                   amount={amount}
-                  onAmountChange={changeAmountHandler}
+                  onAmountChange={(amount) => setAmount(amount)}
                   hasMaxButton={false}
                   showBalances={false}
                 />
@@ -100,7 +94,12 @@ export function CreatePaymentAgreementScreen() {
               </div>
             </div>
 
-            <AgreementCallbacksPartial />
+            <AgreementCallbacksPartial
+              signAgreementHttpCallbackUrl={signAgreementHttpCallbackUrl}
+              cancelAgreementHttpCallbackUrl={cancelAgreementHttpCallbackUrl}
+              onSignAgreementHttpCallbackUrlChange={(signAgreementHttpCallbackUrl) => setSignAgreementHttpCallbackUrl(signAgreementHttpCallbackUrl)}
+              onCancelAgreementHttpCallbackUrlChange={(cancelAgreementHttpCallbackUrl) => setCancelAgreementHttpCallbackUrl(cancelAgreementHttpCallbackUrl)}
+            />
 
             <div className="flex w-full">
               <Button

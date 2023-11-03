@@ -18,6 +18,8 @@ type Props = {
 export function AgreementDetails(props: Props){
   const { agreement } = props;
 
+  const noMembers = agreement.accountsCount === 0
+
   const tokensMap = useTokensMap();
   const token = tokensMap[agreement.tokenIdentifier];
 
@@ -53,7 +55,7 @@ export function AgreementDetails(props: Props){
           <div className="flex space-x-2 items-center">
             <Button
               size={'sm'}
-              disabled={isLoading}
+              disabled={isLoading || noMembers}
               onClick={triggerAgreementButtonHandler}
             >
               Claim
