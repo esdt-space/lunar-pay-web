@@ -44,7 +44,7 @@ export const SignPaymentAgreementScreen = () => {
   const agreementRequiredBalance = formatTokenBalance(currentAgreementBalance, token.decimals)
 
   const redirect = () => {
-    window.open(agreement.newMemberRedirectUrl, '_blank')
+    window.open(agreement.signAgreementRedirectUrl, '_blank')
   }
 
   const signPaymentAgreementButtonHandler = () => {

@@ -6,5 +6,5 @@ export type UpdateAgreementDto = {
   content?: string;
   signAgreementHttpCallbackUrl?: string;
   cancelAgreementHttpCallbackUrl?: string;
-  newMemberRedirectUrl?: string;
+  signAgreementRedirectUrl?: string;
 }

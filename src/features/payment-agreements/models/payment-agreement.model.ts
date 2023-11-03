@@ -43,7 +43,7 @@ export class PaymentAgreement {
   
   cancelAgreementHttpCallbackUrl?: string;
 
-  newMemberRedirectUrl?: string;
+  signAgreementRedirectUrl?: string;
 
   createdAt: Date;
 

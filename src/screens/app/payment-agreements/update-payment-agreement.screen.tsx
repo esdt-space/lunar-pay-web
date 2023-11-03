@@ -84,7 +84,7 @@ export function UpdatePaymentAgreementScreen() {
       benefits: filteredBenefits,
       signAgreementHttpCallbackUrl: location.state.signAgreementHttpCallbackUrl,
       cancelAgreementHttpCallbackUrl: location.state.cancelAgreementHttpCallbackUrl,
-      newMemberRedirectUrl: newMemberRedirectUrl,
+      signAgreementRedirectUrl: newMemberRedirectUrl,
     }
     
     mutate({
