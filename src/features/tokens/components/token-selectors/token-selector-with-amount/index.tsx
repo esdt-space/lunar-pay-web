@@ -18,10 +18,11 @@ type Props = {
   onAmountChange: (amount: string) => void
   hasMaxButton?: boolean
   showBalances?: boolean
+  isAmountToReceive?: boolean
 }
 
 export function TokenSelectorWithAmount(props: Props) {
-  const { tokens = [], token, amount, hasMaxButton = true, showBalances = true } = props
+  const { tokens = [], token, amount, hasMaxButton = true, showBalances = true, isAmountToReceive = false } = props
   const [tokenError, setTokenError] = useState<null | TokenValueError>(null)
 
   const maxAmountButtonClickHandler = () => {
@@ -40,8 +41,8 @@ export function TokenSelectorWithAmount(props: Props) {
       return ;
     }
 
-    const error = getTokenErrorForValue(token, amount);
-
+    const error = getTokenErrorForValue(token, amount, isAmountToReceive);
+    
     if(!showBalances && ![null, TokenValueError.InvalidFormat, TokenValueError.ZeroValue].includes(error)) return;
 
     setTokenError(error);

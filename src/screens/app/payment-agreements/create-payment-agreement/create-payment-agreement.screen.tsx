@@ -71,6 +71,7 @@ export function CreatePaymentAgreementScreen() {
                   onAmountChange={(amount) => setAmount(amount)}
                   hasMaxButton={false}
                   showBalances={false}
+                  isAmountToReceive={true}
                 />
               </div>
 
