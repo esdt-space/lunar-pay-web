@@ -32,6 +32,8 @@ export function UpdatePaymentAgreementScreen() {
   const [cancelAgreementHttpCallbackUrl, setCancelAgreementHttpCallbackUrl] = useState("")
 
   const { data: agreement } = useCreatedPaymentAgreement(id);
+  
+  const { mutate } = useUpdatePaymentAgreementMutation();
 
   useEffect(() => {
     if(agreement === undefined || formInitialized) return;
@@ -64,8 +66,6 @@ export function UpdatePaymentAgreementScreen() {
       benefits.filter((_, _index) => _index !== index)
     );
   }
-
-  const { mutate } = useUpdatePaymentAgreementMutation();
 
   const agreementUpdatedHandler = () => {
     PaymentAgreementsService
