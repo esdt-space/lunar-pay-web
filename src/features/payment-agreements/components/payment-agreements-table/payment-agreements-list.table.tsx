@@ -24,6 +24,7 @@ function AgreementRow(props: AgreementRowProps) {
 
   const tokensMap = useTokensMap();
   const token = tokensMap[agreement.tokenIdentifier];
+  console.log(token)
 
   return (
     <TableRow
@@ -39,7 +40,7 @@ function AgreementRow(props: AgreementRowProps) {
           </Badge>}
       </TableCell>
       <TableCell>
-        <FormatAmount value={agreement.fixedAmount as string} decimals={token.decimals} />
+        <FormatAmount value={agreement.fixedAmount as string} />
       </TableCell>
       <TableCell>{formatFrequency(agreement.frequency)}</TableCell>
       <TableCell>{agreement.accountsCount}</TableCell>

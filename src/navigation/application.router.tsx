@@ -25,6 +25,7 @@ import {
   ListPaymentAgreementsScreen,
   UpdatePaymentAgreementScreen, SignPaymentAgreementScreen
 } from "@/screens/app/payment-agreements";
+import { DemoPage } from '@/screens/app/demo';
 
 export function ApplicationRouter() {
   useScrollToTopHandler()
@@ -34,6 +35,8 @@ export function ApplicationRouter() {
   return (
     <React.Suspense fallback={<></>}>
       <Routes location={state?.backgroundLocation || location}>
+        <Route path={"/demo-page"} element={<DemoPage />} />
+
         <Route element={<PublicLayout />}>
           <Route index element={<HomeScreen />} />
 

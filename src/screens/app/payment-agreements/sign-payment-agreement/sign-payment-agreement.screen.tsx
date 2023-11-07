@@ -141,29 +141,31 @@ export const SignPaymentAgreementScreen = () => {
                   </div>
                 </div>
 
-                <div className={'bg-slate-50 p-4 rounded space-y-2'}>
-                  <div className={'text-sm font-medium'}>{enoughAssets ? "Vault balance" : "No Assets"}</div>
-                  {vaultToken && (
-                    <TokenItem token={vaultToken} showBalances/>
-                  )}
-                </div>
-
-                {!enoughAssets && <div className="flex flex-1 flex-col gap-4 mt-0">
-                  <TokenSelectorWithAmount
-                    token={selectedToken}
-                    tokens={depositTokensList}
-                    onTokenChange={(token) => setSelectedToken(token)}
-                    amount={amount}
-                    onAmountChange={(amount) => setAmount(amount)}
-                  />
-                  <div className={'text-sm text-muted-foreground'}>
-                    Deposit assets into the Lunar Pay Vault.
+                <div className={!enoughAssets ? 'border p-4' : ""}>
+                  <div className={'bg-slate-50 p-4 rounded space-y-2'}>
+                    <div className={'text-sm font-medium'}>{enoughAssets ? "Vault balance" : "No Assets"}</div>
+                    {vaultToken && (
+                      <TokenItem token={vaultToken} showBalances/>
+                    )}
                   </div>
-                  <Button size={'sm'} onClick={depositToken} disabled={!canPerformOperation}>
-                    Deposit
-                    <Plus className={'ml-1 w-4 h-4'} />
-                  </Button>
-                </div>}
+
+                  {!enoughAssets && <div className="flex flex-1 flex-col gap-4 mt-4">
+                    <TokenSelectorWithAmount
+                      token={selectedToken}
+                      tokens={depositTokensList}
+                      onTokenChange={(token) => setSelectedToken(token)}
+                      amount={amount}
+                      onAmountChange={(amount) => setAmount(amount)}
+                    />
+                    <div className={'text-sm text-muted-foreground'}>
+                      Deposit assets into the Lunar Pay Vault.
+                    </div>
+                    <Button size={'sm'} onClick={depositToken} disabled={!canPerformOperation}>
+                      Deposit
+                      <Plus className={'ml-1 w-4 h-4'} />
+                    </Button>
+                  </div>}
+                </div>
 
                 <div className={'text-sm p-3 ring-1 ring-slate-100 rounded shadow-sm'}>
                   By confirming this subscription, you allow <span className={'font-bold'}>{agreement.ownerName ?? formatAddress(agreement.owner)}</span> to charge your wallet for this payment and future
