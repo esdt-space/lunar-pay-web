@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ArrowUpRight, Minus, Plus } from "lucide-react";
+import { ArrowUpRight, Minus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -7,16 +7,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs.t
 
 import { EsdtToken } from "@/features/tokens";
 import { TokenSelectorWithAmount } from "@/features/tokens/components";
-import { useAccountTokensAvailableToDeposit } from "@/features/account-tokens/hooks";
 import { useAccountVaultTokens } from "@/features/vault/hooks";
 import { getTokenErrorForValue } from "@/features/tokens/validation";
 
 import {
-  useDepositEgldMutation,
-  useDepositEsdtMutation,
   useWithdrawEgldMutation,
   useWithdrawEsdtMutation
 } from "@/features/vault/hooks/mutations";
+import { DepositAssetsComponent } from "./deposit-component";
 
 enum WidgetTabs {
   Deposit = 'deposit',
@@ -29,23 +27,11 @@ export const DepositWithdrawWidget = () => {
   const [selectedTab, setSelectedTab] = useState<WidgetTabs>(WidgetTabs.Deposit)
 
   const { vaultTokens} = useAccountVaultTokens();
-  const depositTokensList = useAccountTokensAvailableToDeposit();
 
-  const { mutate: depositEgldHandler } = useDepositEgldMutation();
-  const { mutate: depositEsdtHandler } = useDepositEsdtMutation();
   const { mutate: withdrawEgldHandler } = useWithdrawEgldMutation();
   const { mutate: withdrawEsdtHandler } = useWithdrawEsdtMutation();
 
   const canPerformOperation = selectedToken !== undefined && !getTokenErrorForValue(selectedToken, amount);
-
-  const depositToken = () => {
-    if (!selectedToken) return
-    
-    if(selectedToken.identifier !== "EGLD")
-      return depositEsdtHandler({token: selectedToken, amount: Number(amount)})
-
-    return depositEgldHandler(Number(amount))
-  }
     
   const withdrawToken = () => {
     if(!selectedToken) return
@@ -84,20 +70,7 @@ export const DepositWithdrawWidget = () => {
 
         <CardContent className={'p-8'}>
           <TabsContent className={'flex flex-1 flex-col gap-4 mt-0'} value={WidgetTabs.Deposit}>
-            <TokenSelectorWithAmount
-              token={selectedToken}
-              tokens={depositTokensList}
-              onTokenChange={(token) => setSelectedToken(token)}
-              amount={amount}
-              onAmountChange={(amount) => setAmount(amount)}
-            />
-            <div className={'text-sm text-muted-foreground'}>
-              Deposit assets into the Lunar Pay Vault.
-            </div>
-            <Button size={'sm'} onClick={depositToken} disabled={!canPerformOperation}>
-              Deposit
-              <Plus className={'ml-1 w-4 h-4'} />
-            </Button>
+            <DepositAssetsComponent />
           </TabsContent>
 
           <TabsContent className={'flex flex-col flex-1 gap-4 mt-0'} value={WidgetTabs.Withdraw}>

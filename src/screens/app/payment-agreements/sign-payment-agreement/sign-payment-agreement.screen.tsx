@@ -1,5 +1,4 @@
-import { useState } from "react"
-import { ArrowLeft, Plus } from "lucide-react"
+import { ArrowLeft } from "lucide-react"
 import { FormatAmount } from "@multiversx/sdk-dapp/UI"
 import { useGetAccount } from "@multiversx/sdk-dapp/hooks"
 import { Link, useNavigate, useParams } from "react-router-dom"
@@ -10,19 +9,17 @@ import { RoutesConfig } from "@/navigation"
 import { Button } from "@/components/ui/button.tsx"
 import { AppIcon } from "@/components/shared/app-icon.tsx"
 
-import { EsdtToken, useTokensMap } from "@/features/tokens"
+import { useTokensMap } from "@/features/tokens"
 import { useIsAuthenticated } from "@/features/auth"
 import { AuthForm } from "@/features/auth/components"
-import { TokenItem, TokenSelectorWithAmount } from "@/features/tokens/components"
+import { TokenItem } from "@/features/tokens/components"
 import { useAccountVaultTokens } from "@/features/vault/hooks"
-import { useAccountTokensAvailableToDeposit } from "@/features/account-tokens/hooks"
-import { useDepositEgldMutation, useDepositEsdtMutation } from "@/features/vault/hooks/mutations"
 import { formatFrequencyForSignAgreement } from "@/utils/utils.ts"
 import { useCreatedPaymentAgreement, useSignPaymentAgreementMutation} from "@/features/payment-agreements/hooks"
-import { getTokenErrorForValue } from "@/features/tokens/validation"
 
 import { AgreementDetailsPartial } from "./partials/agreement-details-partial.tsx"
 import {formatAddress} from "@/utils/address";
+import { DepositAssetsComponent } from "../../dashboard/components/deposit-component.tsx"
 
 export const SignPaymentAgreementScreen = () => {
   const { address } = useGetAccount()
@@ -31,25 +28,6 @@ export const SignPaymentAgreementScreen = () => {
   const isLoggedIn = useIsAuthenticated()
   const {vaultTokens} = useAccountVaultTokens()
   const tokensMap = useTokensMap();
-
-  const { mutate: depositEgldHandler } = useDepositEgldMutation();
-  const { mutate: depositEsdtHandler } = useDepositEsdtMutation();
-  
-  const [amount, setAmount] = useState('');
-  const [selectedToken, setSelectedToken] = useState<EsdtToken | undefined>(undefined);
-  
-  const canPerformOperation = selectedToken !== undefined && !getTokenErrorForValue(selectedToken, amount);
-
-  const depositTokensList = useAccountTokensAvailableToDeposit();
-
-  const depositToken = () => {
-    if (!selectedToken) return
-    
-    if(selectedToken.identifier !== "EGLD")
-      return depositEsdtHandler({token: selectedToken, amount: Number(amount)})
-
-    return depositEgldHandler(Number(amount))
-  }
 
   const { data: agreement } = useCreatedPaymentAgreement(id);
   const { mutate: signPaymentAgreement} = useSignPaymentAgreementMutation(id);
@@ -151,22 +129,7 @@ export const SignPaymentAgreementScreen = () => {
                     )}
                   </div>
 
-                  {!enoughAssets && <div className="flex flex-1 flex-col gap-4 mt-4">
-                    <TokenSelectorWithAmount
-                      token={selectedToken}
-                      tokens={depositTokensList}
-                      onTokenChange={(token) => setSelectedToken(token)}
-                      amount={amount}
-                      onAmountChange={(amount) => setAmount(amount)}
-                    />
-                    <div className={'text-sm text-muted-foreground'}>
-                      Deposit assets into the Lunar Pay Vault.
-                    </div>
-                    <Button size={'sm'} onClick={depositToken} disabled={!canPerformOperation}>
-                      Deposit
-                      <Plus className={'ml-1 w-4 h-4'} />
-                    </Button>
-                  </div>}
+                  {!enoughAssets && <DepositAssetsComponent />}
                 </div>
 
                 <div className={'text-sm p-3 ring-1 ring-slate-100 rounded shadow-sm'}>
