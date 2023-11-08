@@ -52,7 +52,7 @@ export const TokensOperationsScreen = () => {
             <TabsTrigger value={TokenOperationType.Deposit} disabled={isLoadingFirstTime}>Deposits</TabsTrigger>
             <TabsTrigger value={TokenOperationType.Withdraw} disabled={isLoadingFirstTime}>Withdrawals</TabsTrigger>
             <TabsTrigger value={TokenOperationType.Transfer} disabled={isLoadingFirstTime}>Transfers</TabsTrigger>
-            <TabsTrigger value={TokenOperationType.Charge} disabled={isLoadingFirstTime}>Chatges</TabsTrigger>
+            <TabsTrigger value={TokenOperationType.Charge} disabled={isLoadingFirstTime}>Charges</TabsTrigger>
           </TabsList>
         </Tabs>
 
