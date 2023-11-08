@@ -122,7 +122,7 @@ export const SignPaymentAgreementScreen = () => {
                 </div>
 
                 <div className={!enoughAssets ? 'border p-4' : ""}>
-                  <div className={'bg-slate-50 p-4 rounded space-y-2'}>
+                  <div className={'bg-slate-50 p-4 rounded space-y-2 mb-4'}>
                     <div className={'text-sm font-medium'}>{enoughAssets ? "Vault balance" : "No Assets"}</div>
                     {vaultToken && (
                       <TokenItem token={vaultToken} showBalances/>
