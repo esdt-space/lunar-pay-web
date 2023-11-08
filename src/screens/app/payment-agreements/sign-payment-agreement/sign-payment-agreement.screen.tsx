@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { ArrowLeft, Plus } from "lucide-react"
 import { FormatAmount } from "@multiversx/sdk-dapp/UI"
 import { useGetAccount } from "@multiversx/sdk-dapp/hooks"
@@ -22,7 +23,6 @@ import { getTokenErrorForValue } from "@/features/tokens/validation"
 
 import { AgreementDetailsPartial } from "./partials/agreement-details-partial.tsx"
 import {formatAddress} from "@/utils/address";
-import { useState } from "react"
 
 export const SignPaymentAgreementScreen = () => {
   const { address } = useGetAccount()
@@ -56,6 +56,12 @@ export const SignPaymentAgreementScreen = () => {
 
   if(!agreement) return;
 
+  const redirect = () => {
+    if(agreement.signAgreementRedirectUrl) {
+      window.location.href = agreement.signAgreementRedirectUrl
+    }
+  }
+
   const token = tokensMap[agreement.tokenIdentifier];
   const vaultToken = vaultTokens.find(item => item.identifier === agreement.tokenIdentifier);
   
@@ -65,10 +71,6 @@ export const SignPaymentAgreementScreen = () => {
 
   const currentAgreementBalance = agreement.fixedAmount !== undefined ? agreement.fixedAmount : ""
   const agreementRequiredBalance = formatTokenBalance(currentAgreementBalance, token.decimals)
-
-  const redirect = () => {
-    window.open(agreement.signAgreementRedirectUrl, '_blank')
-  }
 
   const signPaymentAgreementButtonHandler = () => {
     signPaymentAgreement(agreement.agreementIdentifier, { onSuccess: redirect })
