@@ -38,6 +38,7 @@ export const TokenOperationsTable = (props: Props) => {
           {isAllOrTransfer && <TableHead className={'max-md:hidden'}>Type</TableHead>}
           {isAllOrTransfer && <TableHead>From</TableHead>}
           {isAllOrTransfer && <TableHead>To</TableHead>}
+          {operationType === "payment-agreement-charge" && <TableHead className={'max-lg:hidden'}>Agreement</TableHead>}
           <TableHead className={'max-lg:hidden'}>Date</TableHead>
           <TableHead className="max-w-[150px]"></TableHead>
         </TableRow>
@@ -54,6 +55,7 @@ export const TokenOperationsTable = (props: Props) => {
             </TableCell>}
             {isAllOrTransfer && <AddressCell value={item.sender} />}
             {isAllOrTransfer && <AddressCell value={item.receiver} />}
+            {operationType === "payment-agreement-charge" && <TableCell className={'max-lg:hidden text-muted-foreground'}>{item.agreementName}</TableCell>}
             <TableCell className={'max-lg:hidden text-muted-foreground'}>{moment(item.createdAt).format('ll')}</TableCell>
             <TableCell className="truncate text-right">
               <Button asChild variant={'ghost'} size={'sm'}>

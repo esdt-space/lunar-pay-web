@@ -11,6 +11,8 @@ export class TokenOperation {
 
   txHash: string;
 
+  agreementName: string;
+
   isInternal: boolean;
   createdAt: Date;
 
