@@ -133,7 +133,7 @@ export const SignPaymentAgreementScreen = () => {
                 </div>
 
                 <div className={'text-sm p-3 ring-1 ring-slate-100 rounded shadow-sm'}>
-                  By confirming this subscription, you allow <span className={'font-bold'}>{agreement.ownerName ?? formatAddress(agreement.owner)}</span> to charge your wallet for this payment and future
+                  By signing this payment agreement, you allow <span className={'font-bold'}>{agreement.ownerName ?? formatAddress(agreement.owner)}</span> to charge your wallet for this payment and future
                   payments in accordance with their terms. Your first payment will be made <span className={'font-bold'}>today</span>, and then
                   <span className={'font-bold'}> every {formatFrequencyForSignAgreement(agreement.frequency)}</span>.
                 </div>
