@@ -11,16 +11,18 @@ import { Badge } from "@/components/ui/badge";
 
 type Props = {
   agreementsList: PaymentAgreement[];
+  signedList?: boolean
 }
 
 type AgreementRowProps = {
   agreement: PaymentAgreement;
+  signedList?: boolean
 }
 
 function AgreementRow(props: AgreementRowProps) {
-  const { agreement } = props;
+  const { agreement, signedList } = props;
 
-  const { mutate: refetchAgreement } = useCreatedPaymentAgreementMutation(agreement.id as string)
+  const { mutate: refetchAgreement } = useCreatedPaymentAgreementMutation(agreement.id as string, signedList)
 
   const tokensMap = useTokensMap();
   const token = tokensMap[agreement.tokenIdentifier];
@@ -48,7 +50,7 @@ function AgreementRow(props: AgreementRowProps) {
   )
 }
 
-export const PaymentAgreementListTable = ({ agreementsList }: Props) => { 
+export const PaymentAgreementListTable = ({ agreementsList, signedList }: Props) => { 
   return <div>
     <Table>
       <TableHeader>
@@ -61,7 +63,7 @@ export const PaymentAgreementListTable = ({ agreementsList }: Props) => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {agreementsList.map((item) => <AgreementRow key={item.id} agreement={item} />)}
+        {agreementsList.map((item) => <AgreementRow key={item.id} agreement={item} signedList={signedList}/>)}
       </TableBody>
     </Table>
   </div>

@@ -13,10 +13,11 @@ import { useTriggerPaymentAgreementMutation } from "@/features/payment-agreement
 
 type Props = {
   agreement: PaymentAgreement;
+  signedList?: boolean;
 }
 
 export function AgreementDetails(props: Props){
-  const { agreement } = props;
+  const { agreement, signedList } = props;
 
   const noMembers = agreement.accountsCount === 0
 
@@ -52,7 +53,7 @@ export function AgreementDetails(props: Props){
             </Badge>
           </div>
 
-          <div className="flex space-x-2 items-center">
+          {!signedList && <div className="flex space-x-2 items-center">
             <Button
               size={'sm'}
               disabled={isLoading || noMembers}
@@ -61,7 +62,7 @@ export function AgreementDetails(props: Props){
               Claim
               <Wallet className={'ml-2 w-3 h-3'} />
             </Button>
-          </div>
+          </div>}
         </div>
 
         <div>{agreement.accountsCount} members</div>

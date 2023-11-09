@@ -26,6 +26,7 @@ import {
   UpdatePaymentAgreementScreen, SignPaymentAgreementScreen
 } from "@/screens/app/payment-agreements";
 import { DemoPage } from '@/screens/app/demo';
+import { ViewSignedPaymentAgreementScreen } from '@/screens/app/payment-agreements/view-payment-agreement/view-signed-payment-agreement.screen';
 
 export function ApplicationRouter() {
   useScrollToTopHandler()
@@ -69,6 +70,7 @@ export function ApplicationRouter() {
             <Route path={RoutesConfig.paymentAgreements}>
               <Route index element={<ListPaymentAgreementsScreen />} />
               <Route path={':id'} element={<ViewPaymentAgreementScreen />} />
+              <Route path={':id/signed'} element={<ViewSignedPaymentAgreementScreen />} />
               <Route path={':id/edit'} element={<UpdatePaymentAgreementScreen />} />
               <Route path={RoutesConfig.createPaymentAgreementIndex} element={<CreatePaymentAgreementIndexScreen />} />
               <Route path={RoutesConfig.createPaymentAgreementSubscription} element={<CreatePaymentAgreementScreen />} />
