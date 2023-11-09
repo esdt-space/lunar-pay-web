@@ -19,6 +19,7 @@ import { TokenOperationType } from "../../enums";
 import { AddressCell } from "./address-cell.tsx";
 import { TokenOperationIcon } from "./token-operation-icon.tsx";
 import { TokenOperationValueCell } from "./token-operation-value-cell.tsx";
+import { AgreementNameCell } from "./agreement-name-cell.tsx";
 
 type Props = {
   operations: TokenOperation[];
@@ -55,7 +56,7 @@ export const TokenOperationsTable = (props: Props) => {
             </TableCell>}
             {isAllOrTransfer && <AddressCell value={item.sender} />}
             {isAllOrTransfer && <AddressCell value={item.receiver} />}
-            {operationType === "payment-agreement-charge" && <TableCell className={'max-lg:hidden text-muted-foreground'}>{item.agreementName}</TableCell>}
+            {operationType === "payment-agreement-charge" && <AgreementNameCell tokenOperationItem={item} />}
             <TableCell className={'max-lg:hidden text-muted-foreground'}>{moment(item.createdAt).format('ll')}</TableCell>
             <TableCell className="truncate text-right">
               <Button asChild variant={'ghost'} size={'sm'}>
