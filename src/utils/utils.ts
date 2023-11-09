@@ -19,8 +19,6 @@ export const getPaymentFrequency = (input: string) => {
       return secondsInMonth
     case 'Per Year':
       return secondsInYear
-    default:
-      return secondsInMonth
   }
 }
 
@@ -38,8 +36,6 @@ export const formatFrequency = (input: number) => {
       return 'Monthly';
     case secondsInYear:
       return 'Per Year';
-    default:
-      return 'Monthly'
   }
 }
 
@@ -57,7 +53,5 @@ export const formatFrequencyForSignAgreement = (input: number) => {
       return  'month';
     case secondsInYear:
       return 'year';
-    default:
-      return 'month'
   }
 }
