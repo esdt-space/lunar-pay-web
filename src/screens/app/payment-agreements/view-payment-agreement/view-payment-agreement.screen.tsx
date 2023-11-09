@@ -21,6 +21,8 @@ export const ViewPaymentAgreementScreen = () => {
   const { data: agreement } = useCreatedPaymentAgreement(id);
   const { data: members = [] } = usePaymentAgreementMembers(id);
 
+  console.log(agreement?.itemName)
+
   if(!agreement) return;
 
   if(agreement && agreement.owner !== address) {

@@ -1,11 +1,10 @@
 import moment from "moment";
-import { useNavigate } from "react-router-dom";
 import { FormatAmount } from "@multiversx/sdk-dapp/UI";
 
 import { formatFrequency } from "@/utils";
-import { RoutesConfig } from "@/navigation";
 import { useTokensMap } from "@/features/tokens";
 import { PaymentAgreement } from "@/features/payment-agreements/models";
+import { useCreatedPaymentAgreementMutation } from "../../hooks";
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
@@ -20,14 +19,15 @@ type AgreementRowProps = {
 
 function AgreementRow(props: AgreementRowProps) {
   const { agreement } = props;
-  const navigate = useNavigate()
+
+  const { mutate: refetchAgreement } = useCreatedPaymentAgreementMutation(agreement.id as string)
 
   const tokensMap = useTokensMap();
   const token = tokensMap[agreement.tokenIdentifier];
 
   return (
     <TableRow
-      onClick={() => navigate(`${RoutesConfig.paymentAgreements}/${agreement.id}`)}
+      onClick={() => refetchAgreement()}
     >
       <TableCell>
         {agreement.itemName !== "" ? agreement.itemName : 
@@ -48,7 +48,7 @@ function AgreementRow(props: AgreementRowProps) {
   )
 }
 
-export const PaymentAgreementListTable = ({ agreementsList }: Props) => {
+export const PaymentAgreementListTable = ({ agreementsList }: Props) => { 
   return <div>
     <Table>
       <TableHeader>

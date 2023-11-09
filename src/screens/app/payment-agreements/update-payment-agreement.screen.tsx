@@ -12,7 +12,6 @@ import { Textarea } from "@/components/ui/textarea"
 import { Separator } from "@/components/ui/separator"
 
 import { useCreatedPaymentAgreement, useUpdatePaymentAgreementMutation } from "@/features/payment-agreements/hooks"
-import { PaymentAgreementsService } from "@/features/payment-agreements/payment-agreements.service"
 import { AgreementRedirectPartial } from "./create-payment-agreement/partials/agreement-redirect-partial";
 import { AgreementCallbacksPartial } from "./create-payment-agreement/partials/agreement-callbacks-partial";
 
@@ -33,7 +32,7 @@ export function UpdatePaymentAgreementScreen() {
 
   const { data: agreement } = useCreatedPaymentAgreement(id);
   
-  const { mutate } = useUpdatePaymentAgreementMutation();
+  const { mutate: editAgreement } = useUpdatePaymentAgreementMutation();
 
   useEffect(() => {
     if(agreement === undefined || formInitialized) return;
@@ -67,14 +66,6 @@ export function UpdatePaymentAgreementScreen() {
     );
   }
 
-  const agreementUpdatedHandler = () => {
-    PaymentAgreementsService
-      .fetchAgreementsCreated()
-      .then(() => {
-        navigate(RoutesConfig.paymentAgreements)
-    });
-  }
-
   const updateAgreementDetails = () => {
     const filteredBenefits = benefits.filter((item) => item !== "")
 
@@ -90,10 +81,7 @@ export function UpdatePaymentAgreementScreen() {
       signAgreementRedirectUrl: newMemberRedirectUrl,
     }
     
-    mutate({
-      id: id,
-      input: input
-    }, { onSuccess: agreementUpdatedHandler})
+    editAgreement({ id: id, input: input })
   }
   
   return (
