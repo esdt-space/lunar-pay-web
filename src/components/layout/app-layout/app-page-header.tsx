@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { logout } from "@multiversx/sdk-dapp/utils";
 import { useGetAccount } from "@multiversx/sdk-dapp/hooks";
@@ -8,6 +8,14 @@ import { AppIcon } from "@/components/shared/app-icon.tsx";
 import { cn } from "@/theme/utils";
 import { RoutesConfig } from "@/navigation";
 import { useIsAuthenticated } from "@/features/auth";
+import { formatAddress } from "@/utils/address";
+import { Copy } from "lucide-react";
+import { useWindowSize } from "./useWindowSize";
+
+type LogoutMenuProps = {
+  address: string;
+  logoutFn: () => void;
+}
 
 type HeaderLinkProps = {
   text: string;
@@ -24,13 +32,55 @@ function HeaderLink(props: HeaderLinkProps) {
   )
 }
 
+const CopyIcon = ({address}: {address: string}) => {
+  const copyButtonHandler = () => {
+    return navigator.clipboard.writeText(address)
+  };
+
+  return <span
+      onClick={copyButtonHandler}
+      className={'ml-1 px-1 py-1 cursor-pointer'}
+    >
+      <Copy className={'w-4 h-4'} />
+    </span>
+}
+
+const LogoutMenu = (props: LogoutMenuProps) => {
+  const {address, logoutFn} = props
+
+  return <div className="absolute right-0 top-16 border border-gray-100 bg-white p-8 shadow-2xl shadow-slate-400/50">
+    <ul className="space-y-6 text-base font-medium flex flex-col">
+      <div className="mt-12 -ml-1 flex items-center w-full flex-col space-y-2 border-primary/10 dark:border-gray-700 sm:flex-row md:w-max lg:mt-0 lg:mr-6 lg:space-y-0 lg:border-l lg:pl-6">
+        <span className={'relative ml-auto flex h-9 w-full items-center justify-center before:absolute before:inset-0 before:rounded-full before:bg-primary before:transition-transform before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:px-4 lg:before:border lg:before:border-gray-200 lg:before:bg-gray-100'}>
+          <span className="relative text-sm font-semibold text-white lg:text-primary max-w-[100px] truncate">
+            <div>{formatAddress(address)}</div>
+          </span>
+        </span>
+        <CopyIcon address={address} />
+      </div>
+      <div onClick={logoutFn} className="mx-auto">
+        <HeaderLink text={'Logout'} location={""} />
+      </div>
+    </ul>
+  </div>
+}
+
 export function AppPageHeader() {
   const { address } = useGetAccount()
   const isAuthenticated = useIsAuthenticated()
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isLogoutMenuOpen, setIsLogoutMenuOpen] = useState(false)
 
   const signOutHandler = () => logout(RoutesConfig.home)
+
+  const windowInnerWidth = useWindowSize()
+
+  useEffect(() => {
+    if(windowInnerWidth >= 1024) {
+      setIsMobileMenuOpen(false)
+    }
+  }, [windowInnerWidth])
 
   return (
     <header>
@@ -67,17 +117,26 @@ export function AppPageHeader() {
                   <HeaderLink text={'Admin'} location={RoutesConfig.admin} />
                   <HeaderLink text={'Agreements'} location={RoutesConfig.paymentAgreements} />
                   <HeaderLink text={'Token Operations'} location={RoutesConfig.tokensOperations} />
+                  {isMobileMenuOpen && <HeaderLink text={'Logout'} location={""} />}
                 </ul>
               </div>
 
-              <div className="mt-12 -ml-1 flex w-full flex-col space-y-2 border-primary/10 dark:border-gray-700 sm:flex-row md:w-max lg:mt-0 lg:mr-6 lg:space-y-0 lg:border-l lg:pl-6">
-                <Link to={''} onClick={signOutHandler} className={'relative ml-auto flex h-9 w-full items-center justify-center before:absolute before:inset-0 before:rounded-full before:bg-primary before:transition-transform before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:px-4 lg:before:border lg:before:border-gray-200 lg:before:bg-gray-100'}>
+              <div className="mt-12 -ml-1 flex w-full space-y-2 border-primary/10 dark:border-gray-700 sm:flex-row md:w-max lg:mt-0 lg:mr-6 lg:space-y-0 lg:border-l lg:pl-6">
+                <span className={'relative ml-auto flex h-9 w-full items-center justify-center before:absolute before:inset-0 before:rounded-full before:bg-primary before:transition-transform before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:px-4 lg:before:border lg:before:border-gray-200 lg:before:bg-gray-100'}>
                   <span className="relative text-sm font-semibold text-white lg:text-primary max-w-[100px] truncate">
-                    {isAuthenticated ? address : 'Get started'}
+                    {isAuthenticated ? 
+                      <div
+                        className="cursor-pointer"
+                        onClick={() => setIsLogoutMenuOpen(!isLogoutMenuOpen)}
+                      >
+                        {address}
+                      </div> : 'Get started'}
                   </span>
-                </Link>
+                </span>
+                {isMobileMenuOpen && <CopyIcon address={address} />}
               </div>
             </div>
+            {isLogoutMenuOpen && <LogoutMenu address={address} logoutFn={signOutHandler} />}
           </div>
         </div>
       </nav>
