@@ -1,3 +1,5 @@
+import { PaymentAgreement } from "@/features/payment-agreements/models";
+
 export class TokenOperation {
   type: string;
   sender: string;
@@ -11,7 +13,7 @@ export class TokenOperation {
 
   txHash: string;
 
-  agreementName: string;
+  agreement: PaymentAgreement
 
   isInternal: boolean;
   createdAt: Date;
