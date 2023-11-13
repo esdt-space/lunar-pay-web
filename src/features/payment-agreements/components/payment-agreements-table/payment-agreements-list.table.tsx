@@ -32,7 +32,7 @@ function AgreementRow(props: AgreementRowProps) {
       onClick={() => refetchAgreement()}
     >
       <TableCell>
-        {agreement.itemName !== "" ? agreement.itemName : 
+        {agreement.itemName ? agreement.itemName : 
           <Badge
             variant={'outline'}
             className={'text-yellow-500 border-yellow-500'}
