@@ -114,7 +114,7 @@ export function AppPageHeader() {
             >
               <div onClick={() => setIsMobileMenuOpen(false)} className="text-gray-600 dark:text-gray-300 lg:pr-4">
                 <ul className="space-y-6 text-base font-medium tracking-wide lg:flex lg:space-y-0 lg:text-sm">
-                  <HeaderLink text={'Admin'} location={RoutesConfig.admin} />
+                  {/* <HeaderLink text={'Admin'} location={RoutesConfig.admin} /> */}
                   <HeaderLink text={'Agreements'} location={RoutesConfig.paymentAgreements} />
                   <HeaderLink text={'Token Operations'} location={RoutesConfig.tokensOperations} />
                   {isMobileMenuOpen && <HeaderLink text={'Logout'} location={""}/>}

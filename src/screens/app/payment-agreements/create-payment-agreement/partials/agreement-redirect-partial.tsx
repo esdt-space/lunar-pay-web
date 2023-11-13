@@ -51,7 +51,7 @@ export function AgreementRedirectPartial(props: Props) {
                   <span>New Member Redirect</span>
                 </FormLabel>
                 <FormDescription>
-                  We'll communicate directly with your API to keep you updated about new subscribers.
+                  We will redirect the subscribers to your provided url.
                 </FormDescription>
               </div>
               <FormControl>
