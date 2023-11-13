@@ -1,8 +1,15 @@
 import { Copy } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast.ts";
 
 export const CopyIconComponent = ({address}: {address: string}) => {
+  const { toast } = useToast()
+
   const copyButtonHandler = () => {
-    return navigator.clipboard.writeText(address)
+    return navigator.clipboard.writeText(address).then(() => {
+      toast({
+        description: 'Address copied to clipboard'
+      })
+    })
   };
 
   return (
