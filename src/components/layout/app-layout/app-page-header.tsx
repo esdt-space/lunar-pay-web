@@ -13,15 +13,14 @@ import { AppIcon } from "@/components/shared/app-icon.tsx";
 
 import { cn } from "@/theme/utils";
 import { RoutesConfig } from "@/navigation";
-import { useIsAuthenticated } from "@/features/auth";
 import { useWindowSize } from "./useWindowSize";
 import { useGetPaymentAgreementsMutation } from "@/features/payment-agreements/hooks";
 import { CopyIconComponent, HeaderLink, LogoutMenu } from "./components";
+import {Menu, User} from "lucide-react";
+import {Button} from "@/components/ui/button.tsx";
 
 export function AppPageHeader() {
   const { address } = useGetAccount()
-  const isAuthenticated = useIsAuthenticated()
-
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const { mutate: fetchAgreements } = useGetPaymentAgreementsMutation();
@@ -46,10 +45,9 @@ export function AppPageHeader() {
                 <AppIcon />
               </Link>
 
-              <button aria-label="humburger" id="hamburger" className="relative -mr-6 p-6 lg:hidden" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-                <div aria-hidden="true" className="m-auto h-0.5 w-5 rounded bg-sky-900 transition duration-300"></div>
-                <div aria-hidden="true" className="m-auto mt-2 h-0.5 w-5 rounded bg-sky-900 transition duration-300"></div>
-              </button>
+              <div className={'relative -mr-6 p-6 lg:hidden'}>
+                <Menu className="w-6 h-6" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} />
+              </div>
             </div>
             <div id="layer" aria-hidden="true" className="fixed inset-0 z-10 h-screen w-screen origin-bottom scale-y-0 bg-white/70 backdrop-blur-2xl transition duration-500 lg:hidden"></div>
             <div
@@ -83,33 +81,28 @@ export function AppPageHeader() {
                         {address}
                       </span>
                       <CopyIconComponent address={address} />
-                    </div>}
+                    </div>
+                  }
                 </ul>
               </div>
 
-              <div>
-                {!isMobileMenuOpen && 
-                  <Popover>
-                    <PopoverTrigger asChild >
-                      <div className={"flex w-full items-center sm:flex-row md:w-max border p-2 rounded-full"}>
-                        <span className="text-xs max-w-[80px] truncate">
-                          {isAuthenticated ? 
-                            <div
-                              className="cursor-pointer"
-                            >
-                              {address}
-                            </div> : 'Get started'}
-                        </span>
-                      </div>
-                    </PopoverTrigger>
+              {!isMobileMenuOpen &&
+                <Popover>
+                  <PopoverTrigger asChild >
+                    <Button size={'sm'}>
+                      <span className="text-xs max-w-[80px] truncate">
+                        {address}
+                      </span>
+                      <User className={'w-4 h-4'} />
+                    </Button>
+                  </PopoverTrigger>
                     <PopoverContent className="w-full p-8">
-                      <div className="flex justify-center">
-                        <LogoutMenu address={address} logoutFn={signOutHandler} />
-                      </div>
-                    </PopoverContent>
-                  </Popover>}
-              </div>
-
+                        <div className="flex justify-center">
+                            <LogoutMenu address={address} logoutFn={signOutHandler}/>
+                        </div>
+                  </PopoverContent>
+                </Popover>
+              }
             </div>
           </div>
         </div>
