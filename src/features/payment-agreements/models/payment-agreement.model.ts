@@ -1,7 +1,7 @@
 import { AgreementAmountType, AgreementType, AgreementUserFriendlyType } from '@/features/payment-agreements/enums';
 
 export class PaymentAgreement {
-  id: string;
+  _id: string;
 
   owner: string;
 
