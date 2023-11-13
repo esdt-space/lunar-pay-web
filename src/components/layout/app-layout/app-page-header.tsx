@@ -1,29 +1,19 @@
+import { Menu } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Menu, User } from "lucide-react";
 import { useEffect, useState } from "react";
-import { logout } from "@multiversx/sdk-dapp/utils";
 import { useGetAccount } from "@multiversx/sdk-dapp/hooks";
 
 import { cn } from "@/theme/utils";
 import { RoutesConfig } from "@/navigation";
 
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
-
-import { Button } from "@/components/ui/button.tsx";
 import { AppIcon } from "@/components/shared/app-icon.tsx";
 
 import { useWindowSize } from "./useWindowSize";
-import { CopyIconComponent, HeaderLink, LogoutMenu } from "./components";
+import { CopyIconComponent, HeaderLink, UserMenu } from "./components";
 
 export function AppPageHeader() {
   const { address } = useGetAccount()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-
-  const signOutHandler = () => logout(RoutesConfig.home)
 
   const windowInnerWidth = useWindowSize()
 
@@ -82,19 +72,7 @@ export function AppPageHeader() {
                 </ul>
               </div>
 
-              {!isMobileMenuOpen &&
-                <Popover>
-                  <PopoverTrigger asChild >
-                    <Button size={'sm'}>
-                      <span className="text-xs max-w-[80px] truncate">{address}</span>
-                      <User className={'w-4 h-4'} />
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-full p-8">
-                    <LogoutMenu address={address} logoutFn={signOutHandler}/>
-                  </PopoverContent>
-                </Popover>
-              }
+              {!isMobileMenuOpen && <UserMenu />}
             </div>
           </div>
         </div>
