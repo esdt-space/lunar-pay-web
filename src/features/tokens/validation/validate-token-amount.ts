@@ -13,7 +13,7 @@ export function checkIsValidAmount(value: string | number): boolean {
   return bigNumberValue.gt(0);
 }
 
-export function getTokenErrorForValue(token: Token, value: string | number): TokenValueError | null {
+export function getTokenErrorForValue(token: Token, value: string | number, isAmountToReceive?: boolean): TokenValueError | null {
   const tokenBalanceBigNumberBigUIntValue = BigNumber(token.balance);
   const valueBigNumberBigUIntValue = BigNumber(value).multipliedBy(Math.pow(10, token.decimals))
 
@@ -25,8 +25,13 @@ export function getTokenErrorForValue(token: Token, value: string | number): Tok
     case tokenBalanceBigNumberBigUIntValue.isNaN() || valueBigNumberBigUIntValue.isNaN():
       return TokenValueError.InvalidFormat;
 
-    case tokenBalanceBigNumberBigUIntValue.lt(valueBigNumberBigUIntValue):
-      return TokenValueError.BalanceExceeded;
+    case tokenBalanceBigNumberBigUIntValue.lt(valueBigNumberBigUIntValue): {
+      if (!isAmountToReceive) {
+        return TokenValueError.BalanceExceeded;
+      }
+      
+      return null;
+    }
 
     default:
       return null;

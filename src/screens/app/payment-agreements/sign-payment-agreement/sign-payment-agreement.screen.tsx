@@ -19,6 +19,7 @@ import { useCreatedPaymentAgreement, useSignPaymentAgreementMutation} from "@/fe
 
 import { AgreementDetailsPartial } from "./partials/agreement-details-partial.tsx"
 import {formatAddress} from "@/utils/address";
+import { DepositAssetsComponent } from "../../dashboard/components/deposit-component.tsx"
 
 export const SignPaymentAgreementScreen = () => {
   const { address } = useGetAccount()
@@ -33,6 +34,12 @@ export const SignPaymentAgreementScreen = () => {
 
   if(!agreement) return;
 
+  const redirect = () => {
+    if(agreement.signAgreementRedirectUrl) {
+      window.location.href = agreement.signAgreementRedirectUrl
+    }
+  }
+
   const token = tokensMap[agreement.tokenIdentifier];
   const vaultToken = vaultTokens.find(item => item.identifier === agreement.tokenIdentifier);
   
@@ -43,16 +50,12 @@ export const SignPaymentAgreementScreen = () => {
   const currentAgreementBalance = agreement.fixedAmount !== undefined ? agreement.fixedAmount : ""
   const agreementRequiredBalance = formatTokenBalance(currentAgreementBalance, token.decimals)
 
-  const redirect = () => {
-    window.open(agreement.signAgreementRedirectUrl, '_blank')
-  }
-
   const signPaymentAgreementButtonHandler = () => {
     signPaymentAgreement(agreement.agreementIdentifier, { onSuccess: redirect })
   }
 
   const userIsOwner = address === agreement.owner
-  const notEnoughAssets = Number(currentBalance.toString()) < Number(agreementRequiredBalance.toString())
+  const enoughAssets = Number(currentBalance.toString()) > Number(agreementRequiredBalance.toString())
  
   return (
     <div className="flex flex-1 flex-col">
@@ -118,15 +121,19 @@ export const SignPaymentAgreementScreen = () => {
                   </div>
                 </div>
 
-                <div className={'bg-slate-50 p-4 rounded space-y-2'}>
-                  <div className={'text-sm font-medium'}>Vault balance</div>
-                  {vaultToken && (
-                    <TokenItem token={vaultToken} showBalances/>
-                  )}
+                <div className={!enoughAssets ? 'border p-4' : ""}>
+                  <div className={'bg-slate-50 p-4 rounded space-y-2 mb-4'}>
+                    <div className={'text-sm font-medium'}>{enoughAssets ? "Vault balance" : "No Assets"}</div>
+                    {vaultToken && (
+                      <TokenItem token={vaultToken} showBalances/>
+                    )}
+                  </div>
+
+                  {!enoughAssets && <DepositAssetsComponent />}
                 </div>
 
                 <div className={'text-sm p-3 ring-1 ring-slate-100 rounded shadow-sm'}>
-                  By confirming this subscription, you allow <span className={'font-bold'}>{agreement.ownerName ?? formatAddress(agreement.owner)}</span> to charge your wallet for this payment and future
+                  By signing this payment agreement, you allow <span className={'font-bold'}>{agreement.ownerName ?? formatAddress(agreement.owner)}</span> to charge your wallet for this payment and future
                   payments in accordance with their terms. Your first payment will be made <span className={'font-bold'}>today</span>, and then
                   <span className={'font-bold'}> every {formatFrequencyForSignAgreement(agreement.frequency)}</span>.
                 </div>
@@ -134,7 +141,7 @@ export const SignPaymentAgreementScreen = () => {
                 <div className={'flex flex-col'}>
                   <Button
                     variant={'primary'}
-                    disabled={userIsOwner || notEnoughAssets}
+                    disabled={userIsOwner || !enoughAssets}
                     className={'bg-gradient-to-r from-primary to-secondary text-white hover:text-slate-200'}
                     onClick={signPaymentAgreementButtonHandler}
                   >
@@ -147,7 +154,7 @@ export const SignPaymentAgreementScreen = () => {
                     </div>
                   )}
 
-                  {!userIsOwner && notEnoughAssets && (
+                  {!userIsOwner && !enoughAssets && (
                     <div className={'text-sm text-red-500 text-center'}>
                       You don't have enough tokens to accept this agreement
                     </div>

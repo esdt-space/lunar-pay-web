@@ -4,6 +4,8 @@ import { useGetAccount } from "@multiversx/sdk-dapp/hooks";
 import { accountPaymentAgreementsCreatedQueryKey } from "@/features/payment-agreements/query-keys.ts";
 import { PaymentAgreementsService } from "../../payment-agreements.service";
 import { UpdateAgreementDto } from "../../dto";
+import { useNavigate } from "react-router-dom";
+import { RoutesConfig } from "@/navigation";
 
 type UpdateAgreementInput = {
   id: string;
@@ -13,17 +15,13 @@ type UpdateAgreementInput = {
 export function useUpdatePaymentAgreementMutation() {
   const client = useQueryClient();
   const { address } = useGetAccount();
-
-  const getCallback = async () => {
-    await client.invalidateQueries({queryKey: accountPaymentAgreementsCreatedQueryKey(address)})
-  }
+  const navigate = useNavigate()
 
   return useMutation({
-    mutationFn: ({id, input}: UpdateAgreementInput) => {
-      return PaymentAgreementsService.updateAgreement(id, input)
-    },
+    mutationFn: ({id, input}: UpdateAgreementInput) => PaymentAgreementsService.updateAgreement(id, input),
     onSuccess: async () => {
-      await getCallback()
+      await client.resetQueries({queryKey: accountPaymentAgreementsCreatedQueryKey(address), exact: true})
+      navigate(RoutesConfig.paymentAgreements)
     },
   });
 }

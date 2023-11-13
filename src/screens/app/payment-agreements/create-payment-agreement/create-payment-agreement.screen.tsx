@@ -15,16 +15,12 @@ import { useCreatePaymentAgreementMutation } from "@/features/payment-agreements
 import { AgreementAmountType, AgreementType } from "@/contracts/lunar-pay/agreements/enums";
 import { PaymentAgreementsService } from "@/features/payment-agreements/payment-agreements.service.ts";
 
-import { AgreementCallbacksPartial } from "./partials/agreement-callbacks-partial.tsx";
-
 const frequencyList = ["Per Minute", "Per Hour", "Daily", "Weekly", "Monthly", "Per Year"]
 
 export function CreatePaymentAgreementScreen() {
   const navigate = useNavigate();
   const [frequency, setFrequency] = useState('Monthly');
   const [selectedToken, setSelectedToken] = useState<EsdtToken | undefined>(undefined);
-  const [signAgreementHttpCallbackUrl, setSignAgreementHttpCallbackUrl] = useState("")
-  const [cancelAgreementHttpCallbackUrl, setCancelAgreementHttpCallbackUrl] = useState("")
 
   const tokens = useAccountTokensAvailableToDeposit();
   const [amount, setAmount] = useState('')
@@ -38,15 +34,17 @@ export function CreatePaymentAgreementScreen() {
     PaymentAgreementsService
       .fetchLatestAgreementCreatedByAccount()
       .then(agreement => {
-        navigate(RoutesConfig.updatePaymentAgreement.replace(":id", agreement.id), { state: { signAgreementHttpCallbackUrl, cancelAgreementHttpCallbackUrl } })
+        navigate(RoutesConfig.updatePaymentAgreement.replace(":id", agreement.id))
     });
   }
 
   const buttonHandler = () => {
-    if(!selectedToken || !amount) return;
+    const formatedFrequency = getPaymentFrequency(frequency)
+
+    if(!selectedToken || !amount || !formatedFrequency) return;
 
     mutate({
-      frequency: getPaymentFrequency(frequency),
+      frequency: formatedFrequency,
       token: selectedToken,
       type: AgreementType.RecurringPayoutToReceive,
       amountType: AgreementAmountType.FixedAmount,
@@ -75,6 +73,7 @@ export function CreatePaymentAgreementScreen() {
                   onAmountChange={(amount) => setAmount(amount)}
                   hasMaxButton={false}
                   showBalances={false}
+                  isAmountToReceive={true}
                 />
               </div>
 
@@ -93,13 +92,6 @@ export function CreatePaymentAgreementScreen() {
                 </Select>
               </div>
             </div>
-
-            <AgreementCallbacksPartial
-              signAgreementHttpCallbackUrl={signAgreementHttpCallbackUrl}
-              cancelAgreementHttpCallbackUrl={cancelAgreementHttpCallbackUrl}
-              onSignAgreementHttpCallbackUrlChange={(signAgreementHttpCallbackUrl) => setSignAgreementHttpCallbackUrl(signAgreementHttpCallbackUrl)}
-              onCancelAgreementHttpCallbackUrlChange={(cancelAgreementHttpCallbackUrl) => setCancelAgreementHttpCallbackUrl(cancelAgreementHttpCallbackUrl)}
-            />
 
             <div className="flex w-full">
               <Button
