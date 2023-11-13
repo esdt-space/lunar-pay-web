@@ -1,7 +1,11 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { Menu, User } from "lucide-react";
+import { useEffect, useState } from "react";
 import { logout } from "@multiversx/sdk-dapp/utils";
 import { useGetAccount } from "@multiversx/sdk-dapp/hooks";
+
+import { cn } from "@/theme/utils";
+import { RoutesConfig } from "@/navigation";
 
 import {
   Popover,
@@ -9,14 +13,11 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
+import { Button } from "@/components/ui/button.tsx";
 import { AppIcon } from "@/components/shared/app-icon.tsx";
 
-import { cn } from "@/theme/utils";
-import { RoutesConfig } from "@/navigation";
 import { useWindowSize } from "./useWindowSize";
 import { CopyIconComponent, HeaderLink, LogoutMenu } from "./components";
-import {Menu, User} from "lucide-react";
-import {Button} from "@/components/ui/button.tsx";
 
 export function AppPageHeader() {
   const { address } = useGetAccount()
