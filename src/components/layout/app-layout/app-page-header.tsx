@@ -14,7 +14,6 @@ import { AppIcon } from "@/components/shared/app-icon.tsx";
 import { cn } from "@/theme/utils";
 import { RoutesConfig } from "@/navigation";
 import { useWindowSize } from "./useWindowSize";
-import { useGetPaymentAgreementsMutation } from "@/features/payment-agreements/hooks";
 import { CopyIconComponent, HeaderLink, LogoutMenu } from "./components";
 import {Menu, User} from "lucide-react";
 import {Button} from "@/components/ui/button.tsx";
@@ -22,8 +21,6 @@ import {Button} from "@/components/ui/button.tsx";
 export function AppPageHeader() {
   const { address } = useGetAccount()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-
-  const { mutate: fetchAgreements } = useGetPaymentAgreementsMutation();
 
   const signOutHandler = () => logout(RoutesConfig.home)
 
@@ -67,12 +64,10 @@ export function AppPageHeader() {
               <div onClick={() => setIsMobileMenuOpen(false)} className="text-gray-600 dark:text-gray-300 lg:pr-4">
                 <ul className="space-y-6 text-base font-medium tracking-wide lg:flex lg:space-y-0 lg:text-sm">
                   {/* <HeaderLink text={'Admin'} location={RoutesConfig.admin} /> */}
-                  <div onClick={() => fetchAgreements()}>
-                    <HeaderLink 
-                      text={'Agreements'} 
-                      location={RoutesConfig.paymentAgreements}
-                    />
-                  </div>
+                  <HeaderLink
+                    text={'Agreements'}
+                    location={RoutesConfig.paymentAgreements}
+                  />
                   <HeaderLink text={'Token Operations'} location={RoutesConfig.tokensOperations} />
                   {isMobileMenuOpen && <HeaderLink text={'Logout'} location={""}/>}
                   {isMobileMenuOpen && 
@@ -90,16 +85,12 @@ export function AppPageHeader() {
                 <Popover>
                   <PopoverTrigger asChild >
                     <Button size={'sm'}>
-                      <span className="text-xs max-w-[80px] truncate">
-                        {address}
-                      </span>
+                      <span className="text-xs max-w-[80px] truncate">{address}</span>
                       <User className={'w-4 h-4'} />
                     </Button>
                   </PopoverTrigger>
-                    <PopoverContent className="w-full p-8">
-                        <div className="flex justify-center">
-                            <LogoutMenu address={address} logoutFn={signOutHandler}/>
-                        </div>
+                  <PopoverContent className="w-full p-8">
+                    <LogoutMenu address={address} logoutFn={signOutHandler}/>
                   </PopoverContent>
                 </Popover>
               }
