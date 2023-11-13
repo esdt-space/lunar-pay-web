@@ -8,6 +8,7 @@ import { useCreatedPaymentAgreementMutation } from "../../hooks";
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import { Eye } from "lucide-react";
 
 type Props = {
   agreementsList: PaymentAgreement[];
@@ -29,22 +30,24 @@ function AgreementRow(props: AgreementRowProps) {
 
   return (
     <TableRow
+      className="cursor-pointer"
       onClick={() => refetchAgreement()}
     >
-      <TableCell>
+      <TableCell className="flex">
+        <Eye className={'w-4 h-4 mr-2'} />
         {agreement.itemName ? agreement.itemName : 
           <Badge
             variant={'outline'}
             className={'text-yellow-500 border-yellow-500'}
           >
-            Missing Data !!!
+            Missing Data
           </Badge>}
       </TableCell>
       <TableCell>
         <FormatAmount value={agreement.fixedAmount as string} decimals={token.decimals} />
       </TableCell>
       <TableCell>{formatFrequency(agreement.frequency)}</TableCell>
-      <TableCell>{agreement.accountsCount}</TableCell>
+      {!signedList && <TableCell>{agreement.accountsCount}</TableCell>}
       <TableCell className="max-sm:hidden">{moment(agreement.createdAt).format('ll')}</TableCell>
     </TableRow>
   )
@@ -58,7 +61,7 @@ export const PaymentAgreementListTable = ({ agreementsList, signedList }: Props)
           <TableHead>Name</TableHead>
           <TableHead>Value</TableHead>
           <TableHead>Frequency</TableHead>
-          <TableHead>Subscribers</TableHead>
+          {!signedList && <TableHead>Subscribers</TableHead>}
           <TableHead className="max-sm:hidden">Date</TableHead>
         </TableRow>
       </TableHeader>
