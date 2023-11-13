@@ -82,7 +82,7 @@ export function ListPaymentAgreementsScreen() {
         <TabsContent className={'flex flex-1 flex-col gap-4 mt-0'} value={ScreenTabs.Signed}>
           <Card>
             <CardContent className="p-0">
-              <PaymentAgreementListTable agreementsList={signedAgreements} />
+              <PaymentAgreementListTable agreementsList={signedAgreements} signedList={true}/>
             </CardContent>
           </Card>
         </TabsContent>

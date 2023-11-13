@@ -5,13 +5,15 @@ import { accountPaymentAgreementById } from "@/features/payment-agreements/query
 import { useNavigate } from "react-router-dom";
 import { RoutesConfig } from "@/navigation";
 
-export function useCreatedPaymentAgreementMutation(id: string) {
+export function useCreatedPaymentAgreementMutation(id: string, isSigned?: boolean) {
   const client = useQueryClient();
   const { address } = useGetAccount();
   const navigate = useNavigate()
 
   const navigateToAgreement = () => {
-    return Promise.resolve(navigate(`${RoutesConfig.paymentAgreements}/${id}`))
+    const signed = isSigned ? "/signed" : ""
+
+    return Promise.resolve(navigate(`${RoutesConfig.paymentAgreements}/${id}${signed}`))
   }
 
   return useMutation({
