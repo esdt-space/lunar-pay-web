@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import {cn} from "@/theme/utils.ts";
 
 type Props = {
   text: string;
@@ -8,9 +9,12 @@ type Props = {
 export function HeaderLink(props: Props) {
   return (
     <li>
-      <Link to={props.location} className={'block transition hover:text-primary md:px-4'}>
+      <NavLink to={props.location} className={({isActive}) => cn([
+        'block transition hover:text-primary/80 md:px-4',
+        isActive && `text-primary`
+      ])}>
         {props.text}
-      </Link>
+      </NavLink>
     </li>
   )
 }
