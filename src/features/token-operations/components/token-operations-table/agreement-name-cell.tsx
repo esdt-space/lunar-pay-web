@@ -11,7 +11,7 @@ export const AgreementNameCell = ({tokenOperationItem}: Props) => {
   const navigate = useNavigate()
   
   return <TableCell
-    onClick={() => navigate(`${RoutesConfig.paymentAgreements}/${tokenOperationItem.agreement.id}`)}
+    onClick={() => navigate(`${RoutesConfig.paymentAgreements}/${tokenOperationItem.agreement._id}`)}
     className={'max-lg:hidden text-muted-foreground cursor-pointer'}
   >
     <span className={'flex items-center'}>
