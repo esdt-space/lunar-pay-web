@@ -3,75 +3,26 @@ import { Link } from "react-router-dom";
 import { logout } from "@multiversx/sdk-dapp/utils";
 import { useGetAccount } from "@multiversx/sdk-dapp/hooks";
 
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+
 import { AppIcon } from "@/components/shared/app-icon.tsx";
 
 import { cn } from "@/theme/utils";
 import { RoutesConfig } from "@/navigation";
 import { useIsAuthenticated } from "@/features/auth";
-import { formatAddress } from "@/utils/address";
-import { Copy } from "lucide-react";
 import { useWindowSize } from "./useWindowSize";
 import { useGetPaymentAgreementsMutation } from "@/features/payment-agreements/hooks";
-
-type LogoutMenuProps = {
-  address: string;
-  logoutFn: () => void;
-}
-
-type HeaderLinkProps = {
-  text: string;
-  location: string;
-}
-
-function HeaderLink(props: HeaderLinkProps) {
-  return (
-    <li>
-      <Link to={props.location} className={'block transition hover:text-primary md:px-4'}>
-        {props.text}
-      </Link>
-    </li>
-  )
-}
-
-const CopyIcon = ({address}: {address: string}) => {
-  const copyButtonHandler = () => {
-    return navigator.clipboard.writeText(address)
-  };
-
-  return (
-    <span
-      onClick={copyButtonHandler}
-      className={'ml-1 px-1 py-1 cursor-pointer'}
-    >
-      <Copy className={'w-4 h-4'} />
-    </span>
-  )
-}
-
-const LogoutMenu = (props: LogoutMenuProps) => {
-  const {address, logoutFn} = props
-
-  return (
-    <div className="absolute right-0 top-16 border border-gray-100 bg-white p-8 shadow-2xl shadow-slate-400/50">
-      <ul className="space-y-6 text-base font-medium flex flex-col">
-        <div className="flex space-x-4">
-          <span className="text-sm font-semibold">{formatAddress(address)}</span>
-          <CopyIcon address={address} />
-        </div>
-        <div onClick={logoutFn} className="mx-auto">
-          <HeaderLink text={'Logout'} location={""} />
-        </div>
-      </ul>
-    </div>
-  )
-}
+import { CopyIconComponent, HeaderLink, LogoutMenu } from "./components";
 
 export function AppPageHeader() {
   const { address } = useGetAccount()
   const isAuthenticated = useIsAuthenticated()
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [isLogoutMenuOpen, setIsLogoutMenuOpen] = useState(false)
 
   const { mutate: fetchAgreements } = useGetPaymentAgreementsMutation();
 
@@ -126,24 +77,40 @@ export function AppPageHeader() {
                   </div>
                   <HeaderLink text={'Token Operations'} location={RoutesConfig.tokensOperations} />
                   {isMobileMenuOpen && <HeaderLink text={'Logout'} location={""}/>}
+                  {isMobileMenuOpen && 
+                    <div className={"flex w-full items-center sm:flex-row md:w-max mt-6 md:ml-4 space-x-4"}>
+                      <span className="text-xs max-w-[80px] truncate">
+                        {address}
+                      </span>
+                      <CopyIconComponent address={address} />
+                    </div>}
                 </ul>
               </div>
 
-              <div className={cn(["flex w-full items-center sm:flex-row md:w-max", isMobileMenuOpen ? "mt-6 space-x-4" : "border p-2 rounded-full"])}>
-                <span className="text-xs max-w-[80px] truncate">
-                  {isAuthenticated ? 
-                    <div
-                      className="cursor-pointer"
-                      onClick={() => setIsLogoutMenuOpen(!isLogoutMenuOpen)}
-                    >
-                      {address}
-                    </div> : 'Get started'}
-                </span>
-                {isMobileMenuOpen && <CopyIcon address={address} />}
+              <div>
+                {!isMobileMenuOpen && 
+                  <Popover>
+                    <PopoverTrigger asChild >
+                      <div className={"flex w-full items-center sm:flex-row md:w-max border p-2 rounded-full"}>
+                        <span className="text-xs max-w-[80px] truncate">
+                          {isAuthenticated ? 
+                            <div
+                              className="cursor-pointer"
+                            >
+                              {address}
+                            </div> : 'Get started'}
+                        </span>
+                      </div>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-full p-8">
+                      <div className="flex justify-center">
+                        <LogoutMenu address={address} logoutFn={signOutHandler} />
+                      </div>
+                    </PopoverContent>
+                  </Popover>}
               </div>
 
             </div>
-            {isLogoutMenuOpen && <LogoutMenu address={address} logoutFn={signOutHandler} />}
           </div>
         </div>
       </nav>

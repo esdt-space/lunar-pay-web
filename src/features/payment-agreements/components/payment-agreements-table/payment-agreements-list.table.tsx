@@ -33,7 +33,7 @@ function AgreementRow(props: AgreementRowProps) {
       className="cursor-pointer"
       onClick={() => refetchAgreement()}
     >
-      <TableCell className="flex">
+      <TableCell className="flex items-center">
         <Eye className={'w-4 h-4 mr-2'} />
         {agreement.itemName ? agreement.itemName : 
           <Badge
