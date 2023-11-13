@@ -22,7 +22,7 @@ type AgreementRowProps = {
 function AgreementRow(props: AgreementRowProps) {
   const { agreement, signedList } = props;
 
-  const { mutate: refetchAgreement } = useCreatedPaymentAgreementMutation(agreement.id as string, signedList)
+  const { mutate: refetchAgreement } = useCreatedPaymentAgreementMutation(agreement._id as string, signedList)
 
   const tokensMap = useTokensMap();
   const token = tokensMap[agreement.tokenIdentifier];
@@ -63,7 +63,7 @@ export const PaymentAgreementListTable = ({ agreementsList, signedList }: Props)
         </TableRow>
       </TableHeader>
       <TableBody>
-        {agreementsList.map((item) => <AgreementRow key={item.id} agreement={item} signedList={signedList}/>)}
+        {agreementsList.map((item) => <AgreementRow key={item._id} agreement={item} signedList={signedList}/>)}
       </TableBody>
     </Table>
   </div>
