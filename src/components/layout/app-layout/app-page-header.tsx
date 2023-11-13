@@ -11,6 +11,7 @@ import { useIsAuthenticated } from "@/features/auth";
 import { formatAddress } from "@/utils/address";
 import { Copy } from "lucide-react";
 import { useWindowSize } from "./useWindowSize";
+import { useGetPaymentAgreementsMutation } from "@/features/payment-agreements/hooks";
 
 type LogoutMenuProps = {
   address: string;
@@ -72,6 +73,8 @@ export function AppPageHeader() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isLogoutMenuOpen, setIsLogoutMenuOpen] = useState(false)
 
+  const { mutate: fetchAgreements } = useGetPaymentAgreementsMutation();
+
   const signOutHandler = () => logout(RoutesConfig.home)
 
   const windowInnerWidth = useWindowSize()
@@ -115,7 +118,12 @@ export function AppPageHeader() {
               <div onClick={() => setIsMobileMenuOpen(false)} className="text-gray-600 dark:text-gray-300 lg:pr-4">
                 <ul className="space-y-6 text-base font-medium tracking-wide lg:flex lg:space-y-0 lg:text-sm">
                   {/* <HeaderLink text={'Admin'} location={RoutesConfig.admin} /> */}
-                  <HeaderLink text={'Agreements'} location={RoutesConfig.paymentAgreements} />
+                  <div onClick={() => fetchAgreements()}>
+                    <HeaderLink 
+                      text={'Agreements'} 
+                      location={RoutesConfig.paymentAgreements}
+                    />
+                  </div>
                   <HeaderLink text={'Token Operations'} location={RoutesConfig.tokensOperations} />
                   {isMobileMenuOpen && <HeaderLink text={'Logout'} location={""}/>}
                 </ul>
