@@ -8,7 +8,7 @@ import { DashboardLatestTransactionsWidget } from "./components/latest-transacti
 export function DashboardScreen() {
   return (
     <ContainedScreen>
-      <div className={'flex flex-1 flex-col lg:flex-row gap-4 md:gap-8'}>
+      <div className={'flex flex-1 flex-col lg:flex-row gap-4 xl:gap-8'}>
         <DashboardLunarBalanceWidget />
         <VaultAssetsWidget />
         <DepositWithdrawWidget />
