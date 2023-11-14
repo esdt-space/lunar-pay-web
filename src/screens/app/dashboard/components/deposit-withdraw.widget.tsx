@@ -30,7 +30,7 @@ export const DepositWithdrawWidget = () => {
   }, [vaultTokens, selectedTab]);
 
   return (
-    <Card className={'flex flex-col flex-1 shadow'}>
+    <Card className={'flex flex-col flex-1'}>
       <Tabs value={selectedTab} className="flex flex-col space-y-0" onValueChange={onTabChange}>
         <TabsList className={'flex'}>
           <TabsTrigger className={'flex-1'} value={WidgetTabs.Deposit}>

@@ -60,7 +60,7 @@ export const VaultAssetsWidget = () => {
   }, [selectedTab, isLoadingFirstTime, isLoadedAndHasData, isLoadedAndHasNoData]);
 
   return (
-    <Card className={'flex-1 shadow p-2'}>
+    <Card className={'flex-1 p-2'}>
       <CardHeader>
         <CardTitle className={'text-sm font-semibold uppercase tracking-wide'}>
           {selectedTab === ScreenTabs.TransferAsset ? 'Transfer' : 'Assets'}
