@@ -9,6 +9,7 @@ import { RoutesConfig } from "@/navigation"
 import { Button } from "@/components/ui/button.tsx"
 import { AppIcon } from "@/components/shared/app-icon.tsx"
 
+import { formatAddress } from "@/utils/address"
 import { useTokensMap } from "@/features/tokens"
 import { useIsAuthenticated } from "@/features/auth"
 import { AuthForm } from "@/features/auth/components"
@@ -18,7 +19,6 @@ import { formatFrequencyForSignAgreement } from "@/utils/utils.ts"
 import { useCreatedPaymentAgreement, useSignPaymentAgreementMutation} from "@/features/payment-agreements/hooks"
 
 import { AgreementDetailsPartial } from "./partials/agreement-details-partial.tsx"
-import {formatAddress} from "@/utils/address";
 import { DepositAssetsComponent } from "../../dashboard/components/deposit-component.tsx"
 
 export const SignPaymentAgreementScreen = () => {

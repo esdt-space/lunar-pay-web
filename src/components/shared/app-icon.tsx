@@ -1,4 +1,4 @@
-import {ReactComponent as AppIconImage} from '@/assets/media/app-logo-full.svg';
+import AppIconImage from '@/assets/media/app-logo-full.svg?react';
 
 export function AppIcon() {
   return (

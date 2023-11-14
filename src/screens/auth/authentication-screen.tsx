@@ -7,7 +7,7 @@ import { useLoginRedirectLocation } from "@/features/auth";
 
 import { AppIcon } from "@/components/shared/app-icon";
 
-import {ReactComponent as IllustrationImage} from '@/assets/media/illustration.svg';
+import IllustrationImage from '@/assets/media/illustration.svg?react';
 
 export function AuthenticationScreen() {
   const redirectTo = useLoginRedirectLocation();

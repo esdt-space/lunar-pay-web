@@ -9,6 +9,7 @@ import { TokenSelectorWithAmount } from "@/features/tokens/components"
 import { getTokenErrorForValue } from "@/features/tokens/validation";
 
 import { useDepositEgldMutation, useDepositEsdtMutation } from "@/features/vault/hooks/mutations";
+import {BinancePayButton} from "@/components/prefab/binance-pay-button.tsx";
 
 export const DepositAssetsComponent = () => {
   const [amount, setAmount] = useState('');
@@ -48,9 +49,13 @@ export const DepositAssetsComponent = () => {
       Deposit assets into the Lunar Pay Vault.
     </div>
 
-    <Button size={'sm'} onClick={depositToken} disabled={!canPerformOperation}>
-      Deposit
-      <Plus className={'ml-1 w-4 h-4'} />
-    </Button>
+    <div className={'flex flex-1 flex-col gap-2'}>
+      <Button size={'sm'} onClick={depositToken} disabled={!canPerformOperation}>
+        Deposit
+        <Plus className={'ml-1 w-4 h-4'} />
+      </Button>
+
+      <BinancePayButton />
+    </div>
 </div>
 }
