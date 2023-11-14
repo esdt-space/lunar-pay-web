@@ -1,5 +1,7 @@
 import { Copy } from "lucide-react";
+
 import { TableCell } from "@/components/ui/table.tsx";
+import { useToast } from "@/components/ui/use-toast.ts";
 
 import { formatAddress } from "@/utils/address";
 import { TokenOperationAddressType } from "@/features/token-operations/enums";
@@ -8,10 +10,15 @@ import { useTokenOperationAddressType } from "@/features/token-operations/hooks"
 type AddressCellProps = { value: string };
 
 export function AddressCell(props: AddressCellProps) {
+  const { toast } = useToast()
   const addressType = useTokenOperationAddressType(props.value);
 
   const copyButtonHandler = () => {
-    return navigator.clipboard.writeText(props.value)
+    return navigator.clipboard.writeText(props.value).then(() => {
+      toast({
+        description: 'Address copied to clipboard'
+      })
+    })
   };
 
   return (
