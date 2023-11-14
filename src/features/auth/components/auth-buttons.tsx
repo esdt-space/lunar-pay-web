@@ -1,5 +1,5 @@
 import { ChevronRight } from "lucide-react";
-import { useExtensionLogin, useWebWalletLogin } from '@multiversx/sdk-dapp/hooks'
+import { useExtensionLogin, useWebWalletLogin, useXaliasLogin } from '@multiversx/sdk-dapp/hooks'
 
 import { cn } from "@/theme/utils.ts";
 import { defaultAuthButtonConfig } from '@/lib/mvx'
@@ -14,15 +14,14 @@ type Props = {
 export function AuthButtons(props: Props) {
   const { mobileAppButtonClickHandler, callbackRoute } = props
 
-  const [initiateWebWalletLogin] = useWebWalletLogin({
+  const defaultOptions = {
     callbackRoute: callbackRoute,
     ...defaultAuthButtonConfig,
-  })
+  };
 
-  const [initiateExtensionLogin] = useExtensionLogin({
-    callbackRoute: callbackRoute,
-    ...defaultAuthButtonConfig,
-  })
+  const [initiateWebWalletLogin] = useWebWalletLogin(defaultOptions)
+  const [initiateExtensionLogin] = useExtensionLogin(defaultOptions)
+  const [initiateXAliasLogin] = useXaliasLogin(defaultOptions)
 
   return (
     <div className={'grid gap-2'}>
@@ -56,6 +55,17 @@ export function AuthButtons(props: Props) {
         onClick={initiateWebWalletLogin}
       >
         Web Wallet
+        <ChevronRight />
+      </Button>
+
+      <Button
+        className={cn([
+          'justify-between',
+          'bg-gradient-to-r from-primary to-secondary text-white hover:text-slate-200'
+        ])}
+        onClick={initiateXAliasLogin}
+      >
+        xAlias
         <ChevronRight />
       </Button>
     </div>

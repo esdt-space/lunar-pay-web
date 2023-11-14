@@ -19,18 +19,18 @@ export function AuthForm(props: Props) {
   return (
     <div className={'flex flex-col flex-1 gap-4'}>
       <Card className={'p-4 space-y-2 bg-muted/50'}>	
-          <div className={'flex items-center gap-1'}>	
-            <Info className={'w-4 h-4'} />	
-            <p className={'text-sm font-medium'}>	
-              Beware of scams and phishing attempts!	
-            </p>	
-          </div>	
-          <p className={'text-xs text-muted-foreground'}>	
-            Check the website link carefully:{' '}	
-            <a className={'text-green-600 font-medium'} href={AppEnvironment.appUrl}>	
-              {AppEnvironment.appUrl}	
-            </a>	
-          </p>	
+        <div className={'flex items-center gap-1'}>
+          <Info className={'w-4 h-4'} />
+          <p className={'text-sm font-medium'}>
+            Beware of scams and phishing attempts!
+          </p>
+        </div>
+        <p className={'text-xs text-muted-foreground'}>
+          Check the website link carefully:{' '}
+          <a className={'text-green-600 font-medium'} href={AppEnvironment.appUrl}>
+            {AppEnvironment.appUrl}
+          </a>
+        </p>
       </Card>
 
       {flowStep === 'default' && (

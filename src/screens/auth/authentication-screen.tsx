@@ -3,11 +3,15 @@ import { Link } from "react-router-dom";
 import { RoutesConfig } from "@/navigation";
 
 import { AuthForm } from "@/features/auth/components";
+import { useLoginRedirectLocation } from "@/features/auth";
+
 import { AppIcon } from "@/components/shared/app-icon";
 
 import {ReactComponent as IllustrationImage} from '@/assets/media/illustration.svg';
 
 export function AuthenticationScreen() {
+  const redirectTo = useLoginRedirectLocation();
+
   return (
     <div className={'flex flex-1 h-screen'}>
       <div className={'flex-1 relative hidden isolate lg:flex max-w-lg bg-[#F5F6FA] border-r p-12'}>
@@ -25,7 +29,7 @@ export function AuthenticationScreen() {
         <div className={'max-w-[500px] space-y-2'}>
           <p className='text-lg font-bold'>Connect Wallet</p>
 
-          <AuthForm callbackRoute={''} />
+          <AuthForm callbackRoute={redirectTo} />
         </div>
       </div>
     </div>
