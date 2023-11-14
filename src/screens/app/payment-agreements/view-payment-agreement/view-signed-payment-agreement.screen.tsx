@@ -6,6 +6,7 @@ import { useCreatedPaymentAgreement } from "@/features/payment-agreements/hooks"
 
 import { Card } from "@/components/ui/card.tsx"
 import { Button } from "@/components/ui/button.tsx"
+import { ContainedScreen } from "@/components/prefab/contained-screen.tsx"
 
 import { AgreementDetails } from "./partials/agreement-details.tsx";
 
@@ -17,7 +18,7 @@ export const ViewSignedPaymentAgreementScreen = () => {
   if(!agreement) return;
 
   return (
-    <div className="container mx-auto p-4 sm:p-12 xl:p-16 space-y-6">
+    <ContainedScreen className="space-y-6">
       <div className={'flex justify-between items-top'}>
         <h2 className={'text-lg font-medium'}>
           {agreement.itemName ?? 'Unnamed agreement'}
@@ -36,6 +37,6 @@ export const ViewSignedPaymentAgreementScreen = () => {
       <Card className={'p-6'}>
         <AgreementDetails agreement={agreement} signedList={true}/>
       </Card>
-    </div>
+    </ContainedScreen>
   )
 }

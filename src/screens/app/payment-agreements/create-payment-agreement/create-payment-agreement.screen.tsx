@@ -14,6 +14,7 @@ import { FrequencyType } from "@/features/subscription/models/agreement-types.mo
 import { useCreatePaymentAgreementMutation } from "@/features/payment-agreements/hooks";
 import { AgreementAmountType, AgreementType } from "@/contracts/lunar-pay/agreements/enums";
 import { PaymentAgreementsService } from "@/features/payment-agreements/payment-agreements.service.ts";
+import {ContainedScreen} from "@/components/prefab/contained-screen.tsx";
 
 const frequencyList = ["Per Minute", "Per Hour", "Daily", "Weekly", "Monthly", "Per Year"]
 
@@ -53,55 +54,53 @@ export function CreatePaymentAgreementScreen() {
   }
 
   return (
-    <div className={'container mx-auto sm:p-12 xl:p-16'}>
+    <ContainedScreen>
       <Card className={'shadow'}>
         <CardHeader>
           <CardTitle>
-            Create Subscription
+            <h1 className={'text-xl'}>Create Subscription</h1>
           </CardTitle>
         </CardHeader>
 
-        <CardContent>
-          <div className="space-y-4 pt-6">
-            <div className={'flex gap-4 max-sm:flex-col'}>
-              <div className={'flex-1'}>
-                <TokenSelectorWithAmount
-                  tokens={tokens}
-                  token={selectedToken}
-                  onTokenChange={(token) => setSelectedToken(token)}
-                  amount={amount}
-                  onAmountChange={(amount) => setAmount(amount)}
-                  hasMaxButton={false}
-                  showBalances={false}
-                  isAmountToReceive={true}
-                />
-              </div>
-
-              <div className={'flex-1'}>
-                <Select onValueChange={(item: FrequencyType) => setFrequency(item)} defaultValue={frequency}>
-                  <SelectTrigger id="frequency">
-                    <SelectValue placeholder="Frequency"/>
-                  </SelectTrigger>
-                  <SelectContent position="popper">
-                    {frequencyList.map((item, index) => {
-                      return <div key={index}>
-                        <SelectItem value={item}>{item}</SelectItem>
-                      </div>
-                    })}
-                  </SelectContent>
-                </Select>
-              </div>
+        <CardContent className={'space-y-4'}>
+          <div className={'flex gap-4 max-sm:flex-col'}>
+            <div className={'flex-1'}>
+              <TokenSelectorWithAmount
+                tokens={tokens}
+                token={selectedToken}
+                onTokenChange={(token) => setSelectedToken(token)}
+                amount={amount}
+                onAmountChange={(amount) => setAmount(amount)}
+                hasMaxButton={false}
+                showBalances={false}
+                isAmountToReceive={true}
+              />
             </div>
 
-            <div className="flex w-full">
-              <Button
-                disabled={missingToken || missingAmount}
-                className="flex-1"
-                onClick={buttonHandler}>Create Payment Agreement</Button>
+            <div className={'flex-1'}>
+              <Select onValueChange={(item: FrequencyType) => setFrequency(item)} defaultValue={frequency}>
+                <SelectTrigger id="frequency">
+                  <SelectValue placeholder="Frequency"/>
+                </SelectTrigger>
+                <SelectContent position="popper">
+                  {frequencyList.map((item, index) => {
+                    return <div key={index}>
+                      <SelectItem value={item}>{item}</SelectItem>
+                    </div>
+                  })}
+                </SelectContent>
+              </Select>
             </div>
+          </div>
+
+          <div className="flex w-full">
+            <Button
+              disabled={missingToken || missingAmount}
+              className="flex-1"
+              onClick={buttonHandler}>Create Payment Agreement</Button>
           </div>
         </CardContent>
       </Card>
-    </div>
+    </ContainedScreen>
   );
 }

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import { cn } from "@/theme/utils.ts";
 import { RoutesConfig } from "@/navigation";
+import {ContainedScreen} from "@/components/prefab/contained-screen.tsx";
 
 type ItemProps = {
   title: ReactNode;
@@ -29,10 +30,10 @@ function Item(props: ItemProps) {
 
 export function CreatePaymentAgreementIndexScreen() {
   return (
-    <div className={'container mx-auto sm:p-12 xl:p-16'}>
+    <ContainedScreen>
       <div className={cn(['relative flex isolate',])}>
         <section className="space-y-6">
-          <h2 className="text-2xl font-bold text-gray-900 pt-10">
+          <h2 className="text-xl font-bold text-gray-900 md:pt-10">
             Select Agreement Type
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -57,6 +58,6 @@ export function CreatePaymentAgreementIndexScreen() {
           </div>
         </section>
       </div>
-    </div>
+    </ContainedScreen>
   )
 }

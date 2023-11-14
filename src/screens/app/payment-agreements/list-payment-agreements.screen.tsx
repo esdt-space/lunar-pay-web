@@ -5,6 +5,7 @@ import { RoutesConfig } from "@/navigation";
 import { Card, CardContent } from "@/components/ui/card.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { EmptyStateWithAction } from "@/components/shared/empty-states";
+import { ContainedScreen } from "@/components/prefab/contained-screen.tsx";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs.tsx";
 
 import { PaymentAgreementListTable } from "@/features/payment-agreements/components";
@@ -33,7 +34,7 @@ export function ListPaymentAgreementsScreen() {
     usePagination(agreements, 5);
 
   return (
-    <div className={'container mx-auto sm:p-12 xl:p-16 space-y-8'}>
+    <ContainedScreen className={'space-y-8'}>
       <h1 className={'text-xl font-bold'}>Payment Agreements</h1>
 
       <Tabs className={'space-y-4'} defaultValue={ScreenTabs.Created}>
@@ -52,7 +53,7 @@ export function ListPaymentAgreementsScreen() {
           <Button asChild>
             <Link to={RoutesConfig.createPaymentAgreementIndex}>
               Create Agreement
-              <Plus className={'ml-2 w-4 h-4'} />
+              <Plus className={'ml-2 w-4 h-4'}/>
             </Link>
           </Button>
         </div>
@@ -71,7 +72,7 @@ export function ListPaymentAgreementsScreen() {
               )}
               {!emptyAgreementsCreated && (
                 <div>
-                  <PaymentAgreementListTable agreementsList={paginatedAgreements} />
+                  <PaymentAgreementListTable agreementsList={paginatedAgreements}/>
                   <PaginationButtons {...{...rest}} />
                 </div>
               )}
@@ -87,6 +88,6 @@ export function ListPaymentAgreementsScreen() {
           </Card>
         </TabsContent>
       </Tabs>
-    </div>
+    </ContainedScreen>
   )
 }

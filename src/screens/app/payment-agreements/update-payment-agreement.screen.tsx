@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card.tsx"
 import { Textarea } from "@/components/ui/textarea"
 import { Separator } from "@/components/ui/separator"
+import { ContainedScreen } from "@/components/prefab/contained-screen.tsx";
 
 import { useCreatedPaymentAgreement, useUpdatePaymentAgreementMutation } from "@/features/payment-agreements/hooks"
 import { AgreementRedirectPartial } from "./create-payment-agreement/partials/agreement-redirect-partial";
@@ -85,7 +86,7 @@ export function UpdatePaymentAgreementScreen() {
   }
   
   return (
-    <div className="container mx-auto sm:p-12 xl:p-16">
+    <ContainedScreen>
       <Card className={'p-6 shadow-sm space-y-4'}>
         <div className={'space-y-1'}>
           <h2 className={'font-semibold'}>Update Agreement Details</h2>
@@ -157,6 +158,6 @@ export function UpdatePaymentAgreementScreen() {
             onClick={updateAgreementDetails}>Save Details</Button>
         </div>
       </Card>
-    </div>
+    </ContainedScreen>
   );
 }

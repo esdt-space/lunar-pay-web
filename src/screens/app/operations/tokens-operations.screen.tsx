@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import { Input } from "@/components/ui/input.tsx";
 import { Card, CardContent } from "@/components/ui/card.tsx";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { ContainedScreen } from "@/components/prefab/contained-screen.tsx"
 import { usePagination, PaginationButtons } from "@/components/shared/pagination";
 
 import { TokenOperationType } from "@/features/token-operations/enums";
@@ -44,7 +45,7 @@ export const TokensOperationsScreen = () => {
     usePagination(operationsFilteredByValue, 5);
 
   return (
-    <div className={'container mx-auto p-4 sm:p-12 xl:p-16 space-y-3'}>
+    <ContainedScreen className={'space-y-3'}>
       <div className={'flex justify-between max-sm:flex-col max-sm:space-y-2'}>
         <Tabs defaultValue="all" onValueChange={(value) => setOperationType(value as TokenOperationType)}>
           <TabsList className={'self-start mb-2 mr-2 max-sm:w-full'}>
@@ -79,6 +80,6 @@ export const TokensOperationsScreen = () => {
           )}
         </CardContent>
       </Card>
-    </div>
+    </ContainedScreen>
   )
 }
