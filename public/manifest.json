@@ -1,0 +1,40 @@
+{
+  "short_name": "Lunar Pay",
+  "name": "Payments made simple for WEB3 businesses.",
+  "icons": [
+    {
+      "type": "image/png",
+      "src": "/assets/media/app-icon.svg",
+      "sizes": "1024x1024"
+    },
+    {
+      "type": "image/png",
+      "src": "/assets/media/app-icon.svg",
+      "sizes": "512x512"
+    },
+    {
+      "type": "image/png",
+      "src": "/assets/media/app-icon.svg",
+      "sizes": "256x256"
+    },
+    {
+      "type": "image/png",
+      "src": "/assets/media/app-icon.svg",
+      "sizes": "128x128"
+    },
+    {
+      "type": "image/png",
+      "src": "/assets/media/app-icon.svg",
+      "sizes": "64x64"
+    },
+    {
+      "type": "image/png",
+      "src": "/assets/media/app-icon.svg",
+      "sizes": "32x32"
+    }
+  ],
+  "start_url": "/dashboard",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
