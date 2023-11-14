@@ -1,6 +1,7 @@
 {
   "short_name": "Lunar Pay",
-  "name": "Payments made simple for WEB3 businesses.",
+  "name": "Lunar Pay",
+  "description": "Payments made simple for WEB3 businesses.",
   "icons": [
     {
       "type": "image/png",
