@@ -33,7 +33,7 @@ export function UpdatePaymentAgreementScreen() {
 
   const { data: agreement } = useCreatedPaymentAgreement(id);
   
-  const { mutate: editAgreement } = useUpdatePaymentAgreementMutation();
+  const { mutate: editAgreement } = useUpdatePaymentAgreementMutation(id as string);
 
   useEffect(() => {
     if(agreement === undefined || formInitialized) return;

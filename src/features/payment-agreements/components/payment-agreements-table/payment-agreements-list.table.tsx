@@ -4,11 +4,12 @@ import { FormatAmount } from "@multiversx/sdk-dapp/UI";
 import { formatFrequency } from "@/utils";
 import { useTokensMap } from "@/features/tokens";
 import { PaymentAgreement } from "@/features/payment-agreements/models";
-import { useCreatedPaymentAgreementMutation } from "../../hooks";
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Eye } from "lucide-react";
+import { RoutesConfig } from "@/navigation";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   agreementsList: PaymentAgreement[];
@@ -22,8 +23,13 @@ type AgreementRowProps = {
 
 function AgreementRow(props: AgreementRowProps) {
   const { agreement, signedList } = props;
+  const navigate = useNavigate()
 
-  const { mutate: refetchAgreement } = useCreatedPaymentAgreementMutation(agreement._id as string, signedList)
+  const navigateToAgreement = () => {
+    const signed = signedList ? "/signed" : ""
+
+    return navigate(`${RoutesConfig.paymentAgreements}/${agreement._id}${signed}`)
+  }
 
   const tokensMap = useTokensMap();
   const token = tokensMap[agreement.tokenIdentifier];
@@ -31,7 +37,7 @@ function AgreementRow(props: AgreementRowProps) {
   return (
     <TableRow
       className="cursor-pointer"
-      onClick={() => refetchAgreement()}
+      onClick={navigateToAgreement}
     >
       <TableCell className="flex items-center">
         <Eye className={'w-4 h-4 mr-2'} />
