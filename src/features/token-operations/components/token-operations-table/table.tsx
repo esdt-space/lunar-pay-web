@@ -20,7 +20,8 @@ import { AddressCell } from "./address-cell.tsx";
 import { TokenOperationIcon } from "./token-operation-icon.tsx";
 import { TokenOperationValueCell } from "./token-operation-value-cell.tsx";
 import { AgreementNameCell } from "./agreement-name-cell.tsx";
-import { TokenOperationsService } from "../../token-operations.service.ts";
+import { useNavigate } from "react-router-dom";
+import { RoutesConfig } from "@/navigation/index.ts";
 
 type Props = {
   operations: TokenOperation[];
@@ -31,6 +32,8 @@ export const TokenOperationsTable = (props: Props) => {
   const { operations, operationType } = props;
   const isAllOrTransfer = [TokenOperationType.Transfer, "all", undefined].includes(operationType);
   const isCharge = operationType === "payment-agreement-charge"
+
+  const navigate = useNavigate()
 
   return (
     <Table>
@@ -49,7 +52,9 @@ export const TokenOperationsTable = (props: Props) => {
       <TableBody>
         {operations.map((item, index) => (
           <TableRow key={index} onClick={() => {
-            TokenOperationsService.getTokenOperationsByParentIdOperations(item._id)
+            if(item.type === "payment-agreement-charge") {
+              navigate(`${RoutesConfig.tokensOperations}/${item._id}`)
+            }
           }}>
             <TableCell>
               <TokenOperationIcon operation={item} />
