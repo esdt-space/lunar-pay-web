@@ -1,6 +1,8 @@
 import { PaymentAgreement } from "@/features/payment-agreements/models";
 
 export class TokenOperation {
+  _id: string;
+  
   type: string;
   sender: string;
   receiver: string;

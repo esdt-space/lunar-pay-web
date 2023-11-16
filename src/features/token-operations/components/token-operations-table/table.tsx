@@ -20,6 +20,7 @@ import { AddressCell } from "./address-cell.tsx";
 import { TokenOperationIcon } from "./token-operation-icon.tsx";
 import { TokenOperationValueCell } from "./token-operation-value-cell.tsx";
 import { AgreementNameCell } from "./agreement-name-cell.tsx";
+import { TokenOperationsService } from "../../token-operations.service.ts";
 
 type Props = {
   operations: TokenOperation[];
@@ -29,6 +30,7 @@ type Props = {
 export const TokenOperationsTable = (props: Props) => {
   const { operations, operationType } = props;
   const isAllOrTransfer = [TokenOperationType.Transfer, "all", undefined].includes(operationType);
+  const isCharge = operationType === "payment-agreement-charge"
 
   return (
     <Table>
@@ -37,16 +39,18 @@ export const TokenOperationsTable = (props: Props) => {
           <TableHead />
           <TableHead>Amount</TableHead>
           {isAllOrTransfer && <TableHead className={'max-md:hidden'}>Type</TableHead>}
-          {isAllOrTransfer && <TableHead>From</TableHead>}
-          {isAllOrTransfer && <TableHead>To</TableHead>}
-          {operationType === "payment-agreement-charge" && <TableHead className={'max-lg:hidden'}>Agreement</TableHead>}
+          {(isAllOrTransfer || isCharge) && <TableHead>From</TableHead>}
+          {(isAllOrTransfer || isCharge) && <TableHead>To</TableHead>}
+          {isCharge && <TableHead className={'max-lg:hidden'}>Agreement</TableHead>}
           <TableHead className={'max-lg:hidden'}>Date</TableHead>
           <TableHead className="max-w-[150px]"></TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {operations.map((item, index) => (
-          <TableRow key={index}>
+          <TableRow key={index} onClick={() => {
+            TokenOperationsService.getTokenOperationsByParentIdOperations(item._id)
+          }}>
             <TableCell>
               <TokenOperationIcon operation={item} />
             </TableCell>
@@ -54,9 +58,9 @@ export const TokenOperationsTable = (props: Props) => {
             {isAllOrTransfer && <TableCell className={'max-md:hidden'}>
               {item.type === TokenOperationType.Charge ? "charge" : item.type}
             </TableCell>}
-            {isAllOrTransfer && <AddressCell value={item.sender} />}
-            {isAllOrTransfer && <AddressCell value={item.receiver} />}
-            {operationType === "payment-agreement-charge" && <AgreementNameCell tokenOperationItem={item} />}
+            {(isAllOrTransfer || isCharge) && (item.sender ? <AddressCell value={item.sender} /> : "-")}
+            {(isAllOrTransfer || isCharge) && (item.receiver ? <AddressCell value={item.receiver} /> : "-")}
+            {isCharge && <AgreementNameCell tokenOperationItem={item} />}
             <TableCell className={'max-lg:hidden text-muted-foreground'}>{moment(item.createdAt).format('ll')}</TableCell>
             <TableCell className="truncate text-right">
               <Button asChild variant={'ghost'} size={'sm'}>
