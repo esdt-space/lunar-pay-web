@@ -5,6 +5,7 @@ import { Link, useNavigate, useParams } from "react-router-dom"
 import { RoutesConfig } from "@/navigation"
 import { useCreatedPaymentAgreement } from "@/features/payment-agreements/hooks";
 import { usePaymentAgreementMembers } from "@/features/payment-agreements/hooks";
+import { useAgreementTriggersQuery } from "@/features/agreement-triggers/hooks";
 
 import { Card } from "@/components/ui/card.tsx"
 import { Button } from "@/components/ui/button.tsx"
@@ -21,6 +22,9 @@ export const ViewPaymentAgreementScreen = () => {
 
   const { data: agreement } = useCreatedPaymentAgreement(id);
   const { data: members = [] } = usePaymentAgreementMembers(id);
+  const { data: agreementTriggers = [] } = useAgreementTriggersQuery(id);
+
+  console.log(agreementTriggers) // TODO: Remove after creating the table
 
   if(!agreement) return;
 

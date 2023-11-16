@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { ContainedScreen } from "@/components/prefab/contained-screen"
 import { PaginationButtons, usePagination } from "@/components/shared/pagination"
 
-import { useChargesOperations } from "@/features/token-operations/hooks/useChargesOperations"
+import { useChargesOperations } from "@/features/token-operations/hooks"
 import { useParams } from "react-router-dom"
 import { useEmptyStateContent, useLoadingStateContent } from "./hooks"
 import { TokenOperationsTable } from "@/features/token-operations/components"
