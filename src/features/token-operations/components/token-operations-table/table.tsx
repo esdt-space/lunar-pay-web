@@ -22,6 +22,7 @@ import { TokenOperationValueCell } from "./token-operation-value-cell.tsx";
 import { AgreementNameCell } from "./agreement-name-cell.tsx";
 import { useNavigate } from "react-router-dom";
 import { RoutesConfig } from "@/navigation/index.ts";
+import { Badge } from "@/components/ui/badge.tsx";
 
 type Props = {
   operations: TokenOperation[];
@@ -63,8 +64,22 @@ export const TokenOperationsTable = (props: Props) => {
             {isAllOrTransfer && <TableCell className={'max-md:hidden'}>
               {item.type === TokenOperationType.Charge ? "charge" : item.type}
             </TableCell>}
-            {(isAllOrTransfer || isCharge) && (item.sender ? <AddressCell value={item.sender} /> : "-")}
-            {(isAllOrTransfer || isCharge) && (item.receiver ? <AddressCell value={item.receiver} /> : "-")}
+            {(isAllOrTransfer || isCharge) && (item.sender ? <AddressCell value={item.sender} /> : <TableCell>
+              <Badge
+                variant={'outline'}
+                className={'text-yellow-500 border-yellow-500'}
+              >
+                Missing Data
+              </Badge>
+            </TableCell>)}
+            {(isAllOrTransfer || isCharge) && (item.receiver ? <AddressCell value={item.receiver} /> : <TableCell>
+              <Badge
+                variant={'outline'}
+                className={'text-yellow-500 border-yellow-500'}
+              >
+                Missing Data
+              </Badge>
+            </TableCell>)}
             {isCharge && <AgreementNameCell tokenOperationItem={item} />}
             <TableCell className={'max-lg:hidden text-muted-foreground'}>{moment(item.createdAt).format('ll')}</TableCell>
             <TableCell className="truncate text-right">
