@@ -27,17 +27,18 @@ export const ViewPaymentAgreementScreen = () => {
   const { data: members = [] } = usePaymentAgreementMembers(id);
   const { data: agreementTriggers = [] } = useAgreementTriggersQuery(id);
 
+  const { data: paginatedTriggers, ...rest} =
+    usePagination(agreementTriggers, 5);
+
+  const tokensMap = useTokensMap();
+
   if(!agreement) return;
+
+  const token = tokensMap[agreement.tokenIdentifier];
 
   if(agreement && agreement.owner !== address) {
     navigate(RoutesConfig.dashboard, { replace: true });
   }
-
-  const tokensMap = useTokensMap();
-  const token = tokensMap[agreement.tokenIdentifier];
-
-  const { data: paginatedTriggers, ...rest} =
-    usePagination(agreementTriggers, 5);
 
   return (
     <ContainedScreen className="space-y-6">
