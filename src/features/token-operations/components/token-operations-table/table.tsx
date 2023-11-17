@@ -64,14 +64,8 @@ export const TokenOperationsTable = (props: Props) => {
             {isAllOrTransfer && <TableCell className={'max-md:hidden'}>
               {item.type === TokenOperationType.Charge ? "charge" : item.type}
             </TableCell>}
-            {(isAllOrTransfer || isCharge) && (item.sender ? <AddressCell value={item.sender} /> : <TableCell>
-              <Badge
-                variant={'outline'}
-                className={'text-yellow-500 border-yellow-500'}
-              >
-                Missing Data
-              </Badge>
-            </TableCell>)}
+            {(isAllOrTransfer) && 
+              (item.sender ? <AddressCell value={item.sender} /> : (!item.sender || isCharge) && <TableCell>{item.senderAccountsCount + " accounts"}</TableCell>)}
             {(isAllOrTransfer || isCharge) && (item.receiver ? <AddressCell value={item.receiver} /> : <TableCell>
               <Badge
                 variant={'outline'}

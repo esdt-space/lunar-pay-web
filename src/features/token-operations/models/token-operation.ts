@@ -7,6 +7,8 @@ export class TokenOperation {
   sender: string;
   receiver: string;
 
+  senderAccountsCount: number;
+
   amount: number;
 
   tokenNonce: number;
