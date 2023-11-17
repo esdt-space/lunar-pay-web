@@ -8,7 +8,7 @@ import { PaginationButtons, usePagination } from "@/components/shared/pagination
 import { useChargesOperations } from "@/features/token-operations/hooks"
 import { useParams } from "react-router-dom"
 import { useEmptyStateContent, useLoadingStateContent } from "./hooks"
-import { TokenOperationsTable } from "@/features/token-operations/components"
+import { ChargeOperationTable } from "@/features/token-operations/components"
 
 export const ChargesOperationsScreen = () => {
   const { id } = useParams()
@@ -54,7 +54,7 @@ export const ChargesOperationsScreen = () => {
 
         {isLoadedAndHasData && (
           <div>
-            <TokenOperationsTable 
+            <ChargeOperationTable 
               operations={paginatedOperations} />
             <PaginationButtons {...{...rest}} />
           </div>
