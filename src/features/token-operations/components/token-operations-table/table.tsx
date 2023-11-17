@@ -43,7 +43,7 @@ export const TokenOperationsTable = (props: Props) => {
           <TableHead />
           <TableHead>Amount</TableHead>
           {isAllOrTransfer && <TableHead className={'max-md:hidden'}>Type</TableHead>}
-          {(isAllOrTransfer || isCharge) && <TableHead>From</TableHead>}
+          {isAllOrTransfer && <TableHead>From</TableHead>}
           {(isAllOrTransfer || isCharge) && <TableHead>To</TableHead>}
           {isCharge && <TableHead className={'max-lg:hidden'}>Agreement</TableHead>}
           <TableHead className={'max-lg:hidden'}>Date</TableHead>
@@ -65,7 +65,8 @@ export const TokenOperationsTable = (props: Props) => {
               {item.type === TokenOperationType.Charge ? "charge" : item.type}
             </TableCell>}
             {(isAllOrTransfer) && 
-              (item.sender ? <AddressCell value={item.sender} /> : (!item.sender || isCharge) && <TableCell>{item.senderAccountsCount + " accounts"}</TableCell>)}
+              (item.sender ? <AddressCell value={item.sender} /> : (!item.sender || isCharge) && 
+                <TableCell>{item.senderAccountsCount + " accounts"}</TableCell>)}
             {(isAllOrTransfer || isCharge) && (item.receiver ? <AddressCell value={item.receiver} /> : <TableCell>
               <Badge
                 variant={'outline'}

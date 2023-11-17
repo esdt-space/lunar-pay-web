@@ -1,5 +1,5 @@
 import moment from "moment/moment";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Check, X } from "lucide-react";
 
 import AppEnvironment from "@/environment/app.environment.ts";
 
@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/table.tsx"
 import { Button } from "@/components/ui/button.tsx";
 
-import { Badge } from "@/components/ui/badge.tsx";
 import { AgreementTrigger } from "../../models";
 import { FormatAmount } from "@multiversx/sdk-dapp/UI";
 
@@ -30,34 +29,24 @@ export const AgreementTriggersTable = (props: Props) => {
       <TableHeader>
         <TableRow>
           <TableHead />
-          <TableHead>Successful</TableHead>
-          <TableHead>Failed</TableHead>
+          <TableHead>Status</TableHead>
+          <TableHead>Amount</TableHead>
           <TableHead className={'max-lg:hidden'}>Date</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {triggersList.map((item, index) => (
           <TableRow key={index}>
-            <TableCell></TableCell>
-            <TableCell>
-              {item.successfulChargeAmount ?
-                <FormatAmount value={item.successfulChargeAmount as string} decimals={tokenDecimals} /> : 
-                <Badge
-                  variant={'outline'}
-                  className={'text-yellow-500 border-yellow-500'}
-                >
-                  Missing Data
-                </Badge>}
+            <TableCell>{item.successfulChargeAmount ? 
+              <Check className={'w-4 h-4 sm:w-6 sm:h-6 text-green-700'} /> : 
+              <X className={'w-4 h-4 sm:w-6 sm:h-6 text-red-700'} />}
             </TableCell>
+            <TableCell>{item.successfulChargeAmount ? "Success" : "Failed"}</TableCell>
             <TableCell>
-              {item.failedChargeAmount ?
-                <FormatAmount value={item.failedChargeAmount as string} decimals={tokenDecimals} /> : 
-                <Badge
-                  variant={'outline'}
-                  className={'text-yellow-500 border-yellow-500'}
-                >
-                  Missing Data
-                </Badge>}
+              {item.successfulChargeAmount ? 
+                <FormatAmount value={item.successfulChargeAmount as string} decimals={tokenDecimals} /> :
+                <FormatAmount value={item.failedChargeAmount as string} decimals={tokenDecimals} />
+              }
             </TableCell>
             <TableCell className={'max-lg:hidden text-muted-foreground'}>{moment(item.createdAt).format('ll')}</TableCell>
             <TableCell className="truncate text-right">
