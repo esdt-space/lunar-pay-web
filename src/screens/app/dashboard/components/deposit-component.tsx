@@ -3,10 +3,10 @@ import { Plus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
-import { EsdtToken } from "@/features/tokens";
+import { EsdtToken } from "@/core/tokens";
 import { useAccountTokensAvailableToDeposit } from "@/features/account-tokens/hooks";
-import { TokenSelectorWithAmount } from "@/features/tokens/components"
-import { getTokenErrorForValue } from "@/features/tokens/validation";
+import { TokenSelectorWithAmount } from "@/core/tokens/components"
+import { getTokenErrorForValue } from "@/core/tokens/validation";
 
 import { useDepositEgldMutation, useDepositEsdtMutation } from "@/features/vault/hooks/mutations";
 import {BinancePayButton} from "@/components/prefab/binance-pay-button.tsx";

@@ -7,8 +7,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 
 import { RoutesConfig } from "@/navigation";
 import { getPaymentFrequency } from "@/utils";
-import { EsdtToken } from "@/features/tokens";
-import { TokenSelectorWithAmount } from "@/features/tokens/components";
+import { EsdtToken } from "@/core/tokens";
+import { TokenSelectorWithAmount } from "@/core/tokens/components";
 import { useAccountTokensAvailableToDeposit } from "@/features/account-tokens/hooks";
 import { FrequencyType } from "@/features/subscription/models/agreement-types.model";
 import { useCreatePaymentAgreementMutation } from "@/features/payment-agreements/hooks";

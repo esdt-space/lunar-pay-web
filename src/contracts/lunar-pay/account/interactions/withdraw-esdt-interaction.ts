@@ -5,7 +5,7 @@ import {
   TokenTransfer
 } from '@multiversx/sdk-core/out'
 
-import { EsdtToken } from "@/features/tokens";
+import { EsdtToken } from "@/core/tokens";
 import { sendTransactionWithWatcher } from '@/lib/mvx'
 import { getAddress, getNetworkConfig } from "@multiversx/sdk-dapp/utils";
 import { lunarPaySmartContract } from "@/contracts/lunar-pay/contract-utils.ts";

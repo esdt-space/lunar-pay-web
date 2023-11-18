@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
-import { useTokensPrice } from "@/features/tokens";
+import { useTokensPrice } from "@/core/tokens";
 import { useAccountVaultTokens } from "@/features/vault/hooks";
 
 export const DashboardLunarBalanceWidget = () => {

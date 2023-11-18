@@ -10,8 +10,8 @@ import { Tabs, TabsContent } from "@/components/ui/tabs.tsx";
 import { LoaderWithIconAndText } from "@/components/shared/loaders";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-import { EsdtToken } from "@/features/tokens";
-import { TokenItem } from "@/features/tokens/components";
+import { EsdtToken } from "@/core/tokens";
+import { TokenItem } from "@/core/tokens/components";
 import { useAccountVaultTokens } from "@/features/vault/hooks";
 
 import { TransferAssetComponent } from "./transfer-asset-component.tsx";

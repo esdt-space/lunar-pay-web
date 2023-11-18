@@ -1,7 +1,7 @@
 import {
   useWhitelistedTokenIdentifiersQuery
 } from "./queries/use-whitelisted-token-identifiers-query.ts";
-import { useTokensList } from "@/features/tokens/hooks/use-tokens.ts";
+import { useTokensList } from "@/core/tokens/hooks/use-tokens.ts";
 
 export function useWhitelistedVaultTokens() {
   const tokens = useTokensList();

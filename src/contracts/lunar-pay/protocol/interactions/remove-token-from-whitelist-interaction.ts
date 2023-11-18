@@ -4,7 +4,7 @@ import {getAddress, getNetworkConfig} from "@multiversx/sdk-dapp/utils";
 import { sendTransactionWithWatcher } from '@/lib/mvx'
 import { lunarPaySmartContract } from "@/contracts/lunar-pay/contract-utils.ts";
 
-import { EsdtToken } from "@/features/tokens";
+import { EsdtToken } from "@/core/tokens";
 
 export async function removeTokenFromWhitelistInteraction(token: EsdtToken) {
   const sender = await getAddress();
