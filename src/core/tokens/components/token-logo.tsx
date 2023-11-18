@@ -1,7 +1,7 @@
 import { CircleDashed } from 'lucide-react'
 
 import { cn } from '@/theme/utils'
-import { Token } from '@/features/tokens'
+import { Token } from '@/core/tokens'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 

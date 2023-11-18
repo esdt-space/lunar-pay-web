@@ -1,4 +1,4 @@
-import { TokenValueError } from "@/features/tokens/enums";
+import { TokenValueError } from "@/core/tokens/enums";
 
 export function tokenErrorToText(errorType: TokenValueError) {
   switch (errorType) {

@@ -1,5 +1,5 @@
 import BigNumber from "bignumber.js";
-import { Token } from "@/features/tokens";
+import { Token } from "@/core/tokens";
 
 export function useTokensPrice(tokens: Token[]) {
   return tokens.reduce((acc, token) => {
