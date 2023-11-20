@@ -5,15 +5,15 @@ import { useVirtualizer } from '@tanstack/react-virtual'
 import { Input } from '@/components/ui/input'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 
-import { EsdtToken } from '@/core/tokens'
+import { Egld, EsdtToken } from '@/core/tokens'
 import { TokenItem } from "@/core/tokens/components";
 
 type Props = {
   isOpen: boolean
-  value?: EsdtToken
-  tokens: EsdtToken[]
+  value?: EsdtToken | Egld
+  tokens: EsdtToken[] | Egld[]
   closeDialogHandler: () => void
-  selectTokenHandler: (token: EsdtToken) => void
+  selectTokenHandler: (token: EsdtToken | Egld) => void
   showBalances?: boolean
 }
 

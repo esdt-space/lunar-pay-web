@@ -1,10 +1,10 @@
 import { FormatAmount } from "@multiversx/sdk-dapp/UI";
 import { getTokenBalanceValueInDollars } from "@/core/tokens/utils";
 
-import { EsdtToken } from "@/core/tokens";
+import { Egld, EsdtToken } from "@/core/tokens";
 
 type TokenBalanceProps = {
-  token: EsdtToken
+  token: EsdtToken | Egld
 }
 
 export function TokenBalance(props: TokenBalanceProps) {

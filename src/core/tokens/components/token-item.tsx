@@ -1,10 +1,10 @@
-import { EsdtToken } from "@/core/tokens";
+import { Egld, EsdtToken } from "@/core/tokens";
 
 import { TokenLogo } from "./token-logo.tsx";
 import { TokenBalance } from "./token-balance.tsx";
 
 type TokenBalanceProps = {
-  token: EsdtToken
+  token: EsdtToken | Egld
   showBalances?: boolean
 }
 

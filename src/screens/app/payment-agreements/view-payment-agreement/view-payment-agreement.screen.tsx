@@ -15,7 +15,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs.t
 import { AgreementDetails } from "./partials/agreement-details.tsx";
 import { MembersListPartial } from "./partials/members-list-partial.tsx";
 import { AgreementTriggersTable } from "@/features/agreement-triggers/components";
-import { useTokensMap } from "@/features/tokens";
+import { useTokensMap } from "@/core/tokens";
 import { PaginationButtons, usePagination } from "@/components/shared/pagination";
 
 export const ViewPaymentAgreementScreen = () => {

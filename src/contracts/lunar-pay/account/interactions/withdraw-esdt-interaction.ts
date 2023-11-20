@@ -5,12 +5,12 @@ import {
   TokenTransfer
 } from '@multiversx/sdk-core/out'
 
-import { EsdtToken } from "@/core/tokens";
+import { Egld, EsdtToken } from "@/core/tokens";
 import { sendTransactionWithWatcher } from '@/lib/mvx'
 import { getAddress, getNetworkConfig } from "@multiversx/sdk-dapp/utils";
 import { lunarPaySmartContract } from "@/contracts/lunar-pay/contract-utils.ts";
 
-export async function withdrawEsdtInteraction(token: EsdtToken, amount: number) {
+export async function withdrawEsdtInteraction(token: EsdtToken | Egld, amount: number) {
   const sender = await getAddress();
   const { chainId } = getNetworkConfig()
 
