@@ -1,4 +1,4 @@
-import { useEgld } from "@/features/tokens";
+import { useEgld } from "@/core/tokens";
 import { useGetAccount } from "@multiversx/sdk-dapp/hooks";
 
 import { useAccountTokensQuery } from "./queries";

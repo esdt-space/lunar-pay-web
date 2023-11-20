@@ -1,4 +1,4 @@
-import { useTokensList } from "@/features/tokens/hooks/use-tokens.ts";
+import { useTokensList } from "@/core/tokens/hooks/use-tokens.ts";
 
 import { useAccountBalancesQuery } from "./queries/use-account-balances-query.ts";
 

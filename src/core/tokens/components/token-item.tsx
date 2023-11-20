@@ -1,4 +1,4 @@
-import { EsdtToken } from "@/features/tokens";
+import { EsdtToken } from "@/core/tokens";
 
 import { TokenLogo } from "./token-logo.tsx";
 import { TokenBalance } from "./token-balance.tsx";

@@ -1,7 +1,7 @@
 import BigNumber from "bignumber.js";
 
-import { Token } from "@/features/tokens";
-import { TokenValueError } from "@/features/tokens/enums";
+import { Token } from "@/core/tokens";
+import { TokenValueError } from "@/core/tokens/enums";
 
 export function checkIsValidFormat(value: string | number): boolean {
   const bigNumberValue = BigNumber(value);

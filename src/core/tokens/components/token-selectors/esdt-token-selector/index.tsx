@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
-import { EsdtToken } from '@/features/tokens'
-import { TokenLogo } from '@/features/tokens/components'
+import { EsdtToken } from '@/core/tokens'
+import { TokenLogo } from '@/core/tokens/components'
 
 import { Select, SelectTrigger, SelectValue } from '@/components/ui/select'
 

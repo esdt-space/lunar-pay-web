@@ -5,8 +5,8 @@ import { useVirtualizer } from '@tanstack/react-virtual'
 import { Input } from '@/components/ui/input'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 
-import { EsdtToken } from '@/features/tokens'
-import { TokenItem } from "@/features/tokens/components";
+import { EsdtToken } from '@/core/tokens'
+import { TokenItem } from "@/core/tokens/components";
 
 type Props = {
   isOpen: boolean

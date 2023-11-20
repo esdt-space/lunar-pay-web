@@ -3,9 +3,9 @@ import { getEgldLabel } from '@multiversx/sdk-dapp/utils'
 import { EGLD_TOKEN_IDENTIFIER } from '@/lib/mvx'
 
 import egldTokenLogo from '@/assets/tokens/egld-logo.svg'
-import { EsdtToken } from './esdt-token.model'
+import { Token } from './token.model'
 
-export class Egld extends EsdtToken {
+export class Egld extends Token {
   ticker = EGLD_TOKEN_IDENTIFIER
   identifier = EGLD_TOKEN_IDENTIFIER
   balance = '0'
