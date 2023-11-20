@@ -1,4 +1,4 @@
-import { Egld } from "@/features/tokens";
+import { Egld } from "@/core/tokens";
 import { useGetEgldPrice } from "@multiversx/sdk-dapp/hooks";
 
 export function useEgld() {

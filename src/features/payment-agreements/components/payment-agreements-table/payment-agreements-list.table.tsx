@@ -2,7 +2,7 @@ import moment from "moment";
 import { FormatAmount } from "@multiversx/sdk-dapp/UI";
 
 import { formatFrequency } from "@/utils";
-import { useTokensMap } from "@/features/tokens";
+import { useTokensMap } from "@/core/tokens";
 import { PaymentAgreement } from "@/features/payment-agreements/models";
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";

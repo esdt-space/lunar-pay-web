@@ -3,11 +3,10 @@ import { Minus } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 
-import { EsdtToken } from "@/features/tokens";
-import { TokenSelectorWithAmount } from "@/features/tokens/components"
-import { getTokenErrorForValue } from "@/features/tokens/validation";
+import { EsdtToken } from "@/core/tokens";
+import { TokenSelectorWithAmount } from "@/core/tokens/components"
+import { getTokenErrorForValue } from "@/core/tokens/validation";
 import { useAccountVaultTokens } from "@/features/vault/hooks";
-
 import { useWithdrawEgldMutation, useWithdrawEsdtMutation } from "@/features/vault/hooks/mutations";
 
 export const WithdrawAssetsComponent = () => {

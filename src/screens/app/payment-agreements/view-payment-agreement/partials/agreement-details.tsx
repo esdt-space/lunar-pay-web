@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button.tsx";
 import { Separator } from "@/components/ui/separator.tsx";
 
 import { formatFrequency } from "@/utils";
-import { useTokensMap } from "@/features/tokens";
+import { useTokensMap } from "@/core/tokens";
 import { PaymentAgreement } from "@/features/payment-agreements/models";
 import { useTriggerPaymentAgreementMutation } from "@/features/payment-agreements/hooks";
 

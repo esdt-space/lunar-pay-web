@@ -1,6 +1,6 @@
 import BigNumber from "bignumber.js";
 
-import { Token } from "@/features/tokens";
+import { Token } from "@/core/tokens";
 import {AgreementAmountType, AgreementType} from "@/contracts/lunar-pay/agreements/enums";
 
 export type AmountValue = string | number | BigNumber;

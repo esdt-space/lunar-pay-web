@@ -6,11 +6,11 @@ import { cn, formatTokenBalance } from "@/theme/utils"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 
-import { EsdtToken } from "@/features/tokens";
-import { TokenItem } from "@/features/tokens/components";
-import { TokenValueError } from "@/features/tokens/enums";
-import { tokenErrorToText } from "@/features/tokens/utils";
-import { getTokenErrorForValue } from "@/features/tokens/validation";
+import { EsdtToken } from "@/core/tokens";
+import { TokenItem } from "@/core/tokens/components";
+import { TokenValueError } from "@/core/tokens/enums";
+import { tokenErrorToText } from "@/core/tokens/utils";
+import { getTokenErrorForValue } from "@/core/tokens/validation";
 import { useTokenTransferMutation } from "@/features/vault/hooks/mutations";
 
 type Props = {

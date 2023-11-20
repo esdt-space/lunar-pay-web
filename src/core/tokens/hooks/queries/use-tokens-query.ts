@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 
-import {TokensService} from "@/features/tokens";
+import { TokensService } from "@/core/tokens";
 
 const queryKey = ['global-blockchain-tokens']
 
