@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { EsdtToken } from '@/core/tokens'
+import { Egld, EsdtToken } from '@/core/tokens'
 import { TokenLogo } from '@/core/tokens/components'
 
 import { Select, SelectTrigger, SelectValue } from '@/components/ui/select'
@@ -8,9 +8,9 @@ import { Select, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { TokenSelectorDialog } from '../token-selector-dialog'
 
 type Props = {
-  tokens: EsdtToken[]
-  value?: EsdtToken
-  onChange: (token: EsdtToken) => void
+  tokens: EsdtToken[] | Egld[]
+  value?: EsdtToken | Egld
+  onChange: (token: EsdtToken | Egld) => void
   showBalances?: boolean
   triggerClassname?: string
 }
@@ -20,7 +20,7 @@ export function EsdtTokenSelector(props: Props) {
   const [isOpen, setIsOpen] = useState(false)
 
   const closeDialogHandler = () => setIsOpen(false)
-  const selectTokenHandler = (token: EsdtToken) => {
+  const selectTokenHandler = (token: EsdtToken | Egld) => {
     onChange(token)
     setIsOpen(false)
   }
