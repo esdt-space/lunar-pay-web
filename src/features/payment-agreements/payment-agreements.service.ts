@@ -42,6 +42,13 @@ export class PaymentAgreementsService {
       .then(data => data.map(item => new PaymentAgreement(item)))
   }
 
+  static async fetchAgreementMembership(id: string): Promise<AgreementMember> {
+    return PaymentAgreementsService.api
+      .get<AgreementMember>(`/payment-agreements/signed/${id}`)
+      .then((response) => response.data)
+      .then(data => new AgreementMember(data))
+  }
+
   static async updateAgreement(id: string, input: UpdateAgreementDto) {
     return this.api
     .put(`/payment-agreements/${id}`, input)

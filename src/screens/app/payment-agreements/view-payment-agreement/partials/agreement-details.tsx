@@ -9,7 +9,7 @@ import { Separator } from "@/components/ui/separator.tsx";
 import { formatFrequency } from "@/utils";
 import { useTokensMap } from "@/core/tokens";
 import { PaymentAgreement } from "@/features/payment-agreements/models";
-import { useTriggerPaymentAgreementMutation } from "@/features/payment-agreements/hooks";
+import { useAgreementMembership, useTriggerPaymentAgreementMutation } from "@/features/payment-agreements/hooks";
 
 type Props = {
   agreement: PaymentAgreement;
@@ -18,6 +18,8 @@ type Props = {
 
 export function AgreementDetails(props: Props){
   const { agreement, signedList } = props;
+
+  const { data: membership } = useAgreementMembership(agreement._id)
 
   const noMembers = agreement.accountsCount === 0
 
@@ -34,7 +36,7 @@ export function AgreementDetails(props: Props){
     <div className="flex max-lg:flex-col justify-between gap-4">
       <div className="flex-1">
         <div className={'text-muted-foreground text-sm'}>
-          Created on {moment(agreement.createdAt).format('ll')}
+          Signed at {membership && moment(membership.createdAt).format('ll')}
         </div>
         <div className={'flex justify-between'}>
           <div className="flex items-center">
@@ -64,8 +66,6 @@ export function AgreementDetails(props: Props){
             </Button>
           </div>}
         </div>
-
-        <div>{agreement.accountsCount} members</div>
 
         <div className={''}>
         </div>

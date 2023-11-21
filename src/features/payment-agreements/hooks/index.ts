@@ -6,3 +6,4 @@ export * from './use-created-payment-agreements.ts'
 export * from './use-signed-payment-agreements.ts'
 
 export * from './use-payment-agreement-members.ts'
+export * from './use-agreement-membership.ts'
