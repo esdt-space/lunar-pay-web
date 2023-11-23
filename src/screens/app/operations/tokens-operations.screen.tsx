@@ -10,9 +10,12 @@ import { TokenOperationType } from "@/features/token-operations/enums";
 import { TokenOperationsTable } from "@/features/token-operations/components";
 import { useTokenOperationsQuery } from "@/features/token-operations/hooks/queries";
 import { useLoadingStateContent, useEmptyStateContent } from "@/screens/app/operations/hooks";
+import { TokenOperationsService } from "@/features/token-operations/token-operations.service";
 
 export const TokensOperationsScreen = () => {
-  const { data: operations = [], isFetching, isFetched } = useTokenOperationsQuery();
+  let currentPage = 0;
+
+  const { data: operations = [], isFetching, isFetched } = useTokenOperationsQuery(currentPage);
 
   const [filterValue, setFilterValue] = useState("")
   const [operationType, setOperationType] = useState<TokenOperationType | "all">("all");
@@ -44,8 +47,26 @@ export const TokensOperationsScreen = () => {
   const { data: paginatedOperations, ...rest} =
     usePagination(operationsFilteredByValue, 5);
 
+  const nextPage = () => {
+    currentPage += 1;
+
+    // TODO: Turn this into a mutation
+    TokenOperationsService.getAllTokenOperations(currentPage)
+  }
+
+  const previousPage = () => {
+    currentPage = Math.max(0, currentPage - 1);
+
+    // TODO: Turn this into a mutation
+    TokenOperationsService.getAllTokenOperations(currentPage)
+  }
+
   return (
     <ContainedScreen className={'space-y-3'}>
+      <div>
+        <button className="mr-4" onClick={previousPage}>Previous</button>
+        <button onClick={nextPage}>Next</button>
+      </div>
       <div className={'flex justify-between max-sm:flex-col max-sm:space-y-2'}>
         <Tabs defaultValue="all" onValueChange={(value) => setOperationType(value as TokenOperationType)}>
           <TabsList className={'self-start mb-2 mr-2 max-sm:w-full'}>
