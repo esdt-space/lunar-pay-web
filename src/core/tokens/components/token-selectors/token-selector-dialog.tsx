@@ -5,15 +5,15 @@ import { useVirtualizer } from '@tanstack/react-virtual'
 import { Input } from '@/components/ui/input'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 
-import { EsdtToken } from '@/core/tokens'
+import { Token, TokensList } from '@/core/tokens'
 import { TokenItem } from "@/core/tokens/components";
 
 type Props = {
   isOpen: boolean
-  value?: EsdtToken
-  tokens: EsdtToken[]
+  value?: Token
+  tokens: TokensList
   closeDialogHandler: () => void
-  selectTokenHandler: (token: EsdtToken) => void
+  selectTokenHandler: (value: Token) => void
   showBalances?: boolean
 }
 
@@ -81,7 +81,7 @@ export function TokenSelectorDialog(props: Props) {
                       data-index={row.index}
                       ref={virtualizer.measureElement}
                       onClick={() => selectTokenHandler(token)}
-                      className={'flex rounded-md hover:bg-slate-50 p-2 cursor-pointer'}
+                      className={'flex rounded-md hover:bg-muted p-2 cursor-pointer'}
                     >
                       <TokenItem token={token} showBalances={showBalances} />
                     </div>
