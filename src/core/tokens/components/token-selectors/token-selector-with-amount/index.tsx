@@ -4,17 +4,17 @@ import { cn, formatTokenBalance } from '@/theme/utils'
 
 import { Input } from '@/components/ui/input'
 
-import { Egld, EsdtToken } from '@/core/tokens'
+import { Token, TokensList } from '@/core/tokens'
 import { EsdtTokenSelector } from '@/core/tokens/components'
 import { getTokenErrorForValue } from "@/core/tokens/validation";
 import { tokenErrorToText } from "@/core/tokens/utils";
 import { TokenValueError } from "@/core/tokens/enums/token-value-error.enum.ts";
 
 type Props = {
-  tokens: EsdtToken[] | Egld[]
-  token?: EsdtToken | Egld
+  tokens: TokensList
+  token?: Token
   amount?: string
-  onTokenChange: (token: EsdtToken | Egld) => void
+  onTokenChange: (token: Token) => void
   onAmountChange: (amount: string) => void
   hasMaxButton?: boolean
   showBalances?: boolean
