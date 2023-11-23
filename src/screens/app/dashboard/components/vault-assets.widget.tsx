@@ -10,7 +10,7 @@ import { Tabs, TabsContent } from "@/components/ui/tabs.tsx";
 import { LoaderWithIconAndText } from "@/components/shared/loaders";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-import { EsdtToken } from "@/core/tokens";
+import { Token } from "@/core/tokens";
 import { TokenItem } from "@/core/tokens/components";
 import { useAccountVaultTokens } from "@/features/vault/hooks";
 
@@ -26,7 +26,7 @@ enum ScreenTabs {
 export const VaultAssetsWidget = () => {
   const [animatedElement] = useAutoAnimate()
   const [assetSearchValue, setAssetSearchValue] = useState('');
-  const [selectedToken, setSelectedToken] = useState<EsdtToken>()
+  const [selectedToken, setSelectedToken] = useState<Token>()
   const [selectedTab, setSelectedTab] = useState<ScreenTabs>(ScreenTabs.LoadingState)
 
   const { vaultTokens, isFetched, isFetching } = useAccountVaultTokens();
@@ -112,7 +112,7 @@ export const VaultAssetsWidget = () => {
 
           <TabsContent className={'mt-0'} value="transfer-asset">
             <TransferAssetComponent
-              selectedToken={selectedToken as EsdtToken}
+              selectedToken={selectedToken as Token}
               finishCallback={() => setSelectedTab(ScreenTabs.ViewAssets)}
             />
           </TabsContent>

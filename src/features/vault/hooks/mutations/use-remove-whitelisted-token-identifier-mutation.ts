@@ -1,4 +1,4 @@
-import { EsdtToken } from "@/core/tokens";
+import { Token } from "@/core/tokens";
 import { useMutation, useQueryClient } from "react-query";
 
 import { protocolWhitelistedTokensQueryKey } from "@/features/vault/query-keys.ts";
@@ -8,7 +8,7 @@ export function useRemoveWhitelistedTokenIdentifierMutation() {
   const client = useQueryClient();
 
   return useMutation({
-    mutationFn: (token: EsdtToken) => removeTokenFromWhitelistInteraction(token),
+    mutationFn: (token: Token) => removeTokenFromWhitelistInteraction(token),
     onSuccess() {
       client.invalidateQueries({ queryKey: protocolWhitelistedTokensQueryKey });
     },

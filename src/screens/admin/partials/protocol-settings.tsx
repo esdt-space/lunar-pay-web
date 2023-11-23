@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button.tsx";
 import { Separator } from "@/components/ui/separator.tsx";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-import { EsdtToken } from "@/core/tokens";
+import { Token } from "@/core/tokens";
 import { useTokensList } from "@/core/tokens/hooks/use-tokens.ts";
 import { TokenItem, EsdtTokenSelector } from "@/core/tokens/components";
 import { useWhitelistedVaultAddresses, useWhitelistedVaultTokens } from "@/features/vault/hooks";
@@ -20,7 +20,7 @@ import {
 
 export function ProtocolSettings() {
   const tokens = useTokensList();
-  const [selectedToken, setSelectedToken] = useState<EsdtToken | undefined>(undefined);
+  const [selectedToken, setSelectedToken] = useState<Token | undefined>(undefined);
   const [tokenSearchValue, setTokenSearchValue] = useState('');
   const [addressToWhitelist, setAddressToWhitelist] = useState('');
   const [addressSearchValue, setAddressSearchValue] = useState('');
