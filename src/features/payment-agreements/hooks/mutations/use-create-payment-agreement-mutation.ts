@@ -19,6 +19,7 @@ export function useCreatePaymentAgreementMutation() {
     await client.invalidateQueries({queryKey: accountBalancesQueryKey(address)})
     await client.invalidateQueries({queryKey: accountTokenOperationsQueryKey(address)})
     await client.invalidateQueries({queryKey: accountPaymentAgreementsCreatedQueryKey(address)})
+    await client.resetQueries({queryKey: accountPaymentAgreementsCreatedQueryKey(address), exact: true})
     callback(value);
   }
 
@@ -26,8 +27,6 @@ export function useCreatePaymentAgreementMutation() {
     mutationFn: (options: AgreementInteractionOptions) => createPaymentAgreementInteraction(options),
     onSuccess(sessionId) {
       if(!sessionId) return Promise.reject();
-
-      client.resetQueries({queryKey: accountPaymentAgreementsCreatedQueryKey(address), exact: true})
 
       return new Promise((resolve) => {
         registerSessionId(sessionId, getCallback(resolve));
