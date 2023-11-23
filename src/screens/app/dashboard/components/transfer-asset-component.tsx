@@ -6,7 +6,7 @@ import { cn, formatTokenBalance } from "@/theme/utils"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 
-import { EsdtToken } from "@/core/tokens";
+import { Token } from "@/core/tokens";
 import { TokenItem } from "@/core/tokens/components";
 import { TokenValueError } from "@/core/tokens/enums";
 import { tokenErrorToText } from "@/core/tokens/utils";
@@ -15,7 +15,7 @@ import { useTokenTransferMutation } from "@/features/vault/hooks/mutations";
 
 type Props = {
   finishCallback: () => void
-  selectedToken: EsdtToken
+  selectedToken: Token
 }
 
 export const TransferAssetComponent = ( props: Props ) => {

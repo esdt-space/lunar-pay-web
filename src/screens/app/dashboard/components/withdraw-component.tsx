@@ -3,7 +3,7 @@ import { Minus } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 
-import { Egld, EsdtToken } from "@/core/tokens";
+import { Token } from "@/core/tokens";
 import { TokenSelectorWithAmount } from "@/core/tokens/components"
 import { getTokenErrorForValue } from "@/core/tokens/validation";
 import { useAccountVaultTokens } from "@/features/vault/hooks";
@@ -11,7 +11,7 @@ import { useWithdrawEgldMutation, useWithdrawEsdtMutation } from "@/features/vau
 
 export const WithdrawAssetsComponent = () => {
   const [amount, setAmount] = useState('');
-  const [selectedToken, setSelectedToken] = useState<EsdtToken | Egld | undefined>(undefined);
+  const [selectedToken, setSelectedToken] = useState<Token | undefined>(undefined);
 
   useEffect(() => {
     setAmount("");
