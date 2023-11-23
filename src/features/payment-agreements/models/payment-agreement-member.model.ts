@@ -13,6 +13,8 @@ export class AgreementMember {
 
   lastChargedAt: Date;
 
+  lastSuccessfulCharge: Date;
+
   canceledAt: Date;
 
   createdAt: Date;
