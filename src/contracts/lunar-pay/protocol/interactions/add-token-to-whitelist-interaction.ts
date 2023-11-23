@@ -4,9 +4,9 @@ import { getAddress, getNetworkConfig } from "@multiversx/sdk-dapp/utils";
 import { sendTransactionWithWatcher} from "@/lib/mvx";
 import { lunarPaySmartContract } from "@/contracts/lunar-pay/contract-utils.ts";
 
-import { Egld, EsdtToken } from "@/core/tokens";
+import { Token } from "@/core/tokens";
 
-export async function addTokenToWhitelistInteraction(token: EsdtToken | Egld) {
+export async function addTokenToWhitelistInteraction(token: Token) {
   const sender = await getAddress();
   const { chainId } = getNetworkConfig()
 

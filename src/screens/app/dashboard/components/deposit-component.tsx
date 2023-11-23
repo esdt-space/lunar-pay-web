@@ -3,7 +3,7 @@ import { Plus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
-import { Egld, EsdtToken } from "@/core/tokens";
+import { Token } from "@/core/tokens";
 import { useAccountTokensAvailableToDeposit } from "@/features/account-tokens/hooks";
 import { TokenSelectorWithAmount } from "@/core/tokens/components"
 import { getTokenErrorForValue } from "@/core/tokens/validation";
@@ -13,7 +13,7 @@ import {BinancePayButton} from "@/components/prefab/binance-pay-button.tsx";
 
 export const DepositAssetsComponent = () => {
   const [amount, setAmount] = useState('');
-  const [selectedToken, setSelectedToken] = useState<EsdtToken | Egld | undefined>(undefined);
+  const [selectedToken, setSelectedToken] = useState<Token | undefined>(undefined);
 
   useEffect(() => {
     setAmount("");
