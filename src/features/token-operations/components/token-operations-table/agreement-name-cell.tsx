@@ -9,6 +9,8 @@ type Props = {
 
 export const AgreementNameCell = ({tokenOperationItem}: Props) => {
   const navigate = useNavigate()
+
+  if(!tokenOperationItem.agreement) return null;
   
   return <TableCell
     onClick={() => navigate(`${RoutesConfig.paymentAgreements}/${tokenOperationItem.agreement._id}`)}
