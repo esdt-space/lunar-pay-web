@@ -10,7 +10,7 @@ import { TokenOperationsTable } from "@/features/token-operations/components";
 import { useTokenOperationsQuery } from "@/features/token-operations/hooks/queries";
 
 export const DashboardLatestTransactionsWidget = () => {
-  const { data } = useTokenOperationsQuery( 0, "" );
+  const { data } = useTokenOperationsQuery( 1, "" );
   const latestOperations = data?.operations.slice(0, 5) ?? [];
 
   return (
