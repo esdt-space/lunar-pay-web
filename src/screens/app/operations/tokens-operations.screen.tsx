@@ -25,8 +25,9 @@ export const TokensOperationsScreen = () => {
   const previousPageHandler = () => setCurrentPage(page => Math.max(1, page - 1));
 
   useEffect(() => {
-    refetch()
-  }, [operationType, currentPage, refetch])
+    setCurrentPage(1);
+    refetch();
+  }, [operationType])
 
   const isLoadingFirstTime = !isFetched && isFetching;
   const isLoadedAndHasData = isFetched && operations.length > 0;
