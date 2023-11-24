@@ -19,7 +19,9 @@ export const TokensOperationsScreen = () => {
   const [operationType, setOperationType] = useState<TokenOperationType | "all">("all");
   
   const typeFilter = operationType === "all" ? "" : operationType
-  const { data: operations = [], isFetching, isFetched, refetch } = useTokenOperationsQuery(currentPage, typeFilter);
+  const { data, isFetching, isFetched, refetch } = useTokenOperationsQuery(currentPage, typeFilter);
+  const operations = data?.operations ?? []
+  const numberOfPages = data?.numberOfPages
 
   const nextPageHandler = () => setCurrentPage(page => page + 1);
   const previousPageHandler = () => setCurrentPage(page => Math.max(0, page - 1));
@@ -67,14 +69,14 @@ export const TokensOperationsScreen = () => {
                 operationType={operationType} 
                 operations={operations} />
               <div className="flex justify-end items-center m-2 p-2 space-x-2">
-                <span className={'text-sm text-muted-foreground'}>Page {currentPage + 1}</span>
+                <span className={'text-sm text-muted-foreground'}>Page {currentPage + 1} of {numberOfPages}</span>
 
                 <Button size={'sm'} onClick={previousPageHandler} disabled={currentPage === 0}>
                   <ChevronLeft className={'w-4 h-4 mr-2'} />
                   Previous
                 </Button>
 
-                <Button size={'sm'} onClick={nextPageHandler}>
+                <Button size={'sm'} onClick={nextPageHandler} disabled={currentPage + 1 === numberOfPages}>
                   Next
                   <ChevronRight className={'w-4 h-4 ml-2'} />
                 </Button>
