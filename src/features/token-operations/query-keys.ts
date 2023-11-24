@@ -1,2 +1,2 @@
-export const accountTokenOperationsQueryKey = (address: string) => ['account-token-operations', address]
+export const accountTokenOperationsQueryKey = (address: string, pageNumber: number) => ['account-token-operations', address, pageNumber]
 
