@@ -10,7 +10,7 @@ export class TokenOperationsService {
     const skip = (page - 1) * TokenOperationsService.ITEMS_PER_PAGE;
 
     return TokenOperationsService.api
-      .get<TokenOperation[]>(`/token-operations/all?limit=${TokenOperationsService.ITEMS_PER_PAGE}&skip=${skip}&type=${type}`)
+      .get<TokenOperation[]>(`/token-operations?limit=${TokenOperationsService.ITEMS_PER_PAGE}&skip=${skip}&type=${type}`)
       .then((response) => response.data)
       .then(data => data.map(item => new TokenOperation(item)))
   }
