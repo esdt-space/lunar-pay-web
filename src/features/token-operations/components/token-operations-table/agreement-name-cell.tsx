@@ -13,7 +13,9 @@ export const AgreementNameCell = ({tokenOperationItem}: Props) => {
   const getOperation = () => {
     navigate(`${RoutesConfig.paymentAgreements}/${tokenOperationItem.agreement._id}`)
   }
-  
+
+  if(!tokenOperationItem.agreement) return null;
+
   return <TableCell
     onClick={getOperation}
     className={'max-lg:hidden text-muted-foreground cursor-pointer'}
