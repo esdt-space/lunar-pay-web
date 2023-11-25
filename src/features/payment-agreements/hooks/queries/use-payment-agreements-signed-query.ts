@@ -10,7 +10,7 @@ export function usePaymentAgreementsSignedQuery() {
   return useQuery({
     queryKey: accountPaymentAgreementsSignedQueryKey(address),
     queryFn: PaymentAgreementsService.fetchAgreementsSigned,
-    refetchOnMount: false,
+    refetchOnMount: true,
     refetchOnWindowFocus: false,
     refetchInterval: 60 * 1000, // 1 minute
   })

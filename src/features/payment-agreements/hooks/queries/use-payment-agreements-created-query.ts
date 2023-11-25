@@ -10,7 +10,7 @@ export function usePaymentAgreementsCreatedQuery() {
   return useQuery({
     queryKey: accountPaymentAgreementsCreatedQueryKey(address),
     queryFn: PaymentAgreementsService.fetchAgreementsCreated,
-    refetchOnMount: false,
+    refetchOnMount: true,
     refetchOnWindowFocus: false,
     refetchInterval: 60 * 1000, // 1 minute
   })

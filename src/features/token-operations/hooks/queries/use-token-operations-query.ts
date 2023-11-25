@@ -12,7 +12,7 @@ export function useTokenOperationsQuery(pageNumber: number, type: string) {
   return useQuery({
     queryKey: accountTokenOperationsFilteredQueryKey(address, type, pageNumber),
     queryFn: () => TokenOperationsService.getAllTokenOperations(pageNumber, type),
-    refetchOnMount: false,
+    refetchOnMount: true,
     refetchOnWindowFocus: false,
     keepPreviousData: true,
     refetchInterval: 60 * 1000, // 1 minute
