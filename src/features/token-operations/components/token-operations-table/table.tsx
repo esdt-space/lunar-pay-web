@@ -54,7 +54,7 @@ export const TokenOperationsTable = (props: Props) => {
         {operations.map((item, index) => (
           <TableRow key={index} onClick={() => {
             if(item.type === "payment-agreement-charge") {
-              navigate(`${RoutesConfig.tokensOperations}/${item._id}`)
+              navigate(`${RoutesConfig.tokensOperations}/${item.id}`)
             }
           }}>
             <TableCell>
