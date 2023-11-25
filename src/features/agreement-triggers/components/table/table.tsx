@@ -1,5 +1,6 @@
 import moment from "moment/moment";
 import { ArrowUpRight } from "lucide-react";
+import { FormatAmount } from "@multiversx/sdk-dapp/UI";
 
 import AppEnvironment from "@/environment/app.environment.ts";
 
@@ -11,19 +12,19 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table.tsx"
+import { Badge } from "@/components/ui/badge.tsx";
 import { Button } from "@/components/ui/button.tsx";
 
-import { Badge } from "@/components/ui/badge.tsx";
+import { Token } from "@/core/tokens";
 import { AgreementTrigger } from "../../models";
-import { FormatAmount } from "@multiversx/sdk-dapp/UI";
 
 type Props = {
   triggersList: AgreementTrigger[];
-  tokenDecimals: number;
+  token: Token;
 }
 
 export const AgreementTriggersTable = (props: Props) => {
-  const { triggersList, tokenDecimals } = props;
+  const { triggersList, token } = props;
 
   return (
     <Table>
@@ -41,7 +42,7 @@ export const AgreementTriggersTable = (props: Props) => {
             <TableCell></TableCell>
             <TableCell>
               {item.successfulChargeAmount ?
-                <FormatAmount value={item.successfulChargeAmount as string} decimals={tokenDecimals} /> : 
+                <FormatAmount value={item.successfulChargeAmount as string} token={token.name} decimals={token.decimals} /> :
                 <Badge
                   variant={'outline'}
                   className={'text-yellow-500 border-yellow-500'}
@@ -51,7 +52,7 @@ export const AgreementTriggersTable = (props: Props) => {
             </TableCell>
             <TableCell>
               {item.failedChargeAmount ?
-                <FormatAmount value={item.failedChargeAmount as string} decimals={tokenDecimals} /> : 
+                <FormatAmount value={item.failedChargeAmount as string} token={token.name} decimals={token.decimals} /> :
                 <Badge
                   variant={'outline'}
                   className={'text-yellow-500 border-yellow-500'}

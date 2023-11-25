@@ -78,7 +78,7 @@ export const ViewPaymentAgreementScreen = () => {
           <MembersListPartial members={members}/>
           <Card>
             <CardContent className="p-0">
-              <AgreementTriggersTable triggersList={paginatedTriggers} tokenDecimals={token.decimals} />
+              <AgreementTriggersTable triggersList={paginatedTriggers} token={token} />
               <PaginationButtons {...{...rest}} />
             </CardContent>
           </Card>
