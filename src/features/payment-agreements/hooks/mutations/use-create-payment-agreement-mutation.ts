@@ -27,8 +27,6 @@ export function useCreatePaymentAgreementMutation() {
     onSuccess(sessionId) {
       if(!sessionId) return Promise.reject();
 
-      client.resetQueries({queryKey: accountPaymentAgreementsCreatedQueryKey(address), exact: true})
-
       return new Promise((resolve) => {
         registerSessionId(sessionId, getCallback(resolve));
       });
