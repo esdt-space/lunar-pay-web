@@ -11,7 +11,7 @@ export function useAgreementTriggersQuery(id: string | undefined) {
     enabled: id !== undefined,
     queryKey: agreementTriggersQueryKey(address, id as string),
     queryFn: () => AgreementTriggersService.getAgreementTriggersById(id as string),
-    refetchOnMount: false,
+    refetchOnMount: true,
     refetchOnWindowFocus: false,
     refetchInterval: 60 * 1000, // 1 minute
   })
