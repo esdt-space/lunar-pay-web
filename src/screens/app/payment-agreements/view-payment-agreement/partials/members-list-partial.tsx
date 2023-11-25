@@ -34,7 +34,7 @@ export function MembersListPartial(props: Props) {
                 <AddressCell value={item.member} />
                 <TableCell>{item.status}</TableCell>
                 <TableCell>{moment(item.createdAt).format('ll')}</TableCell>
-                <TableCell>{moment(item.lastChargedAt).format('ll')}</TableCell>
+                <TableCell>{moment(item.lastSuccessfulCharge).format('ll')}</TableCell>
               </TableRow>
             ))}
           </TableBody>

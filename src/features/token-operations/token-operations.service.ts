@@ -14,4 +14,10 @@ export class TokenOperationsService {
       .then((response) => response.data)
       .then(data => data.map(item => new TokenOperation(item)))
   }
+
+  static async getTokenOperationsByParentId(id: string): Promise<TokenOperation[]> {
+    return TokenOperationsService.api.get<TokenOperation[]>(`/token-operations/${id}/all/charge-operations?limit=1000`)
+      .then((response) => response.data)
+      .then(data => data.map(item => new TokenOperation(item)))
+  }
 }

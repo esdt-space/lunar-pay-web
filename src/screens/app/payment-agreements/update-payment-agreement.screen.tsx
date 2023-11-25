@@ -33,7 +33,7 @@ export function UpdatePaymentAgreementScreen() {
 
   const { data: agreement } = useCreatedPaymentAgreement(id);
   
-  const { mutate: editAgreement } = useUpdatePaymentAgreementMutation();
+  const { mutate: editAgreement } = useUpdatePaymentAgreementMutation(id as string);
 
   useEffect(() => {
     if(agreement === undefined || formInitialized) return;
@@ -81,8 +81,13 @@ export function UpdatePaymentAgreementScreen() {
       cancelAgreementHttpCallbackUrl: cancelAgreementHttpCallbackUrl,
       signAgreementRedirectUrl: newMemberRedirectUrl,
     }
-    
-    editAgreement({ id: id, input: input })
+
+    editAgreement(
+      { id: id, input: input },
+      {
+        onSuccess: () => navigate(RoutesConfig.paymentAgreements)
+      }
+    )
   }
   
   return (
