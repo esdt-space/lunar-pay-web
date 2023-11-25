@@ -11,7 +11,7 @@ export function usePaymentAgreementByIdQuery(id: string | undefined) {
     enabled: id !== undefined,
     queryKey: accountPaymentAgreementById(address, id as string),
     queryFn: () => PaymentAgreementsService.agreementById(id as string),
-    refetchOnMount: false,
+    refetchOnMount: true,
     refetchOnWindowFocus: false,
     refetchInterval: 60 * 1000, // 1 minute
   })

@@ -11,7 +11,7 @@ export function useChargesOperationsQuery(id: string | undefined) {
     enabled: id !== undefined,
     queryKey: accountChargesOperationsQueryKey(address, id as string),
     queryFn: () => TokenOperationsService.getTokenOperationsByParentId(id as string),
-    refetchOnMount: false,
+    refetchOnMount: true,
     refetchOnWindowFocus: false,
     refetchInterval: 60 * 1000, // 1 minute
   })
