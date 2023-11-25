@@ -81,8 +81,13 @@ export function UpdatePaymentAgreementScreen() {
       cancelAgreementHttpCallbackUrl: cancelAgreementHttpCallbackUrl,
       signAgreementRedirectUrl: newMemberRedirectUrl,
     }
-    
-    editAgreement({ id: id, input: input })
+
+    editAgreement(
+      { id: id, input: input },
+      {
+        onSuccess: () => navigate(RoutesConfig.paymentAgreements)
+      }
+    )
   }
   
   return (
