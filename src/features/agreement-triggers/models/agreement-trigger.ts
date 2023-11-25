@@ -8,4 +8,8 @@ export class AgreementTrigger {
   failedChargeAmount: string;
 
   createdAt: Date;
+
+  constructor(params: Partial<AgreementTrigger>) {
+    Object.assign(this, params);
+  }
 }
