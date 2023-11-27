@@ -16,7 +16,7 @@ export class TokenOperationsService {
 
     return TokenOperationsService.api
       .get<TokenOperationsResponse>(
-        `/token-operations?limit=${TokenOperationsService.ITEMS_PER_PAGE}&skip=${skip}&type=${type}&receiver=${filterValue}&sender=${filterValue}`
+        `/token-operations?limit=${TokenOperationsService.ITEMS_PER_PAGE}&skip=${skip}&type=${type}&addressFilter=${filterValue}`
       )
       .then((response) => response.data)
       .then(data => {
