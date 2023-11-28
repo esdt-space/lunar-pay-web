@@ -3,6 +3,11 @@ import { ProtocolApi } from "@/lib/protocol-api";
 import {AgreementMember, PaymentAgreement} from "./models";
 import { UpdateAgreementDto } from "./dto";
 
+type AgreementMembershipsReponse = {
+  numberOfPages: number;
+  memberships: AgreementMember[]
+}
+
 export class PaymentAgreementsService {
   private static api = new ProtocolApi()
   private static readonly ITEMS_PER_PAGE = 10;
@@ -14,14 +19,18 @@ export class PaymentAgreementsService {
       .then(data => new PaymentAgreement(data))
   }
 
-  static async getAgreementMembers(page: number, id: string) {
+  static async getAgreementMembers(page: number, id: string): Promise<AgreementMembershipsReponse> {
     const skip = (page - 1) * PaymentAgreementsService.ITEMS_PER_PAGE;
 
-    return this.api
-      .get<PaymentAgreement[]>(`/payment-agreements/${id}/members?limit=${PaymentAgreementsService.ITEMS_PER_PAGE}&skip=${skip}`)
+    return PaymentAgreementsService.api
+      .get<AgreementMembershipsReponse>(`/payment-agreements/${id}/members?limit=${PaymentAgreementsService.ITEMS_PER_PAGE}&skip=${skip}`)
       .then((response) => response.data)
-      .then(data => data.map(item => new AgreementMember(item)))
-
+      .then(data => {
+        return {
+          numberOfPages: data.numberOfPages,
+          memberships: data.memberships.map(item => new AgreementMember(item)) 
+        }
+      })
   }
 
   static async fetchLatestAgreementCreatedByAccount() {

@@ -4,8 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom"
 
 import { RoutesConfig } from "@/navigation"
 import { useCreatedPaymentAgreement } from "@/features/payment-agreements/hooks";
-import { usePaymentAgreementMembers } from "@/features/payment-agreements/hooks";
-import { useAgreementTriggersQuery } from "@/features/agreement-triggers/hooks";
+import { useAgreementTriggers } from "@/features/agreement-triggers/hooks";
 
 import { Card, CardContent } from "@/components/ui/card.tsx"
 import { Button } from "@/components/ui/button.tsx"
@@ -16,8 +15,9 @@ import { AgreementDetails } from "./partials/agreement-details.tsx";
 import { MembersListPartial } from "./partials/members-list-partial.tsx";
 import { AgreementTriggersTable } from "@/features/agreement-triggers/components";
 import { useTokensMap } from "@/core/tokens";
-import { PaginationButtons, usePagination } from "@/components/shared/pagination";
+import { PaginationButtonsNew } from "@/components/shared/pagination";
 import { useEffect, useState } from "react";
+import { usePaymentAgreementsMembersQuery } from "@/features/payment-agreements/hooks/queries/use-payment-agreements-members-query.ts";
 
 export const ViewPaymentAgreementScreen = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -26,16 +26,16 @@ export const ViewPaymentAgreementScreen = () => {
   const navigate = useNavigate()
 
   const { data: agreement } = useCreatedPaymentAgreement(id);
-  const { data: members = [], refetch } = usePaymentAgreementMembers(currentPage, id);
-  const { data: agreementTriggers = [] } = useAgreementTriggersQuery(id);
+  const { data: members, refetch } = usePaymentAgreementsMembersQuery(currentPage, id);
+  const { data: agreementTriggers = [] } = useAgreementTriggers(currentPage, id);
+
+  const memberships = members?.memberships ?? []
+  const numberOfPages = members?.numberOfPages
 
   useEffect(() => {
     setCurrentPage(1);
     refetch();
   }, [])
-
-  const { data: paginatedTriggers, ...rest} =
-    usePagination(agreementTriggers, 5);
 
   const tokensMap = useTokensMap();
 
@@ -46,6 +46,9 @@ export const ViewPaymentAgreementScreen = () => {
   if(agreement && agreement.owner !== address) {
     navigate(RoutesConfig.dashboard, { replace: true });
   }
+
+  const nextPageHandler = () => setCurrentPage(page => page + 1);
+  const previousPageHandler = () => setCurrentPage(page => Math.max(1, page - 1));
 
   return (
     <ContainedScreen className="space-y-6">
@@ -82,11 +85,15 @@ export const ViewPaymentAgreementScreen = () => {
           <Card className={'p-6'}>
             <AgreementDetails agreement={agreement}/>
           </Card>
-          <MembersListPartial members={members}/>
+          <MembersListPartial members={memberships}/>
           <Card>
             <CardContent className="p-0">
-              <AgreementTriggersTable triggersList={paginatedTriggers} token={token} />
-              <PaginationButtons {...{...rest}} />
+              <AgreementTriggersTable triggersList={agreementTriggers} token={token} />
+              <PaginationButtonsNew 
+                previousPageHandler={previousPageHandler} 
+                nextPageHandler={nextPageHandler}
+                currentPage={currentPage}
+                lastPage={numberOfPages} />
             </CardContent>
           </Card>
         </TabsContent>

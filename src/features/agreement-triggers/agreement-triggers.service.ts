@@ -3,9 +3,12 @@ import { AgreementTrigger } from "./models";
 
 export class AgreementTriggersService {
   private static api = new ProtocolApi()
+  private static readonly ITEMS_PER_PAGE = 10;
 
-  static async getAgreementTriggersById(id: string): Promise<AgreementTrigger[]> {
-    return this.api.get<AgreementTrigger[]>(`/agreement-triggers/${id}/all?limit=1000`)
+  static async getAgreementTriggersById(page: number, id: string): Promise<AgreementTrigger[]> {
+    const skip = (page - 1) * AgreementTriggersService.ITEMS_PER_PAGE;
+
+    return this.api.get<AgreementTrigger[]>(`/agreement-triggers/${id}/all?limit==${AgreementTriggersService.ITEMS_PER_PAGE}&skip=${skip}`)
       .then((response) => response.data)
       .then(data => data.map(item => new AgreementTrigger(item)))
   }
