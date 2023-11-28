@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
@@ -11,8 +11,14 @@ import { useEmptyStateContent, useLoadingStateContent } from "./hooks"
 import { ChargeOperationTable } from "@/features/token-operations/components"
 
 export const ChargesOperationsScreen = () => {
+  const [currentPage, setCurrentPage] = useState(1)
   const { id } = useParams()
-  const {data: chargesOperations = [], isFetching, isFetched } = useChargesOperations(id)
+  const {data: chargesOperations = [], isFetching, isFetched, refetch } = useChargesOperations(currentPage, id)
+
+  useEffect(() => {
+    setCurrentPage(1);
+    refetch();
+  }, [])
 
   const [filterValue, setFilterValue] = useState("")
 
