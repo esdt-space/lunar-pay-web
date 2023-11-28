@@ -20,6 +20,9 @@ import { AddressCell } from "./address-cell.tsx";
 import { TokenOperationIcon } from "./token-operation-icon.tsx";
 import { TokenOperationValueCell } from "./token-operation-value-cell.tsx";
 import { AgreementNameCell } from "./agreement-name-cell.tsx";
+import { useNavigate } from "react-router-dom";
+import { RoutesConfig } from "@/navigation/index.ts";
+import { Badge } from "@/components/ui/badge.tsx";
 
 type Props = {
   operations: TokenOperation[];
@@ -29,6 +32,9 @@ type Props = {
 export const TokenOperationsTable = (props: Props) => {
   const { operations, operationType } = props;
   const isAllOrTransfer = [TokenOperationType.Transfer, "all", undefined].includes(operationType);
+  const isCharge = operationType === "payment-agreement-charge"
+
+  const navigate = useNavigate()
 
   return (
     <Table>
@@ -38,15 +44,19 @@ export const TokenOperationsTable = (props: Props) => {
           <TableHead>Amount</TableHead>
           {isAllOrTransfer && <TableHead className={'max-md:hidden'}>Type</TableHead>}
           {isAllOrTransfer && <TableHead>From</TableHead>}
-          {isAllOrTransfer && <TableHead>To</TableHead>}
-          {operationType === "payment-agreement-charge" && <TableHead className={'max-lg:hidden'}>Agreement</TableHead>}
+          {(isAllOrTransfer || isCharge) && <TableHead>To</TableHead>}
+          {isCharge && <TableHead className={'max-lg:hidden'}>Agreement</TableHead>}
           <TableHead className={'max-lg:hidden'}>Date</TableHead>
           <TableHead className="max-w-[150px]"></TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {operations.map((item, index) => (
-          <TableRow key={index}>
+          <TableRow key={index} onClick={() => {
+            if(item.type === "payment-agreement-charge") {
+              navigate(`${RoutesConfig.tokensOperations}/${item.id}`)
+            }
+          }}>
             <TableCell>
               <TokenOperationIcon operation={item} />
             </TableCell>
@@ -54,9 +64,18 @@ export const TokenOperationsTable = (props: Props) => {
             {isAllOrTransfer && <TableCell className={'max-md:hidden'}>
               {item.type === TokenOperationType.Charge ? "charge" : item.type}
             </TableCell>}
-            {isAllOrTransfer && <AddressCell value={item.sender} />}
-            {isAllOrTransfer && <AddressCell value={item.receiver} />}
-            {operationType === "payment-agreement-charge" && <AgreementNameCell tokenOperationItem={item} />}
+            {(isAllOrTransfer) && 
+              (item.sender ? <AddressCell value={item.sender} /> : (!item.sender || isCharge) && 
+                <TableCell>{item.senderAccountsCount + " accounts"}</TableCell>)}
+            {(isAllOrTransfer || isCharge) && (item.receiver ? <AddressCell value={item.receiver} /> : <TableCell>
+              <Badge
+                variant={'outline'}
+                className={'text-yellow-500 border-yellow-500'}
+              >
+                Missing Data
+              </Badge>
+            </TableCell>)}
+            {isCharge && <AgreementNameCell tokenOperationItem={item} />}
             <TableCell className={'max-lg:hidden text-muted-foreground'}>{moment(item.createdAt).format('ll')}</TableCell>
             <TableCell className="truncate text-right">
               <Button asChild variant={'ghost'} size={'sm'}>

@@ -5,14 +5,18 @@ import { Link, useNavigate, useParams } from "react-router-dom"
 import { RoutesConfig } from "@/navigation"
 import { useCreatedPaymentAgreement } from "@/features/payment-agreements/hooks";
 import { usePaymentAgreementMembers } from "@/features/payment-agreements/hooks";
+import { useAgreementTriggersQuery } from "@/features/agreement-triggers/hooks";
 
-import { Card } from "@/components/ui/card.tsx"
+import { Card, CardContent } from "@/components/ui/card.tsx"
 import { Button } from "@/components/ui/button.tsx"
 import { ContainedScreen } from "@/components/prefab/contained-screen.tsx"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs.tsx"
 
 import { AgreementDetails } from "./partials/agreement-details.tsx";
 import { MembersListPartial } from "./partials/members-list-partial.tsx";
+import { AgreementTriggersTable } from "@/features/agreement-triggers/components";
+import { useTokensMap } from "@/core/tokens";
+import { PaginationButtons, usePagination } from "@/components/shared/pagination";
 
 export const ViewPaymentAgreementScreen = () => {
   const { address } = useGetAccount()
@@ -21,8 +25,16 @@ export const ViewPaymentAgreementScreen = () => {
 
   const { data: agreement } = useCreatedPaymentAgreement(id);
   const { data: members = [] } = usePaymentAgreementMembers(id);
+  const { data: agreementTriggers = [] } = useAgreementTriggersQuery(id);
+
+  const { data: paginatedTriggers, ...rest} =
+    usePagination(agreementTriggers, 5);
+
+  const tokensMap = useTokensMap();
 
   if(!agreement) return;
+
+  const token = tokensMap[agreement.tokenIdentifier];
 
   if(agreement && agreement.owner !== address) {
     navigate(RoutesConfig.dashboard, { replace: true });
@@ -61,9 +73,15 @@ export const ViewPaymentAgreementScreen = () => {
 
         <TabsContent value="overview" className={'space-y-4'}>
           <Card className={'p-6'}>
-            <AgreementDetails agreement={agreement} />
+            <AgreementDetails agreement={agreement}/>
           </Card>
           <MembersListPartial members={members}/>
+          <Card>
+            <CardContent className="p-0">
+              <AgreementTriggersTable triggersList={paginatedTriggers} token={token} />
+              <PaginationButtons {...{...rest}} />
+            </CardContent>
+          </Card>
         </TabsContent>
       </Tabs>
     </ContainedScreen>
