@@ -17,15 +17,22 @@ import { MembersListPartial } from "./partials/members-list-partial.tsx";
 import { AgreementTriggersTable } from "@/features/agreement-triggers/components";
 import { useTokensMap } from "@/core/tokens";
 import { PaginationButtons, usePagination } from "@/components/shared/pagination";
+import { useEffect, useState } from "react";
 
 export const ViewPaymentAgreementScreen = () => {
+  const [currentPage, setCurrentPage] = useState(1);
   const { address } = useGetAccount()
   const { id } = useParams()
   const navigate = useNavigate()
 
   const { data: agreement } = useCreatedPaymentAgreement(id);
-  const { data: members = [] } = usePaymentAgreementMembers(id);
+  const { data: members = [], refetch } = usePaymentAgreementMembers(currentPage, id);
   const { data: agreementTriggers = [] } = useAgreementTriggersQuery(id);
+
+  useEffect(() => {
+    setCurrentPage(1);
+    refetch();
+  }, [])
 
   const { data: paginatedTriggers, ...rest} =
     usePagination(agreementTriggers, 5);

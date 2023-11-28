@@ -9,8 +9,9 @@ import { ContainedScreen } from "@/components/prefab/contained-screen.tsx";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs.tsx";
 
 import { PaymentAgreementListTable } from "@/features/payment-agreements/components";
-import { usePaymentAgreementsCreatedQuery, useSignedPaymentAgreements } from "@/features/payment-agreements/hooks";
+import { useCreatedPaymentAgreements, useSignedPaymentAgreements } from "@/features/payment-agreements/hooks";
 import { PaginationButtons, usePagination } from "@/components/shared/pagination";
+import { useEffect, useState } from "react";
 
 enum ScreenTabs {
   Created = 'agreements-created',
@@ -18,12 +19,18 @@ enum ScreenTabs {
 }
 
 export function ListPaymentAgreementsScreen() {
-  const { data: agreements = [], isFetched } = usePaymentAgreementsCreatedQuery()
+  const [currentPage, setCurrentPage] = useState(1);
+  const { data: agreements = [], isFetched, refetch } = useCreatedPaymentAgreements(currentPage)
   const {
     data: signedAgreements = [],
     isFetched: isFetchedSignedAgreement,
     isFetching: isFetchingSignedAgreement,
-  } = useSignedPaymentAgreements()
+  } = useSignedPaymentAgreements(currentPage)
+
+  useEffect(() => {
+    setCurrentPage(1);
+    refetch();
+  }, [ScreenTabs])
 
   const emptyAgreementsCreated = isFetched && agreements.length === 0;
 
