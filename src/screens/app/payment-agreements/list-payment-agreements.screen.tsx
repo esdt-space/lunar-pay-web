@@ -10,7 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs.t
 
 import { PaymentAgreementListTable } from "@/features/payment-agreements/components";
 import { useCreatedPaymentAgreements, useSignedPaymentAgreements } from "@/features/payment-agreements/hooks";
-import { PaginationButtons, usePagination } from "@/components/shared/pagination";
+import { PaginationButtonsNew } from "@/components/shared/pagination";
 import { useEffect, useState } from "react";
 
 enum ScreenTabs {
@@ -32,13 +32,15 @@ export function ListPaymentAgreementsScreen() {
     refetch();
   }, [ScreenTabs])
 
+  const nextPageHandler = () => setCurrentPage(page => page + 1);
+  const previousPageHandler = () => setCurrentPage(page => Math.max(1, page - 1));
+
+  const numberOfPages = 100; // TODO: update later
+
   const emptyAgreementsCreated = isFetched && agreements.length === 0;
 
   const emptyAgreementsSigned = isFetchedSignedAgreement && signedAgreements.length === 0;
   const isFetchingFirstTimeSignedAgreement = !isFetchedSignedAgreement && isFetchingSignedAgreement;
-
-  const { data: paginatedAgreements, ...rest} =
-    usePagination(agreements, 5);
 
   return (
     <ContainedScreen className={'space-y-8'}>
@@ -79,8 +81,12 @@ export function ListPaymentAgreementsScreen() {
               )}
               {!emptyAgreementsCreated && (
                 <div>
-                  <PaymentAgreementListTable agreementsList={paginatedAgreements}/>
-                  <PaginationButtons {...{...rest}} />
+                  <PaymentAgreementListTable agreementsList={agreements}/>
+                  <PaginationButtonsNew 
+                    previousPageHandler={previousPageHandler} 
+                    nextPageHandler={nextPageHandler}
+                    currentPage={currentPage}
+                    lastPage={numberOfPages} />
                 </div>
               )}
             </CardContent>
