@@ -3,6 +3,11 @@ import { ProtocolApi } from "@/lib/protocol-api";
 import {AgreementMember, PaymentAgreement} from "./models";
 import { UpdateAgreementDto } from "./dto";
 
+type PaymentAgreementsReponse = {
+  numberOfPages: number;
+  agreements: PaymentAgreement[]
+}
+
 type AgreementMembershipsReponse = {
   numberOfPages: number;
   memberships: AgreementMember[]
@@ -40,22 +45,32 @@ export class PaymentAgreementsService {
       .then(item => new PaymentAgreement(item))
   }
 
-  static async fetchAgreementsCreated(page: number) {
+  static async fetchAgreementsCreated(page: number): Promise<PaymentAgreementsReponse> {
     const skip = (page - 1) * PaymentAgreementsService.ITEMS_PER_PAGE;
 
     return PaymentAgreementsService.api
-      .get<PaymentAgreement[]>(`/payment-agreements/created?limit=${PaymentAgreementsService.ITEMS_PER_PAGE}&skip=${skip}`)
+      .get<PaymentAgreementsReponse>(`/payment-agreements/created?limit=${PaymentAgreementsService.ITEMS_PER_PAGE}&skip=${skip}`)
       .then((response) => response.data)
-      .then(data => data.map(item => new PaymentAgreement(item)))
+      .then(data => {
+        return {
+          numberOfPages: data.numberOfPages,
+          agreements: data.agreements.map(item => new PaymentAgreement(item)) 
+        }
+      })
   }
 
-  static async fetchAgreementsSigned(page: number): Promise<PaymentAgreement[]> {
+  static async fetchAgreementsSigned(page: number): Promise<PaymentAgreementsReponse> {
     const skip = (page - 1) * PaymentAgreementsService.ITEMS_PER_PAGE;
 
     return PaymentAgreementsService.api
-      .get<PaymentAgreement[]>(`/payment-agreements/signed?limit=${PaymentAgreementsService.ITEMS_PER_PAGE}&skip=${skip}`)
+      .get<PaymentAgreementsReponse>(`/payment-agreements/signed?limit=${PaymentAgreementsService.ITEMS_PER_PAGE}&skip=${skip}`)
       .then((response) => response.data)
-      .then(data => data.map(item => new PaymentAgreement(item)))
+      .then(data => {
+        return {
+          numberOfPages: data.numberOfPages,
+          agreements: data.agreements.map(item => new PaymentAgreement(item)) 
+        }
+      })
   }
 
   static async updateAgreement(id: string, input: UpdateAgreementDto) {
