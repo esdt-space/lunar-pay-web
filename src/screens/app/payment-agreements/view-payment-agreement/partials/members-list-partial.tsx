@@ -1,20 +1,29 @@
 import moment from "moment";
 
 import { Card, CardContent } from "@/components/ui/card.tsx";
-import { AgreementMember } from "@/features/payment-agreements/models";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table.tsx";
 import { AddressCell } from "@/features/token-operations/components/token-operations-table/address-cell.tsx";
-import { PaginationButtons, usePagination } from "@/components/shared/pagination";
+import { PaginationButtonsNew } from "@/components/shared/pagination";
+import { usePaymentAgreementsMembersQuery } from "@/features/payment-agreements/hooks/queries/use-payment-agreements-members-query";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
-type Props = {
-  members: AgreementMember[];
-}
+export function MembersListPartial() {
+  const { id } = useParams()
+  const [currentPage, setCurrentPage] = useState(1);
+  
+  const { data: members, refetch } = usePaymentAgreementsMembersQuery(currentPage, id);
 
-export function MembersListPartial(props: Props) {
-  const { members } = props;
+  const memberships = members?.memberships ?? []
+  const numberOfPages = members?.numberOfPages
 
-  const { data: paginatedMembers, ...rest} =
-    usePagination(members, 5);
+  useEffect(() => {
+    setCurrentPage(1);
+    refetch();
+  }, [])
+
+  const nextPageHandler = () => setCurrentPage(page => page + 1);
+  const previousPageHandler = () => setCurrentPage(page => Math.max(1, page - 1));
 
   return (
     <Card>
@@ -29,7 +38,7 @@ export function MembersListPartial(props: Props) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {paginatedMembers.map((item, index: number) => (
+            {memberships.map((item, index: number) => (
               <TableRow key={index}>
                 <AddressCell value={item.member} />
                 <TableCell>{item.status}</TableCell>
@@ -39,7 +48,11 @@ export function MembersListPartial(props: Props) {
             ))}
           </TableBody>
         </Table>
-        <PaginationButtons {...{...rest}} />
+        <PaginationButtonsNew 
+          previousPageHandler={previousPageHandler} 
+          nextPageHandler={nextPageHandler}
+          currentPage={currentPage}
+          lastPage={numberOfPages} />
       </CardContent>
     </Card>
   )

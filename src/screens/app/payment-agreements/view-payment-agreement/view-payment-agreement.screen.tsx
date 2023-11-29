@@ -17,7 +17,6 @@ import { AgreementTriggersTable } from "@/features/agreement-triggers/components
 import { useTokensMap } from "@/core/tokens";
 import { PaginationButtonsNew } from "@/components/shared/pagination";
 import { useEffect, useState } from "react";
-import { usePaymentAgreementsMembersQuery } from "@/features/payment-agreements/hooks/queries/use-payment-agreements-members-query.ts";
 
 export const ViewPaymentAgreementScreen = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -26,11 +25,10 @@ export const ViewPaymentAgreementScreen = () => {
   const navigate = useNavigate()
 
   const { data: agreement } = useCreatedPaymentAgreement(id);
-  const { data: members, refetch } = usePaymentAgreementsMembersQuery(currentPage, id);
-  const { data: agreementTriggers = [] } = useAgreementTriggers(currentPage, id);
+  const { data: triggers, refetch } = useAgreementTriggers(currentPage, id);
 
-  const memberships = members?.memberships ?? []
-  const numberOfPages = members?.numberOfPages
+  const agreementTriggers = triggers?.agreementTriggers ?? []
+  const numberOfPages = triggers?.numberOfPages
 
   useEffect(() => {
     setCurrentPage(1);
@@ -85,7 +83,7 @@ export const ViewPaymentAgreementScreen = () => {
           <Card className={'p-6'}>
             <AgreementDetails agreement={agreement}/>
           </Card>
-          <MembersListPartial members={memberships}/>
+          <MembersListPartial />
           <Card>
             <CardContent className="p-0">
               <AgreementTriggersTable triggersList={agreementTriggers} token={token} />
