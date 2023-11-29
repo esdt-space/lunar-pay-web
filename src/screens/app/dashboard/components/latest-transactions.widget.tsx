@@ -8,31 +8,54 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 
 import { TokenOperationsTable } from "@/features/token-operations/components";
 import { useTokenOperationsQuery } from "@/features/token-operations/hooks/queries";
+import { useEmptyStateContent, useLoadingStateContent } from "../../operations/hooks";
 
 export const DashboardLatestTransactionsWidget = () => {
-  const { data: operations = [] } = useTokenOperationsQuery( 1, "" );
+  const { 
+    data: operations = [],
+    isFetched,
+    isFetching
+  } = useTokenOperationsQuery( 1, "" );
   const latestOperations = operations.slice(0, 5);
 
+  const isLoadingFirstTime = !isFetched && isFetching;
+  const isLoadedAndHasData = isFetched && operations.length > 0;
+  const isLoadedAndHasNoData = isFetched && operations.length === 0;
+
+  const emptyStateContent = useEmptyStateContent(isLoadedAndHasNoData);
+  const loadingStateContent = useLoadingStateContent(isLoadingFirstTime);
+
   return (
-    <Card className={'flex-1 shadow p-2'}>
-      <CardHeader>
-        <CardTitle className={'text-sm font-semibold uppercase tracking-wide'}>
-          Latest Token Operations
-        </CardTitle>
-      </CardHeader>
+    <>
+      {!isLoadedAndHasData && 
+        <Card className={'flex-1 shadow p-2'} >
+          {emptyStateContent}
+        </Card>
+      }
+      {loadingStateContent}
 
-      <CardContent>
-        <TokenOperationsTable operations={latestOperations} />
-      </CardContent>
+      {isLoadedAndHasData && (
+        <Card className={'flex-1 shadow p-2'}>
+          <CardHeader>
+            <CardTitle className={'text-sm font-semibold uppercase tracking-wide'}>
+              Latest Token Operations
+            </CardTitle>
+          </CardHeader>
 
-      <CardFooter>
-        <Button className="w-full" variant={'outline'} asChild>
-          <Link to={RoutesConfig.tokensOperations}>
-            View All Token Operations
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Link>
-        </Button>
-      </CardFooter>
-    </Card>
+          <CardContent>
+            <TokenOperationsTable operations={latestOperations} />
+          </CardContent>
+
+          <CardFooter>
+            <Button className="w-full" variant={'outline'} asChild>
+              <Link to={RoutesConfig.tokensOperations}>
+                View All Token Operations
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </CardFooter>
+        </Card>
+      )}
+    </>
   )
 }
