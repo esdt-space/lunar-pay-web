@@ -17,6 +17,7 @@ import { MembersListPartial } from "./partials/members-list-partial.tsx";
 import { AgreementTriggersTable } from "@/features/agreement-triggers/components";
 import { useTokensMap } from "@/core/tokens";
 import { PaginationButtons, usePagination } from "@/components/shared/pagination";
+import { EmptyStateWithAction } from "@/components/shared/empty-states/index.ts";
 
 export const ViewPaymentAgreementScreen = () => {
   const { address } = useGetAccount()
@@ -24,8 +25,15 @@ export const ViewPaymentAgreementScreen = () => {
   const navigate = useNavigate()
 
   const { data: agreement } = useCreatedPaymentAgreement(id);
-  const { data: members = [] } = usePaymentAgreementMembers(id);
-  const { data: agreementTriggers = [] } = useAgreementTriggersQuery(id);
+  const {
+     data: members = [], 
+     isFetched: isFetchedMembersList  
+    } = usePaymentAgreementMembers(id);
+
+  const { 
+    data: agreementTriggers = [],
+    isFetched: isFetchedAgreementsTriggers
+   } = useAgreementTriggersQuery(id);
 
   const { data: paginatedTriggers, ...rest} =
     usePagination(agreementTriggers, 5);
@@ -39,6 +47,11 @@ export const ViewPaymentAgreementScreen = () => {
   if(agreement && agreement.owner !== address) {
     navigate(RoutesConfig.dashboard, { replace: true });
   }
+
+  const emptyMembersList = isFetchedMembersList && members.length === 0;
+
+  const emptyAgreementTriggers = isFetchedAgreementsTriggers && agreementTriggers.length === 0;
+
 
   return (
     <ContainedScreen className="space-y-6">
@@ -75,11 +88,39 @@ export const ViewPaymentAgreementScreen = () => {
           <Card className={'p-6'}>
             <AgreementDetails agreement={agreement}/>
           </Card>
-          <MembersListPartial members={members}/>
+              {emptyMembersList && (
+                <Card> 
+                  <div className={'p-12'}>
+                    <EmptyStateWithAction
+                      title={'No current members'}
+                      description={"Members will appear here"}
+                      action={<></>}
+                    />
+                  </div>
+                </Card> 
+              )}
+              {!emptyMembersList && (
+                <div>
+                  <MembersListPartial members={members}/>
+                </div>
+              )}
           <Card>
             <CardContent className="p-0">
-              <AgreementTriggersTable triggersList={paginatedTriggers} token={token} />
-              <PaginationButtons {...{...rest}} />
+              {emptyAgreementTriggers && (
+                <div className={'p-12'}>
+                  <EmptyStateWithAction
+                    title={'No current agreement triggers'}
+                    description={"Agreement triggers will appear here"}
+                    action={<></>}
+                  />
+                </div>
+              )}
+              {!emptyAgreementTriggers && (
+                <div>
+                  <AgreementTriggersTable triggersList={paginatedTriggers} token={token} />
+                  <PaginationButtons {...{...rest}} />
+                </div>
+              )}
             </CardContent>
           </Card>
         </TabsContent>
