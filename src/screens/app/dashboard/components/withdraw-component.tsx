@@ -70,13 +70,14 @@ export const WithdrawAssetsComponent = () => {
               <Minus className={'ml-1 w-4 h-4'} />
             </Button>
 
-            <BinancePayButton buttonFn={openBinanceTransfer} />
+            <BinancePayButton disableButton={selectedToken === undefined} buttonFn={openBinanceTransfer} />
           </div>
         </div>
       </TabsContent>
 
       <TabsContent className={'mt-0'} value={ScreenTabs.BinanceTransfer}>
         <TransferAssetComponent
+          addressPlaceholder='Insert BinancePay Address'
           selectedToken={selectedToken as Token}
           finishCallback={() => setSelectedTab(ScreenTabs.Withdraw)}
         />

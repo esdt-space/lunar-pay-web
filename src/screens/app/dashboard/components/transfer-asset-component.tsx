@@ -14,12 +14,13 @@ import { getTokenErrorForValue } from "@/core/tokens/validation";
 import { useTokenTransferMutation } from "@/features/vault/hooks/mutations";
 
 type Props = {
-  finishCallback: () => void
-  selectedToken: Token
+  finishCallback: () => void;
+  selectedToken: Token;
+  addressPlaceholder?: string;
 }
 
 export const TransferAssetComponent = ( props: Props ) => {
-  const { selectedToken, finishCallback } = props
+  const { selectedToken, finishCallback, addressPlaceholder } = props
 
   const [amount, setAmount] = useState("")
   const [address, setAddress] = useState("")
@@ -29,6 +30,7 @@ export const TransferAssetComponent = ( props: Props ) => {
   const invalidAmountStyle = tokenValueError ? "border-red-500" : ""
   const invalidAddressStyle = addressIsInvalid ? "border-red-500" : ""
   const canPerformOperation = checkIsValidAddress(address) && !getTokenErrorForValue(selectedToken, amount);
+  const addressInputPlaceholder = addressPlaceholder ? addressPlaceholder : 'Insert Address'
 
   const { mutate: tokenTransferHandler } = useTokenTransferMutation();
 
@@ -92,7 +94,7 @@ export const TransferAssetComponent = ( props: Props ) => {
       <Input
         type={"text"}
         value={address}
-        placeholder='Insert Address'
+        placeholder={addressInputPlaceholder}
         onChange={changeAddressHandler}
         className={cn(['text-xs', invalidAddressStyle])}
       />
