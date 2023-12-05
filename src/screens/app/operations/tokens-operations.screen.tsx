@@ -1,10 +1,11 @@
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input.tsx";
 import { Card, CardContent } from "@/components/ui/card.tsx";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ContainedScreen } from "@/components/prefab/contained-screen.tsx"
-import { usePagination, PaginationButtons } from "@/components/shared/pagination";
 
 import { TokenOperationType } from "@/features/token-operations/enums";
 import { TokenOperationsTable } from "@/features/token-operations/components";
@@ -12,27 +13,21 @@ import { useTokenOperationsQuery } from "@/features/token-operations/hooks/queri
 import { useLoadingStateContent, useEmptyStateContent } from "@/screens/app/operations/hooks";
 
 export const TokensOperationsScreen = () => {
-  const { data: operations = [], isFetching, isFetched } = useTokenOperationsQuery();
+  const [currentPage, setCurrentPage] = useState(1)
 
   const [filterValue, setFilterValue] = useState("")
   const [operationType, setOperationType] = useState<TokenOperationType | "all">("all");
+  
+  const typeFilter = operationType === "all" ? "" : operationType
+  const { data: operations = [], isFetching, isFetched, refetch } = useTokenOperationsQuery(currentPage, typeFilter);
 
-  const operationsFilteredByType = useMemo(() => {
-    if(operationType === "all") return operations;
+  const nextPageHandler = () => setCurrentPage(page => page + 1);
+  const previousPageHandler = () => setCurrentPage(page => Math.max(1, page - 1));
 
-    return operations.filter(item => item.type === operationType);
-  }, [operations, operationType]);
-
-  const operationsFilteredByValue = useMemo(() => {
-    if(filterValue === "") return operationsFilteredByType;
-    const lowercaseFilterValue = filterValue.toLocaleLowerCase();
-
-    return operationsFilteredByType.filter(item =>
-      item.sender.toLocaleLowerCase().includes(lowercaseFilterValue) ||
-      item.receiver.toLocaleLowerCase().includes(lowercaseFilterValue) ||
-      item.tokenIdentifier.toLocaleLowerCase().includes(lowercaseFilterValue)
-    );
-  }, [operationsFilteredByType, filterValue]);
+  useEffect(() => {
+    setCurrentPage(1);
+    refetch();
+  }, [operationType])
 
   const isLoadingFirstTime = !isFetched && isFetching;
   const isLoadedAndHasData = isFetched && operations.length > 0;
@@ -40,9 +35,6 @@ export const TokensOperationsScreen = () => {
 
   const emptyStateContent = useEmptyStateContent(isLoadedAndHasNoData);
   const loadingStateContent = useLoadingStateContent(isLoadingFirstTime);
-
-  const { data: paginatedOperations, ...rest} =
-    usePagination(operationsFilteredByValue, 5);
 
   return (
     <ContainedScreen className={'space-y-3'}>
@@ -74,8 +66,20 @@ export const TokensOperationsScreen = () => {
             <div>
               <TokenOperationsTable 
                 operationType={operationType} 
-                operations={paginatedOperations} />
-              <PaginationButtons {...{...rest}} />
+                operations={operations} />
+              <div className="flex justify-end items-center m-2 p-2 space-x-2">
+                <span className={'text-sm text-muted-foreground'}>Page {currentPage}</span>
+
+                <Button size={'sm'} onClick={previousPageHandler} disabled={currentPage === 1}>
+                  <ChevronLeft className={'w-4 h-4 mr-2'} />
+                  Previous
+                </Button>
+
+                <Button size={'sm'} onClick={nextPageHandler}>
+                  Next
+                  <ChevronRight className={'w-4 h-4 ml-2'} />
+                </Button>
+              </div>
             </div>
           )}
         </CardContent>

@@ -13,7 +13,7 @@ import { AdminScreen } from '@/screens/admin';
 import { SubscriptionMembersList } from "@/screens/app/subscriptions";
 import { AuthenticationScreen } from "@/screens/auth/authentication-screen.tsx";
 import { DashboardScreen } from "@/screens/app/dashboard";
-import { TokensOperationsScreen } from '@/screens/app/operations';
+import { ChargesOperationsScreen, TokensOperationsScreen } from '@/screens/app/operations';
 import {Payroll} from "@/screens/landing/payroll";
 import {Subscriptions} from "@/screens/landing/subscriptions";
 import {Donations} from "@/screens/landing/donations";
@@ -79,6 +79,7 @@ export function ApplicationRouter() {
 
             <Route path={RoutesConfig.tokensOperations}>
               <Route index element={<TokensOperationsScreen />} />
+              <Route path={':id'} element={<ChargesOperationsScreen />} />
             </Route>
           </Route>
         </Route>

@@ -1,4 +1,4 @@
-import { EsdtToken, EsdtTokensList, EsdtTokensMap } from '@/features/tokens'
+import { EsdtToken, EsdtTokensList, EsdtTokensMap } from '@/core/tokens'
 
 import { ProtocolApi } from "@/lib/protocol-api";
 

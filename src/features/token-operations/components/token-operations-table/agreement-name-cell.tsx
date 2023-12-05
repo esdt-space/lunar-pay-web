@@ -9,9 +9,15 @@ type Props = {
 
 export const AgreementNameCell = ({tokenOperationItem}: Props) => {
   const navigate = useNavigate()
-  
+
+  const getOperation = () => {
+    navigate(`${RoutesConfig.paymentAgreements}/${tokenOperationItem.agreement._id}`)
+  }
+
+  if(!tokenOperationItem.agreement) return null;
+
   return <TableCell
-    onClick={() => navigate(`${RoutesConfig.paymentAgreements}/${tokenOperationItem.agreement._id}`)}
+    onClick={getOperation}
     className={'max-lg:hidden text-muted-foreground cursor-pointer'}
   >
     <span className={'flex items-center'}>

@@ -4,11 +4,10 @@ import { Minus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 
-import { EsdtToken } from "@/features/tokens";
-import { TokenSelectorWithAmount } from "@/features/tokens/components"
-import { getTokenErrorForValue } from "@/features/tokens/validation";
+import { Token } from "@/core/tokens";
+import { TokenSelectorWithAmount } from "@/core/tokens/components"
+import { getTokenErrorForValue } from "@/core/tokens/validation";
 import { useAccountVaultTokens } from "@/features/vault/hooks";
-
 import { useWithdrawEgldMutation, useWithdrawEsdtMutation } from "@/features/vault/hooks/mutations";
 import { BinancePayButton } from "@/components/prefab/binance-pay-button";
 import { TransferAssetComponent } from "./transfer-asset-component";
@@ -20,8 +19,8 @@ enum ScreenTabs {
 
 export const WithdrawAssetsComponent = () => {
   const [amount, setAmount] = useState('');
-  const [selectedToken, setSelectedToken] = useState<EsdtToken | undefined>(undefined);
   const [selectedTab, setSelectedTab] = useState<ScreenTabs>(ScreenTabs.Withdraw)
+  const [selectedToken, setSelectedToken] = useState<Token | undefined>(undefined);
 
   useEffect(() => {
     setAmount("");
@@ -78,7 +77,7 @@ export const WithdrawAssetsComponent = () => {
 
       <TabsContent className={'mt-0'} value={ScreenTabs.BinanceTransfer}>
         <TransferAssetComponent
-          selectedToken={selectedToken as EsdtToken}
+          selectedToken={selectedToken as Token}
           finishCallback={() => setSelectedTab(ScreenTabs.Withdraw)}
         />
       </TabsContent>

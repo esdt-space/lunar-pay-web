@@ -1,8 +1,9 @@
 import { Check } from "lucide-react";
+import { FormatAmount } from "@multiversx/sdk-dapp/UI";
+
+import { useTokensMap } from "@/core/tokens";
+import { formatFrequencyForSignAgreement } from "@/utils";
 import { PaymentAgreement } from "@/features/payment-agreements/models";
-import {FormatAmount} from "@multiversx/sdk-dapp/UI";
-import {useTokensMap} from "@/features/tokens";
-import {formatFrequencyForSignAgreement} from "@/utils";
 
 type Props = {
   agreement: PaymentAgreement

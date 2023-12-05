@@ -1,7 +1,7 @@
 import BigNumber from "bignumber.js";
 import {BigUIntType, BigUIntValue, EnumValue, Field, OptionValue, Struct} from "@multiversx/sdk-core/out";
 
-import { Token } from "@/features/tokens";
+import { Token } from "@/core/tokens";
 import { lunarPayAbiRegistry } from "@/contracts/lunar-pay/contract-utils.ts";
 import { AgreementAmountType } from "@/contracts/lunar-pay/agreements/enums";
 import { AgreementInteractionOptions, AmountValue } from "@/contracts/lunar-pay/agreements/types";

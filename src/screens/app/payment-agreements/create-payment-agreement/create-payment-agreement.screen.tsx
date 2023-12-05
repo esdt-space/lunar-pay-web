@@ -7,8 +7,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 
 import { RoutesConfig } from "@/navigation";
 import { getPaymentFrequency } from "@/utils";
-import { EsdtToken } from "@/features/tokens";
-import { TokenSelectorWithAmount } from "@/features/tokens/components";
+import { Token } from "@/core/tokens";
+import { TokenSelectorWithAmount } from "@/core/tokens/components";
 import { useAccountTokensAvailableToDeposit } from "@/features/account-tokens/hooks";
 import { FrequencyType } from "@/features/subscription/models/agreement-types.model";
 import { useCreatePaymentAgreementMutation } from "@/features/payment-agreements/hooks";
@@ -21,7 +21,7 @@ const frequencyList = ["Per Minute", "Per Hour", "Daily", "Weekly", "Monthly", "
 export function CreatePaymentAgreementScreen() {
   const navigate = useNavigate();
   const [frequency, setFrequency] = useState('Monthly');
-  const [selectedToken, setSelectedToken] = useState<EsdtToken | undefined>(undefined);
+  const [selectedToken, setSelectedToken] = useState<Token | undefined>(undefined);
 
   const tokens = useAccountTokensAvailableToDeposit();
   const [amount, setAmount] = useState('')
