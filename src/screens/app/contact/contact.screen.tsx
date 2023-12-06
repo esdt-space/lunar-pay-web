@@ -1,73 +1,29 @@
 import { ContainedScreen } from "@/components/prefab/contained-screen"
-import { cn } from "@/theme/utils"
-import { ReactNode } from "react";
-import { Link } from "react-router-dom";
-
-type ItemProps = {
-  title: ReactNode;
-  className?: string;
-  linkLocation: string;
-  description: string;
-}
-
-function Item(props: ItemProps) {
-  return (
-    <Link to={props.linkLocation} className={cn([
-      "relative bg-white bg-opacity-90 p-8 rounded-md ring-1 ring-slate-200",
-      props.className
-    ])}>
-      <div
-        className="relative bg-gradient-to-br from-primary to-secondary w-4 h-4 mb-3 opacity-80">&nbsp;</div>
-      <div className={'flex-1 space-y-1'}>
-        <h2 className="text-lg font-semibold text-gray-900 text-left">{props.title}</h2>
-        <p className="text-sm text-slate-700 text-left max-w-md">{props.description}</p>
-      </div>
-    </Link>
-  )
-}
+import { Card } from "@/components/ui/card"
+import { TelegramLogo, TwitterLogo } from "./icons"
+import { ContactForm } from "./contact-form"
 
 export const ContactScreen = () => {
   return (
     <ContainedScreen>
-      <div className={cn(['relative flex isolate',])}>
-        <section className="space-y-6">
-          <h2 className="text-xl font-bold text-gray-900 md:pt-10">
-            Contact Us
-          </h2>
-          <p>
-            Want to get in touch? Here's how you can reach us.
-          </p>
-          <div className="flex content-between">
-            <Item
-              linkLocation={""}
-              className={'hover:shadow-md cursor-pointer'}
-              title={'Email us'}
-              description={'phone'}
-            />
-            
-            <Item
-              linkLocation={""}
-              className={'hover:shadow-md cursor-pointer'}
-              title={'Call us'}
-              description={'phone'}
-            />
-
-            <Item
-              linkLocation={""}
-              className={'hover:shadow-md cursor-pointer'}
-              title={'Telegram'}
-              description={'telegram link'}
-            />
-
-            <Item
-              linkLocation={""}
-              className={'hover:shadow-md cursor-pointer'}
-              title={'Social media'}
-              description={'links'}
-            />
+      <Card className="flex justify-between p-6">
+        <div>
+          <ContactForm/>
+        </div>
+        <div className={'space-y-8'}>
+          <div>
+            <h1>Contact us</h1>
+            <p>Send us an email or give us a call, we try to answer all enquiries within 24 hours on business days.</p>
+            <p>E: this@something.ro</p>
+            <p>P: number</p>
           </div>
-        </section>
-      </div>
+          <div>
+            <h2>Social Media</h2>
+            <TelegramLogo>text</TelegramLogo>
+            <TwitterLogo/>
+          </div>
+        </div>
+      </Card >
     </ContainedScreen>
   )
 }
