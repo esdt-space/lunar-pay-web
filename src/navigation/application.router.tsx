@@ -27,6 +27,7 @@ import {
 } from "@/screens/app/payment-agreements";
 import { DemoPage } from '@/screens/app/demo';
 import { ViewSignedPaymentAgreementScreen } from '@/screens/app/payment-agreements/view-payment-agreement/view-signed-payment-agreement.screen';
+import { ContactScreen } from '@/screens/app/contact';
 
 export function ApplicationRouter() {
   useScrollToTopHandler()
@@ -57,6 +58,7 @@ export function ApplicationRouter() {
         <Route element={<AuthenticatedRouteOutlet />}>
           <Route element={<AppLayout />}>
             <Route index element={<DashboardScreen />} />
+            <Route path={RoutesConfig.contact} element={<ContactScreen />} />
             <Route path={RoutesConfig.dashboard} element={<DashboardScreen />} />
 
             <Route path={RoutesConfig.admin}>
