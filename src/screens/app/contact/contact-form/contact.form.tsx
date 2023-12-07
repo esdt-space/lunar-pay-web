@@ -6,14 +6,14 @@ import React, {useState, FormEvent} from 'react';
 export const ContactForm: React.FC = () => {
   const [ name, setName] = useState('')
   const [ email, setEmail] = useState('')
-  const [ textArea, setTextArea] = useState('')
+  const [ message, setMessage] = useState('')
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
     const formData = {
       name: name,
       email: email,
-      textArea: textArea
+      message: message
     }
 
     console.log('form data submitted:', formData)
@@ -41,8 +41,8 @@ export const ContactForm: React.FC = () => {
       <div>
         <h2>Message</h2>
         <Textarea
-          value={textArea}
-          onChange={(e) => setTextArea(e.target.value)}
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
         />
       </div>
       <Button type='submit' onClick={handleSubmit}>Submit</Button>
