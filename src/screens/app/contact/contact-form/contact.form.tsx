@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { EmailService } from '@/features/emailing/email.service';
 import React, {useState, FormEvent} from 'react';
 
 export const ContactForm: React.FC = () => {
@@ -17,6 +18,7 @@ export const ContactForm: React.FC = () => {
     }
 
     console.log('form data submitted:', formData)
+    EmailService.emailTrigger(formData)
   }
 
   return (
