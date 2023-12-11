@@ -1,5 +1,5 @@
 import React from "react";
-import { ListItem } from "./components/list-item";
+import { ListItem } from ".";
 
 export const FrequentlyAskedQuestions: React.FC = () => {
   
