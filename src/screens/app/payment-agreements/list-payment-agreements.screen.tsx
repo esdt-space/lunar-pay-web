@@ -11,6 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs.t
 import { PaymentAgreementListTable } from "@/features/payment-agreements/components";
 import { usePaymentAgreementsCreatedQuery, useSignedPaymentAgreements } from "@/features/payment-agreements/hooks";
 import { PaginationButtons, usePagination } from "@/components/shared/pagination";
+import { WhitepaperScreen } from "../static-pages/white-paper/whitepaper.screen";
 
 enum ScreenTabs {
   Created = 'agreements-created',
@@ -88,6 +89,7 @@ export function ListPaymentAgreementsScreen() {
           </Card>
         </TabsContent>
       </Tabs>
+      <WhitepaperScreen />
     </ContainedScreen>
   )
 }
