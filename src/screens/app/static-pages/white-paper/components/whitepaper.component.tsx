@@ -40,7 +40,7 @@ export const Whitepaper: React.FC = () => {
           linethree={"Risk Management"}
         />
         <h2 className="font-bold text-2xl mb-4 mt-16">Executive Summary</h2>
-          <h3 className="text-2xl mb-4">Project Introduction</h3>
+          <h3 className="text-2xl mb-4 mt-8">Project Introduction</h3>
             <ListItem
               title={"What is Lunar Pay?"}
               content={"Lunar Pay is a revolutionary financial platform designed to transform the financial landscape on MultiversX. In the rapidly evolving world of cryptocurrencies and blockchain technology, Lunar Pay offers a cutting-edge solution that caters to the diverse financial needs of individuals, businesses, investors, and teams. Our platform is driven by the vision of providing enhanced flexibility and streamlined access to assets, making financial operations more efficient and user-friendly."}
@@ -83,7 +83,7 @@ export const Whitepaper: React.FC = () => {
               boldcontent={"Lunar Pay Donations: "}
               content={"Lunar Pay Donations is the ultimate solution for seamlessly accepting and managing recurring donations on the MultiversX blockchain. It caters to content creators, nonprofit organizations, and individuals with causes, empowering them to receive support in the digital age by simplifying the donation process."}
             />
-          <h3 className="text-2xl mb-4">Team composition</h3>
+          <h3 className="text-2xl mb-4 mt-8">Team composition</h3>
             <ListItem
               content={"Behind every successful endeavor is a team of exceptional individuals, and at Lunar Pay, we take immense pride in our assembly of professionals. Boasting a collective experience of over 45 years, our seasoned team is our most prized asset."}
             />
@@ -111,7 +111,7 @@ export const Whitepaper: React.FC = () => {
               cofounder={"CO-FOUNDER at ESDT SPACE and WEBCHAIN"}
               content={"Florin has over 14 years of expertise writing reliable code for high-volume businesses, he is a creative and dynamic software engineer."} 
             />
-          <h3 className="text-2xl mb-4">Market Opportunity & Value Proposition</h3>
+          <h3 className="text-2xl mb-4 mt-8">Market Opportunity & Value Proposition</h3>
             <ListItem 
               title={"Competitive Landscape "}
               content={"In the blockchain-based financial services space, Lunar Pay faces competition from similar platforms and protocols. Competitors may include other blockchain payroll and payment solutions, subscription management tools, and donation platforms. Some well-established blockchain platforms like Ethereum may also offer similar services."}
@@ -165,7 +165,7 @@ export const Whitepaper: React.FC = () => {
               content={"Users benefit from deep insights into their financial transactions and forward-looking financial projections for better financial planning."}
             />
         <h2 className="font-bold text-2xl mb-4 mt-16">Business Description</h2>
-          <h3 className="text-2xl mb-4">Problem Analysis</h3>
+          <h3 className="text-2xl mb-4 mt-8">Problem Analysis</h3>
             <ListItem
               boldcontent={"Manual Processes: "}
               content={"Many businesses and individuals in the Web3 space still rely on manual processes for payroll, subscription management, and token transfers. This introduces inefficiencies and the potential for errors."}
@@ -202,7 +202,7 @@ export const Whitepaper: React.FC = () => {
               boldcontent={"Insights: "}
               content={"Users gain valuable insights into their financial transactions, helping them understand their financial situation, track spending, and make data-driven decisions."}
             />
-          <h3 className="text-2xl mb-4">Target Audience</h3>
+          <h3 className="text-2xl mb-4 mt-8">Target Audience</h3>
             <ListItem 
               content={"Lunar Pay's target audience includes:"}
             />
@@ -222,7 +222,7 @@ export const Whitepaper: React.FC = () => {
               boldcontent={"Individuals: "} 
               content={"Individuals with various causes and financial needs in the Web3 space who want a user-friendly and secure platform for managing their financial transactions."}
             />       
-          <h3 className="text-2xl mb-4">Competitive Landscape</h3>
+          <h3 className="text-2xl mb-4 mt-8">Competitive Landscape</h3>
             <ListItem 
               content={"The competitive landscape for Lunar Pay includes:"}
             />
@@ -242,7 +242,7 @@ export const Whitepaper: React.FC = () => {
               boldcontent={"Blockchain Ecosystem: "}
               content={"Well-established blockchain ecosystems like Ethereum that offer a range of financial services."}
             />
-          <h3 className="text-2xl mb-4">Potential Strategic Partners</h3>
+          <h3 className="text-2xl mb-4 mt-8">Potential Strategic Partners</h3>
             <ListItem 
               boldcontent={"OneDex and QuantumX:"}
               content={"These projects, which facilitate payment agreements for token purchases, could be strategic partners for Lunar Pay. Collaborating with them would allow Lunar Pay users to seamlessly execute buy orders when they have sufficient funds in their Lunar Pay accounts. This partnership would provide users with a flexible and efficient way to manage their investments."}
@@ -271,7 +271,7 @@ export const Whitepaper: React.FC = () => {
               content={"These partnerships strengthen Lunar Pay's value proposition for businesses and individuals, providing a more comprehensive financial management solution that includes payroll, budgeting, and benefits in addition to existing capabilities. It will also create opportunities for seamless financial operations across various sectors, benefiting both Lunar Pay users and partner companies."}
             />
         <h2 className="font-bold text-2xl mb-4 mt-16">Marketing and Sales Strategy</h2>
-          <h3 className="text-2xl mb-4">User Acquisition Plan</h3>
+          <h3 className="text-2xl mb-4 mt-8">User Acquisition Plan</h3>
            <ListItem 
             boldcontent={"Market Research: "}
             content={"Conduct extensive market research to identify the specific needs and pain points of potential users, such as businesses, content creators, and individuals in the Web3 space. This will help tailor the product to the target audience."}
@@ -296,7 +296,7 @@ export const Whitepaper: React.FC = () => {
             boldcontent={"Community Engagement: "}
             content={"Encourage an active and engaged community around Lunar Pay through forums, social media groups, and user feedback channels. Actively address user concerns and incorporate valuable feedback into product improvements."}
            />
-          <h3 className="text-2xl mb-4">Product Delivery</h3>
+          <h3 className="text-2xl mb-4 mt-8">Product Delivery</h3>
             <ListItem
               boldcontent={"Agile Development: "}
               content={"Utilize agile development methodologies to continuously enhance and refine the product. Release regular updates to address bug fixes, security improvements, and new feature additions."} 
@@ -326,7 +326,7 @@ export const Whitepaper: React.FC = () => {
               content={"Coordinate a well-planned product launch, including a comprehensive marketing campaign that highlights the unique value propositions and features of Lunar Pay. The launch should coincide with the platform's readiness for use."} 
             />
         <h2 className="font-bold text-2xl mb-4 mt-16">Operations and Development</h2>
-          <h3 className="text-2xl mb-4">Operations</h3>
+          <h3 className="text-2xl mb-4 mt-8">Operations</h3>
             <ListItem 
               boldcontent={"User Support and Engagement:"}
               content={"Establish a robust user support system to address queries and issues promptly. Engage with the user community through forums, social media, and feedback channels to maintain a strong user relationship."}
@@ -339,7 +339,7 @@ export const Whitepaper: React.FC = () => {
               boldcontent={"Marketing and Growth: "}
               content={"Implement marketing strategies to drive user acquisition and retention. Monitor key performance indicators (KPIs) to evaluate the effectiveness of marketing efforts and make necessary adjustments."}
             />
-          <h3 className="text-2xl mb-4">Development</h3>
+          <h3 className="text-2xl mb-4 mt-8">Development</h3>
           <ListItem 
               boldcontent={"Agile Development: "}
               content={"Continue agile development methodologies to adapt to user feedback and market changes. Regularly release updates and new features to keep the platform competitive."}
@@ -356,7 +356,7 @@ export const Whitepaper: React.FC = () => {
               boldcontent={"Testing and Quality Assurance: "}
               content={"Maintain rigorous testing and quality assurance processes to ensure a stable and secure platform. Regularly audit smart contracts and conduct penetration testing."}
             />
-          <h3 className="text-2xl mb-4">Timeline & Key Milestones</h3>
+          <h3 className="text-2xl mb-4 mt-8">Timeline & Key Milestones</h3>
             <TimelineItem
               boldcontent={"Q3 2023: "}
               content={"Research & Planning"}
@@ -377,7 +377,7 @@ export const Whitepaper: React.FC = () => {
               linetwo={"Prepare for the official launch, ensuring readiness for a larger user base."}
               linethree={"Officially launch Lunar Pay and begin user onboarding processes."}
             />
-          <h3 className="text-2xl mb-4">Resource Plan</h3>
+          <h3 className="text-2xl mb-4 mt-8">Resource Plan</h3>
             <ListItem
               title={"Human Resources: "}
               content={"Core team expansion, particularly in development and customer support, to ensure a well-rounded and responsive team capable of managing the growing user base."}
@@ -391,7 +391,7 @@ export const Whitepaper: React.FC = () => {
               content={"Continuous upgrade of infrastructure to handle increasing user load and transaction volume. This involves investments in server resources, cloud services, and technologies that can efficiently scale to meet the demands of a growing user base."}
             />
         <h2 className="font-bold text-2xl mb-4 mt-16">Financial Plan and Risk Management</h2>
-          <h3 className="text-2xl mb-4">Financial Plan</h3>
+          <h3 className="text-2xl mb-4 mt-8">Financial Plan</h3>
             <ListItem
               title={"Monetization Strategy"}
               content={"Lunar Pay's primary source of revenue will be transaction fees on its platform. A 0.5% fee per transaction will contribute to the revenue stream. This fee structure provides a sustainable revenue source while keeping the platform accessible to a broad user base."} 
@@ -400,7 +400,7 @@ export const Whitepaper: React.FC = () => {
               title={"Expected Costs & Funding"}
               content={"To bring the product to maturity, Lunar Pay anticipates an initial investment of €300,000. This budget allocation covers various expenses such as development, security, compliance, marketing, and infrastructure scaling. A subsequent funding phase will be initiated to secure the required capital for product development, growth, and operational expenses."} 
             />
-          <h3 className="text-2xl mb-4">Potential Risks & Challenges</h3>
+          <h3 className="text-2xl mb-4 mt-8">Potential Risks & Challenges</h3>
             <ListItem
               boldcontent={"Regulatory Evolution: "}
               content={"The evolving and uncertain regulatory environment in the Web3 space may pose challenges. Governments worldwide are still defining their stances on cryptocurrencies and blockchain technology."} 
@@ -417,7 +417,7 @@ export const Whitepaper: React.FC = () => {
               boldcontent={"Competitive Pressure: "}
               content={"With numerous entities competing in the MultiverseX space, maintaining a competitive edge is vital. Lunar Pay must continuously innovate to stay relevant and attract and retain users."} 
             />
-          <h3 className="text-2xl mb-4">Risk Management</h3>
+          <h3 className="text-2xl mb-4 mt-8">Risk Management</h3>
             <ListItem
               content={"Lunar Pay is committed to managing and mitigating these potential risks:"} 
             />

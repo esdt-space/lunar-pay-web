@@ -5,7 +5,7 @@ export const TermsAndConditions: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto p-4">
       <h1 className="text-2xl font-bold mb-12 text-center">Terms and Conditions</h1>
-      <h2 className="font-bold mb-8">1. Introduction</h2>
+      <h2 className="font-bold mb-6 mt-10">1. Introduction</h2>
       <ul>
         <ListItem 
           title={'1.1 Welcome to Lunar Pay'}
@@ -32,7 +32,7 @@ export const TermsAndConditions: React.FC = () => {
           content={'Lunar Pay is a platform that facilitates various financial transactions and services. It is important to note that we do not offer traditional banking or financial services and should not be considered as a financial institution.'}
         />
       </ul>
-      <h2 className="font-bold mb-8">2. Acceptance of Terms</h2>
+      <h2 className="font-bold mb-6 mt-10">2. Acceptance of Terms</h2>
       <ul>
         <ListItem
           title={'2.1 Agreement to Terms'}
@@ -55,7 +55,7 @@ export const TermsAndConditions: React.FC = () => {
           content={'In agreeing to these Terms, you also agree to: (a) provide accurate, current, and complete information about yourself as prompted by our registration forms ("Registration Data"); (b) maintain the security of your password and identification; (c) maintain and promptly update the Registration Data, and any other information you provide to Lunar Pay, to keep it accurate, current, and complete; and (d) accept all risks of unauthorized access to the Registration Data and any other information you provide to Lunar Pay.'}
         />
       </ul>
-      <h2 className="font-bold mb-8">3. Eligibility</h2>
+      <h2 className="font-bold mb-6 mt-10">3. Eligibility</h2>
       <ul>
         <ListItem
           title={'3.1 Age and Capacity'}
@@ -70,7 +70,7 @@ export const TermsAndConditions: React.FC = () => {
           content={"By using Lunar Pay, you declare that your funds are obtained legally and that you will not use Lunar Pay's services for money laundering, illegal transactions, or any other illicit activity."}
         />
       </ul>
-      <h2 className="font-bold mb-8">4. Lunar Pay Services</h2>
+      <h2 className="font-bold mb-6 mt-10">4. Lunar Pay Services</h2>
       <ul>
         <ListItem
           title={'4.1 Description of Services '}
@@ -101,7 +101,7 @@ export const TermsAndConditions: React.FC = () => {
           content={'Lunar Pay will strive to maintain continuous operation of its services but does not guarantee uninterrupted service. Lunar Pay is not liable for any loss or damage arising from service interruptions, including interruptions that may affect the processing of transactions.'}
         />
       </ul>
-      <h2 className="font-bold mb-8">5. User Accounts</h2>
+      <h2 className="font-bold mb-6 mt-10">5. User Accounts</h2>
       <ul>
         <ListItem
           title={'5.1 Account Creation'}
@@ -136,7 +136,7 @@ export const TermsAndConditions: React.FC = () => {
           content={'Upon termination or deactivation of your account, Lunar Pay may retain your information for a certain period for backup, archival, or audit purposes. You may request the deletion of your account data in accordance with our Privacy Policy.'}
         />
       </ul>
-      <h2 className="font-bold mb-8">6. User Conduct</h2>
+      <h2 className="font-bold mb-6 mt-10">6. User Conduct</h2>
       <ul>
         <ListItem
           title={'6.1 Acceptable Use Policy'}
@@ -167,7 +167,7 @@ export const TermsAndConditions: React.FC = () => {
           content={'You are solely responsible for the content you provide while using Lunar Pay, including any data, text, information, usernames, images, graphics, or other materials.'}
         />
       </ul>
-      <h2 className="font-bold mb-8">7. Fees and Transactions</h2>
+      <h2 className="font-bold mb-6 mt-10">7. Fees and Transactions</h2>
       <ul>
         <ListItem
           title={'7.1 Transaction Fees'}
@@ -194,7 +194,7 @@ export const TermsAndConditions: React.FC = () => {
           content={'You must inform Lunar Pay immediately if you believe there has been an unauthorized transaction or security breach in your account. Lunar Pay will investigate and, where appropriate, take steps to rectify the issue. However, Lunar Pay is not liable for any loss resulting from unauthorized transactions.'}
         /> 
       </ul>
-      <h2 className="font-bold mb-8">8. Risks</h2>
+      <h2 className="font-bold mb-6 mt-10">8. Risks</h2>
       <ul>
         <ListItem
           title={'8.1 Acknowledgment of Risks'}
@@ -233,7 +233,7 @@ export const TermsAndConditions: React.FC = () => {
           content={'Lunar Pay does not provide investment, legal, or tax advice. All trading decisions, including those related to cryptocurrency assets, are made solely by you, and you are fully responsible for all aspects of your interaction with Lunar Pay.'}
         />    
       </ul>
-      <h2 className="font-bold mb-8">9. Security</h2>
+      <h2 className="font-bold mb-6 mt-10">9. Security</h2>
       <ul>
         <ListItem
           title={'9.1 Platform Security Measures'}
@@ -260,7 +260,7 @@ export const TermsAndConditions: React.FC = () => {
           content={'You are responsible for securing any device or network through which you access Lunar Pay services. This includes using virus protection, firewalls, and other security measures.'}
         />      
       </ul>
-      <h2 className="font-bold mb-8">10. Resource Plan</h2>
+      <h2 className="font-bold mb-6 mt-10">10. Resource Plan</h2>
       <ul>
         <ListItem
           title={'10.1 Human Resources'}
@@ -283,7 +283,7 @@ export const TermsAndConditions: React.FC = () => {
           content={'Lunar Pay dedicates resources to ensure compliance with relevant laws and regulations. This includes legal expertise and aligning our operations with current financial and data protection regulations.'}
         />       
       </ul>
-      <h2 className="font-bold mb-8">11. Financial Plan and Risk Management</h2>
+      <h2 className="font-bold mb-6 mt-10">11. Financial Plan and Risk Management</h2>
       <ul>
         <ListItem
           title={'11.1 Financial Strategy'}
@@ -318,7 +318,7 @@ export const TermsAndConditions: React.FC = () => {
           content={'We maintain contingency plans to address potential financial challenges or crises. This includes setting aside emergency funds and having strategies in place for various financial scenarios.'}
         /> 
       </ul>
-      <h2 className="font-bold mb-8">12. Disclaimer of Warranties</h2>
+      <h2 className="font-bold mb-6 mt-10">12. Disclaimer of Warranties</h2>
       <ul>
         <ListItem
           title={'12.1 "As Is" Basis'}
@@ -345,7 +345,7 @@ export const TermsAndConditions: React.FC = () => {
           content={'You understand and agree that you use all Lunar Pay services at your own risk and discretion. You will be solely responsible for any damage to your computer system, loss of data, or any other loss or damage that results from the use of Lunar Pay services.'}
         />
       </ul>
-      <h2 className="font-bold mb-8">13. Limitation of Liability</h2>
+      <h2 className="font-bold mb-6 mt-10">13. Limitation of Liability</h2>
       <ul>
         <ListItem
           title={'13.1 Scope of Liability'}
@@ -364,7 +364,7 @@ export const TermsAndConditions: React.FC = () => {
           content={'You acknowledge that Lunar Pay has offered its services, set its prices, and entered into these Terms in reliance upon the warranty disclaimers and the limitations of liability set forth herein, that the warranty disclaimers and the limitations of liability set forth herein reflect a reasonable and fair allocation of risk between you and Lunar Pay, and that the warranty disclaimers and the limitations of liability set forth herein form an essential basis of the bargain between you and Lunar Pay.'}
         />
       </ul>
-      <h2 className="font-bold mb-8">14. Governing Law</h2>
+      <h2 className="font-bold mb-6 mt-10">14. Governing Law</h2>
       <ul>
         <ListItem
           title={'14.1 Jurisdiction'}
@@ -395,7 +395,7 @@ export const TermsAndConditions: React.FC = () => {
           content={'You and Lunar Pay hereby waive any right to assert any claims against the other party as a representative or member in any class or representative action, except where such waiver is prohibited by law or deemed by a court of law to be against public policy.'}
         />       
       </ul>
-      <h2 className="font-bold mb-8">15. Contact Information and Communication</h2>
+      <h2 className="font-bold mb-6 mt-10">15. Contact Information and Communication</h2>
       <ul>
         <ListItem
           title={'15.1 Contacting Lunar Pay'}
