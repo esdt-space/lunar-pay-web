@@ -89,7 +89,6 @@ export function ListPaymentAgreementsScreen() {
           </Card>
         </TabsContent>
       </Tabs>
-      <WhitepaperScreen />
     </ContainedScreen>
   )
 }
