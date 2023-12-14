@@ -1,5 +1,7 @@
 import { PropsWithChildren } from "react";
-import logoLoader from "./telegram-logo.svg";
+import { SocialIcon } from 'react-social-icons'
+
+const TelegramIcon = <SocialIcon style={{ height: '24px', width: '24px' }} url="https://web.telegram.org/" />
 
 export function TelegramLogo(props: PropsWithChildren) {
 
@@ -10,8 +12,8 @@ export function TelegramLogo(props: PropsWithChildren) {
   }
 
   return (
-    <div onClick={redirect} className="flex direction-row mb-2 mt-2 cursor-pointer">
-      <img src={logoLoader} className="w-7 h-7 mr-2"/>
+    <div onClick={redirect} className="flex direction-row mb-2 mt-2 cursor-pointer space-x-2">
+      {TelegramIcon}
       <div className={''}>
         {props.children}
       </div>
