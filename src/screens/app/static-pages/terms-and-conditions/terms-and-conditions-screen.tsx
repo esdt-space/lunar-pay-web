@@ -3,7 +3,6 @@ import { Card } from "@/components/ui/card"
 import { TermsAndConditions } from "./components"
 
 export function TermsAndConditionsScreen() {
-
   return (
     <ContainedScreen>
       <Card className="p-6">
@@ -11,5 +10,4 @@ export function TermsAndConditionsScreen() {
       </Card>
     </ContainedScreen>
   )
-
 }
