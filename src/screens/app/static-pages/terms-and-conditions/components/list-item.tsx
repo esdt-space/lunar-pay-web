@@ -4,10 +4,9 @@ type Props = {
 }
 
 export const ListItem = ({title, content}: Props) => {
-  return (
-  <li>
+  return <li>
     <h2 className="font-semibold">{title}</h2>
     <p className="mb-4">{content}</p>
   </li>
-  )
 }
+
