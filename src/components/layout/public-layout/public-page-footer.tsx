@@ -31,16 +31,18 @@ export function PublicPageFooter() {
                 </Link>
               </div>
             </div>
-            <div className="col-span-12 md:col-span-4"></div>
             <div className="col-span-12 md:col-span-4">
-              <div className="flex h-full items-center justify-between gap-6 border-b border-white py-6 max-md:flex-col md:items-start md:justify-between md:space-y-6 md:border-none md:py-0">
-                <div className="flex flex-col space-y-1">
+              <div className="flex h-full items-center justify-between py-6 max-md:flex-col md:items-start md:justify-between md:space-y-6 md:border-none md:py-0">
+                <div className="flex space-x-4 max-md:flex-col">
                   <Link to={RoutesConfig.frequentlyAskedQuestions}>FAQ</Link>
                   <Link to={RoutesConfig.termsAndConditions}>Terms&Conditions</Link>
                   <Link to={RoutesConfig.whitepaper}>Whitepaper</Link>
                   <Link to={RoutesConfig.contactUs}>Contact Us</Link>
                 </div>
               </div>
+            </div>
+            <div className="col-span-12 md:col-span-4">
+              Social Media
             </div>
             {/*<div className="col-span-12 md:col-span-8">*/}
             {/*  <div className="grid grid-cols-2 gap-6 pb-16">*/}
