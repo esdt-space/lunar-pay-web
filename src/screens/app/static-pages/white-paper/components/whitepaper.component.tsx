@@ -1,44 +1,12 @@
 import { ListItem } from "./list-item"
-import { SummaryItem } from "./summary-item"
 import { TeamItem } from "./team-item"
 import { TimelineItem } from "./timeline-item"
 
 export const Whitepaper: React.FC = () => {
   return (
-    <div className="max-w-4xl mx-auto p-4">
+    <div className="max-w-4xl mx-auto p-4 mt-8">
       <h1 className="text-2xl font-bold mb-16 text-center">WHITEPAPER</h1>
       <ul>
-        <SummaryItem
-          content={"Executive Summary"}
-          lineone={"Project Introduction"}
-          linetwo={"Team composition"}
-          linethree={"Market Opportunity & Value Proposition"}
-        />
-        <SummaryItem
-          content={"Business Description"}
-          lineone={"Problem Analysis"}
-          linetwo={"Target Audience"}
-          linethree={"Competitive Landscape"}
-          linefour={"Potential Strategic Partners"}
-        />
-        <SummaryItem
-          content={"Marketing and Sales Strategy"}
-          lineone={"User Acquisition Plan"}
-          linetwo={"Product Delivery"}
-        />
-        <SummaryItem
-          content={"Operations and Development"}
-          lineone={"Operations"}
-          linetwo={"Development"}
-          linethree={"Timeline & Key Milestones"}
-          linefour={"Resource Plan"}
-        />
-        <SummaryItem
-          content={"Financial Plan and Risk Management"}
-          lineone={"Financial Plan"}
-          linetwo={"Potential Risks & Challenges"}
-          linethree={"Risk Management"}
-        />
         <h2 className="font-bold text-2xl mb-4 mt-16">Executive Summary</h2>
           <h3 className="text-2xl mb-4 mt-8">Project Introduction</h3>
             <ListItem
