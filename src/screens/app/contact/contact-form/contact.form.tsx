@@ -11,11 +11,12 @@ export const ContactForm: React.FC = () => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    console.log(name)
 
     const formData = {
+      name: name,
       from: email,
-      context: message
+      context: message,
+      to: 'contact@lunarpay.finance'
     }
 
     console.log('form data submitted:', formData)
