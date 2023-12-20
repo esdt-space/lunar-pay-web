@@ -70,8 +70,8 @@ export function PublicPageFooter() {
             {/*  </div>*/}
             {/*</div>*/}
           </div>
-          <div className="text-sm">
-            All right reserved © Lunar Pay 2023 - Present
+          <div className="text-sm text-center">
+            All rights reserved © Lunar Pay 2023 - Present
           </div>
         </div>
       </div>
