@@ -7,7 +7,7 @@ import { Separator } from "@/components/ui/separator.tsx"
 export const ContactScreen = () => {
   return (
     <ContainedScreen>
-      <Card className="flex justify-between max-md:flex-col p-6">
+      <Card className="flex justify-between max-md:flex-col p-6 mt-16">
         <div className="w-6/12 md:mr-6 max-md:w-full">
           <div>
             <h2 className={'text-3xl font-medium mb-4'}>Contact us</h2>

@@ -56,7 +56,7 @@ export function ApplicationRouter() {
           <Route path={RoutesConfig.frequentlyAskedQuestions} element={<FrequentlyAskedQuestionsScreen />} />
           <Route path={RoutesConfig.termsAndConditions} element={<TermsAndConditionsScreen />} />
           <Route path={RoutesConfig.whitepaper} element={<WhitepaperScreen />} />
-          <Route path={RoutesConfig.contactUs} element={<></>} />
+          <Route path={RoutesConfig.contactUs} element={<ContactScreen />} />
         </Route>
 
         <Route path={RoutesConfig.agreement}>
@@ -66,7 +66,6 @@ export function ApplicationRouter() {
         <Route element={<AuthenticatedRouteOutlet />}>
           <Route element={<AppLayout />}>
             <Route index element={<DashboardScreen />} />
-            <Route path={RoutesConfig.contact} element={<ContactScreen />} />
             <Route path={RoutesConfig.dashboard} element={<DashboardScreen />} />
 
             <Route path={RoutesConfig.admin}>
