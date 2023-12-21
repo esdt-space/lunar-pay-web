@@ -1,14 +1,28 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import Reaptcha from 'reaptcha';
 
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { EmailService } from '@/features/emailing/email.service';
 
+const siteKey = import.meta.env.VITE_CAPTCHA_SITE_KEY
+
 export const ContactForm: React.FC = () => {
+  const [verified, setVerified] = useState(false);
+  const captchaRef = useRef(null)
+
+  const verify = () => {
+    if (captchaRef.current === null) {
+      return
+    }
+    
+    setVerified(true)
+  }
+
   const contactSchema = z.object({
     name: z.string(),
     email: z.string().min(1, { message: "Email is required" }).email({
@@ -30,7 +44,7 @@ export const ContactForm: React.FC = () => {
   const onSubmit: SubmitHandler<Contact> = (data) => EmailService.sendContactEmail(data)
 
   return (
-    <form className="px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div className={'space-y-4'}>
         <div>
           <h2>Name</h2>
@@ -62,7 +76,12 @@ export const ContactForm: React.FC = () => {
             </p>
           )}
         </div>
-        <Button type='submit'>Submit</Button>
+        <Reaptcha
+          sitekey={siteKey}
+          ref={captchaRef}
+          onVerify={verify}
+        />
+        <Button disabled={!verified} type='submit'>Submit</Button>
       </div>
     </form>
   )
