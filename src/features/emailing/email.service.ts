@@ -4,8 +4,8 @@ import { ContactInput } from "./dto";
 export class EmailService {
   private static api = new ProtocolApi()
 
-  static async emailTrigger(email: ContactInput) {
-    return EmailService.api.post<ContactInput>(`/email-service/trigger-email`, email)
+  static async sendContactEmail(email: ContactInput) {
+    return EmailService.api.post<ContactInput>(`/email-service/contact`, email)
       .then((response) => response.data)
   }
 }
