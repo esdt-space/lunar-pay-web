@@ -1,5 +1,6 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import {Check, Loader2 as LoadingIcon} from 'lucide-react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import Reaptcha from 'reaptcha';
@@ -13,7 +14,16 @@ const siteKey = import.meta.env.VITE_CAPTCHA_SITE_KEY
 
 export const ContactForm: React.FC = () => {
   const [verified, setVerified] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccessful, setIsSuccessful] = useState(false);
+  
   const captchaRef = useRef(null)
+
+  useEffect(() => {
+    if(isSuccessful) {
+      setTimeout(() => setIsSuccessful(false), 3000)
+    }
+  }, [isSuccessful])
 
   const verify = () => {
     if (captchaRef.current === null) {
@@ -36,12 +46,21 @@ export const ContactForm: React.FC = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<Contact>({
     resolver: zodResolver(contactSchema),
   });
 
-  const onSubmit: SubmitHandler<Contact> = (data) => EmailService.sendContactEmail(data)
+  const onSubmit: SubmitHandler<Contact> = (data) => {
+    setIsLoading(true)
+
+    EmailService.sendContactEmail(data).then(() => {
+      setIsLoading(false)
+      setIsSuccessful(true)
+      reset()
+    })
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -81,7 +100,11 @@ export const ContactForm: React.FC = () => {
           ref={captchaRef}
           onVerify={verify}
         />
-        <Button disabled={!verified} type='submit'>Submit</Button>
+        <Button disabled={!verified} type='submit'>
+          Submit 
+            {isLoading && <LoadingIcon className="ml-2 h-4 w-4 animate-spin" />}
+            {isSuccessful && <Check className="ml-2 h-4 w-4" />}
+        </Button>
       </div>
     </form>
   )
