@@ -23,12 +23,26 @@ export function PublicPageFooter() {
     <footer className="border-t border-gray-100 py-8">
       <div>
         <div className="m-auto space-y-8 px-4 text-gray-600 sm:px-12 xl:max-w-6xl xl:px-0">
-          <div className="grid grid-cols-12 gap-6 md:gap-0">
-            <div className="col-span-12 md:col-span-4">
-              <div className="flex h-full items-center justify-between gap-6 border-b border-white py-6 md:flex-col md:items-start md:justify-between md:space-y-6 md:border-none md:py-0">
+          <div className="flex justify-between max-sm:flex-col max-sm:space-y-6">
+            <div className="flex items-center justify-center">
+              <div>
                 <Link to={RoutesConfig.home}>
                   <AppIcon />
                 </Link>
+              </div>
+            </div>
+            <div className="flex flex-wrap justify-center p-6 space-x-6">
+              <div className="max-sm:mt-4">
+                <Link to={RoutesConfig.frequentlyAskedQuestions}>FAQ</Link>
+              </div>
+              <div className="max-sm:mt-4">
+                <Link to={RoutesConfig.termsAndConditions}>Terms&Conditions</Link>
+              </div>
+              <div className="max-sm:mt-4">
+                <Link to={RoutesConfig.whitepaper}>Whitepaper</Link>
+              </div>
+              <div className="max-sm:mt-4">
+                <Link to={RoutesConfig.contactUs}>Contact Us</Link>
               </div>
             </div>
             {/*<div className="col-span-12 md:col-span-8">*/}
@@ -56,8 +70,8 @@ export function PublicPageFooter() {
             {/*  </div>*/}
             {/*</div>*/}
           </div>
-          <div className="text-sm">
-            All right reserved © Lunar Pay 2023 - Present
+          <div className="text-sm text-center">
+            All rights reserved © Lunar Pay 2023 - Present
           </div>
         </div>
       </div>
