@@ -17,6 +17,8 @@ export class RoutesConfig {
   static auth = '/auth'
 
   static dashboard = '/dashboard'
+  
+  static contact = '/contact'
 
   static payroll = '/payroll'
 
