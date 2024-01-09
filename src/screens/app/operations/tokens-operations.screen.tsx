@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input.tsx";
 import { Card, CardContent } from "@/components/ui/card.tsx";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -11,6 +9,7 @@ import { TokenOperationType } from "@/features/token-operations/enums";
 import { TokenOperationsTable } from "@/features/token-operations/components";
 import { useTokenOperationsQuery } from "@/features/token-operations/hooks/queries";
 import { useLoadingStateContent, useEmptyStateContent } from "@/screens/app/operations/hooks";
+import { PaginationButtonsNew } from "@/components/shared/pagination/pagination-buttons";
 
 export const TokensOperationsScreen = () => {
   const [currentPage, setCurrentPage] = useState(1)
@@ -69,19 +68,11 @@ export const TokensOperationsScreen = () => {
               <TokenOperationsTable 
                 operationType={operationType} 
                 operations={operations} />
-              <div className="flex justify-end items-center m-2 p-2 space-x-2">
-                <span className={'text-sm text-muted-foreground'}>Page {currentPage} of {numberOfPages}</span>
-
-                <Button size={'sm'} onClick={previousPageHandler} disabled={currentPage === 1}>
-                  <ChevronLeft className={'w-4 h-4 mr-2'} />
-                  Previous
-                </Button>
-
-                <Button size={'sm'} onClick={nextPageHandler} disabled={currentPage === numberOfPages}>
-                  Next
-                  <ChevronRight className={'w-4 h-4 ml-2'} />
-                </Button>
-              </div>
+              <PaginationButtonsNew 
+                previousPageHandler={previousPageHandler} 
+                nextPageHandler={nextPageHandler}
+                currentPage={currentPage}
+                lastPage={numberOfPages} />
             </div>
           )}
         </CardContent>
