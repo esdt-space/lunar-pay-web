@@ -1,8 +1,6 @@
 import {LogOut, User} from "lucide-react";
-import { logout } from "@multiversx/sdk-dapp/utils";
 import { useGetAccount } from "@multiversx/sdk-dapp/hooks";
 
-import { RoutesConfig } from "@/navigation";
 import { formatAddress } from "@/utils/address";
 
 import { Button} from "@/components/ui/button.tsx";
@@ -10,9 +8,12 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 
 import { CopyIconComponent } from "./copy-icon";
 
-export const UserMenu = () => {
+type Props = {
+  signOutHandler: () => void;
+}
+
+export const UserMenu = ({signOutHandler}: Props) => {
   const { address } = useGetAccount()
-  const signOutHandler = () => logout(RoutesConfig.home)
 
   return (
     <Popover>
@@ -28,7 +29,7 @@ export const UserMenu = () => {
             <span className="text-xs">{formatAddress(address)}</span>
             <CopyIconComponent address={address}/>
           </li>
-          <li onClick={signOutHandler} className="">
+          <li onClick={signOutHandler}>
             <Button variant={'ghost'} size={'sm'} className={'flex w-full justify-between'}>
               Logout
               <LogOut className={'w-4 h-4 ml-2'} />
