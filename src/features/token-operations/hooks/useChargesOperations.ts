@@ -1,7 +1,7 @@
 import { useChargesOperationsQuery } from "./queries";
 
-export function useChargesOperations(id: string | undefined){
-  const {data, ...props} = useChargesOperationsQuery(id);
+export function useChargesOperations(pageNumber: number, id: string | undefined){
+  const {data, ...props} = useChargesOperationsQuery(pageNumber, id);
 
   return { data, ...props };
 }

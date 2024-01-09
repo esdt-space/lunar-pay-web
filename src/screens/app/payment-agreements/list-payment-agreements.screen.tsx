@@ -9,8 +9,9 @@ import { ContainedScreen } from "@/components/prefab/contained-screen.tsx";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs.tsx";
 
 import { PaymentAgreementListTable } from "@/features/payment-agreements/components";
-import { usePaymentAgreementsCreatedQuery, useSignedPaymentAgreements } from "@/features/payment-agreements/hooks";
-import { PaginationButtons, usePagination } from "@/components/shared/pagination";
+import { usePaymentAgreementsCreatedQuery, usePaymentAgreementsSignedQuery } from "@/features/payment-agreements/hooks";
+import { PaginationButtonsNew } from "@/components/shared/pagination";
+import { useEffect, useState } from "react";
 
 enum ScreenTabs {
   Created = 'agreements-created',
@@ -18,20 +19,32 @@ enum ScreenTabs {
 }
 
 export function ListPaymentAgreementsScreen() {
-  const { data: agreements = [], isFetched } = usePaymentAgreementsCreatedQuery()
+  const [currentPage, setCurrentPage] = useState(1);
+  const { data: agreementsResponse, isFetched, refetch } = usePaymentAgreementsCreatedQuery(currentPage)
   const {
-    data: signedAgreements = [],
+    data: signedAgreementsResponse,
     isFetched: isFetchedSignedAgreement,
     isFetching: isFetchingSignedAgreement,
-  } = useSignedPaymentAgreements()
+  } = usePaymentAgreementsSignedQuery(currentPage)
+
+  const agreements = agreementsResponse?.agreements ?? []
+  const numberOfPages = agreementsResponse?.numberOfPages
+
+  const signedAgreements = signedAgreementsResponse?.agreements ?? []
+  const numberOfPagesSignedAgreements = signedAgreementsResponse?.numberOfPages
+
+  useEffect(() => {
+    setCurrentPage(1);
+    refetch();
+  }, [ScreenTabs])
+
+  const nextPageHandler = () => setCurrentPage(page => page + 1);
+  const previousPageHandler = () => setCurrentPage(page => Math.max(1, page - 1));
 
   const emptyAgreementsCreated = isFetched && agreements.length === 0;
 
   const emptyAgreementsSigned = isFetchedSignedAgreement && signedAgreements.length === 0;
   const isFetchingFirstTimeSignedAgreement = !isFetchedSignedAgreement && isFetchingSignedAgreement;
-
-  const { data: paginatedAgreements, ...rest} =
-    usePagination(agreements, 5);
 
   return (
     <ContainedScreen className={'space-y-8'}>
@@ -72,8 +85,12 @@ export function ListPaymentAgreementsScreen() {
               )}
               {!emptyAgreementsCreated && (
                 <div>
-                  <PaymentAgreementListTable agreementsList={paginatedAgreements}/>
-                  <PaginationButtons {...{...rest}} />
+                  <PaymentAgreementListTable agreementsList={agreements}/>
+                  <PaginationButtonsNew 
+                    previousPageHandler={previousPageHandler} 
+                    nextPageHandler={nextPageHandler}
+                    currentPage={currentPage}
+                    lastPage={numberOfPages} />
                 </div>
               )}
             </CardContent>
@@ -84,6 +101,11 @@ export function ListPaymentAgreementsScreen() {
           <Card>
             <CardContent className="p-0">
               <PaymentAgreementListTable agreementsList={signedAgreements} signedList={true}/>
+              <PaginationButtonsNew 
+                previousPageHandler={previousPageHandler} 
+                nextPageHandler={nextPageHandler}
+                currentPage={currentPage}
+                lastPage={numberOfPagesSignedAgreements} />
             </CardContent>
           </Card>
         </TabsContent>
