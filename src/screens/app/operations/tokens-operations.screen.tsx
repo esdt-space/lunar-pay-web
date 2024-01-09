@@ -18,7 +18,7 @@ export const TokensOperationsScreen = () => {
   const [operationType, setOperationType] = useState<TokenOperationType | "all">("all");
   
   const typeFilter = operationType === "all" ? "" : operationType
-  const { data, isFetching, isFetched, refetch } = useTokenOperationsQuery(currentPage, typeFilter);
+  const { data, isFetching, isFetched, refetch } = useTokenOperationsQuery(currentPage, typeFilter, filterValue);
   const operations = data?.operations ?? []
   const numberOfPages = data?.numberOfPages
 
@@ -28,7 +28,7 @@ export const TokensOperationsScreen = () => {
   useEffect(() => {
     setCurrentPage(1);
     refetch();
-  }, [operationType])
+  }, [operationType, filterValue])
 
   const isLoadingFirstTime = !isFetched && isFetching;
   const isLoadedAndHasData = isFetched && operations.length > 0;
