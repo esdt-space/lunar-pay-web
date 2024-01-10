@@ -27,6 +27,10 @@ import {
 } from "@/screens/app/payment-agreements";
 import { DemoPage } from '@/screens/app/demo';
 import { ViewSignedPaymentAgreementScreen } from '@/screens/app/payment-agreements/view-payment-agreement/view-signed-payment-agreement.screen';
+import { ContactScreen } from '@/screens/app/contact';
+import { FrequentlyAskedQuestionsScreen } from '@/screens/app/static-pages/frequently-asked-questions/frequently-asked-questions.screen';
+import { TermsAndConditionsScreen } from '@/screens/app/static-pages/terms-and-conditions/terms-and-conditions-screen';
+import { WhitepaperScreen } from '@/screens/app/static-pages/white-paper/whitepaper.screen';
 
 export function ApplicationRouter() {
   useScrollToTopHandler()
@@ -48,6 +52,11 @@ export function ApplicationRouter() {
           <Route path={RoutesConfig.landingPortfolioManagement} element={<PortfolioManagement></PortfolioManagement>} />
           <Route path={RoutesConfig.landingDonations} element={<Donations></Donations>} />
           <Route path={RoutesConfig.landingExpensesAndAllowances} element={<></>} />
+
+          <Route path={RoutesConfig.frequentlyAskedQuestions} element={<FrequentlyAskedQuestionsScreen />} />
+          <Route path={RoutesConfig.termsAndConditions} element={<TermsAndConditionsScreen />} />
+          <Route path={RoutesConfig.whitepaper} element={<WhitepaperScreen />} />
+          <Route path={RoutesConfig.contactUs} element={<ContactScreen />} />
         </Route>
 
         <Route path={RoutesConfig.agreement}>

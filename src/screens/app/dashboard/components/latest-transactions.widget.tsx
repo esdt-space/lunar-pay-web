@@ -10,8 +10,8 @@ import { TokenOperationsTable } from "@/features/token-operations/components";
 import { useTokenOperationsQuery } from "@/features/token-operations/hooks/queries";
 
 export const DashboardLatestTransactionsWidget = () => {
-  const { data: operations = [] } = useTokenOperationsQuery( 1, "" );
-  const latestOperations = operations.slice(0, 5);
+  const { data } = useTokenOperationsQuery( 1, "" );
+  const latestOperations = data?.operations.slice(0, 5) ?? [];
 
   return (
     <Card className={'flex-1 shadow p-2'}>

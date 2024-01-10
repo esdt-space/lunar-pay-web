@@ -4,8 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom"
 
 import { RoutesConfig } from "@/navigation"
 import { useCreatedPaymentAgreement } from "@/features/payment-agreements/hooks";
-import { usePaymentAgreementMembers } from "@/features/payment-agreements/hooks";
-import { useAgreementTriggersQuery } from "@/features/agreement-triggers/hooks";
+import { useAgreementTriggers } from "@/features/agreement-triggers/hooks";
 
 import { Card, CardContent } from "@/components/ui/card.tsx"
 import { Button } from "@/components/ui/button.tsx"
@@ -16,19 +15,25 @@ import { AgreementDetails } from "./partials/agreement-details.tsx";
 import { MembersListPartial } from "./partials/members-list-partial.tsx";
 import { AgreementTriggersTable } from "@/features/agreement-triggers/components";
 import { useTokensMap } from "@/core/tokens";
-import { PaginationButtons, usePagination } from "@/components/shared/pagination";
+import { PaginationButtonsNew } from "@/components/shared/pagination";
+import { useEffect, useState } from "react";
 
 export const ViewPaymentAgreementScreen = () => {
+  const [currentPage, setCurrentPage] = useState(1);
   const { address } = useGetAccount()
   const { id } = useParams()
   const navigate = useNavigate()
 
   const { data: agreement } = useCreatedPaymentAgreement(id);
-  const { data: members = [] } = usePaymentAgreementMembers(id);
-  const { data: agreementTriggers = [] } = useAgreementTriggersQuery(id);
+  const { data: triggers, refetch } = useAgreementTriggers(currentPage, id);
 
-  const { data: paginatedTriggers, ...rest} =
-    usePagination(agreementTriggers, 5);
+  const agreementTriggers = triggers?.agreementTriggers ?? []
+  const numberOfPages = triggers?.numberOfPages
+
+  useEffect(() => {
+    setCurrentPage(1);
+    refetch();
+  }, [])
 
   const tokensMap = useTokensMap();
 
@@ -39,6 +44,9 @@ export const ViewPaymentAgreementScreen = () => {
   if(agreement && agreement.owner !== address) {
     navigate(RoutesConfig.dashboard, { replace: true });
   }
+
+  const nextPageHandler = () => setCurrentPage(page => page + 1);
+  const previousPageHandler = () => setCurrentPage(page => Math.max(1, page - 1));
 
   return (
     <ContainedScreen className="space-y-6">
@@ -75,11 +83,15 @@ export const ViewPaymentAgreementScreen = () => {
           <Card className={'p-6'}>
             <AgreementDetails agreement={agreement}/>
           </Card>
-          <MembersListPartial members={members}/>
+          <MembersListPartial />
           <Card>
             <CardContent className="p-0">
-              <AgreementTriggersTable triggersList={paginatedTriggers} token={token} />
-              <PaginationButtons {...{...rest}} />
+              <AgreementTriggersTable triggersList={agreementTriggers} token={token} />
+              <PaginationButtonsNew 
+                previousPageHandler={previousPageHandler} 
+                nextPageHandler={nextPageHandler}
+                currentPage={currentPage}
+                lastPage={numberOfPages} />
             </CardContent>
           </Card>
         </TabsContent>
