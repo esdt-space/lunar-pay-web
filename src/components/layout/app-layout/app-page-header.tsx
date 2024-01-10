@@ -1,5 +1,6 @@
 import { Menu } from "lucide-react";
 import { Link } from "react-router-dom";
+import { logout } from "@multiversx/sdk-dapp/utils";
 import { useEffect, useState } from "react";
 import { useGetAccount } from "@multiversx/sdk-dapp/hooks";
 
@@ -16,6 +17,7 @@ export function AppPageHeader() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const windowInnerWidth = useWindowSize()
+  const signOutHandler = () => logout(RoutesConfig.home)
 
   useEffect(() => {
     if(windowInnerWidth >= 1024) {
@@ -60,7 +62,10 @@ export function AppPageHeader() {
                     location={RoutesConfig.paymentAgreements}
                   />
                   <HeaderLink text={'Token Operations'} location={RoutesConfig.tokensOperations} />
-                  {isMobileMenuOpen && <HeaderLink text={'Logout'} location={""}/>}
+                  {isMobileMenuOpen && 
+                    <li onClick={signOutHandler}>
+                      <HeaderLink text={'Logout'} location={""} />
+                    </li>}
                   {isMobileMenuOpen && 
                     <div className={"flex w-full items-center sm:flex-row md:w-max mt-6 md:ml-4 space-x-4"}>
                       <span className="text-xs max-w-[80px] truncate">
@@ -72,7 +77,7 @@ export function AppPageHeader() {
                 </ul>
               </div>
 
-              {!isMobileMenuOpen && <UserMenu />}
+              {!isMobileMenuOpen && <UserMenu signOutHandler={signOutHandler} />}
             </div>
           </div>
         </div>

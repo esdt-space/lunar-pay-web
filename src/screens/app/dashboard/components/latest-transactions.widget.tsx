@@ -12,15 +12,15 @@ import { useEmptyStateContent, useLoadingStateContent } from "../../operations/h
 
 export const DashboardLatestTransactionsWidget = () => {
   const { 
-    data: operations = [],
+    data,
     isFetched,
     isFetching
   } = useTokenOperationsQuery( 1, "" );
-  const latestOperations = operations.slice(0, 5);
+  const latestOperations = data?.operations.slice(0, 5) ?? [];
 
   const isLoadingFirstTime = !isFetched && isFetching;
-  const isLoadedAndHasData = isFetched && operations.length > 0;
-  const isLoadedAndHasNoData = isFetched && operations.length === 0;
+  const isLoadedAndHasData = isFetched && latestOperations.length > 0;
+  const isLoadedAndHasNoData = isFetched && latestOperations.length === 0;
 
   const emptyStateContent = useEmptyStateContent(isLoadedAndHasNoData);
   const loadingStateContent = useLoadingStateContent(isLoadingFirstTime);

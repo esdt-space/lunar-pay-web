@@ -9,9 +9,16 @@ export class RoutesConfig {
   static landingDonations = '/solutions/donations'
   static landingExpensesAndAllowances = '/solutions/expenses-and-allowances'
 
+  static frequentlyAskedQuestions = '/frequently-asked-questions'
+  static termsAndConditions = '/terms-and-conditions'
+  static whitepaper = '/whitepaper'
+  static contactUs = '/contact'
+
   static auth = '/auth'
 
   static dashboard = '/dashboard'
+  
+  static contact = '/contact'
 
   static payroll = '/payroll'
 

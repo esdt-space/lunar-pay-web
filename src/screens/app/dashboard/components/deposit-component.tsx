@@ -55,7 +55,7 @@ export const DepositAssetsComponent = () => {
         <Plus className={'ml-1 w-4 h-4'} />
       </Button>
 
-      <BinancePayButton />
+      <BinancePayButton disableButton={true} />
     </div>
 </div>
 }
