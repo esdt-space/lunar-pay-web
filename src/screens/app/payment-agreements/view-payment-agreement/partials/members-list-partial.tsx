@@ -1,29 +1,47 @@
 import moment from "moment";
+import { useState } from "react";
 
 import { Card, CardContent } from "@/components/ui/card.tsx";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table.tsx";
-import { AddressCell } from "@/features/token-operations/components/token-operations-table/address-cell.tsx";
 import { PaginationButtonsNew } from "@/components/shared/pagination";
-import { usePaymentAgreementsMembersQuery } from "@/features/payment-agreements/hooks/queries/use-payment-agreements-members-query";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { EmptyStateWithAction } from "@/components/shared/empty-states";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table.tsx";
 
-export function MembersListPartial() {
-  const { id } = useParams()
+import { AddressCell } from "@/features/token-operations/components/token-operations-table/address-cell.tsx";
+import { usePaymentAgreementMembers } from "@/features/payment-agreements/hooks";
+
+type Props = {
+  agreementId: string;
+}
+
+export function MembersListPartial({ agreementId }: Props) {
   const [currentPage, setCurrentPage] = useState(1);
   
-  const { data: members, refetch } = usePaymentAgreementsMembersQuery(currentPage, id);
+  const {
+    data: members,
+    isFetched: isFetchedMembersList
+  } = usePaymentAgreementMembers(currentPage, agreementId);
 
-  const memberships = members?.memberships ?? []
   const numberOfPages = members?.numberOfPages
-
-  useEffect(() => {
-    setCurrentPage(1);
-    refetch();
-  }, [])
+  const memberships = members?.memberships ?? []
 
   const nextPageHandler = () => setCurrentPage(page => page + 1);
   const previousPageHandler = () => setCurrentPage(page => Math.max(1, page - 1));
+
+  const emptyMembersList = isFetchedMembersList && memberships.length === 0;
+
+  if (emptyMembersList) {
+    return (
+      <Card>
+        <div className={'p-12'}>
+          <EmptyStateWithAction
+            title={'No current members'}
+            description={"Members will appear here"}
+            action={<></>}
+          />
+        </div>
+      </Card>
+    )
+  }
 
   return (
     <Card>
@@ -31,6 +49,7 @@ export function MembersListPartial() {
         <Table>
           <TableHeader>
             <TableRow>
+              <TableHead />
               <TableHead>Member</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Added</TableHead>
@@ -40,6 +59,7 @@ export function MembersListPartial() {
           <TableBody>
             {memberships.map((item, index: number) => (
               <TableRow key={index}>
+                <TableCell />
                 <AddressCell value={item.member} />
                 <TableCell>{item.status}</TableCell>
                 <TableCell>{moment(item.createdAt).format('ll')}</TableCell>

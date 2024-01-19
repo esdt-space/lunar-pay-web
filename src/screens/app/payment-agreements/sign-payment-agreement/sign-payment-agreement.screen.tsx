@@ -103,7 +103,7 @@ export const SignPaymentAgreementScreen = () => {
                       <div>1 x {agreement.itemName}</div>
                       <div>
                         <FormatAmount
-                          digits={2}
+                          digits={4}
                           decimals={token.decimals}
                           token={agreement.tokenIdentifier}
                           value={agreement.fixedAmount as string}
@@ -116,7 +116,7 @@ export const SignPaymentAgreementScreen = () => {
                       <div className={'font-bold'}>Total due today</div>
                       <div className={'font-black'}>
                         <FormatAmount
-                          digits={2}
+                          digits={4}
                           decimals={token.decimals}
                           token={agreement.tokenIdentifier}
                           value={agreement.fixedAmount as string}
