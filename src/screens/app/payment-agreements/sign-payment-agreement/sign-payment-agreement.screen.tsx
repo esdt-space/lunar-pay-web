@@ -1,7 +1,7 @@
 import { ArrowLeft } from "lucide-react"
 import { FormatAmount } from "@multiversx/sdk-dapp/UI"
 import { useGetAccount } from "@multiversx/sdk-dapp/hooks"
-import { Link, useNavigate, useParams } from "react-router-dom"
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom"
 
 import { cn, formatTokenBalance } from "@/theme/utils.ts"
 import { RoutesConfig } from "@/navigation"
@@ -25,12 +25,17 @@ export const SignPaymentAgreementScreen = () => {
   const { address } = useGetAccount()
   const { id } = useParams()
   const navigate = useNavigate()
+  const location = useLocation()
   const isLoggedIn = useIsAuthenticated()
   const {vaultTokens} = useAccountVaultTokens()
   const tokensMap = useTokensMap();
 
+  const queryParams = new URLSearchParams(location.search)
+  const metadataValue = queryParams.get('metadata')
+  const metadata = metadataValue ?? ""
+
   const { data: agreement } = useCreatedPaymentAgreement(id);
-  const { mutate: signPaymentAgreement} = useSignPaymentAgreementMutation(id);
+  const { mutate: signPaymentAgreement} = useSignPaymentAgreementMutation(id, metadata);
 
   if(!agreement) return;
 
@@ -141,7 +146,7 @@ export const SignPaymentAgreementScreen = () => {
                 <div className={'flex flex-col'}>
                   <Button
                     variant={'primary'}
-                    disabled={userIsOwner || !enoughAssets}
+                    disabled={userIsOwner || !enoughAssets || metadata === ""}
                     className={'bg-gradient-to-r from-primary to-secondary text-white hover:text-slate-200'}
                     onClick={signPaymentAgreementButtonHandler}
                   >
@@ -157,6 +162,12 @@ export const SignPaymentAgreementScreen = () => {
                   {!userIsOwner && !enoughAssets && (
                     <div className={'text-sm text-red-500 text-center'}>
                       You don't have enough tokens to accept this agreement
+                    </div>
+                  )}
+
+                  {!userIsOwner && enoughAssets && metadata === "" && (
+                    <div className={'text-sm text-red-500 text-center'}>
+                      You cannot accept this agreement due to lack of information
                     </div>
                   )}
                 </div>
