@@ -1,67 +1,31 @@
-import { Link2, Pencil } from "lucide-react";
-import { useGetAccount } from "@multiversx/sdk-dapp/hooks";
+import { Link2, Pencil } from "lucide-react"
+import { useGetAccount } from "@multiversx/sdk-dapp/hooks"
 import { Link, useNavigate, useParams } from "react-router-dom"
 
 import { RoutesConfig } from "@/navigation"
-import { useCreatedPaymentAgreement, usePaymentAgreementMembers } from "@/features/payment-agreements/hooks";
-import { useAgreementTriggers } from "@/features/agreement-triggers/hooks";
+import { useCreatedPaymentAgreement } from "@/features/payment-agreements/hooks"
 
-import { Card, CardContent } from "@/components/ui/card.tsx"
+import { Card } from "@/components/ui/card.tsx"
 import { Button } from "@/components/ui/button.tsx"
 import { ContainedScreen } from "@/components/prefab/contained-screen.tsx"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs.tsx"
 
-import { AgreementDetails } from "./partials/agreement-details.tsx";
-import { MembersListPartial } from "./partials/members-list-partial.tsx";
-import { AgreementTriggersTable } from "@/features/agreement-triggers/components";
-import { useTokensMap } from "@/core/tokens";
-import { EmptyStateWithAction } from "@/components/shared/empty-states/index.ts";
-import { PaginationButtonsNew } from "@/components/shared/pagination";
-import { useEffect, useState } from "react";
+import { AgreementDetails } from "./partials/agreement-details.tsx"
+import { MembersListPartial } from "./partials/members-list-partial.tsx"
+import { AgreementTriggersPartial } from "./partials/agreement-triggers-partial.tsx"
 
 export const ViewPaymentAgreementScreen = () => {
-  const [currentPage, setCurrentPage] = useState(1);
   const { address } = useGetAccount()
   const { id } = useParams()
   const navigate = useNavigate()
 
   const { data: agreement } = useCreatedPaymentAgreement(id);
-  const {
-    data: members, 
-    isFetched: isFetchedMembersList
-  } = usePaymentAgreementMembers(currentPage, id);
-
-  const { 
-    data: triggers, 
-    isFetched: isFetchedAgreementsTriggers, 
-    refetch 
-  } = useAgreementTriggers(currentPage, id);
-
-  const agreementTriggers = triggers?.agreementTriggers ?? []
-  const numberOfPages = triggers?.numberOfPages
-  const memberships = members?.memberships ?? []
-
-  useEffect(() => {
-    setCurrentPage(1);
-    refetch();
-  }, [])
-
-  const tokensMap = useTokensMap();
 
   if(!agreement) return;
-
-  const token = tokensMap[agreement.tokenIdentifier];
 
   if(agreement && agreement.owner !== address) {
     navigate(RoutesConfig.dashboard, { replace: true });
   }
-
-  const emptyMembersList = isFetchedMembersList && memberships.length === 0;
-
-  const emptyAgreementTriggers = isFetchedAgreementsTriggers && agreementTriggers.length === 0;
-
-  const nextPageHandler = () => setCurrentPage(page => page + 1);
-  const previousPageHandler = () => setCurrentPage(page => Math.max(1, page - 1));
 
   return (
     <ContainedScreen className="space-y-6">
@@ -90,51 +54,20 @@ export const ViewPaymentAgreementScreen = () => {
       <Tabs defaultValue="overview">
         <TabsList className={'self-start mb-2'}>
           <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger disabled value="analytics">Analytics</TabsTrigger>
+          <TabsTrigger value="members">Members</TabsTrigger>
           <TabsTrigger disabled value="settings">Settings</TabsTrigger>
         </TabsList>
+
+        <TabsContent value="members" className={'space-y-4'}>
+          <MembersListPartial agreementId={agreement.id} />
+        </TabsContent>
 
         <TabsContent value="overview" className={'space-y-4'}>
           <Card className={'p-6'}>
             <AgreementDetails agreement={agreement}/>
           </Card>
-          {emptyMembersList && (
-            <Card> 
-              <div className={'p-12'}>
-                <EmptyStateWithAction
-                  title={'No current members'}
-                  description={"Members will appear here"}
-                  action={<></>}
-                />
-              </div>
-            </Card> 
-          )}
-          {!emptyMembersList && <MembersListPartial />}
-          <Card>
-            <CardContent className="p-0">
-              {emptyAgreementTriggers && (
-                <div className={'p-12'}>
-                  <EmptyStateWithAction
-                    title={'No current agreement triggers'}
-                    description={"Agreement triggers will appear here"}
-                    action={<></>}
-                  />
-                </div>
-              )}
-              {!emptyAgreementTriggers && (
-                <Card>
-                  <CardContent className="p-0">
-                    <AgreementTriggersTable triggersList={agreementTriggers} token={token} />
-                    <PaginationButtonsNew 
-                      previousPageHandler={previousPageHandler} 
-                      nextPageHandler={nextPageHandler}
-                      currentPage={currentPage}
-                      lastPage={numberOfPages} />
-                  </CardContent>
-                </Card>
-              )}
-            </CardContent>
-          </Card>
+
+          <AgreementTriggersPartial agreementId={agreement.id} />
         </TabsContent>
       </Tabs>
     </ContainedScreen>
