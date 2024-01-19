@@ -13,6 +13,9 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs.t
 import { AgreementDetails } from "./partials/agreement-details.tsx"
 import { MembersListPartial } from "./partials/members-list-partial.tsx"
 import { AgreementTriggersPartial } from "./partials/agreement-triggers-partial.tsx"
+import {
+  RedirectAndWebhooksSettings
+} from "@/screens/app/payment-agreements/view-payment-agreement/redirect-and-webhooks-settings/redirect-and-webhooks-settings.tsx";
 
 export const ViewPaymentAgreementScreen = () => {
   const { address } = useGetAccount()
@@ -55,12 +58,8 @@ export const ViewPaymentAgreementScreen = () => {
         <TabsList className={'self-start mb-2'}>
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="members">Members</TabsTrigger>
-          <TabsTrigger disabled value="settings">Settings</TabsTrigger>
+          <TabsTrigger value="settings">Settings</TabsTrigger>
         </TabsList>
-
-        <TabsContent value="members" className={'space-y-4'}>
-          <MembersListPartial agreementId={agreement.id} />
-        </TabsContent>
 
         <TabsContent value="overview" className={'space-y-4'}>
           <Card className={'p-6'}>
@@ -68,6 +67,14 @@ export const ViewPaymentAgreementScreen = () => {
           </Card>
 
           <AgreementTriggersPartial agreementId={agreement.id} />
+        </TabsContent>
+
+        <TabsContent value="members" className={'space-y-4'}>
+          <MembersListPartial agreementId={agreement.id} />
+        </TabsContent>
+
+        <TabsContent value="settings" className={'space-y-4'}>
+          <RedirectAndWebhooksSettings agreement={agreement} />
         </TabsContent>
       </Tabs>
     </ContainedScreen>
