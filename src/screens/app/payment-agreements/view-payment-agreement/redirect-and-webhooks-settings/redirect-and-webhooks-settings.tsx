@@ -65,7 +65,7 @@ export function RedirectAndWebhooksSettings({ agreement }: Props) {
   }
 
   return (
-    <Card className={'p-8 space-y-8'}>
+    <Card className={'p-6 space-y-8'}>
       <Form {...form}>
         <div className={'space-y-2'}>
           <div className="space-y-0.5">
