@@ -31,6 +31,7 @@ export function MembersListPartial() {
         <Table>
           <TableHeader>
             <TableRow>
+              <TableHead />
               <TableHead>Member</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Added</TableHead>
@@ -40,6 +41,7 @@ export function MembersListPartial() {
           <TableBody>
             {memberships.map((item, index: number) => (
               <TableRow key={index}>
+                <TableCell />
                 <AddressCell value={item.member} />
                 <TableCell>{item.status}</TableCell>
                 <TableCell>{moment(item.createdAt).format('ll')}</TableCell>

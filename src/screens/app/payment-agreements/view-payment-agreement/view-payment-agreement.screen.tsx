@@ -3,7 +3,7 @@ import { useGetAccount } from "@multiversx/sdk-dapp/hooks";
 import { Link, useNavigate, useParams } from "react-router-dom"
 
 import { RoutesConfig } from "@/navigation"
-import { useCreatedPaymentAgreement } from "@/features/payment-agreements/hooks";
+import { useCreatedPaymentAgreement, usePaymentAgreementMembers } from "@/features/payment-agreements/hooks";
 import { useAgreementTriggers } from "@/features/agreement-triggers/hooks";
 
 import { Card, CardContent } from "@/components/ui/card.tsx"
@@ -15,6 +15,7 @@ import { AgreementDetails } from "./partials/agreement-details.tsx";
 import { MembersListPartial } from "./partials/members-list-partial.tsx";
 import { AgreementTriggersTable } from "@/features/agreement-triggers/components";
 import { useTokensMap } from "@/core/tokens";
+import { EmptyStateWithAction } from "@/components/shared/empty-states/index.ts";
 import { PaginationButtonsNew } from "@/components/shared/pagination";
 import { useEffect, useState } from "react";
 
@@ -25,10 +26,20 @@ export const ViewPaymentAgreementScreen = () => {
   const navigate = useNavigate()
 
   const { data: agreement } = useCreatedPaymentAgreement(id);
-  const { data: triggers, refetch } = useAgreementTriggers(currentPage, id);
+  const {
+    data: members, 
+    isFetched: isFetchedMembersList
+  } = usePaymentAgreementMembers(currentPage, id);
+
+  const { 
+    data: triggers, 
+    isFetched: isFetchedAgreementsTriggers, 
+    refetch 
+  } = useAgreementTriggers(currentPage, id);
 
   const agreementTriggers = triggers?.agreementTriggers ?? []
   const numberOfPages = triggers?.numberOfPages
+  const memberships = members?.memberships ?? []
 
   useEffect(() => {
     setCurrentPage(1);
@@ -44,6 +55,10 @@ export const ViewPaymentAgreementScreen = () => {
   if(agreement && agreement.owner !== address) {
     navigate(RoutesConfig.dashboard, { replace: true });
   }
+
+  const emptyMembersList = isFetchedMembersList && memberships.length === 0;
+
+  const emptyAgreementTriggers = isFetchedAgreementsTriggers && agreementTriggers.length === 0;
 
   const nextPageHandler = () => setCurrentPage(page => page + 1);
   const previousPageHandler = () => setCurrentPage(page => Math.max(1, page - 1));
@@ -83,15 +98,41 @@ export const ViewPaymentAgreementScreen = () => {
           <Card className={'p-6'}>
             <AgreementDetails agreement={agreement}/>
           </Card>
-          <MembersListPartial />
+          {emptyMembersList && (
+            <Card> 
+              <div className={'p-12'}>
+                <EmptyStateWithAction
+                  title={'No current members'}
+                  description={"Members will appear here"}
+                  action={<></>}
+                />
+              </div>
+            </Card> 
+          )}
+          {!emptyMembersList && <MembersListPartial />}
           <Card>
             <CardContent className="p-0">
-              <AgreementTriggersTable triggersList={agreementTriggers} token={token} />
-              <PaginationButtonsNew 
-                previousPageHandler={previousPageHandler} 
-                nextPageHandler={nextPageHandler}
-                currentPage={currentPage}
-                lastPage={numberOfPages} />
+              {emptyAgreementTriggers && (
+                <div className={'p-12'}>
+                  <EmptyStateWithAction
+                    title={'No current agreement triggers'}
+                    description={"Agreement triggers will appear here"}
+                    action={<></>}
+                  />
+                </div>
+              )}
+              {!emptyAgreementTriggers && (
+                <Card>
+                  <CardContent className="p-0">
+                    <AgreementTriggersTable triggersList={agreementTriggers} token={token} />
+                    <PaginationButtonsNew 
+                      previousPageHandler={previousPageHandler} 
+                      nextPageHandler={nextPageHandler}
+                      currentPage={currentPage}
+                      lastPage={numberOfPages} />
+                  </CardContent>
+                </Card>
+              )}
             </CardContent>
           </Card>
         </TabsContent>
