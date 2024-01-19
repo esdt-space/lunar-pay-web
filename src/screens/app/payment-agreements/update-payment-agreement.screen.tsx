@@ -13,8 +13,6 @@ import { Separator } from "@/components/ui/separator"
 import { ContainedScreen } from "@/components/prefab/contained-screen.tsx";
 
 import { useCreatedPaymentAgreement, useUpdatePaymentAgreementMutation } from "@/features/payment-agreements/hooks"
-import { AgreementRedirectPartial } from "./create-payment-agreement/partials/agreement-redirect-partial";
-import { AgreementCallbacksPartial } from "./create-payment-agreement/partials/agreement-callbacks-partial";
 
 export function UpdatePaymentAgreementScreen() {
   const { address } = useGetAccount()
@@ -26,13 +24,8 @@ export function UpdatePaymentAgreementScreen() {
   const [description, setDescription] = useState("")
   const [benefits, setBenefits] = useState<string[]>([""])
   const [formInitialized, setFormInitialized] = useState(false);
-  const [newMemberRedirectUrl, setNewMemberRedirectUrl] = useState("")
-
-  const [signAgreementHttpCallbackUrl, setSignAgreementHttpCallbackUrl] = useState("")
-  const [cancelAgreementHttpCallbackUrl, setCancelAgreementHttpCallbackUrl] = useState("")
 
   const { data: agreement } = useCreatedPaymentAgreement(id);
-  
   const { mutate: editAgreement } = useUpdatePaymentAgreementMutation(id as string);
 
   useEffect(() => {
@@ -77,9 +70,6 @@ export function UpdatePaymentAgreementScreen() {
       itemName: itemName,
       description: description,
       benefits: filteredBenefits,
-      signAgreementHttpCallbackUrl: signAgreementHttpCallbackUrl,
-      cancelAgreementHttpCallbackUrl: cancelAgreementHttpCallbackUrl,
-      signAgreementRedirectUrl: newMemberRedirectUrl,
     }
 
     editAgreement(
@@ -114,18 +104,6 @@ export function UpdatePaymentAgreementScreen() {
           value={description ?? agreement.description}
           placeholder="Description"
           onChange={(e) => setDescription(e.target.value)}
-        />
-
-        <AgreementRedirectPartial 
-          newMemberRedirectUrl={newMemberRedirectUrl}
-          onNewMemberRedirectUrlChange={setNewMemberRedirectUrl}
-        />
-
-        <AgreementCallbacksPartial
-          signAgreementHttpCallbackUrl={signAgreementHttpCallbackUrl}
-          cancelAgreementHttpCallbackUrl={cancelAgreementHttpCallbackUrl}
-          onSignAgreementHttpCallbackUrlChange={(signAgreementHttpCallbackUrl) => setSignAgreementHttpCallbackUrl(signAgreementHttpCallbackUrl)}
-          onCancelAgreementHttpCallbackUrlChange={(cancelAgreementHttpCallbackUrl) => setCancelAgreementHttpCallbackUrl(cancelAgreementHttpCallbackUrl)}
         />
 
         <Separator />
