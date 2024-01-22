@@ -14,7 +14,7 @@ export default function MvxAxiosContext(props: PropsWithChildren) {
 
   return (
     <AxiosInterceptorContext.Provider>
-      <AxiosInterceptorContext.Interceptor authenticatedDomanis={nativeAuthDomains}>
+      <AxiosInterceptorContext.Interceptor authenticatedDomains={nativeAuthDomains}>
         {children}
       </AxiosInterceptorContext.Interceptor>
     </AxiosInterceptorContext.Provider>
