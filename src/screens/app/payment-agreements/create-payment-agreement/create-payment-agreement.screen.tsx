@@ -40,12 +40,12 @@ export function CreatePaymentAgreementScreen() {
   }
 
   const buttonHandler = () => {
-    const formatedFrequency = getPaymentFrequency(frequency)
+    const formattedFrequency = getPaymentFrequency(frequency)
 
-    if(!selectedToken || !amount || !formatedFrequency) return;
+    if(!selectedToken || !amount || !formattedFrequency) return;
 
     mutate({
-      frequency: formatedFrequency,
+      frequency: formattedFrequency,
       token: selectedToken,
       type: AgreementType.RecurringPayoutToReceive,
       amountType: AgreementAmountType.FixedAmount,

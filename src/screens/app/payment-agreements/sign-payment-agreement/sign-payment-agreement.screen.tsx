@@ -146,7 +146,7 @@ export const SignPaymentAgreementScreen = () => {
                 <div className={'flex flex-col'}>
                   <Button
                     variant={'primary'}
-                    disabled={userIsOwner || !enoughAssets || metadata === ""}
+                    disabled={userIsOwner || !enoughAssets}
                     className={'bg-gradient-to-r from-primary to-secondary text-white hover:text-slate-200'}
                     onClick={signPaymentAgreementButtonHandler}
                   >
@@ -162,12 +162,6 @@ export const SignPaymentAgreementScreen = () => {
                   {!userIsOwner && !enoughAssets && (
                     <div className={'text-sm text-red-500 text-center'}>
                       You don't have enough tokens to accept this agreement
-                    </div>
-                  )}
-
-                  {!userIsOwner && enoughAssets && metadata === "" && (
-                    <div className={'text-sm text-red-500 text-center'}>
-                      You cannot accept this agreement due to lack of information
                     </div>
                   )}
                 </div>

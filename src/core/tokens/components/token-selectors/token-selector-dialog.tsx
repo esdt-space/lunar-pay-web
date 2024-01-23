@@ -72,18 +72,16 @@ export function TokenSelectorDialog(props: Props) {
                   transform: `translateY(${items[0]?.start ?? 0}px)`,
                 }}
               >
-                {items.map((row) => {
-                  const token = tokensShown[row.index]
-
+                {tokensShown.map((row, index) => {
                   return (
                     <div
-                      key={row.key}
-                      data-index={row.index}
+                      key={index}
+                      data-index={index}
                       ref={virtualizer.measureElement}
-                      onClick={() => selectTokenHandler(token)}
+                      onClick={() => selectTokenHandler(row)}
                       className={'flex rounded-md hover:bg-muted p-2 cursor-pointer'}
                     >
-                      <TokenItem token={token} showBalances={showBalances} />
+                      <TokenItem token={row} showBalances={showBalances} />
                     </div>
                   )
                 })}

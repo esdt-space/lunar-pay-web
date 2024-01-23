@@ -12,7 +12,7 @@ export async function signPaymentAgreementInteraction (agreementId: number, meta
 
   const interaction = lunarPaySmartContract.methods.signAgreement([
     agreementId,
-    new StringValue(metadata)
+    // new StringValue(metadata)
   ]);
 
   const transaction = interaction
