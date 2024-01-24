@@ -8,11 +8,9 @@ export async function signPaymentAgreementInteraction (agreementId: number, meta
   const sender = await getAddress();
   const { chainId } = getNetworkConfig()
 
-  console.log(new StringValue(metadata))
-
   const interaction = lunarPaySmartContract.methods.signAgreement([
     agreementId,
-    // new StringValue(metadata)
+    new StringValue(metadata)
   ]);
 
   const transaction = interaction
