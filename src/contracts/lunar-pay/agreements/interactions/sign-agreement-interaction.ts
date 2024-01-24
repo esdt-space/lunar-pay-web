@@ -1,4 +1,4 @@
-import { Address, StringValue } from "@multiversx/sdk-core/out";
+import { Address, OptionValue, StringValue } from "@multiversx/sdk-core/out";
 import { sendTransactionWithWatcher } from "@/lib/mvx";
 import { getAddress, getNetworkConfig } from "@multiversx/sdk-dapp/utils";
 
@@ -8,15 +8,23 @@ export async function signPaymentAgreementInteraction (agreementId: number, meta
   const sender = await getAddress();
   const { chainId } = getNetworkConfig()
 
+  if (metadata.length > 1000) {
+    return
+  }
+
+  const metadataParam = (metadata || "").length > 0 
+    ? OptionValue.newProvided(new StringValue(metadata)) 
+    : OptionValue.newMissing()
+
   const interaction = lunarPaySmartContract.methods.signAgreement([
     agreementId,
-    new StringValue(metadata)
+    metadataParam
   ]);
 
   const transaction = interaction
     .withChainID(chainId)
     .withSender(new Address(sender))
-    .withGasLimit(10_000_000)
+    .withGasLimit(15_000_000)
     .buildTransaction();
 
   return sendTransactionWithWatcher(transaction, {
