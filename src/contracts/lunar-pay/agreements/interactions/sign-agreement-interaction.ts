@@ -8,10 +8,6 @@ export async function signPaymentAgreementInteraction (agreementId: number, meta
   const sender = await getAddress();
   const { chainId } = getNetworkConfig()
 
-  if (metadata.length > 1000) {
-    return
-  }
-
   const metadataParam = (metadata || "").length > 0 
     ? OptionValue.newProvided(new StringValue(metadata)) 
     : OptionValue.newMissing()

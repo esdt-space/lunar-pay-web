@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { ArrowLeft } from "lucide-react"
 import { FormatAmount } from "@multiversx/sdk-dapp/UI"
 import { useGetAccount } from "@multiversx/sdk-dapp/hooks"
@@ -29,6 +30,7 @@ export const SignPaymentAgreementScreen = () => {
   const isLoggedIn = useIsAuthenticated()
   const {vaultTokens} = useAccountVaultTokens()
   const tokensMap = useTokensMap();
+  const [metadataExceedsLimit, setMetadataExceedsLimit] = useState(false)
 
   const queryParams = new URLSearchParams(location.search)
   const metadataValue = queryParams.get('metadata')
@@ -38,6 +40,10 @@ export const SignPaymentAgreementScreen = () => {
   const { mutate: signPaymentAgreement} = useSignPaymentAgreementMutation(id, metadata);
 
   if(!agreement) return;
+
+  if(metadata.length > 1000) {
+    setMetadataExceedsLimit(true)
+  }
 
   const redirect = () => {
     if(agreement.signAgreementRedirectUrl) {
@@ -146,7 +152,7 @@ export const SignPaymentAgreementScreen = () => {
                 <div className={'flex flex-col'}>
                   <Button
                     variant={'primary'}
-                    disabled={userIsOwner || !enoughAssets}
+                    disabled={userIsOwner || !enoughAssets || metadataExceedsLimit}
                     className={'bg-gradient-to-r from-primary to-secondary text-white hover:text-slate-200'}
                     onClick={signPaymentAgreementButtonHandler}
                   >
