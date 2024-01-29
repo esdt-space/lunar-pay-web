@@ -13,7 +13,10 @@ import { ChargeOperationTable } from "@/features/token-operations/components"
 export const ChargesOperationsScreen = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const { id } = useParams()
-  const {data: chargesOperations = [], isFetching, isFetched, refetch } = useChargesOperations(currentPage, id)
+  const {data: chargesOperations = {
+    numberOfPages: 0,
+    operations: []
+  }, isFetching, isFetched, refetch } = useChargesOperations(currentPage, id)
 
   useEffect(() => {
     setCurrentPage(1);
@@ -28,8 +31,8 @@ export const ChargesOperationsScreen = () => {
   const numberOfPages = 100; // TODO: update later
 
   const isLoadingFirstTime = !isFetched && isFetching;
-  const isLoadedAndHasData = isFetched && chargesOperations.length > 0;
-  const isLoadedAndHasNoData = isFetched && chargesOperations.length === 0;
+  const isLoadedAndHasData = isFetched && chargesOperations.operations.length > 0;
+  const isLoadedAndHasNoData = isFetched && chargesOperations.operations.length === 0;
 
   const emptyStateContent = useEmptyStateContent(isLoadedAndHasNoData);
   const loadingStateContent = useLoadingStateContent(isLoadingFirstTime);
@@ -52,7 +55,7 @@ export const ChargesOperationsScreen = () => {
         {isLoadedAndHasData && (
           <div>
             <ChargeOperationTable 
-              operations={chargesOperations} />
+              operations={chargesOperations.operations} />
             <PaginationButtonsNew 
               previousPageHandler={previousPageHandler} 
               nextPageHandler={nextPageHandler}
