@@ -47,16 +47,14 @@ export function AgreementTriggersPartial({ agreementId }: Props) {
         )}
 
         {!emptyAgreementTriggers && (
-          <Card>
-            <CardContent className="p-0">
-              <AgreementTriggersTable triggersList={agreementTriggers} token={token} />
-              <PaginationButtonsNew
-                previousPageHandler={previousPageHandler}
-                nextPageHandler={nextPageHandler}
-                currentPage={currentPage}
-                lastPage={numberOfPages} />
-            </CardContent>
-          </Card>
+          <div>
+            <AgreementTriggersTable triggersList={agreementTriggers} token={token} />
+            <PaginationButtonsNew
+              previousPageHandler={previousPageHandler}
+              nextPageHandler={nextPageHandler}
+              currentPage={currentPage}
+              lastPage={numberOfPages} />
+          </div>
         )}
       </CardContent>
     </Card>

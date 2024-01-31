@@ -10,7 +10,7 @@ import {
   accountPaymentAgreementsSignedQueryKey
 } from "@/features/payment-agreements/query-keys.ts";
 
-export function useSignPaymentAgreementMutation(internalAgreementId: string | undefined) {
+export function useSignPaymentAgreementMutation(internalAgreementId: string | undefined, metadata: string) {
   const client = useQueryClient();
   const { address } = useGetAccount();
 
@@ -28,7 +28,7 @@ export function useSignPaymentAgreementMutation(internalAgreementId: string | un
   }
 
   return useMutation({
-    mutationFn: (id: number) => signPaymentAgreementInteraction(id),
+    mutationFn: (id: number) => signPaymentAgreementInteraction(id, metadata),
     onSuccess(sessionId) {
       if(!sessionId) return Promise.reject();
 
