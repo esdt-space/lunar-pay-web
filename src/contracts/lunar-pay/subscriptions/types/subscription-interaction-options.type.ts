@@ -5,14 +5,7 @@ import { SubscriptionAmountType, SubscriptionType } from "../enums";
 
 export type AmountValue = string | number | BigNumber;
 
-type Amount = {
-  fixedAmount: AmountValue;
-  minimumAmount: AmountValue;
-  maximumAmount: AmountValue;
-}
-
-type FixedAmount = Pick<Amount, 'fixedAmount'>;
-type BoundedAmount = Omit<Amount, 'fixedAmount'>;
+export type FrequencyType = 'SS' | 'MM' | 'HH' | 'D' | 'W' | 'M' | 'Y';
 
 type BaseSubscriptionInteractionOptions = {
   token: Token;
@@ -27,32 +20,32 @@ type AnyAmountInteractionType = BaseSubscriptionInteractionOptions & {
 
 type FixedAmountInteractionType = BaseSubscriptionInteractionOptions & {
   amountType: SubscriptionAmountType.FixedAmount,
-  amount: FixedAmount
+  amount: string
 }
 
 type BoundedAmountInteractionType = BaseSubscriptionInteractionOptions & {
   amountType: SubscriptionAmountType.BoundedAmount,
-  amount: BoundedAmount
+  amount: string
 }
 
 type SenderDefinedFixedAmountInteractionType = BaseSubscriptionInteractionOptions & {
   amountType: SubscriptionAmountType.SenderDefinedFixedAmount,
-  amount: FixedAmount
+  amount: string
 }
 
 type SenderDefinedBoundedAmountInteractionType = BaseSubscriptionInteractionOptions & {
   amountType: SubscriptionAmountType.SenderDefinedBoundedAmount,
-  amount: FixedAmount
+  amount: string
 }
 
 type CreatorDefinedFixedAmountInteractionType = BaseSubscriptionInteractionOptions & {
   amountType: SubscriptionAmountType.SenderDefinedBoundedAmount,
-  amount: FixedAmount
+  amount: string
 }
 
 type CreatorDefinedBoundedAmountInteractionType = BaseSubscriptionInteractionOptions & {
   amountType: SubscriptionAmountType.SenderDefinedBoundedAmount,
-  amount: FixedAmount
+  amount: string
 }
 
 export type SubscriptionInteractionOptions = AnyAmountInteractionType |

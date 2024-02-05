@@ -1,16 +1,16 @@
 import { EnumValue } from "@multiversx/sdk-core/out";
 
 import { lunarPayAbiRegistry } from "@/contracts/lunar-pay/contract-utils.ts";
-import { AgreementType } from "@/contracts/lunar-pay/agreements/enums";
+import { SubscriptionType } from "@/contracts/lunar-pay/subscriptions/enums";
 
-const agreementTypeEnum = lunarPayAbiRegistry.getEnum("AgreementType");
+const subscriptionTypeEnum = lunarPayAbiRegistry.getEnum("SubscriptionType");
 
-function getAgreementTypeEnumVariant(type: AgreementType){
-  return agreementTypeEnum.getVariantByName(type);
+function getSubscriptionTypeEnumVariant(type: SubscriptionType){
+  return subscriptionTypeEnum.getVariantByName(type);
 }
 
-export function getAgreementTypeInteractionValue(type: AgreementType): EnumValue {
-  const variant = getAgreementTypeEnumVariant(type)
+export function getSubscriptionTypeInteractionValue(type: SubscriptionType): EnumValue {
+  const variant = getSubscriptionTypeEnumVariant(type)
 
-  return new EnumValue(agreementTypeEnum, variant, []);
+  return new EnumValue(subscriptionTypeEnum, variant, []);
 }

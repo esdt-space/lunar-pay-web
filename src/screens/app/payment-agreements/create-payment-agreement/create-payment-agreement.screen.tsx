@@ -10,9 +10,9 @@ import { getPaymentFrequency } from "@/utils";
 import { Token } from "@/core/tokens";
 import { TokenSelectorWithAmount } from "@/core/tokens/components";
 import { useAccountTokensAvailableToDeposit } from "@/features/account-tokens/hooks";
-import { FrequencyType } from "@/features/subscription/models/agreement-types.model";
-import { useCreatePaymentAgreementMutation } from "@/features/payment-agreements/hooks";
-import { AgreementAmountType, AgreementType } from "@/contracts/lunar-pay/agreements/enums";
+import { FrequencyType } from "@/contracts/lunar-pay/subscriptions/types";
+import { useCreateSubscriptionMutation } from "@/features/subscriptions/hooks";
+import { SubscriptionAmountType, SubscriptionType } from "@/contracts/lunar-pay/subscriptions/enums";
 import { PaymentAgreementsService } from "@/features/payment-agreements/payment-agreements.service.ts";
 import {ContainedScreen} from "@/components/prefab/contained-screen.tsx";
 
@@ -26,7 +26,7 @@ export function CreatePaymentAgreementScreen() {
   const tokens = useAccountTokensAvailableToDeposit();
   const [amount, setAmount] = useState('')
 
-  const { mutate } = useCreatePaymentAgreementMutation();
+  const { mutate } = useCreateSubscriptionMutation();
 
   const missingToken = selectedToken === undefined
   const missingAmount = amount === ""
@@ -40,16 +40,16 @@ export function CreatePaymentAgreementScreen() {
   }
 
   const buttonHandler = () => {
-    const formatedFrequency = getPaymentFrequency(frequency)
+    const formattedFrequency = getPaymentFrequency(frequency)
 
-    if(!selectedToken || !amount || !formatedFrequency) return;
+    if(!selectedToken || !amount || !formattedFrequency) return;
 
     mutate({
-      frequency: formatedFrequency,
       token: selectedToken,
-      type: AgreementType.RecurringPayoutToReceive,
-      amountType: AgreementAmountType.FixedAmount,
-      amount: { fixedAmount: amount },
+      frequency: formattedFrequency,
+      type: SubscriptionType.RecurringPayoutToReceive,
+      amountType: SubscriptionAmountType.FixedAmount,
+      amount: amount,
     }, { onSuccess: agreementCreatedHandler})
   }
 

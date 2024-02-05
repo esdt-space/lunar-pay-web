@@ -1,15 +1,15 @@
 import { useMutation, useQueryClient } from "react-query";
 import { useGetAccount } from "@multiversx/sdk-dapp/hooks";
 
-import { AgreementInteractionOptions } from "@/contracts/lunar-pay/agreements/types";
+import { SubscriptionInteractionOptions } from "@/contracts/lunar-pay/subscriptions/types";
 
 import { accountBalancesQueryKey } from "@/features/vault/query-keys.ts";
 import { accountTokenOperationsQueryKey } from "@/features/token-operations/query-keys.ts";
-import { createPaymentAgreementInteraction } from "@/contracts/lunar-pay/agreements/interactions";
+import { createSubscriptionInteraction } from "@/contracts/lunar-pay/subscriptions/interactions";
 import { accountSubscriptionsCreatedQueryKey } from "@/features/subscriptions/query-keys.ts";
 import { useSuccessfulTransactionCallback } from "@/utils/hooks/use-successful-transaction-callback.ts";
 
-export function useCreatePaymentAgreementMutation() {
+export function useCreateSubscriptionMutation() {
   const client = useQueryClient();
   const { address } = useGetAccount();
 
@@ -23,7 +23,7 @@ export function useCreatePaymentAgreementMutation() {
   }
 
   return useMutation({
-    mutationFn: (options: AgreementInteractionOptions) => createPaymentAgreementInteraction(options),
+    mutationFn: (options: SubscriptionInteractionOptions) => createSubscriptionInteraction(options),
     onSuccess(sessionId) {
       if(!sessionId) return Promise.reject();
 

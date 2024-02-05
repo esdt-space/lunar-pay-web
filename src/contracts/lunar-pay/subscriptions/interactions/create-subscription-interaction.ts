@@ -5,20 +5,20 @@ import { getAddress, getNetworkConfig } from "@multiversx/sdk-dapp/utils";
 import { lunarPaySmartContract } from "@/contracts/lunar-pay/contract-utils.ts";
 
 import { SubscriptionInteractionOptions } from "../types/index.ts";
-import { getAgreementTypeInteractionValue } from "../subscription-type-helper.ts";
-import { getAgreementAmountTypeInteractionValue, getCreateAgreementAmountInteractionValue } from "../subscription-amount-helper.ts";
+import { getSubscriptionTypeInteractionValue } from "../subscription-type-helper.ts";
+import { getSubscriptionAmountTypeInteractionValue, getCreateSubscriptionAmountInteractionValue } from "../subscription-amount-helper.ts";
 
 
-export async function createPaymentAgreementInteraction (options: SubscriptionInteractionOptions) {
+export async function createSubscriptionInteraction (options: SubscriptionInteractionOptions) {
   const sender = await getAddress();
-  const { chainId } = getNetworkConfig()
+  const { chainId } = getNetworkConfig();
 
   const interaction = lunarPaySmartContract.methods.createSubscription([
     new TokenIdentifierValue(options.token.identifier),
-    getAgreementTypeInteractionValue(options.type),
-    getAgreementAmountTypeInteractionValue(options.amountType),
     options.frequency,
-    getCreateAgreementAmountInteractionValue(options),
+    getSubscriptionTypeInteractionValue(options.type),
+    getSubscriptionAmountTypeInteractionValue(options.amountType),
+    getCreateSubscriptionAmountInteractionValue(options),
   ]);
 
   const transaction = interaction
