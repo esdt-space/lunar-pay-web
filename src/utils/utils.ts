@@ -39,7 +39,7 @@ export const formatFrequency = (input: number) => {
   }
 }
 
-export const formatFrequencyForSignAgreement = (input: number) => {
+export const formatFrequencyForSignSubscription = (input: number) => {
   switch(input) {
     case secondsInMinute:
       return 'minute';

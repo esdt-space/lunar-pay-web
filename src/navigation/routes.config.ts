@@ -23,16 +23,19 @@ export class RoutesConfig {
   static payroll = '/payroll'
 
   static subscriptions = '/subscriptions'
-  static subscriptionMembers = '/subscriptions/members'
+  static createSubscription = '/subscriptions/new'
+  static approveSubscription = '/approve-subscription'
+  static viewSubscription = '/subscriptions/:id'
+  static updateSubscription = '/subscriptions/:id/edit'
+  static signedSubscription = '/subscriptions/:id/signed'
 
-  static agreement = '/agreement'
-  static signAgreement = '/agreement/:id'
+  static subscription = '/subscription'
+  static signSubscription = '/subscription/:id'
 
   static paymentAgreements = '/payment-agreements'
   static createPaymentAgreementIndex = '/payment-agreements/new'
   static createPaymentAgreementSubscription = '/payment-agreements/new/subscription'
   static updatePaymentAgreement = '/payment-agreements/:id/edit'
-  static approveSubscription = '/approve-subscription'
 
   static tokensOperations = '/tokens-operations'
   static transactions = '/transactions'

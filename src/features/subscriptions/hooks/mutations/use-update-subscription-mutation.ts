@@ -10,7 +10,7 @@ type UpdateSubscriptionInput = {
   input: UpdateSubscriptionDto
 }
 
-export function useUpdatePaymentAgreementMutation(agreementId: string) {
+export function useUpdateSubscriptionMutation(subscriptionId: string) {
   const client = useQueryClient();
   const { address } = useGetAccount();
 
@@ -18,7 +18,7 @@ export function useUpdatePaymentAgreementMutation(agreementId: string) {
     mutationFn: ({id, input}: UpdateSubscriptionInput) => SubscriptionsService.updateSubscription(id, input),
     onSuccess: async () => {
       await client.invalidateQueries({queryKey: accountSubscriptionsCreatedQueryKey(address)})
-      await client.invalidateQueries({queryKey: accountSubscriptionById(address, agreementId)})
+      await client.invalidateQueries({queryKey: accountSubscriptionById(address, subscriptionId)})
     },
   });
 }

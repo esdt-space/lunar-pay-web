@@ -4,12 +4,12 @@ import { getAddress, getNetworkConfig } from "@multiversx/sdk-dapp/utils";
 
 import { lunarPaySmartContract } from "@/contracts/lunar-pay/contract-utils.ts";
 
-export async function triggerPaymentAgreementInteraction(agreementId: number) {
+export async function triggerSubscriptionInteraction(subscriptionId: number) {
   const sender = await getAddress();
   const { chainId } = getNetworkConfig()
 
   const interaction = lunarPaySmartContract.methods.triggerAgreement([
-    agreementId
+    subscriptionId
   ]);
 
   const transaction = interaction

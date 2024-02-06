@@ -3,7 +3,7 @@ import { useGetAccount } from "@multiversx/sdk-dapp/hooks";
 
 import { accountBalancesQueryKey } from "@/features/vault/query-keys.ts";
 import { accountTokenOperationsQueryKey } from "@/features/token-operations/query-keys.ts";
-import { triggerPaymentAgreementInteraction } from "@/contracts/lunar-pay/agreements/interactions";
+import { triggerSubscriptionInteraction } from "@/contracts/lunar-pay/subscriptions/interactions";
 import { useSuccessfulTransactionCallback } from "@/utils/hooks/use-successful-transaction-callback.ts";
 import {
   accountSubscriptionById,
@@ -11,18 +11,18 @@ import {
   accountSubscriptionsCreatedQueryKey,
 } from "@/features/subscriptions/query-keys.ts";
 
-export function useTriggerPaymentAgreementMutation(internalAgreementId: string | undefined) {
+export function useTriggerSubscriptionMutation(internalSubscriptionId: string | undefined) {
   const client = useQueryClient();
   const { address } = useGetAccount();
 
   const registerSessionId =  useSuccessfulTransactionCallback()
 
   const getCallback = (callback: (value: unknown) => void) => async (value: unknown) => {
-    if(!internalAgreementId) return;
+    if(!internalSubscriptionId) return;
     
     await client.invalidateQueries({queryKey: accountBalancesQueryKey(address)})
     await client.invalidateQueries({queryKey: accountTokenOperationsQueryKey(address)})
-    await client.invalidateQueries({queryKey: accountSubscriptionById(address, internalAgreementId)})
+    await client.invalidateQueries({queryKey: accountSubscriptionById(address, internalSubscriptionId)})
     await client.invalidateQueries({queryKey: accountSubscriptionsSignedQueryKey(address)})
     await client.invalidateQueries({queryKey: accountSubscriptionsCreatedQueryKey(address)})
 
@@ -30,7 +30,7 @@ export function useTriggerPaymentAgreementMutation(internalAgreementId: string |
   }
 
   return useMutation({
-    mutationFn: (id: number) => triggerPaymentAgreementInteraction(id),
+    mutationFn: (id: number) => triggerSubscriptionInteraction(id),
     onSuccess(sessionId) {
       if(!sessionId) return Promise.reject();
 

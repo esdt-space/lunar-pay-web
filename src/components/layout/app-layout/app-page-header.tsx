@@ -58,8 +58,8 @@ export function AppPageHeader() {
                 <ul className="space-y-6 text-base font-medium tracking-wide lg:flex lg:space-y-0 lg:text-sm">
                   {/* <HeaderLink text={'Admin'} location={RoutesConfig.admin} /> */}
                   <HeaderLink
-                    text={'Agreements'}
-                    location={RoutesConfig.paymentAgreements}
+                    text={'Subscriptions'}
+                    location={RoutesConfig.subscriptions}
                   />
                   <HeaderLink text={'Token Operations'} location={RoutesConfig.tokensOperations} />
                   {isMobileMenuOpen && 

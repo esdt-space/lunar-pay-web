@@ -1,4 +1,4 @@
-export enum AgreementAmountType {
+export enum SubscriptionAmountType {
   AnyAmount = 'any-amount',
   FixedAmount = 'fixed-amount',
   BoundedAmount = 'bounded-amount',

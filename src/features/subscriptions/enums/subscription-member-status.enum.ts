@@ -1,4 +1,4 @@
-export enum AgreementMemberStatus {
+export enum SubscriptionMemberStatus {
   Active = 'active',
   Canceled = 'canceled'
 }

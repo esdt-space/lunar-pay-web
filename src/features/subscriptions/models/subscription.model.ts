@@ -1,4 +1,4 @@
-import { AgreementAmountType, AgreementType } from '@/features/subscriptions/enums';
+import { SubscriptionAmountType, SubscriptionType } from '@/features/subscriptions/enums';
 
 export class Subscription {
   id: string;
@@ -6,11 +6,11 @@ export class Subscription {
 
   owner: string;
 
-  agreementIdentifier: number;
+  subscriptionIdentifier: number;
 
-  agreementType: AgreementType;
+  subscriptionType: SubscriptionType;
 
-  amountType: AgreementAmountType;
+  amountType: SubscriptionAmountType;
 
   frequency: number;
 
@@ -38,11 +38,11 @@ export class Subscription {
 
   maximumAmount?: string;
 
-  signAgreementHttpCallbackUrl?: string;
+  signSubscriptionHttpCallbackUrl?: string;
   
-  cancelAgreementHttpCallbackUrl?: string;
+  cancelSubscriptionHttpCallbackUrl?: string;
 
-  signAgreementRedirectUrl?: string;
+  signSubscriptionRedirectUrl?: string;
 
   createdAt: Date;
 
