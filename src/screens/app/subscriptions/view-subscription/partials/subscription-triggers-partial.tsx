@@ -1,9 +1,9 @@
 import { useState } from "react"
 
 import { useTokensMap } from "@/core/tokens"
-import { useAgreementTriggers } from "@/features/agreement-triggers/hooks"
+import { useSubscriptionTriggers } from "@/features/subscription-triggers/hooks"
 import { useCreatedSubscription } from "@/features/subscriptions/hooks"
-import { AgreementTriggersTable } from "@/features/agreement-triggers/components"
+import { SubscriptionTriggersTable } from "@/features/subscription-triggers/components"
 
 import { Card, CardContent } from "@/components/ui/card.tsx"
 import { PaginationButtonsNew } from "@/components/shared/pagination"
@@ -21,7 +21,7 @@ export function SubscriptionTriggersPartial({ subscriptionId }: Props) {
   const {
     data: triggers,
     isFetched: isFetchedSubscriptionsTriggers,
-  } = useAgreementTriggers(currentPage, subscriptionId);
+  } = useSubscriptionTriggers(currentPage, subscriptionId);
 
   if (!subscription) return null;
 
@@ -30,7 +30,7 @@ export function SubscriptionTriggersPartial({ subscriptionId }: Props) {
 
   const token = tokensMap[subscription?.tokenIdentifier];
   const numberOfPages = triggers?.numberOfPages
-  const subscriptionTriggers = triggers?.agreementTriggers ?? []
+  const subscriptionTriggers = triggers?.subscriptionTriggers ?? []
   const emptySubscriptionTriggers = isFetchedSubscriptionsTriggers && subscriptionTriggers.length === 0;
 
   return (
@@ -49,7 +49,7 @@ export function SubscriptionTriggersPartial({ subscriptionId }: Props) {
         {!emptySubscriptionTriggers && (
           <Card>
             <CardContent className="p-0">
-              <AgreementTriggersTable triggersList={subscriptionTriggers} token={token} />
+              <SubscriptionTriggersTable triggersList={subscriptionTriggers} token={token} />
               <PaginationButtonsNew
                 previousPageHandler={previousPageHandler}
                 nextPageHandler={nextPageHandler}
