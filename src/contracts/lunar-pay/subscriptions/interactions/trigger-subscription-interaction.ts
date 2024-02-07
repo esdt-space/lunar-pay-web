@@ -8,7 +8,7 @@ export async function triggerSubscriptionInteraction(subscriptionId: number) {
   const sender = await getAddress();
   const { chainId } = getNetworkConfig()
 
-  const interaction = lunarPaySmartContract.methods.triggerAgreement([
+  const interaction = lunarPaySmartContract.methods.triggerSubscription([
     subscriptionId
   ]);
 
