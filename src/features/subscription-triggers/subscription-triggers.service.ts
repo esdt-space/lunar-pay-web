@@ -13,7 +13,7 @@ export class SubscriptionTriggersService {
   static async getSubscriptionTriggersById(page: number, id: string): Promise<SubscriptionTriggersResponse> {
     const skip = (page - 1) * SubscriptionTriggersService.ITEMS_PER_PAGE;
 
-    return this.api.get<SubscriptionTriggersResponse>(`/subscriptions/${id}/all?limit=${SubscriptionTriggersService.ITEMS_PER_PAGE}&skip=${skip}`)
+    return this.api.get<SubscriptionTriggersResponse>(`/subscription-triggers/${id}/all?limit=${SubscriptionTriggersService.ITEMS_PER_PAGE}&skip=${skip}`)
       .then((response) => response.data)
       .then(data => {
         return {
