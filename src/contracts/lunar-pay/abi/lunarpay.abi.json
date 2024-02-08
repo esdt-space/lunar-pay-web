@@ -463,6 +463,17 @@
             "outputs": []
         },
         {
+            "name": "triggerSubscription",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "id",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
             "name": "createPaymentAgreement",
             "mutability": "mutable",
             "inputs": [
