@@ -38,6 +38,15 @@ export class SubscriptionsService {
       })
   }
 
+  static async getAllSubscriptionMembers(id: string | undefined): Promise<SubscriptionMember[]> {
+    return await SubscriptionsService.api
+      .get<SubscriptionMember[]>(`/subscriptions/${id}/members/all`)
+      .then((response) => response.data)
+      .then(data => {
+        return data.map(item => new SubscriptionMember(item)) 
+      })
+  }
+
   static async fetchLatestSubscriptionCreatedByAccount() {
     return SubscriptionsService.api
       .get<Subscription>(`/subscriptions/created/latest`)

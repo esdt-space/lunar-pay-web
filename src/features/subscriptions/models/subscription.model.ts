@@ -34,10 +34,6 @@ export class Subscription {
 
   fixedAmount?: string;
 
-  minimumAmount?: string;
-
-  maximumAmount?: string;
-
   signSubscriptionHttpCallbackUrl?: string;
   
   cancelSubscriptionHttpCallbackUrl?: string;

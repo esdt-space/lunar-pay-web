@@ -17,18 +17,38 @@ import {
   RedirectAndWebhooksSettings
 } from "@/screens/app/subscriptions/view-subscription/redirect-and-webhooks-settings/redirect-and-webhooks-settings.tsx";
 
+import { SubscriptionsService } from "@/features/subscriptions/subscriptions.service.ts"
+import { useEffect, useState } from "react"
+import { SubscriptionMember } from "@/features/subscriptions/models"
+
 export const ViewSubscriptionScreen = () => {
+  const [ memberships, setMemberships ] = useState<SubscriptionMember[]>([])
   const { address } = useGetAccount()
   const { id } = useParams()
   const navigate = useNavigate()
 
   const { data: subscription } = useCreatedSubscription(id);
 
-  if(!subscription) return;
+  useEffect(() => {
+    console.log(memberships)
+  }, [memberships])
 
+  useEffect(() => {
+    if(subscription !== undefined) {
+      SubscriptionsService.getAllSubscriptionMembers(subscription?.id).then((res) => {
+        setMemberships(res)
+      })
+    }
+  }, [])
+
+  if(!subscription) return;
+  
   if(subscription && subscription.owner !== address) {
     navigate(RoutesConfig.dashboard, { replace: true });
   }
+
+  const totalAmountPerMonth = 300;
+  const totalAmountCharged = 30000;
 
   return (
     <ContainedScreen className="space-y-6">
@@ -59,6 +79,7 @@ export const ViewSubscriptionScreen = () => {
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="members">Members</TabsTrigger>
           <TabsTrigger value="settings">Settings</TabsTrigger>
+          <TabsTrigger value="analytics">Analytics</TabsTrigger>
         </TabsList>
 
         <TabsContent value="overview" className={'space-y-4'}>
@@ -75,6 +96,16 @@ export const ViewSubscriptionScreen = () => {
 
         <TabsContent value="settings" className={'space-y-4'}>
           <RedirectAndWebhooksSettings subscription={subscription} />
+        </TabsContent>
+
+        <TabsContent value="analytics" className={'space-y-4'}>
+          <Card className={'p-6'}>
+            <div className="flex flex-col">
+              <div className="text-2xl bold mb-4">Analytics</div>
+              <div>Total Amount per Month: {totalAmountPerMonth}</div>
+              <div>Total Amount Charged: {totalAmountCharged}</div>
+            </div>
+          </Card>
         </TabsContent>
       </Tabs>
     </ContainedScreen>

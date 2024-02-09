@@ -1,15 +1,15 @@
-import { AgreementMemberStatus, AgreementType } from '@/features/subscriptions/enums';
+import { SubscriptionMemberStatus, SubscriptionType } from '@/features/subscriptions/enums';
 
 export class SubscriptionMember {
   member: string;
 
-  internalAgreementId: string;
+  internalSubscriptionId: string;
 
-  blockchainAgreementId: number;
+  blockchainSubscriptionId: number;
 
-  agreementType: AgreementType;
+  subscriptionType: SubscriptionType;
 
-  status: AgreementMemberStatus;
+  status: SubscriptionMemberStatus;
 
   lastChargedAt: Date;
 
