@@ -1,5 +1,5 @@
 import { ContainedScreen } from "@/components/prefab/contained-screen.tsx"
-import {useSearchParams} from "react-router-dom";
+import {Link, useSearchParams} from "react-router-dom";
 import {CheckoutOrder} from "@/screens/app/checkout/checkout-order.model.ts";
 import {defaultWalletConnectButtonConfig} from "@/lib/mvx";
 import {WalletConnectLoginContainer} from "@multiversx/sdk-dapp/UI";
@@ -10,6 +10,10 @@ import _ from "lodash";
 import {DefaultCheckoutTemplate} from "@/screens/app/checkout/default-checkout-template";
 import {usePaymentMutation} from "@/features/payments/hooks/mutations";
 import {useTokensMap} from "@/core/tokens";
+import { AppIcon } from "@/components/shared/app-icon";
+import { RoutesConfig } from "@/navigation";
+
+import IllustrationImage from '@/assets/media/illustration.svg?react';
 
 /*
   erd127klw7q8q970ke6tg6vddz9fvuzyqfnn8fpzt5vdt757t05w7jgqe4dcuy
@@ -62,8 +66,18 @@ export const CheckoutScreen = () => {
   }
 
   return (
-    <ContainedScreen className="space-y-6">
-      <DefaultCheckoutTemplate order={order} />
+    <div className="flex flex-1 h-screen">
+      <div className={'flex-1 relative hidden isolate lg:flex max-w-lg bg-[#F5F6FA] border-r p-12'}>
+        <Link to={RoutesConfig.home}>
+          <AppIcon />
+        </Link>
+
+        <IllustrationImage className={"absolute inset-0 z-0 w-full h-full object-cover"} />
+      </div>
+
+      <div className="flex flex-1 items-center justify-center">
+        <DefaultCheckoutTemplate order={order} />
+      </div>
 
       {isLoginVisible &&
         <WalletConnectLoginContainer
@@ -82,6 +96,6 @@ export const CheckoutScreen = () => {
           {...defaultWalletConnectButtonConfig}
         />
       }
-    </ContainedScreen>
+    </div>
   )
 }
