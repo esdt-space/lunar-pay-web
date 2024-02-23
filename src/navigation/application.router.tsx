@@ -31,6 +31,7 @@ import { ContactScreen } from '@/screens/app/contact';
 import { FrequentlyAskedQuestionsScreen } from '@/screens/app/static-pages/frequently-asked-questions/frequently-asked-questions.screen';
 import { TermsAndConditionsScreen } from '@/screens/app/static-pages/terms-and-conditions/terms-and-conditions-screen';
 import { WhitepaperScreen } from '@/screens/app/static-pages/white-paper/whitepaper.screen';
+import { Donation } from '@/screens/app/donation';
 
 export function ApplicationRouter() {
   useScrollToTopHandler()
@@ -41,6 +42,7 @@ export function ApplicationRouter() {
     <React.Suspense fallback={<></>}>
       <Routes location={state?.backgroundLocation || location}>
         <Route path={"/demo-page"} element={<DemoPage />} />
+        <Route path={"/donation"} element={<Donation />} />
 
         <Route element={<PublicLayout />}>
           <Route index element={<HomeScreen />} />
