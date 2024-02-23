@@ -14,9 +14,9 @@ export function DefaultCheckoutTemplate({order}: Params) {
         ))}
       </div>
 
-      <div className="pt-6">
-        <div className="text-2xl font-semibold text-gray-900">Total amount</div>
-        <div className="text-xl text-gray-800">{order.total.toHumanReadableString()}</div>
+      <div className="pt-6 flex space-x-4">
+        <div className="text-2xl font-semibold text-gray-900">Total amount:</div>
+        <div className="text-xl text-gray-800 pt-1">{order.total.toHumanReadableString()} EGLD</div>
       </div>
     </div>
   )

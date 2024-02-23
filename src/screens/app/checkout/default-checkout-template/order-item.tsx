@@ -8,10 +8,11 @@ export function OrderItem({item}: Params) {
   return (
     <div className="flex justify-between items-center py-2">
       <div className="text-gray-800 text-sm md:text-base">
-        {item.name} <span className="font-semibold">x{item.quantity}</span>
+        <div>{item.name}</div> 
+        <div className="font-semibold">Quantity: {item.quantity}</div>
       </div>
       <div className="text-gray-900 font-semibold text-sm md:text-lg">
-        {item.price.toHumanReadableString()}
+        {item.price.toHumanReadableString()} EGLD
       </div>
     </div>
   )

@@ -12,15 +12,21 @@ import {usePaymentMutation} from "@/features/payments/hooks/mutations";
 import {useTokensMap} from "@/core/tokens";
 
 /*
-
+  erd127klw7q8q970ke6tg6vddz9fvuzyqfnn8fpzt5vdt757t05w7jgqe4dcuy
   https://localhost:5174/checkout?receiver=erd1yng4ajnxp03lx5erwcq57m5502m6t9nxajf5hv9nw0k27t8zcq4qq3vu4v
   &itemName[]=iPhone 15 PRO
   &itemPrice[]=1
   &itemQuantity[]=1
+
   &itemName[]=MacBook PRO
   &itemPrice[]=1
   &itemQuantity[]=1
+
   &currency=EGLD
+  
+  &thankYouMessage=Thank you!
+  &callbackUrl=https://...
+  &redirectUrl=https://...
 
   https://localhost:5174/checkout?receiver=erd1yng4ajnxp03lx5erwcq57m5502m6t9nxajf5hv9nw0k27t8zcq4qq3vu4v&itemName[]=iPhone 15 PRO&itemPrice[]=1&itemQuantity[]=1&itemName[]=MacBook PRO&itemPrice[]=1&itemQuantity[]=1&currency=EGLD
  */
@@ -65,6 +71,7 @@ export const CheckoutScreen = () => {
           loginButtonText={''}
           showScamPhishingAlert={false}
           wrapContentInsideModal={false}
+          showLoginContent={false}
 
           onLoginRedirect={payOrder}
           logoutRoute={window.location.href}
