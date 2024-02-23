@@ -15,17 +15,26 @@ export class CheckoutOrder {
   receiver: string;
   currency: Token['identifier'];
   total: W3Number;
+  thankYouMessage: string;
+  callbackUrl: string;
+  redirectUrl: string;
 
   constructor() {
     this.items = [];
     this.receiver = '';
     this.currency = '';
+    this.thankYouMessage = '';
+    this.callbackUrl = '';
+    this.redirectUrl = '';
   }
 
   static fromParams(params: URLSearchParams) {
     const order = new CheckoutOrder();
     order.receiver = params.get('receiver') || '';
     order.currency = params.get('currency') || '';
+    order.thankYouMessage = params.get('thankYouMessage') || '';
+    order.callbackUrl = params.get('callbackUrl') || '';
+    order.redirectUrl = params.get('redirectUrl') || '';
 
     let orderTotal = new BigNumber(0);
 

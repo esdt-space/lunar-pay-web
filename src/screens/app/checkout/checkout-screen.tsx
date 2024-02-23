@@ -1,4 +1,3 @@
-import { ContainedScreen } from "@/components/prefab/contained-screen.tsx"
 import {Link, useSearchParams} from "react-router-dom";
 import {CheckoutOrder} from "@/screens/app/checkout/checkout-order.model.ts";
 import {defaultWalletConnectButtonConfig} from "@/lib/mvx";
