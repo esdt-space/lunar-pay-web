@@ -27,5 +27,8 @@ export function usePaymentMutation() {
         registerSessionId(sessionId, getCallback(resolve));
       });
     },
+    onError() {
+
+    },
   });
 }

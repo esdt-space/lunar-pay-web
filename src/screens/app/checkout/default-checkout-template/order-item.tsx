@@ -7,12 +7,13 @@ type Params = {
 
 export function OrderItem({item, currency}: Params) {
   return (
-    <div className="flex flex-col border rounded-md p-4 px-6 bg-gradient-to-r from-primary to-secondary text-white">
-      <div className="border-b border-white pb-3 mb-1">
-        <div className="text-lg font-semibold">{item.name}</div> 
+    <div className="flex justify-between">
+      <div className="flex items-center gap-2">
+        <div className="">{item.name}</div>
+        <div>x {item.quantity}</div>
       </div>
+
       <div className="flex justify-between items-center">
-        <div>Qty: {item.quantity}</div>
         {item.price.toHumanReadableString()} {currency}
       </div>
     </div>
