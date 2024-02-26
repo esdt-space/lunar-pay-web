@@ -44,9 +44,7 @@ export const Donation = () => {
   }
 
   const donate = () => {
-    if (!selectedToken) {
-      return
-    }
+    if (!selectedToken || !amount) return;
     
     mutate({
       token: selectedToken,
