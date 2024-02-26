@@ -6,6 +6,9 @@ import { useAccountVaultTokens } from "@/features/vault/hooks";
 import { TokenSelectorWithAmount } from "@/core/tokens/components";
 import { DonationPageTemplate } from "./template";
 import { DonationAmountSelect, DonationTypeSelect } from "./components";
+import { useSingleDonationMutation } from "@/features/donations/hooks/mutations/use-single-donation-mutation";
+import BigNumber from "bignumber.js";
+import { useSearchParams } from "react-router-dom";
 
 export type DonationType = 'single' | 'monthly';
 export type PredeterminedAmount = '5' | '10' | '20' | null;
@@ -15,6 +18,9 @@ export const Donation = () => {
   const [selectedToken, setSelectedToken] = useState<Token | undefined>(undefined);
   const [selectedDonationType, setSelectedDonationType] = useState<DonationType>('single')
   const [selectedPredeterminedAmount, setSelectedPredeterminedAmount] = useState<PredeterminedAmount>(null)
+  const [searchParams] = useSearchParams()
+
+  const receiver = searchParams.get('receiver') || '';
 
   useEffect(() => {
     setAmount("");
@@ -22,6 +28,7 @@ export const Donation = () => {
   }, [])
 
   const { vaultTokens} = useAccountVaultTokens();
+  const { mutate } = useSingleDonationMutation()
 
   const selectDonationType = (donation: DonationType) => {
     setSelectedDonationType(donation)
@@ -35,13 +42,25 @@ export const Donation = () => {
 
     setSelectedPredeterminedAmount(amount)
   }
+
+  const donate = () => {
+    if (!selectedToken) {
+      return
+    }
+    
+    mutate({
+      token: selectedToken,
+      amount: new BigNumber(amount),
+      receiver: receiver,
+    }, { onSuccess: () => console.log('success')})
+  }
   
   return (
     <DonationPageTemplate 
       donationReceiver="Streamer"
       subtitle="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
       description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
-      donateMethod={() => {}}
+      donateMethod={donate}
     >
       <DonationTypeSelect selectedDonationType={selectedDonationType} selectDonationType={selectDonationType} />
 
