@@ -16,9 +16,9 @@ export const ToolsMenu = () => {
     <div className="mr-4">
       <DropdownMenu>
         <DropdownMenuTrigger>Tools</DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuItem onClick={() => navigate(RoutesConfig.paymentButtonTool)}>
-            Payment Button
+        <DropdownMenuContent className='p-2'>
+          <DropdownMenuItem onClick={() => navigate(RoutesConfig.checkoutUrlTool)}>
+            Checkout Url
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => navigate(RoutesConfig.donationButtonTool)}>
             Donation Button

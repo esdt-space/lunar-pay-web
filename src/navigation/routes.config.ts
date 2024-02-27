@@ -39,7 +39,7 @@ export class RoutesConfig {
 
   static admin = '/admin'
 
-  static paymentButtonTool = '/payment-button-tool'
+  static checkoutUrlTool = '/checkout-url-tool'
   static donationButtonTool = '/donation-button-tool'
 
   static getDefaultLoginRoute() {
