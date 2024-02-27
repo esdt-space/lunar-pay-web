@@ -31,6 +31,7 @@ import { ContactScreen } from '@/screens/app/contact';
 import { FrequentlyAskedQuestionsScreen } from '@/screens/app/static-pages/frequently-asked-questions/frequently-asked-questions.screen';
 import { TermsAndConditionsScreen } from '@/screens/app/static-pages/terms-and-conditions/terms-and-conditions-screen';
 import { WhitepaperScreen } from '@/screens/app/static-pages/white-paper/whitepaper.screen';
+import { DonationButtonTool, PaymentButtonTool } from '@/screens/app/tools';
 
 export function ApplicationRouter() {
   useScrollToTopHandler()
@@ -67,6 +68,8 @@ export function ApplicationRouter() {
           <Route element={<AppLayout />}>
             <Route index element={<DashboardScreen />} />
             <Route path={RoutesConfig.dashboard} element={<DashboardScreen />} />
+            <Route path={RoutesConfig.paymentButtonTool} element={<PaymentButtonTool />} />
+            <Route path={RoutesConfig.donationButtonTool} element={<DonationButtonTool />} />
 
             <Route path={RoutesConfig.admin}>
               <Route index element={<AdminScreen />} />
