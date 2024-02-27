@@ -4,7 +4,7 @@ import { Token } from "@/core/tokens";
 import { useAccountVaultTokens } from "@/features/vault/hooks";
 
 import { TokenSelectorWithAmount } from "@/core/tokens/components";
-import { DonationPageTemplate } from "./template";
+import { DonationPageWrapper } from "./page-wrapper";
 import { DonationAmountSelect, DonationTypeSelect } from "./components";
 import { useSingleDonationMutation } from "@/features/donations/hooks/mutations/use-single-donation-mutation";
 import BigNumber from "bignumber.js";
@@ -54,7 +54,7 @@ export const Donation = () => {
   }
   
   return (
-    <DonationPageTemplate 
+    <DonationPageWrapper 
       donationReceiver="Streamer"
       subtitle="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
       description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
@@ -71,6 +71,6 @@ export const Donation = () => {
         amount={amount}
         onAmountChange={(amount) => setAmount(amount)}
       />
-    </DonationPageTemplate>
+    </DonationPageWrapper>
   )
 }

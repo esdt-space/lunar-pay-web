@@ -16,7 +16,7 @@ type Props = {
   donateMethod: () => void;
 }
 
-export const DonationPageTemplate = (props: PropsWithChildren<Props>) => {
+export const DonationPageWrapper = (props: PropsWithChildren<Props>) => {
   const { donationReceiver, subtitle, description, donateMethod, children } = props;
 
   return (
