@@ -8,7 +8,7 @@ import { useToast } from '@/components/ui/use-toast';
 export const CheckoutUrlToolScreen = () => {
   const { toast } = useToast()
   
-  const baseUrlCodeString = ' https://lunarpay.finance//checkout'
+  const baseUrlCodeString = ' https://lunarpay.finance/checkout'
   const exampleUrl = 'https://lunarpay.finance/checkout?receiver=erd1yng4ajnxp03lx5erwcq57m5502m6t9nxajf5hv9nw0k27t8zcq4qq3vu4v&itemName[]=iPhone 15 PRO&itemPrice[]=1&itemQuantity[]=1&itemName[]=MacBook PRO&itemPrice[]=1&itemQuantity[]=1&currency=EGLD&thankYouMessage=Thank%20you!&callbackUrl=https://example-callback-url.com&redirectUrl=https://example-redirect-url.com'
 
   const copyButtonHandler = (input: string) => {
