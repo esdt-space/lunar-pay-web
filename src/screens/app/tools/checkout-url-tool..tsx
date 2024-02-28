@@ -2,10 +2,22 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 import { ContainedScreen } from "@/components/prefab/contained-screen"
+import { Button } from '@/components/ui/button';
+import { useToast } from '@/components/ui/use-toast';
 
 export const CheckoutUrlToolScreen = () => {
+  const { toast } = useToast()
+  
   const baseUrlCodeString = ' https://lunarpay.finance//checkout'
   const exampleUrl = 'https://lunarpay.finance/checkout?receiver=erd1yng4ajnxp03lx5erwcq57m5502m6t9nxajf5hv9nw0k27t8zcq4qq3vu4v&itemName[]=iPhone 15 PRO&itemPrice[]=1&itemQuantity[]=1&itemName[]=MacBook PRO&itemPrice[]=1&itemQuantity[]=1&currency=EGLD&thankYouMessage=Thank%20you!&callbackUrl=https://example-callback-url.com&redirectUrl=https://example-redirect-url.com'
+
+  const copyButtonHandler = (input: string) => {
+    return navigator.clipboard.writeText(input).then(() => {
+      toast({
+        description: 'Copied URL to clipboard'
+      })
+    })
+  };
 
   return (
     <ContainedScreen className='w-3/5'>
@@ -23,6 +35,7 @@ export const CheckoutUrlToolScreen = () => {
       >
         {baseUrlCodeString}
       </SyntaxHighlighter>
+      <Button onClick={() => copyButtonHandler(baseUrlCodeString)}>Copy to clipboard</Button>
 
       <div className='text-2xl font-semibold mt-16 mb-4'>Query Parameters</div>
       <div className='text-lg'>Append the following query parameters to the base URL. Each parameter consists of a key-value pair, connected by '=' and separated from subsequent parameters by '&'.</div>
@@ -69,6 +82,7 @@ export const CheckoutUrlToolScreen = () => {
       >
         {exampleUrl}
       </SyntaxHighlighter>
+      <Button onClick={() => copyButtonHandler(exampleUrl)}>Copy to clipboard</Button>
 
       <div className='text-2xl font-semibold mt-16 mb-4'>Important Notes</div>
       <div className='mt-4'>
