@@ -54,7 +54,7 @@ export const CheckoutUrlToolScreen = () => {
         </div>
 
         <div className='text-lg'>
-          <span className='font-bold'>itemQuantity[]:</span> The quantity of each item, aligned with the of `itemName[]` and `itemPrice[]`.
+          <span className='font-bold'>itemQuantity[]:</span> The quantity of each item, aligned with the order of `itemName[]` and `itemPrice[]`.
         </div>
 
         <div className='text-lg'>
