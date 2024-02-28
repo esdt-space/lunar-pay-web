@@ -45,11 +45,13 @@ export const Donation = () => {
   }
 
   const donate = () => {
-    if (!selectedToken || !amount) return;
+    const donationAmount = selectedPredeterminedAmount === null ? amount : selectedPredeterminedAmount;
+
+    if (!selectedToken || !donationAmount) return;
     
     mutate({
       token: selectedToken,
-      amount: new BigNumber(amount),
+      amount: new BigNumber(donationAmount),
       receiver: receiver,
       metadata: metadata,
     }, { onSuccess: () => console.log('success')})
