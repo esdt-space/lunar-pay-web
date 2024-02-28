@@ -1,23 +1,9 @@
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism';
-
 import { ContainedScreen } from "@/components/prefab/contained-screen"
-import { Button } from '@/components/ui/button';
-import { useToast } from '@/components/ui/use-toast';
+import { CodeHighlight } from './components';
 
 export const CheckoutUrlToolScreen = () => {
-  const { toast } = useToast()
-  
-  const baseUrlCodeString = ' https://lunarpay.finance/checkout'
-  const exampleUrl = 'https://lunarpay.finance/checkout?receiver=erd1yng4ajnxp03lx5erwcq57m5502m6t9nxajf5hv9nw0k27t8zcq4qq3vu4v&itemName[]=iPhone 15 PRO&itemPrice[]=1&itemQuantity[]=1&itemName[]=MacBook PRO&itemPrice[]=1&itemQuantity[]=1&currency=EGLD&thankYouMessage=Thank%20you!&callbackUrl=https://example-callback-url.com&redirectUrl=https://example-redirect-url.com'
-
-  const copyButtonHandler = (input: string) => {
-    return navigator.clipboard.writeText(input).then(() => {
-      toast({
-        description: 'Copied URL to clipboard'
-      })
-    })
-  };
+  const baseCheckoutUrl = ' https://lunarpay.finance/checkout'
+  const exampleCheckoutUrl = 'https://lunarpay.finance/checkout?receiver=erd1yng4ajnxp03lx5erwcq57m5502m6t9nxajf5hv9nw0k27t8zcq4qq3vu4v&itemName[]=iPhone 15 PRO&itemPrice[]=1&itemQuantity[]=1&itemName[]=MacBook PRO&itemPrice[]=1&itemQuantity[]=1&currency=EGLD&thankYouMessage=Thank%20you!&callbackUrl=https://example-callback-url.com&redirectUrl=https://example-redirect-url.com'
 
   return (
     <ContainedScreen className='w-3/5'>
@@ -28,14 +14,7 @@ export const CheckoutUrlToolScreen = () => {
 
       <div className='text-2xl font-semibold mt-16 mb-4'>Base URL</div>
       <div className='text-lg'>Your checkout process begins with the base URL</div>
-      <SyntaxHighlighter 
-        language="typescript"
-        style={dark} 
-        customStyle={{backgroundColor: 'black', border: 'none', marginTop: '24px', marginBottom: '24px'}}
-      >
-        {baseUrlCodeString}
-      </SyntaxHighlighter>
-      <Button onClick={() => copyButtonHandler(baseUrlCodeString)}>Copy to clipboard</Button>
+      <CodeHighlight codeString={baseCheckoutUrl} />
 
       <div className='text-2xl font-semibold mt-16 mb-4'>Query Parameters</div>
       <div className='text-lg'>Append the following query parameters to the base URL. Each parameter consists of a key-value pair, connected by '=' and separated from subsequent parameters by '&'.</div>
@@ -75,14 +54,7 @@ export const CheckoutUrlToolScreen = () => {
       </div>
 
       <div className='text-2xl font-semibold mt-16 mb-4'>Example URL</div>
-      <SyntaxHighlighter 
-        language="typescript"
-        style={dark} 
-        customStyle={{backgroundColor: 'black', border: 'none', marginTop: '24px', marginBottom: '24px'}}
-      >
-        {exampleUrl}
-      </SyntaxHighlighter>
-      <Button onClick={() => copyButtonHandler(exampleUrl)}>Copy to clipboard</Button>
+      <CodeHighlight codeString={exampleCheckoutUrl} />
 
       <div className='text-2xl font-semibold mt-16 mb-4'>Important Notes</div>
       <div className='mt-4'>
