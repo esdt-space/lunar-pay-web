@@ -21,6 +21,7 @@ export const Donation = () => {
   const [searchParams] = useSearchParams()
 
   const receiver = searchParams.get('receiver') || '';
+  const metadata = searchParams.get('metadata') || '';
 
   useEffect(() => {
     setAmount("");
@@ -50,6 +51,7 @@ export const Donation = () => {
       token: selectedToken,
       amount: new BigNumber(amount),
       receiver: receiver,
+      metadata: metadata,
     }, { onSuccess: () => console.log('success')})
   }
   
