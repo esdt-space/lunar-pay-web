@@ -34,6 +34,15 @@ export class RoutesConfig {
   static updatePaymentAgreement = '/payment-agreements/:id/edit'
   static approveSubscription = '/approve-subscription'
 
+  static donations = '/donations'
+  static createDonationIndex = '/donations/new'
+  static createDonationWidget = '/donations/new/widget'
+  static createDonationGoal = '/donations/new/goal'
+
+  static event = '/event'
+  static eventDonationsReceived = '/event/donations-received'
+  static eventActivity = '/event/users-activity'
+
   static tokensOperations = '/tokens-operations'
   static transactions = '/transactions'
 

@@ -4,19 +4,17 @@ import { Token } from "@/core/tokens";
 import { useAccountVaultTokens } from "@/features/vault/hooks";
 
 import { TokenSelectorWithAmount } from "@/core/tokens/components";
-import { DonationPageWrapper } from "./page-wrapper";
-import { DonationAmountSelect, DonationTypeSelect } from "./components";
 import { useSingleDonationMutation } from "@/features/donations/hooks/mutations/use-single-donation-mutation";
 import BigNumber from "bignumber.js";
 import { useSearchParams } from "react-router-dom";
+import { DonationWidgetWrapper } from "./donation-widget-wrapper";
+import { DonationAmountSelect } from "../components";
 
-export type DonationType = 'single' | 'monthly';
 export type PredeterminedAmount = '5' | '10' | '20' | null;
 
-export const Donation = () => {
+export const SingleDonationWidget = () => {
   const [amount, setAmount] = useState('');
   const [selectedToken, setSelectedToken] = useState<Token | undefined>(undefined);
-  const [selectedDonationType, setSelectedDonationType] = useState<DonationType>('single')
   const [selectedPredeterminedAmount, setSelectedPredeterminedAmount] = useState<PredeterminedAmount>(null)
   const [searchParams] = useSearchParams()
 
@@ -30,10 +28,6 @@ export const Donation = () => {
 
   const { vaultTokens} = useAccountVaultTokens();
   const { mutate } = useSingleDonationMutation()
-
-  const selectDonationType = (donation: DonationType) => {
-    setSelectedDonationType(donation)
-  }
 
   const selectPredeterminedAmount = (amount: PredeterminedAmount) => {
     if (amount === selectedPredeterminedAmount) {
@@ -58,14 +52,12 @@ export const Donation = () => {
   }
   
   return (
-    <DonationPageWrapper 
+    <DonationWidgetWrapper 
       donationReceiver="Streamer"
       subtitle="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
       description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
       donateMethod={donate}
     >
-      <DonationTypeSelect selectedDonationType={selectedDonationType} selectDonationType={selectDonationType} />
-
       <DonationAmountSelect selectedPredeterminedAmount={selectedPredeterminedAmount}  selectPredeterminedAmount={selectPredeterminedAmount}/>
 
       <TokenSelectorWithAmount
@@ -75,6 +67,6 @@ export const Donation = () => {
         amount={amount}
         onAmountChange={(amount) => setAmount(amount)}
       />
-    </DonationPageWrapper>
+    </DonationWidgetWrapper>
   )
 }

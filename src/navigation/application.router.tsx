@@ -31,7 +31,7 @@ import { ContactScreen } from '@/screens/app/contact';
 import { FrequentlyAskedQuestionsScreen } from '@/screens/app/static-pages/frequently-asked-questions/frequently-asked-questions.screen';
 import { TermsAndConditionsScreen } from '@/screens/app/static-pages/terms-and-conditions/terms-and-conditions-screen';
 import { WhitepaperScreen } from '@/screens/app/static-pages/white-paper/whitepaper.screen';
-import { Donation } from '@/screens/app/donation';
+import { DonationScreen } from '@/screens/app/donations';
 
 export function ApplicationRouter() {
   useScrollToTopHandler()
@@ -42,7 +42,6 @@ export function ApplicationRouter() {
     <React.Suspense fallback={<></>}>
       <Routes location={state?.backgroundLocation || location}>
         <Route path={"/demo-page"} element={<DemoPage />} />
-        <Route path={"/donation"} element={<Donation />} />
 
         <Route element={<PublicLayout />}>
           <Route index element={<HomeScreen />} />
@@ -67,8 +66,26 @@ export function ApplicationRouter() {
 
         <Route element={<AuthenticatedRouteOutlet />}>
           <Route element={<AppLayout />}>
+
+            <Route path={RoutesConfig.event}>
+              <Route path={RoutesConfig.eventActivity} element={<div>Users Activity</div>} />
+              <Route path={RoutesConfig.eventDonationsReceived} element={<div>Users ranked by donations received</div>} />
+            </Route>
+
             <Route index element={<DashboardScreen />} />
             <Route path={RoutesConfig.dashboard} element={<DashboardScreen />} />
+
+            <Route path={RoutesConfig.donations}>
+              <Route index element={<div>Donations List</div>} />
+              <Route path={':id'} element={<div>View Donation</div>} />
+              <Route path={':id/public'} element={<DonationScreen />} />
+
+              <Route path={RoutesConfig.createDonationIndex}>
+                <Route index element={<div>New Donation Screen</div>} />
+                <Route path={RoutesConfig.createDonationWidget} element={<div>Create donation widget</div>} />
+                <Route path={RoutesConfig.createDonationGoal} element={<div>Create donation goal</div>} />
+              </Route>
+            </Route>
 
             <Route path={RoutesConfig.admin}>
               <Route index element={<AdminScreen />} />
