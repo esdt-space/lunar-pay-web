@@ -8,11 +8,12 @@ type Props = {
   donationReceiver: string;
   subtitle?: string;
   description?: string;
+  disableButton: boolean;
   donateMethod: () => void;
 }
 
 export const DonationWidgetWrapper = (props: PropsWithChildren<Props>) => {
-  const { donationReceiver, subtitle, description, donateMethod, children } = props;
+  const { donationReceiver, subtitle, description, disableButton, donateMethod, children } = props;
 
   return (
     <div className="flex flex-1 justify-center items-center">
@@ -29,7 +30,7 @@ export const DonationWidgetWrapper = (props: PropsWithChildren<Props>) => {
           <p>{description}</p>
         </div>
 
-        <Button onClick={donateMethod} className="bg-gradient-to-r from-primary to-secondary text-white hover:text-slate-200">Donate</Button>
+        <Button disabled={disableButton} onClick={donateMethod} className="bg-gradient-to-r from-primary to-secondary text-white hover:text-slate-200">Donate</Button>
 
         <div className="flex justify-center items-center w-full space-x-4"><p className={'text-medium font-bold'}>Powered by</p> <AppIcon /></div>
       </Card>

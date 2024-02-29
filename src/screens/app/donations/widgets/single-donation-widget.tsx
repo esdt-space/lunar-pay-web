@@ -9,6 +9,7 @@ import BigNumber from "bignumber.js";
 import { useSearchParams } from "react-router-dom";
 import { DonationWidgetWrapper } from "./donation-widget-wrapper";
 import { DonationAmountSelect } from "../components";
+import { useEnoughAssets } from "../../../../utils/hooks";
 
 export type PredeterminedAmount = '5' | '10' | '20' | null;
 
@@ -26,8 +27,15 @@ export const SingleDonationWidget = () => {
     setSelectedToken(undefined);
   }, [])
 
-  const { vaultTokens} = useAccountVaultTokens();
+  useEffect(() => {
+    if (selectedPredeterminedAmount !== null) {
+      setAmount(selectedPredeterminedAmount)
+    }
+  }, [selectedPredeterminedAmount])
+
+  const { vaultTokens } = useAccountVaultTokens();
   const { mutate } = useSingleDonationMutation()
+  const { enoughAssets } = useEnoughAssets(amount, selectedToken)
 
   const selectPredeterminedAmount = (amount: PredeterminedAmount) => {
     if (amount === selectedPredeterminedAmount) {
@@ -50,6 +58,11 @@ export const SingleDonationWidget = () => {
       metadata: metadata,
     }, { onSuccess: () => console.log('success')})
   }
+
+  const onAmountChange = (amount: string) => {
+    setAmount(amount)
+    setSelectedPredeterminedAmount(null)
+  }
   
   return (
     <DonationWidgetWrapper 
@@ -57,6 +70,7 @@ export const SingleDonationWidget = () => {
       subtitle="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
       description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
       donateMethod={donate}
+      disableButton={selectedToken === undefined || !enoughAssets} 
     >
       <DonationAmountSelect selectedPredeterminedAmount={selectedPredeterminedAmount}  selectPredeterminedAmount={selectPredeterminedAmount}/>
 
@@ -65,7 +79,7 @@ export const SingleDonationWidget = () => {
         tokens={vaultTokens}
         onTokenChange={(token) => setSelectedToken(token)}
         amount={amount}
-        onAmountChange={(amount) => setAmount(amount)}
+        onAmountChange={onAmountChange}
       />
     </DonationWidgetWrapper>
   )
