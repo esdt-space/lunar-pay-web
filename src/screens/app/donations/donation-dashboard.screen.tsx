@@ -23,12 +23,6 @@ export const DonationDashboardScreen = () => {
           extraDescription='It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout'
           navigationRoute={RoutesConfig.createDonationGoal}
         />
-        <CreateDonationCard 
-          title='Create Widget'
-          description='Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry'
-          extraDescription='It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout'
-          navigationRoute={RoutesConfig.createDonationWidget}
-        />
       </div>
     </ContainedScreen>
   )
