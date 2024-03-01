@@ -31,7 +31,7 @@ import { ContactScreen } from '@/screens/app/contact';
 import { FrequentlyAskedQuestionsScreen } from '@/screens/app/static-pages/frequently-asked-questions/frequently-asked-questions.screen';
 import { TermsAndConditionsScreen } from '@/screens/app/static-pages/terms-and-conditions/terms-and-conditions-screen';
 import { WhitepaperScreen } from '@/screens/app/static-pages/white-paper/whitepaper.screen';
-import { DonationScreen } from '@/screens/app/donations';
+import { DonationDashboardScreen, DonationPublicScreen, DonationsListScreen } from '@/screens/app/donations';
 
 export function ApplicationRouter() {
   useScrollToTopHandler()
@@ -76,12 +76,12 @@ export function ApplicationRouter() {
             <Route path={RoutesConfig.dashboard} element={<DashboardScreen />} />
 
             <Route path={RoutesConfig.donations}>
-              <Route index element={<div>Donations List</div>} />
+              <Route index element={<DonationsListScreen />} />
               <Route path={':id'} element={<div>View Donation</div>} />
-              <Route path={':id/public'} element={<DonationScreen />} />
+              <Route path={':id/public'} element={<DonationPublicScreen />} />
 
               <Route path={RoutesConfig.createDonationIndex}>
-                <Route index element={<div>New Donation Screen</div>} />
+                <Route index element={<DonationDashboardScreen />} />
                 <Route path={RoutesConfig.createDonationWidget} element={<div>Create donation widget</div>} />
                 <Route path={RoutesConfig.createDonationGoal} element={<div>Create donation goal</div>} />
               </Route>
