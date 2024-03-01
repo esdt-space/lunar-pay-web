@@ -16,7 +16,7 @@ export const CreateDonationCard = (props: Props) => {
 
   return (
     <Card onClick={() => navigate(navigationRoute)} className="w-full space-y-4 cursor-pointer p-4">
-      <CardHeader>{title}</CardHeader>
+      <CardHeader className='font-bold'>{title}</CardHeader>
       <CardContent className='flex flex-col space-y-4'>
         <div>{description}</div>
         <div>{extraDescription}</div>
