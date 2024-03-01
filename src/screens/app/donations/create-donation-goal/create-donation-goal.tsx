@@ -12,11 +12,12 @@ import { Button } from "@/components/ui/button"
 const donationTypes = [
   {label: 'oneTimeDonation', description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'},
   {label: 'recurringDonations', description: 'Coming soon'}
-]
+];
+
 const userTypes = [
   {label: 'contentCreator', description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'},
   {label: 'charity', description: 'Coming soon'}
-]
+];
 
 export const CreateDonationGoalScreen = () => {
   const [beneficiaryName, setBeneficiaryName] = useState('');
