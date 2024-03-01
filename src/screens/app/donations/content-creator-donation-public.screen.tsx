@@ -4,7 +4,7 @@ import { LatestDonationsList, SingleDonationWidget } from "./widgets";
 export type DonationType = 'single' | 'monthly';
 export type PredeterminedAmount = '5' | '10' | '20' | null;
 
-export const DonationPublicScreen = () => {
+export const ContentCreatorDonationPublicScreen = () => {
   return (
     <DonationPageWrapper 
       userHeroTag="@david"
