@@ -1,10 +1,11 @@
 import { ChevronRight } from "lucide-react";
-import { useExtensionLogin, useWebWalletLogin, useXaliasLogin } from '@multiversx/sdk-dapp/hooks'
+import { useWebWalletLogin, useXaliasLogin } from '@multiversx/sdk-dapp/hooks'
 
 import { cn } from "@/theme/utils.ts";
 import { defaultAuthButtonConfig } from '@/lib/mvx'
 
 import { Button } from '@/components/ui/button'
+import { DeFiExtensionAuthButton } from "@/features/auth/components/partials";
 
 type Props = {
   callbackRoute: string
@@ -20,7 +21,6 @@ export function AuthButtons(props: Props) {
   };
 
   const [initiateWebWalletLogin] = useWebWalletLogin(defaultOptions)
-  const [initiateExtensionLogin] = useExtensionLogin(defaultOptions)
   const [initiateXAliasLogin] = useXaliasLogin(defaultOptions)
 
   return (
@@ -36,16 +36,13 @@ export function AuthButtons(props: Props) {
         <ChevronRight />
       </Button>
 
-      <Button
+      <DeFiExtensionAuthButton
         className={cn([
           'justify-between',
-          'bg-gradient-to-r from-primary to-secondary text-white hover:text-slate-200'
+          'bg-gradient-to-r from-primary to-secondary text-white hover:text-slate-200',
         ])}
-        onClick={initiateExtensionLogin}
-      >
-        MultiversX DeFi Wallet
-        <ChevronRight />
-      </Button>
+        callbackRoute={callbackRoute}
+      />
 
       <Button
         className={cn([

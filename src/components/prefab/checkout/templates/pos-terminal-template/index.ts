@@ -1,0 +1,1 @@
+export { Template as PosTemplate } from './template.tsx';

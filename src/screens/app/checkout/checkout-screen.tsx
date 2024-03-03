@@ -1,15 +1,15 @@
 import { useSearchParams } from "react-router-dom";
 
 import { useTokensMap } from "@/core/tokens";
-import { useIsAuthenticated } from "@/features/auth";
+// import { useIsAuthenticated } from "@/features/auth";
+import { CheckoutOrder } from "@/features/checkout/models";
 import { usePaymentMutation } from "@/features/payments/hooks/mutations";
-import { CheckoutOrder } from "@/screens/app/checkout/checkout-order.model.ts";
 
-import { QrCode } from "./pay-methods/qr-code.tsx";
-import { DefaultCheckoutTemplate } from "./default-checkout-template";
+import { SideBySideTemplate } from "@/components/prefab/checkout/templates";
+import { AllMvxPayMethods } from "@/components/prefab/checkout/payment-methods";
 
 export const CheckoutScreen = () => {
-  const isAuthenticated = useIsAuthenticated();
+  // const isAuthenticated = useIsAuthenticated();
   const tokens = useTokensMap()
   const [searchParams] = useSearchParams();
   const {mutate: createPayment} = usePaymentMutation();
@@ -34,7 +34,7 @@ export const CheckoutScreen = () => {
   return (
     <div className="flex flex-1 h-screen bg-slate-50">
       <div className="flex flex-1 items-center justify-center">
-        <DefaultCheckoutTemplate order={order} payComponent={<QrCode payCallback={payOrder} />} />
+        <SideBySideTemplate order={order} payComponent={<AllMvxPayMethods payOrder={payOrder} />} />
       </div>
     </div>
   )

@@ -1,0 +1,1 @@
+export { Template as SideBySideTemplate } from './template.tsx';

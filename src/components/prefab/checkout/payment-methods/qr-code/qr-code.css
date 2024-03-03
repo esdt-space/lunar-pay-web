@@ -1,0 +1,30 @@
+.dapp-core-component__walletConnectLoginContainerStyles__xPortal-container-heading,
+.dapp-core-component__walletConnectLoginContainerStyles__xPortal-container-subheading,
+.dapp-core-component__walletConnectLoginContainerStyles__xPortal-pairings {
+  display: none;
+}
+
+.dapp-core-component__walletConnectLoginContainerStyles__xPortal-content {
+  @apply flex w-full items-center !p-0 !m-0;
+
+}
+
+.dapp-core-component__walletConnectLoginContainerStyles__xPortal-qr-code {
+  @apply flex w-full aspect-square !p-0 !m-0 !inset-0 !max-w-none items-center justify-center;
+}
+
+.dapp-core-component__walletConnectLoginContainerStyles__xPortal-qr-code svg {
+  @apply w-full;
+}
+
+.dapp-core-component__walletConnectLoginContainerStyles__xPortal-qr-code path:first-child {
+  @apply fill-transparent;
+}
+
+.dapp-core-component__walletConnectLoginContainerStyles__xPortal-qr-code path:last-child {
+  @apply !max-w-none;
+}
+
+.dapp-core-component__walletConnectLoginContainerStyles__xPortal-container-error {
+  @apply hidden;
+}

@@ -5,7 +5,7 @@ import { cn } from "@/theme/utils.ts";
 import { RoutesConfig } from "@/navigation";
 
 import { AppIcon } from "@/components/shared/app-icon.tsx";
-import { CheckoutOrder } from "@/screens/app/checkout/checkout-order.model.ts";
+import { CheckoutOrder } from "@/features/checkout/models";
 
 import { OrderItem } from "./order-item.tsx";
 

@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button.tsx";
-import { CheckoutOrder } from "@/screens/app/checkout/checkout-order.model.ts";
+import { CheckoutOrder } from "@/features/checkout/models";
 
 type Params = {
   order: CheckoutOrder;

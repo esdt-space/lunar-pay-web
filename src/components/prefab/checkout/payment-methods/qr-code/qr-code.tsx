@@ -17,20 +17,23 @@ export function QrCode({ payCallback }: Params) {
   }, [payCallback])
 
   return (
-    <WalletConnectLoginContainer
-      title={''}
-      loginButtonText={''}
-      showLoginContent={true}
-      showScamPhishingAlert={false}
-      wrapContentInsideModal={false}
+    <>
+      <WalletConnectLoginContainer
+        title={''}
+        loginButtonText={''}
+        showLoginContent={true}
+        showScamPhishingAlert={false}
+        wrapContentInsideModal={false}
 
-      onLoginRedirect={loginFinished}
-      logoutRoute={window.location.href}
-      callbackRoute={window.location.href}
+        onLoginRedirect={loginFinished}
+        logoutRoute={window.location.href}
+        callbackRoute={window.location.href}
 
-      // loginButtonText="xPortal Login"
-      // lead="Scan the QR code to pay"
-      {...defaultWalletConnectButtonConfig}
-    />
+        // loginButtonText="xPortal Login"
+        // lead="Scan the QR code to pay"
+        {...defaultWalletConnectButtonConfig}
+      />
+    </>
+
   )
 }
