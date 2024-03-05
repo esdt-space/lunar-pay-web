@@ -16,6 +16,13 @@ export class DonationsService {
   private static api = new ProtocolApi();
   private static readonly ITEMS_PER_PAGE = 10;
 
+  static async donationById(id: string) {
+    return this.api
+      .get<Donation>(`/donations/${id}`)
+      .then((response) => response.data)
+      .then(data => new Donation(data))
+  }
+
   static async fetchDonationsCreated(page: number): Promise<DonationsResponse> {
     const skip = (page - 1) * DonationsService.ITEMS_PER_PAGE;
 

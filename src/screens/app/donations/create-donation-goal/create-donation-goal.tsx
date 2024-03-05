@@ -4,7 +4,7 @@ import BigNumber from "bignumber.js"
 import { BigUIntValue } from "@multiversx/sdk-core/out"
 
 import { ContainedScreen } from "@/components/prefab/contained-screen"
-import { Card } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import { DonationTypeSelector } from "../components"
 import { Token } from "@/core/tokens"
 import { useAccountTokensAvailableToDeposit } from "@/features/account-tokens/hooks"
@@ -61,56 +61,58 @@ export const CreateDonationGoalScreen = () => {
   
   return (
     <ContainedScreen>
-      <Card className='p-6 space-y-8'>
-        <div className="text-xl font-semibold">New Donation</div>
-        <DonationTypeSelector 
-          optionsList={donationTypes}
-          selectedOption={selectedDonationType}
-          setSelectedOption={setSelectedDonationType}
-        />
-        <div className={'flex-1'}>
-          <TokenSelectorWithAmount
-            tokens={tokens}
-            token={selectedToken}
-            onTokenChange={(token) => setSelectedToken(token)}
-            amount={amount}
-            onAmountChange={(amount) => setAmount(amount)}
-            hasMaxButton={false}
-            showBalances={false}
-            isAmountToReceive={true}
+      <Card>
+        <CardContent className='p-6 space-y-8'>
+          <div className="text-xl font-semibold">New Donation</div>
+          <DonationTypeSelector 
+            optionsList={donationTypes}
+            selectedOption={selectedDonationType}
+            setSelectedOption={setSelectedDonationType}
           />
-        </div>
-        <DonationTypeSelector 
-          label={'Page Layout'}
-          optionsList={userTypes}
-          selectedOption={selectedUserType}
-          setSelectedOption={setSelectedUserType}
-        />
-        <div>
-          <div className="font-bold">
-            Beneficiary Name
+          <div className={'flex-1'}>
+            <TokenSelectorWithAmount
+              tokens={tokens}
+              token={selectedToken}
+              onTokenChange={(token) => setSelectedToken(token)}
+              amount={amount}
+              onAmountChange={(amount) => setAmount(amount)}
+              hasMaxButton={false}
+              showBalances={false}
+              isAmountToReceive={true}
+            />
           </div>
-          <Input
-            value={beneficiaryName}
-            placeholder="John Doe"
-            onChange={(e) => setBeneficiaryName(e.target.value)}
+          <DonationTypeSelector 
+            label={'Page Layout'}
+            optionsList={userTypes}
+            selectedOption={selectedUserType}
+            setSelectedOption={setSelectedUserType}
           />
-        </div>
-        <div>
-          <div className="font-bold">
-            Background Image
+          <div>
+            <div className="font-bold">
+              Beneficiary Name
+            </div>
+            <Input
+              value={beneficiaryName}
+              placeholder="John Doe"
+              onChange={(e) => setBeneficiaryName(e.target.value)}
+            />
           </div>
-          <Input 
-            value={backgroundImageUrl}
-            placeholder="https://example.com/image.jpg"
-            onChange={(e) => setBackgroundImageUrl(e.target.value)}
-          />
-        </div>
-        <Button 
-          onClick={createDonation} 
-          className='w-full'
-          disabled={amountIsMissing}
-        >Create New Donation</Button>
+          <div>
+            <div className="font-bold">
+              Background Image
+            </div>
+            <Input 
+              value={backgroundImageUrl}
+              placeholder="https://example.com/image.jpg"
+              onChange={(e) => setBackgroundImageUrl(e.target.value)}
+            />
+          </div>
+          <Button 
+            onClick={createDonation} 
+            className='w-full'
+            disabled={amountIsMissing}
+          >Create New Donation</Button>
+        </CardContent>
       </Card>
     </ContainedScreen>
   )
