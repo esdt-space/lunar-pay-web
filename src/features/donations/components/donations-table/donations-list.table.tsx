@@ -1,22 +1,22 @@
 import moment from "moment";
 import { FormatAmount } from "@multiversx/sdk-dapp/UI";
+import { Eye } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 import { useTokensMap } from "@/core/tokens";
-import { PaymentAgreement } from "@/features/payment-agreements/models";
+import { RoutesConfig } from "@/navigation";
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Eye } from "lucide-react";
-import { RoutesConfig } from "@/navigation";
-import { useNavigate } from "react-router-dom";
+import { Donation } from "../../models";
 
 type Props = {
-  donationsList: any[] | undefined;
+  donationsList: Donation[] | undefined;
   signedList?: boolean
 }
 
 type DonationRowProps = {
-  donation: any;
+  donation: Donation;
 }
 
 function DonationRow(props: DonationRowProps) {
