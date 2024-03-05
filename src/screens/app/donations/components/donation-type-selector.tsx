@@ -26,7 +26,7 @@ export const DonationTypeSelector = (props: Props) => {
       </div>
       <div className="flex space-x-4">
         {optionsList.map((option) => {
-          const optionIsDisabled = option.label === 'recurringDonations' || option.label === 'charity'
+          const optionIsDisabled = option.label === 'recurring-donations' || option.label === 'charity'
           const disabledStyle = !optionIsDisabled ? 'border-black' : ''
 
           return (
@@ -64,13 +64,13 @@ export const DonationTypeSelector = (props: Props) => {
 
 const displayLabel = (input: string) => {
   switch(input) {
-    case 'oneTimeDonation': {
+    case 'one-time-donation': {
       return 'One Time Donation'
     }
-    case 'recurringDonations': {
+    case 'recurring-donations': {
       return 'Recurring Donations'
     }
-    case 'contentCreator': {
+    case 'content-creator': {
       return 'Content Creator'
     }
     case 'charity': {

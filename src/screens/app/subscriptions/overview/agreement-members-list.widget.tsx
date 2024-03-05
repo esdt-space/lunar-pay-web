@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { PaginationButtons, usePagination } from "@/components/shared/pagination";
+import { PaginationButtonsOld, usePagination } from "@/components/shared/pagination";
 import { AgreementBasicDetails, MembersList } from ".";
 import { AgreementDetails } from ".";
 import { Button } from "@/components/ui/button";
@@ -39,7 +39,7 @@ export const SubscriptionMembersList = () => {
     <Card className="p-6">
       <CardContent className="space-y-4">
         <MembersList membersList={currentSub.agreementType.senders}/>
-        <PaginationButtons {...{...rest}} />
+        <PaginationButtonsOld {...{...rest}} />
       </CardContent>
     </Card>
   </div>

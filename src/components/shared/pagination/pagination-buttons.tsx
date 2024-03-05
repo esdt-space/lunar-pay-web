@@ -9,7 +9,7 @@ type Props = {
   lastPage: number | undefined
 }
 
-export function PaginationButtonsNew(props: Props) {
+export function PaginationButtons(props: Props) {
   const {previousPageHandler, nextPageHandler, currentPage, lastPage} = props;
 
   return(

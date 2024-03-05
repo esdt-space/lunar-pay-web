@@ -9,7 +9,7 @@ import { TokenOperationType } from "@/features/token-operations/enums";
 import { TokenOperationsTable } from "@/features/token-operations/components";
 import { useTokenOperationsQuery } from "@/features/token-operations/hooks/queries";
 import { useLoadingStateContent, useEmptyStateContent } from "@/screens/app/operations/hooks";
-import { PaginationButtonsNew } from "@/components/shared/pagination/pagination-buttons";
+import { PaginationButtons } from "@/components/shared/pagination/pagination-buttons";
 
 export const TokensOperationsScreen = () => {
   const [currentPage, setCurrentPage] = useState(1)
@@ -68,7 +68,7 @@ export const TokensOperationsScreen = () => {
               <TokenOperationsTable 
                 operationType={operationType} 
                 operations={operations} />
-              <PaginationButtonsNew 
+              <PaginationButtons 
                 previousPageHandler={previousPageHandler} 
                 nextPageHandler={nextPageHandler}
                 currentPage={currentPage}

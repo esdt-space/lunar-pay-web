@@ -10,7 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs.t
 
 import { PaymentAgreementListTable } from "@/features/payment-agreements/components";
 import { usePaymentAgreementsCreatedQuery, usePaymentAgreementsSignedQuery } from "@/features/payment-agreements/hooks";
-import { PaginationButtonsNew } from "@/components/shared/pagination";
+import { PaginationButtons } from "@/components/shared/pagination";
 import { useEffect, useState } from "react";
 
 enum ScreenTabs {
@@ -86,7 +86,7 @@ export function ListPaymentAgreementsScreen() {
               {!emptyAgreementsCreated && (
                 <div>
                   <PaymentAgreementListTable agreementsList={agreements}/>
-                  <PaginationButtonsNew 
+                  <PaginationButtons 
                     previousPageHandler={previousPageHandler} 
                     nextPageHandler={nextPageHandler}
                     currentPage={currentPage}
@@ -101,7 +101,7 @@ export function ListPaymentAgreementsScreen() {
           <Card>
             <CardContent className="p-0">
               <PaymentAgreementListTable agreementsList={signedAgreements} signedList={true}/>
-              <PaginationButtonsNew 
+              <PaginationButtons 
                 previousPageHandler={previousPageHandler} 
                 nextPageHandler={nextPageHandler}
                 currentPage={currentPage}

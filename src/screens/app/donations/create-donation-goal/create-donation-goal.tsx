@@ -1,4 +1,7 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import BigNumber from "bignumber.js"
+import { BigUIntValue } from "@multiversx/sdk-core/out"
 
 import { ContainedScreen } from "@/components/prefab/contained-screen"
 import { Card } from "@/components/ui/card"
@@ -8,26 +11,53 @@ import { useAccountTokensAvailableToDeposit } from "@/features/account-tokens/ho
 import { TokenSelectorWithAmount } from "@/core/tokens/components"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { createDonationMutation } from "@/features/donations/hooks/mutations"
+import { RoutesConfig } from "@/navigation"
 
 const donationTypes = [
-  {label: 'oneTimeDonation', description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'},
-  {label: 'recurringDonations', description: 'Coming soon'}
+  {label: 'one-time-donation', description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'},
+  {label: 'recurring-donations', description: 'Coming soon'}
 ];
 
 const userTypes = [
-  {label: 'contentCreator', description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'},
+  {label: 'content-creator', description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'},
   {label: 'charity', description: 'Coming soon'}
 ];
 
 export const CreateDonationGoalScreen = () => {
   const [beneficiaryName, setBeneficiaryName] = useState('');
   const [backgroundImageUrl, setBackgroundImageUrl] = useState('');
-  const [selectedDonationType, setSelectedDonationType] = useState('oneTimeDonation');
-  const [selectedUserType, setSelectedUserType] = useState('contentCreator');
+  const [selectedDonationType, setSelectedDonationType] = useState('one-time-donation');
+  const [selectedUserType, setSelectedUserType] = useState('content-creator');
   const [selectedToken, setSelectedToken] = useState<Token | undefined>(undefined);
   const [amount, setAmount] = useState('')
 
+  const navigate = useNavigate()
   const tokens = useAccountTokensAvailableToDeposit();
+  const { mutate: createNewDonation } = createDonationMutation();
+
+  const createDonation = () => {
+    if(selectedToken === undefined) {
+      return
+    }
+
+    const fixedAmount = new BigUIntValue(
+      new BigNumber(amount).multipliedBy(Math.pow(10, selectedToken.decimals))
+    )
+
+    const dto = {
+      beneficiaryName: beneficiaryName,
+      backgroundImageUrl: backgroundImageUrl,
+      donationType: selectedDonationType,
+      donationTarget: selectedUserType,
+      tokenIdentifier: selectedToken.identifier,
+      fixedAmount: fixedAmount.toString()
+    }
+
+    return createNewDonation(dto, { onSuccess: () => navigate(RoutesConfig.donations)})
+  }
+
+  const amountIsMissing = amount === '' || selectedToken === undefined
   
   return (
     <ContainedScreen>
@@ -76,7 +106,11 @@ export const CreateDonationGoalScreen = () => {
             onChange={(e) => setBackgroundImageUrl(e.target.value)}
           />
         </div>
-        <Button className='w-full'>Create New Donation</Button>
+        <Button 
+          onClick={createDonation} 
+          className='w-full'
+          disabled={amountIsMissing}
+        >Create New Donation</Button>
       </Card>
     </ContainedScreen>
   )

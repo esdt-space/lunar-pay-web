@@ -6,7 +6,7 @@ import { useCreatedPaymentAgreement } from "@/features/payment-agreements/hooks"
 import { AgreementTriggersTable } from "@/features/agreement-triggers/components"
 
 import { Card, CardContent } from "@/components/ui/card.tsx"
-import { PaginationButtonsNew } from "@/components/shared/pagination"
+import { PaginationButtons } from "@/components/shared/pagination"
 import { EmptyStateWithAction } from "@/components/shared/empty-states"
 
 type Props = {
@@ -50,7 +50,7 @@ export function AgreementTriggersPartial({ agreementId }: Props) {
           <Card>
             <CardContent className="p-0">
               <AgreementTriggersTable triggersList={agreementTriggers} token={token} />
-              <PaginationButtonsNew
+              <PaginationButtons
                 previousPageHandler={previousPageHandler}
                 nextPageHandler={nextPageHandler}
                 currentPage={currentPage}
