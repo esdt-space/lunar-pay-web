@@ -1,7 +1,7 @@
 import { DonationTarget, DonationType } from '../enums';
 
 export class Donation {
-  id?: string;
+  id: string;
   _id: string;
 
   owner: string;
@@ -20,11 +20,11 @@ export class Donation {
 
   fixedAmount?: string;
 
-  signAgreementHttpCallbackUrl?: string;
-  
-  cancelAgreementHttpCallbackUrl?: string;
+  backgroundImageUrl?: string;
 
-  signAgreementRedirectUrl?: string;
+  payDonationRedirectUrl?: string;
+  
+  payDonationHttpCallbackUrl?: string;
 
   createdAt: Date;
 

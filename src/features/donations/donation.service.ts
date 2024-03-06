@@ -1,6 +1,6 @@
-import { ProtocolApi } from "@/lib/protocol-api";
-import { Donation } from "./models";
-import { CreateDonationDto } from "./dto";
+import { ProtocolApi } from '@/lib/protocol-api';
+import { Donation } from './models';
+import { CreateDonationDto, UpdateDonationDto } from './dto';
 
 type DonationsResponse = {
   data: Donation[];
@@ -34,6 +34,12 @@ export class DonationsService {
   static async createDonation(input: CreateDonationDto) {
     return this.api
     .post(`/donations`, input)
+    .then((response) => response.data)
+  }
+
+  static async updateDonation(id: string, input: UpdateDonationDto) {
+    return this.api
+    .put(`/donations/${id}`, input)
     .then((response) => response.data)
   }
 }

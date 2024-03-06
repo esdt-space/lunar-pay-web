@@ -31,7 +31,7 @@ import { ContactScreen } from '@/screens/app/contact';
 import { FrequentlyAskedQuestionsScreen } from '@/screens/app/static-pages/frequently-asked-questions/frequently-asked-questions.screen';
 import { TermsAndConditionsScreen } from '@/screens/app/static-pages/terms-and-conditions/terms-and-conditions-screen';
 import { WhitepaperScreen } from '@/screens/app/static-pages/white-paper/whitepaper.screen';
-import { CreateDonationGoalScreen, CreateDonationWidgetScreen, DonationDashboardScreen, ContentCreatorDonationPublicScreen, DonationsListScreen, ViewDonationScreen } from '@/screens/app/donations';
+import { CreateOneTimeDonationScreen, CreateDonationWidgetScreen, DonationDashboardScreen, ContentCreatorDonationPublicScreen, DonationsListScreen, ViewDonationScreen } from '@/screens/app/donations';
 
 export function ApplicationRouter() {
   useScrollToTopHandler()
@@ -83,7 +83,7 @@ export function ApplicationRouter() {
               <Route path={RoutesConfig.createDonationIndex}>
                 <Route index element={<DonationDashboardScreen />} />
                 <Route path={RoutesConfig.createDonationWidget} element={<CreateDonationWidgetScreen />} />
-                <Route path={RoutesConfig.createDonationGoal} element={<CreateDonationGoalScreen />} />
+                <Route path={RoutesConfig.createOneTimeDonation} element={<CreateOneTimeDonationScreen />} />
               </Route>
             </Route>
 

@@ -24,7 +24,7 @@ const userTypes = [
   {label: 'charity', description: 'Coming soon'}
 ];
 
-export const CreateDonationGoalScreen = () => {
+export const CreateOneTimeDonationScreen = () => {
   const [beneficiaryName, setBeneficiaryName] = useState('');
   const [backgroundImageUrl, setBackgroundImageUrl] = useState('');
   const [selectedDonationType, setSelectedDonationType] = useState('one-time-donation');

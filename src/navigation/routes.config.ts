@@ -37,7 +37,8 @@ export class RoutesConfig {
   static donations = '/donations'
   static createDonationIndex = '/donations/new'
   static createDonationWidget = '/donations/new/widget'
-  static createDonationGoal = '/donations/new/goal'
+  static createOneTimeDonation = '/donations/new/one-time-donation'
+  static createDonationGoal = '/donations/new/donation-goal'
 
   static event = '/event'
   static eventDonationsReceived = '/event/donations-received'
