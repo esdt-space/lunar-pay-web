@@ -8,6 +8,7 @@ import { Separator } from '@/components/ui/separator';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import { useToast } from '@/components/ui/use-toast';
+import { Button } from '@/components/ui/button';
 
 type Props = {
   donation: Donation;
@@ -31,23 +32,32 @@ export function DonationDetails(props: Props){
     })
   };
 
+  const navigateToPublicScreen = () => {
+    window.location.href = publicDonationUrl
+  }
+
   return (
-    <Card className='flex-1 p-4'>
+    <Card className='flex-1 pt-6'>
       <CardContent>
         <div className='flex flex-col space-y-6'>
-          <div className='flex flex-col'>
-            <div className={'text-muted-foreground text-sm'}>
-              Created on {moment(donation.createdAt).format('ll')}
-            </div>
-            <div className={'flex justify-between'}>
-              <div className='text-2xl font-black'>
-                <FormatAmount
-                  token={token.identifier}
-                  decimals={token.decimals}
-                  value={donation.fixedAmount as string}
-                />
+          <div className='flex justify-between'>
+            <div className='flex flex-col'>
+              <div className={'text-muted-foreground text-sm'}>
+                Created on {moment(donation.createdAt).format('ll')}
+              </div>
+              <div className={'flex justify-between'}>
+                <div className='text-2xl font-black'>
+                  <FormatAmount
+                    token={token.identifier}
+                    decimals={token.decimals}
+                    value={donation.fixedAmount as string}
+                  />
+                </div>
               </div>
             </div>
+            <Button onClick={navigateToPublicScreen}>
+              Public View
+            </Button>
           </div>
 
           {donation.description && 
