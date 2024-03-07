@@ -14,7 +14,7 @@ export const ContentCreatorDonationPublicScreen = () => {
   
   return (
     <DonationPageWrapper 
-      userHeroTag="@david"
+      userHeroTag={`${'@' + donation?.beneficiaryName ?? ''}`}
       backgroundImage={donation?.backgroundImageUrl}
     >
       <div className="flex flex-1 xl:space-x-8 max-xl:flex-col max-xl:space-y-8">
