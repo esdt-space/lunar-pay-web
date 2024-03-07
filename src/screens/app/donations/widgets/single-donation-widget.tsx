@@ -81,8 +81,7 @@ export const SingleDonationWidget = () => {
     <DonationWidgetWrapper
       donationAmount={amount}
       donationCurrency={selectedToken?.identifier || ''}
-      donationReceiver="Streamer"
-      subtitle="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+      donationReceiver={donation.beneficiaryName ?? ''}
       description={donation.description}
       donateMethod={donate}
       disableButton={selectedToken === undefined || !enoughAssets} 

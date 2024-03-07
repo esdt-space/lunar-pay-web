@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 
 type Props = {
   donationReceiver: string;
-  subtitle?: string;
   description?: string;
   donationAmount: string;
   donationCurrency: string;
@@ -15,7 +14,7 @@ type Props = {
 }
 
 export const DonationWidgetWrapper = (props: PropsWithChildren<Props>) => {
-  const { donationReceiver, subtitle, description, donationAmount, donationCurrency, disableButton, donateMethod, children } = props;
+  const { donationReceiver, description, donationAmount, donationCurrency, disableButton, donateMethod, children } = props;
 
   return (
     <div className="flex flex-1 justify-center items-center">
@@ -23,14 +22,10 @@ export const DonationWidgetWrapper = (props: PropsWithChildren<Props>) => {
         <p className={'text-xl font-bold'}>Donate to {donationReceiver}</p>
 
         <div>
-          <p>{subtitle}</p>
+          <p>{description}</p>
         </div>
 
         {children}
-
-        <div>
-          <p>{description}</p>
-        </div>
 
         <Button disabled={disableButton} onClick={donateMethod} className="bg-gradient-to-r from-primary to-secondary text-white hover:text-slate-200">Donate {donationAmount} {donationCurrency}</Button>
 

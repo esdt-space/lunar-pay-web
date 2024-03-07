@@ -4,9 +4,8 @@ import { useGetAccount } from '@multiversx/sdk-dapp/hooks'
 import { ContainedScreen } from '@/components/prefab/contained-screen'
 import { useCreatedDonation } from '@/features/donations/hooks'
 import { RoutesConfig } from '@/navigation'
-import { DonationDetails, DonationTransactions } from './partials'
+import { CreateDonationWidget, DonationDetails, DonationTransactions } from './partials'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Card, CardContent } from '@/components/ui/card'
 import { RedirectAndWebhooksSettings, UpdateDonationDetailsScreen } from './settings'
 
 export const ViewDonationScreen = () => {
@@ -35,11 +34,7 @@ export const ViewDonationScreen = () => {
           <div className='flex flex-col space-y-4'>
             <div className='flex max-lg:flex-col max-lg:space-y-4 justify-between lg:space-x-4'>
               <DonationDetails donation={donation}/>
-              <Card className='flex-1 p-6'>
-                <CardContent>
-                  <div>Widget</div>
-                </CardContent>
-              </Card>
+              <CreateDonationWidget />
             </div>
             <div>
               <DonationTransactions />

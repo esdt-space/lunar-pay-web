@@ -56,7 +56,7 @@ export function DonationDetails(props: Props){
               </div>
             </div>
             <Button onClick={navigateToPublicScreen}>
-              Public View
+              Preview
             </Button>
           </div>
 
@@ -71,7 +71,7 @@ export function DonationDetails(props: Props){
           <div className='flex flex-col space-y-4'>
             <Separator />
             <div className="relative flex w-full space-x-2 items-center">
-              <Input value={publicDonationUrl} readOnly />
+              <Input className='truncate pr-10' value={publicDonationUrl} readOnly />
               <span className='absolute right-4 cursor-pointer' onClick={copyButtonHandler}>
                 <Copy className={'w-4 h-4'} />
               </span>
