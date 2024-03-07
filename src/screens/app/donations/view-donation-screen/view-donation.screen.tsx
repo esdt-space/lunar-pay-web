@@ -10,9 +10,9 @@ import { Card, CardContent } from '@/components/ui/card'
 import { RedirectAndWebhooksSettings, UpdateDonationDetailsScreen } from './settings'
 
 export const ViewDonationScreen = () => {
-  const { address } = useGetAccount()
-  const { id } = useParams()
-  const navigate = useNavigate()
+  const { address } = useGetAccount();
+  const { id } = useParams();
+  const navigate = useNavigate();
 
   const { data: donation } = useCreatedDonation(id);
 
@@ -34,11 +34,7 @@ export const ViewDonationScreen = () => {
         <TabsContent value='overview' className={'space-y-4'}>
           <div className='flex flex-col space-y-4'>
             <div className='flex max-lg:flex-col max-lg:space-y-4 justify-between lg:space-x-4'>
-              <Card className='flex-1 p-6'>
-                <CardContent>
-                  <DonationDetails donation={donation}/>
-                </CardContent>
-              </Card>
+              <DonationDetails donation={donation}/>
               <Card className='flex-1 p-6'>
                 <CardContent>
                   <div>Widget</div>

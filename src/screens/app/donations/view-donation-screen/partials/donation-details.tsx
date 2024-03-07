@@ -6,6 +6,7 @@ import { useTokensMap } from '@/core/tokens';
 import { Donation } from '@/features/donations/models';
 import { Separator } from '@/components/ui/separator';
 import { Input } from '@/components/ui/input';
+import { Card, CardContent } from '@/components/ui/card';
 import { useToast } from '@/components/ui/use-toast';
 
 type Props = {
@@ -15,7 +16,7 @@ type Props = {
 export function DonationDetails(props: Props){
   const { donation } = props;
 
-  const { toast } = useToast()
+  const { toast } = useToast();
 
   const tokensMap = useTokensMap();
   const token = tokensMap[donation.tokenIdentifier];
@@ -31,38 +32,42 @@ export function DonationDetails(props: Props){
   };
 
   return (
-    <div className='flex flex-col space-y-6'>
-      <div className='flex flex-col'>
-        <div className={'text-muted-foreground text-sm'}>
-          Created on {moment(donation.createdAt).format('ll')}
-        </div>
-        <div className={'flex justify-between'}>
-          <div className='text-2xl font-black'>
-            <FormatAmount
-              token={token.identifier}
-              decimals={token.decimals}
-              value={donation.fixedAmount as string}
-            />
+    <Card className='flex-1 p-4'>
+      <CardContent>
+        <div className='flex flex-col space-y-6'>
+          <div className='flex flex-col'>
+            <div className={'text-muted-foreground text-sm'}>
+              Created on {moment(donation.createdAt).format('ll')}
+            </div>
+            <div className={'flex justify-between'}>
+              <div className='text-2xl font-black'>
+                <FormatAmount
+                  token={token.identifier}
+                  decimals={token.decimals}
+                  value={donation.fixedAmount as string}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className='flex flex-col space-y-2'>
+            <Separator />
+            <div>
+              {donation.description}
+            </div>
+          </div>
+
+          <div className='flex flex-col space-y-4'>
+            <Separator />
+            <div className="relative flex w-full space-x-2 items-center">
+              <Input value={publicDonationUrl} readOnly />
+              <span className='absolute right-4 cursor-pointer' onClick={copyButtonHandler}>
+                <Copy className={'w-4 h-4'} />
+              </span>
+            </div>
           </div>
         </div>
-      </div>
-
-      <div className='flex flex-col space-y-2'>
-        <Separator />
-        <div>
-          {donation.description}
-        </div>
-      </div>
-
-      <div className='flex flex-col space-y-4'>
-        <Separator />
-        <div className="relative flex w-full space-x-2 items-center">
-          <Input value={publicDonationUrl} readOnly />
-          <span className='absolute right-4 cursor-pointer' onClick={copyButtonHandler}>
-            <Copy className={'w-4 h-4'} />
-          </span>
-        </div>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   )
 }
