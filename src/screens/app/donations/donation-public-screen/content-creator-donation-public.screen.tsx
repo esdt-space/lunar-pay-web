@@ -1,5 +1,5 @@
 import { DonationPageWrapper } from "./page-wrapper";
-import { LatestDonationsList, SingleDonationWidget } from "./widgets";
+import { LatestDonationsList, SingleDonationWidget } from "../widgets";
 
 export type DonationType = 'single' | 'monthly';
 export type PredeterminedAmount = '5' | '10' | '20' | null;

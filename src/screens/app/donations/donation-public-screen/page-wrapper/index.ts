@@ -1,0 +1,1 @@
+export * from './donation-public-screen-page-wrapper'
