@@ -5,8 +5,7 @@ import { useEmptyStateContent } from "../hooks";
 import { useLoadingStateContent } from "@/screens/app/operations/hooks";
 
 export const DonationTransactions = () => {
-  const typeFilter = 'donation';
-  const { data, isFetching, isFetched } = useTokenOperationsQuery(1, typeFilter);
+  const { data, isFetching, isFetched } = useTokenOperationsQuery(1, 'donation');
   const operations = data?.operations.slice(0, 5) ?? []
 
   const isLoadingFirstTime = !isFetched && isFetching;

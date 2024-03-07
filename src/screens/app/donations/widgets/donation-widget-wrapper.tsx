@@ -19,7 +19,7 @@ export const DonationWidgetWrapper = (props: PropsWithChildren<Props>) => {
 
   return (
     <div className="flex flex-1 justify-center items-center">
-      <Card className="flex flex-col space-y-6 p-16 min-w-[500px] max-w-[501]px">
+      <Card className="flex flex-col space-y-6 p-16 min-w-[500px] max-w-[501px]">
         <p className={'text-xl font-bold'}>Donate to {donationReceiver}</p>
 
         <div>
