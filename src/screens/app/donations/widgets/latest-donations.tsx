@@ -18,11 +18,11 @@ export const LatestDonationsList = () => {
           Latest Donations
         </CardHeader>
         <CardContent className='space-y-2'>
-          {operations.map((item: TokenOperation) => {
+          {operations.map((item: TokenOperation, index) => {
             const token = tokensMap[item.tokenIdentifier];
 
             return (
-              <div className='flex justify-between'>
+              <div key={index} className='flex justify-between'>
                 <div>
                   {formatAddress(item.sender)} 
                 </div>

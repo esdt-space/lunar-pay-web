@@ -50,12 +50,13 @@ export function DonationDetails(props: Props){
             </div>
           </div>
 
-          <div className='flex flex-col space-y-2'>
-            <Separator />
-            <div>
-              {donation.description}
-            </div>
-          </div>
+          {donation.description && 
+            <div className='flex flex-col space-y-2'>
+              <Separator />
+              <div>
+                {donation.description}
+              </div>
+            </div>}
 
           <div className='flex flex-col space-y-4'>
             <Separator />

@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
+import BigNumber from "bignumber.js";
+import { useParams, useSearchParams } from "react-router-dom";
 
 import { Token } from "@/core/tokens";
 import { useAccountVaultTokens } from "@/features/vault/hooks";
+import { useCreatedDonation } from "@/features/donations/hooks";
 
 import { TokenSelectorWithAmount } from "@/core/tokens/components";
 import { useSingleDonationMutation } from "@/features/donations/hooks/mutations/use-single-donation-mutation";
-import BigNumber from "bignumber.js";
-import { useSearchParams } from "react-router-dom";
 import { DonationWidgetWrapper } from "./donation-widget-wrapper";
 import { DonationAmountSelect } from "../components";
 import { useEnoughAssets } from "../../../../utils/hooks";
@@ -16,8 +17,12 @@ export type PredeterminedAmount = '5' | '10' | '20' | null;
 export const SingleDonationWidget = () => {
   const [amount, setAmount] = useState('');
   const [selectedToken, setSelectedToken] = useState<Token | undefined>(undefined);
-  const [selectedPredeterminedAmount, setSelectedPredeterminedAmount] = useState<PredeterminedAmount>(null)
-  const [searchParams] = useSearchParams()
+  const [selectedPredeterminedAmount, setSelectedPredeterminedAmount] = useState<PredeterminedAmount>(null);
+  const [searchParams] = useSearchParams();
+
+  const { id } = useParams();
+
+  const { data: donation } = useCreatedDonation(id);
 
   const receiver = searchParams.get('receiver') || '';
   const metadata = searchParams.get('metadata') || '';
@@ -34,8 +39,10 @@ export const SingleDonationWidget = () => {
   }, [selectedPredeterminedAmount])
 
   const { vaultTokens } = useAccountVaultTokens();
-  const { mutate } = useSingleDonationMutation()
-  const { enoughAssets } = useEnoughAssets(amount, selectedToken)
+  const { mutate } = useSingleDonationMutation();
+  const { enoughAssets } = useEnoughAssets(amount, selectedToken);
+
+  if(donation === undefined) return;
 
   const selectPredeterminedAmount = (amount: PredeterminedAmount) => {
     if (amount === selectedPredeterminedAmount) {
@@ -44,6 +51,12 @@ export const SingleDonationWidget = () => {
     }
 
     setSelectedPredeterminedAmount(amount)
+  }
+
+  const redirect = (url: string | undefined) => {
+    if(url === undefined) return;
+
+    window.location.href = url
   }
 
   const donate = () => {
@@ -56,7 +69,7 @@ export const SingleDonationWidget = () => {
       amount: new BigNumber(donationAmount),
       receiver: receiver,
       metadata: metadata,
-    }, { onSuccess: () => console.log('success')})
+    }, { onSuccess: () => redirect(donation.payDonationRedirectUrl)})
   }
 
   const onAmountChange = (amount: string) => {
@@ -70,7 +83,7 @@ export const SingleDonationWidget = () => {
       donationCurrency={selectedToken?.identifier || ''}
       donationReceiver="Streamer"
       subtitle="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-      description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
+      description={donation.description}
       donateMethod={donate}
       disableButton={selectedToken === undefined || !enoughAssets} 
     >
