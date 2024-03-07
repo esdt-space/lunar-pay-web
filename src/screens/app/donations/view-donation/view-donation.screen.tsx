@@ -4,7 +4,7 @@ import { useGetAccount } from '@multiversx/sdk-dapp/hooks'
 import { ContainedScreen } from '@/components/prefab/contained-screen'
 import { useCreatedDonation } from '@/features/donations/hooks'
 import { RoutesConfig } from '@/navigation'
-import { DonationDetails } from './partials'
+import { DonationDetails, DonationTransactions } from './partials'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Card, CardContent } from '@/components/ui/card'
 import { RedirectAndWebhooksSettings, UpdateDonationDetailsScreen } from './settings'
@@ -46,11 +46,7 @@ export const ViewDonationScreen = () => {
               </Card>
             </div>
             <div>
-              <Card className='p-6'>
-                <CardContent>
-                  <div>Transactions</div>
-                </CardContent>
-              </Card>
+              <DonationTransactions />
             </div>
           </div>
         </TabsContent>
