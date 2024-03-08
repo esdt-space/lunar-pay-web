@@ -13,6 +13,9 @@ type Props = {
   donationId: string;
 }
 
+const lunarPayTestUrl = import.meta.env.VITE_LUNARPAY_TEST_URL
+const lunarPayInfoUrl = import.meta.env.VITE_LUNARPAY_MEDIA_URL
+
 export const CreateDonationWidget = ({ donationId }: Props) => {
   const [receiver, setReceiver] = useState('');
   const [metadata, setMetadata] = useState('');
@@ -20,10 +23,10 @@ export const CreateDonationWidget = ({ donationId }: Props) => {
   const { toast } = useToast();
 
   const metadataParam = metadata !== '' ? `&metadata=${metadata}` : ''
-  const donationUrl = `https://lunarpay.finance/donations/id?receiver=${receiver}${metadataParam}`
+  const donationUrl = `${lunarPayTestUrl}/donations/id?receiver=${receiver}${metadataParam}`
 
   const codeString = `  <a href="${donationUrl}" target="_blank">
-    <img src="https://lunarpay.io/image.svg" alt="Crypto donation button by LunarPay">
+    <img src="${lunarPayInfoUrl}/image.svg" alt="Crypto donation button by LunarPay">
   </a>`
 
   const generateWidget = () => {
