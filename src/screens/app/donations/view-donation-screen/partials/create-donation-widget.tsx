@@ -23,7 +23,7 @@ export const CreateDonationWidget = ({ donationId }: Props) => {
   const { toast } = useToast();
 
   const metadataParam = metadata !== '' ? `&metadata=${metadata}` : ''
-  const donationUrl = `${lunarPayTestUrl}/donations/id?receiver=${receiver}${metadataParam}`
+  const donationUrl = `${lunarPayTestUrl}/donations/${donationId}/public?receiver=${receiver}${metadataParam}`
 
   const codeString = `  <a href="${donationUrl}" target="_blank">
     <img src="${lunarPayInfoUrl}/image.svg" alt="Crypto donation button by LunarPay">

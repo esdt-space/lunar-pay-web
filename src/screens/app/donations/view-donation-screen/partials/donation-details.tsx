@@ -1,6 +1,8 @@
 import moment from 'moment';
 import { Copy } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { FormatAmount } from '@multiversx/sdk-dapp/UI';
+import { useGetAccount } from '@multiversx/sdk-dapp/hooks';
 
 import { useTokensMap } from '@/core/tokens';
 import { Donation } from '@/features/donations/models';
@@ -9,20 +11,25 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import { useToast } from '@/components/ui/use-toast';
 import { Button } from '@/components/ui/button';
+import { RoutesConfig } from '@/navigation';
 
 type Props = {
   donation: Donation;
 }
 
+const lunarPayTestUrl = import.meta.env.VITE_LUNARPAY_TEST_URL
+
 export function DonationDetails(props: Props){
   const { donation } = props;
 
+  const { address } = useGetAccount()
   const { toast } = useToast();
+  const navigate = useNavigate()
 
   const tokensMap = useTokensMap();
   const token = tokensMap[donation.tokenIdentifier];
 
-  const publicDonationUrl = `https://localhost:5173/donations/${donation._id}/public`;
+    const publicDonationUrl = `${lunarPayTestUrl}/donations/${donation._id}/public?receiver=${address}`;
 
   const copyButtonHandler = () => {
     return navigator.clipboard.writeText(publicDonationUrl).then(() => {
@@ -33,7 +40,7 @@ export function DonationDetails(props: Props){
   };
 
   const navigateToPublicScreen = () => {
-    window.location.href = publicDonationUrl
+    navigate(`${RoutesConfig.donations}/${donation._id}/public?receiver=${address}`)
   }
 
   return (
