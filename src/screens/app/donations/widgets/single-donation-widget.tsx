@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import BigNumber from "bignumber.js";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import { Token } from "@/core/tokens";
 import { useAccountVaultTokens } from "@/features/vault/hooks";
@@ -18,14 +18,10 @@ export const SingleDonationWidget = () => {
   const [amount, setAmount] = useState('');
   const [selectedToken, setSelectedToken] = useState<Token | undefined>(undefined);
   const [selectedPredeterminedAmount, setSelectedPredeterminedAmount] = useState<PredeterminedAmount>(null);
-  const [searchParams] = useSearchParams();
 
   const { id } = useParams();
 
   const { data: donation } = useCreatedDonation(id);
-
-  const receiver = searchParams.get('receiver') || '';
-  const metadata = searchParams.get('metadata') || '';
 
   useEffect(() => {
     setAmount("");
@@ -67,8 +63,7 @@ export const SingleDonationWidget = () => {
     mutate({
       token: selectedToken,
       amount: new BigNumber(donationAmount),
-      receiver: receiver,
-      metadata: metadata,
+      receiver: donation.owner,
     }, { onSuccess: () => redirect(donation.payDonationRedirectUrl)})
   }
 

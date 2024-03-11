@@ -1,3 +1,4 @@
+import { Donation } from "@/features/donations/models";
 import { PaymentAgreement } from "@/features/payment-agreements/models";
 
 export class TokenOperation {
@@ -18,6 +19,8 @@ export class TokenOperation {
   txHash: string;
 
   agreement: PaymentAgreement
+
+  donation: Donation
 
   isInternal: boolean;
   createdAt: Date;

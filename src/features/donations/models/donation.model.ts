@@ -14,6 +14,8 @@ export class Donation {
 
   tokenIdentifier: string;
 
+  totalAmount: string;
+
   beneficiaryName?: string;
 
   description?: string;

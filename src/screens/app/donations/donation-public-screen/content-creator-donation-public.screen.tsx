@@ -11,6 +11,8 @@ export const ContentCreatorDonationPublicScreen = () => {
   const { id } = useParams();
 
   const { data: donation } = useCreatedDonation(id);
+
+  if(donation === undefined) return
   
   return (
     <DonationPageWrapper 
@@ -19,7 +21,7 @@ export const ContentCreatorDonationPublicScreen = () => {
     >
       <div className="flex flex-1 xl:space-x-8 max-xl:flex-col max-xl:space-y-8">
         <SingleDonationWidget />
-        <LatestDonationsList />
+        <LatestDonationsList donationId={donation._id} />
       </div>
     </DonationPageWrapper>
   )

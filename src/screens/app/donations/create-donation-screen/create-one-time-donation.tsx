@@ -1,14 +1,12 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import BigNumber from "bignumber.js"
-import { BigUIntValue } from "@multiversx/sdk-core/out"
 
 import { ContainedScreen } from "@/components/prefab/contained-screen"
 import { Card, CardContent } from "@/components/ui/card"
 import { DonationTypeSelector } from "../components"
 import { Token } from "@/core/tokens"
 import { useAccountTokensAvailableToDeposit } from "@/features/account-tokens/hooks"
-import { TokenSelectorWithAmount } from "@/core/tokens/components"
+import { EsdtTokenSelector } from "@/core/tokens/components"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { createDonationMutation } from "@/features/donations/hooks/mutations"
@@ -30,34 +28,24 @@ export const CreateOneTimeDonationScreen = () => {
   const [selectedDonationType, setSelectedDonationType] = useState('one-time-donation');
   const [selectedUserType, setSelectedUserType] = useState('content-creator');
   const [selectedToken, setSelectedToken] = useState<Token | undefined>(undefined);
-  const [amount, setAmount] = useState('')
 
   const navigate = useNavigate()
   const tokens = useAccountTokensAvailableToDeposit();
   const { mutate: createNewDonation } = createDonationMutation();
 
   const createDonation = () => {
-    if(selectedToken === undefined) {
-      return
-    }
-
-    const fixedAmount = new BigUIntValue(
-      new BigNumber(amount).multipliedBy(Math.pow(10, selectedToken.decimals))
-    )
-
     const dto = {
       beneficiaryName: beneficiaryName,
       backgroundImageUrl: backgroundImageUrl,
       donationType: selectedDonationType,
       donationTarget: selectedUserType,
-      tokenIdentifier: selectedToken.identifier,
-      fixedAmount: fixedAmount.toString()
+      tokenIdentifier: selectedToken !== undefined ? selectedToken.identifier : undefined
     }
 
     return createNewDonation(dto, { onSuccess: () => navigate(RoutesConfig.donations)})
   }
 
-  const amountIsMissing = amount === '' || selectedToken === undefined
+  const tokenIsMissing = selectedDonationType === 'recurring-donations' && selectedToken === undefined;
   
   return (
     <ContainedScreen>
@@ -69,18 +57,14 @@ export const CreateOneTimeDonationScreen = () => {
             selectedOption={selectedDonationType}
             setSelectedOption={setSelectedDonationType}
           />
-          <div className={'flex-1'}>
-            <TokenSelectorWithAmount
+          {selectedDonationType !== 'one-time-donation' && <div className={'flex-1 border rounded-md'}>
+            <EsdtTokenSelector
+              value={selectedToken}
               tokens={tokens}
-              token={selectedToken}
-              onTokenChange={(token) => setSelectedToken(token)}
-              amount={amount}
-              onAmountChange={(amount) => setAmount(amount)}
-              hasMaxButton={false}
-              showBalances={false}
-              isAmountToReceive={true}
+              onChange={(token: Token) => setSelectedToken(token)}
+              triggerClassname={'border-none text-xs'}
             />
-          </div>
+          </div>}
           <DonationTypeSelector 
             label={'Page Layout'}
             optionsList={userTypes}
@@ -110,7 +94,7 @@ export const CreateOneTimeDonationScreen = () => {
           <Button 
             onClick={createDonation} 
             className='w-full'
-            disabled={amountIsMissing}
+            disabled={tokenIsMissing}
           >Create New Donation</Button>
         </CardContent>
       </Card>

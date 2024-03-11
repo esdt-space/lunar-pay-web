@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Copy } from "lucide-react";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { useGetAccount } from "@multiversx/sdk-dapp/hooks";
 
 import { DonationsService } from "@/features/donations/donation.service";
 import { Button } from "@/components/ui/button";
@@ -17,13 +18,13 @@ const lunarPayTestUrl = import.meta.env.VITE_LUNARPAY_TEST_URL
 const lunarPayInfoUrl = import.meta.env.VITE_LUNARPAY_MEDIA_URL
 
 export const CreateDonationWidget = ({ donationId }: Props) => {
-  const [receiver, setReceiver] = useState('');
-  const [metadata, setMetadata] = useState('');
-  const [trigger, setTrigger] = useState(false);
+  const [ metadata, setMetadata ] = useState('');
+  const [ displayCodeString, setDisplayCodeString ] = useState(false);
   const { toast } = useToast();
+  const { address } = useGetAccount();
 
-  const metadataParam = metadata !== '' ? `&metadata=${metadata}` : ''
-  const donationUrl = `${lunarPayTestUrl}/donations/${donationId}/public?receiver=${receiver}${metadataParam}`
+  const metadataParam = metadata !== '' ? `?metadata=${metadata}` : ''
+  const donationUrl = `${lunarPayTestUrl}/donations/${donationId}/public${metadataParam}`
 
   const codeString = `  <a href="${donationUrl}" target="_blank">
     <img src="${lunarPayInfoUrl}/image.svg" alt="Crypto donation button by LunarPay">
@@ -31,14 +32,14 @@ export const CreateDonationWidget = ({ donationId }: Props) => {
 
   const generateWidget = () => {
     const dto = {
-      receiver: receiver,
+      receiver: address,
       metadata: metadata,
       codeString: codeString,
       donationId: donationId
     }
 
     DonationsService.createDonationWidget(dto);
-    setTrigger(true);
+    setDisplayCodeString(true);
   }
 
   const copyButtonHandler = () => {
@@ -51,27 +52,20 @@ export const CreateDonationWidget = ({ donationId }: Props) => {
 
   return (
     <Card className='flex-1 max-w-1/2 truncate'>
-      {!trigger ? <div>
+      {!displayCodeString ? <div>
         <CardHeader>
           Create Donation Widget
         </CardHeader>
         <CardContent className='space-y-4'>
           <div>
-            <div className='text-sm'>Receiver address</div>
-            <Input 
-              value={receiver}
-              onChange={(el) => setReceiver(el.target.value)}
-            />
-          </div>
-          <div>
-            <div className='text-sm'>Metadata</div>
+            <div>Metadata</div>
+            <div className={'text-muted-foreground text-sm'}>Optional param used for sending you notifications about payments</div>
             <Input 
               value={metadata}
               onChange={(el) => setMetadata(el.target.value)}
             />
           </div>
-          <Button 
-            disabled={receiver === ''}  
+          <Button  
             className='w-full' 
             onClick={generateWidget}
           >
@@ -103,7 +97,7 @@ export const CreateDonationWidget = ({ donationId }: Props) => {
           </span>
         </div>
 
-        <Button className='w-full' onClick={() => setTrigger(false)}>
+        <Button className='w-full' onClick={() => setDisplayCodeString(false)}>
           Close
         </Button>
       </CardContent>}

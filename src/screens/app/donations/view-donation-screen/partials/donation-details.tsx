@@ -2,7 +2,6 @@ import moment from 'moment';
 import { Copy } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { FormatAmount } from '@multiversx/sdk-dapp/UI';
-import { useGetAccount } from '@multiversx/sdk-dapp/hooks';
 
 import { useTokensMap } from '@/core/tokens';
 import { Donation } from '@/features/donations/models';
@@ -22,14 +21,13 @@ const lunarPayTestUrl = import.meta.env.VITE_LUNARPAY_TEST_URL
 export function DonationDetails(props: Props){
   const { donation } = props;
 
-  const { address } = useGetAccount()
   const { toast } = useToast();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const tokensMap = useTokensMap();
   const token = tokensMap[donation.tokenIdentifier];
 
-    const publicDonationUrl = `${lunarPayTestUrl}/donations/${donation._id}/public?receiver=${address}`;
+    const publicDonationUrl = `${lunarPayTestUrl}/donations/${donation._id}/public`;
 
   const copyButtonHandler = () => {
     return navigator.clipboard.writeText(publicDonationUrl).then(() => {
@@ -40,7 +38,7 @@ export function DonationDetails(props: Props){
   };
 
   const navigateToPublicScreen = () => {
-    navigate(`${RoutesConfig.donations}/${donation._id}/public?receiver=${address}`)
+    navigate(`${RoutesConfig.donations}/${donation._id}/public`)
   }
 
   return (
@@ -57,7 +55,7 @@ export function DonationDetails(props: Props){
                   <FormatAmount
                     token={token.identifier}
                     decimals={token.decimals}
-                    value={donation.fixedAmount as string}
+                    value={donation.totalAmount as string}
                   />
                 </div>
               </div>

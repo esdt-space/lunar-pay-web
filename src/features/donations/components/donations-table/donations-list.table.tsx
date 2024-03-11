@@ -46,7 +46,7 @@ function DonationRow(props: DonationRowProps) {
           </Badge>}
       </TableCell>
       <TableCell>
-        <FormatAmount value={donation.fixedAmount as string} decimals={token.decimals} />
+        <FormatAmount value={donation.totalAmount as string} decimals={token.decimals} />
       </TableCell>
       <TableCell>
         {donation.donationType}
@@ -65,7 +65,7 @@ export const DonationsListTable = ({ donationsList }: Props) => {
       <TableHeader>
         <TableRow>
           <TableHead>Name</TableHead>
-          <TableHead>Value</TableHead>
+          <TableHead>Total Amount</TableHead>
           <TableHead>Type</TableHead>
           <TableHead>Target</TableHead>
           <TableHead className="max-sm:hidden">Date</TableHead>

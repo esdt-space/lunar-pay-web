@@ -6,10 +6,14 @@ import { useTokenOperationsQuery } from "@/features/token-operations/hooks/queri
 import { TokenOperation } from "@/features/token-operations/models";
 import { formatAddress } from "@/utils/address";
 
-export const LatestDonationsList = () => {
+type Props = {
+  donationId: string;
+}
+
+export const LatestDonationsList = ({donationId}: Props) => {
   const tokensMap = useTokensMap();
   const { data } = useTokenOperationsQuery(1, 'donation');
-  const operations = data?.operations.slice(0, 10) ?? []
+  const operations = data?.operations.filter(el => el.donation._id === donationId) ?? []
   
   return (
     <div className="flex flex-1 w-full justify-center">
