@@ -13,13 +13,13 @@ import { createDonationMutation } from "@/features/donations/hooks/mutations"
 import { RoutesConfig } from "@/navigation"
 
 const donationTypes = [
-  {label: 'one-time-donation', description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'},
-  {label: 'recurring-donations', description: 'Coming soon'}
+  {label: 'one-time-donation', description: 'A direct, one-time contribution to your preferred cause.'},
+  {label: 'recurring-donations', description: 'Set up a continuous impact through regular donations.(Coming soon)'}
 ];
 
 const userTypes = [
-  {label: 'content-creator', description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'},
-  {label: 'charity', description: 'Coming soon'}
+  {label: 'content-creator', description: 'Layout that seamlessly supports content creator\'s needs'},
+  {label: 'charity', description: 'Support charitable causes.(Coming soon)'}
 ];
 
 export const CreateOneTimeDonationScreen = () => {
@@ -53,6 +53,7 @@ export const CreateOneTimeDonationScreen = () => {
         <CardContent className='p-6 space-y-8'>
           <div className="text-xl font-semibold">New Donation</div>
           <DonationTypeSelector 
+            label={'Donation Type'}
             optionsList={donationTypes}
             selectedOption={selectedDonationType}
             setSelectedOption={setSelectedDonationType}
