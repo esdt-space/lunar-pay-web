@@ -59,11 +59,13 @@ export const CreateDonationWidget = ({ donationId }: Props) => {
         <CardContent className='space-y-4'>
           <div>
             <div>Metadata</div>
-            <div className={'text-muted-foreground text-sm'}>Optional param used for sending you notifications about payments</div>
-            <Input 
-              value={metadata}
-              onChange={(el) => setMetadata(el.target.value)}
-            />
+            <div className='border rounded-md p-4 grayscale bg-slate-100'>
+              <div className={'text-muted-foreground text-sm'}>Optional param used for sending you notifications about payments</div>
+              <Input 
+                value={metadata}
+                onChange={(el) => setMetadata(el.target.value)}
+              />
+            </div>
           </div>
           <Button  
             className='w-full' 
