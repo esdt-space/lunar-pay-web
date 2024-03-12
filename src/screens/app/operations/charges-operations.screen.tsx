@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
 import { ContainedScreen } from "@/components/prefab/contained-screen"
-import {  PaginationButtonsNew } from "@/components/shared/pagination"
+import {  PaginationButtons } from "@/components/shared/pagination"
 
 import { useChargesOperations } from "@/features/token-operations/hooks"
 import { useParams } from "react-router-dom"
@@ -53,7 +53,7 @@ export const ChargesOperationsScreen = () => {
           <div>
             <ChargeOperationTable 
               operations={chargesOperations} />
-            <PaginationButtonsNew 
+            <PaginationButtons 
               previousPageHandler={previousPageHandler} 
               nextPageHandler={nextPageHandler}
               currentPage={currentPage}

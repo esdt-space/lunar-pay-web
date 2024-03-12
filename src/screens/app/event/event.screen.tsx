@@ -1,7 +1,10 @@
+import { useState } from 'react'
+
 import { ContainedScreen } from '@/components/prefab/contained-screen'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { useState } from 'react'
+import { DonationsService } from '@/features/donations/donation.service';
+import { Button } from '@/components/ui/button';
 
 enum EventTabs {
   ActionsPerformed = 'actions-performed',
@@ -35,6 +38,7 @@ export const EventScreen = () => {
             <CardContent className={'p-8'}>
               <TabsContent className={'flex flex-1 flex-col gap-4 mt-0'} value={EventTabs.ActionsPerformed}>
                 <div>Actions</div>
+                <Button onClick={() => DonationsService.fetchDonationsForEvent()}>Click</Button>
               </TabsContent>
 
               <TabsContent className={'flex flex-col flex-1 gap-4 mt-0'} value={EventTabs.DonationsReceived}>

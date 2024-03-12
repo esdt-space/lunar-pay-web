@@ -2,7 +2,7 @@ import moment from "moment";
 import { useState } from "react";
 
 import { Card, CardContent } from "@/components/ui/card.tsx";
-import { PaginationButtonsNew } from "@/components/shared/pagination";
+import { PaginationButtons } from "@/components/shared/pagination";
 import { EmptyStateWithAction } from "@/components/shared/empty-states";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table.tsx";
 
@@ -68,7 +68,7 @@ export function MembersListPartial({ agreementId }: Props) {
             ))}
           </TableBody>
         </Table>
-        <PaginationButtonsNew 
+        <PaginationButtons 
           previousPageHandler={previousPageHandler} 
           nextPageHandler={nextPageHandler}
           currentPage={currentPage}

@@ -34,12 +34,18 @@ export class RoutesConfig {
   static updatePaymentAgreement = '/payment-agreements/:id/edit'
   static approveSubscription = '/approve-subscription'
 
+  static donations = '/donations'
+  static createDonationIndex = '/donations/new'
+  static createDonationWidget = '/donations/new/widget'
+  static createOneTimeDonation = '/donations/new/one-time-donation'
+  static createDonationGoal = '/donations/new/donation-goal'
+
+  static event = '/event'
+
   static tokensOperations = '/tokens-operations'
   static transactions = '/transactions'
 
   static admin = '/admin'
-
-  static event = '/event'
 
   static getDefaultLoginRoute() {
     return this.home

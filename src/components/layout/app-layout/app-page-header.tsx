@@ -62,6 +62,10 @@ export function AppPageHeader() {
                     location={RoutesConfig.event}
                   />
                   <HeaderLink
+                    text={'Donations'}
+                    location={RoutesConfig.donations}
+                  />
+                  <HeaderLink
                     text={'Agreements'}
                     location={RoutesConfig.paymentAgreements}
                   />
