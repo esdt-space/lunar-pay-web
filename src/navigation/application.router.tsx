@@ -31,6 +31,7 @@ import { ContactScreen } from '@/screens/app/contact';
 import { FrequentlyAskedQuestionsScreen } from '@/screens/app/static-pages/frequently-asked-questions/frequently-asked-questions.screen';
 import { TermsAndConditionsScreen } from '@/screens/app/static-pages/terms-and-conditions/terms-and-conditions-screen';
 import { WhitepaperScreen } from '@/screens/app/static-pages/white-paper/whitepaper.screen';
+import { EventScreen } from '@/screens/app/event';
 
 export function ApplicationRouter() {
   useScrollToTopHandler()
@@ -65,6 +66,8 @@ export function ApplicationRouter() {
 
         <Route element={<AuthenticatedRouteOutlet />}>
           <Route element={<AppLayout />}>
+            <Route path={RoutesConfig.event} element={<EventScreen />} />
+
             <Route index element={<DashboardScreen />} />
             <Route path={RoutesConfig.dashboard} element={<DashboardScreen />} />
 

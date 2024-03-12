@@ -39,6 +39,8 @@ export class RoutesConfig {
 
   static admin = '/admin'
 
+  static event = '/event'
+
   static getDefaultLoginRoute() {
     return this.home
   }
