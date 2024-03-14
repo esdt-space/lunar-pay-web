@@ -32,7 +32,7 @@ import { FrequentlyAskedQuestionsScreen } from '@/screens/app/static-pages/frequ
 import { TermsAndConditionsScreen } from '@/screens/app/static-pages/terms-and-conditions/terms-and-conditions-screen';
 import { WhitepaperScreen } from '@/screens/app/static-pages/white-paper/whitepaper.screen';
 import { CreateOneTimeDonationScreen, CreateDonationWidgetScreen, DonationDashboardScreen, ContentCreatorDonationPublicScreen, DonationsListScreen, ViewDonationScreen } from '@/screens/app/donations';
-import { EventScreen } from '@/screens/app/event';
+import { ActionsPerformedRankingScreen, DonationsReceivedRankingScreen } from '@/screens/app/event';
 
 export function ApplicationRouter() {
   useScrollToTopHandler()
@@ -59,6 +59,11 @@ export function ApplicationRouter() {
           <Route path={RoutesConfig.termsAndConditions} element={<TermsAndConditionsScreen />} />
           <Route path={RoutesConfig.whitepaper} element={<WhitepaperScreen />} />
           <Route path={RoutesConfig.contactUs} element={<ContactScreen />} />
+          
+          <Route path={RoutesConfig.donationPublic} element={<ContentCreatorDonationPublicScreen />} />
+
+          <Route path={RoutesConfig.eventActions} element={<ActionsPerformedRankingScreen />} />
+          <Route path={RoutesConfig.eventDonations} element={<DonationsReceivedRankingScreen />} />
         </Route>
 
         <Route path={RoutesConfig.agreement}>
@@ -68,7 +73,6 @@ export function ApplicationRouter() {
         <Route element={<AuthenticatedRouteOutlet />}>
           <Route element={<AppLayout />}>
 
-            <Route path={RoutesConfig.event} element={<EventScreen />} />
 
             <Route index element={<DashboardScreen />} />
             <Route path={RoutesConfig.dashboard} element={<DashboardScreen />} />
@@ -76,7 +80,6 @@ export function ApplicationRouter() {
             <Route path={RoutesConfig.donations}>
               <Route index element={<DonationsListScreen />} />
               <Route path={':id'} element={<ViewDonationScreen />} />
-              <Route path={':id/public'} element={<ContentCreatorDonationPublicScreen />} />
 
               <Route path={RoutesConfig.createDonationIndex}>
                 <Route index element={<DonationDashboardScreen />} />

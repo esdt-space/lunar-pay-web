@@ -12,6 +12,17 @@ type DonationsResponse = {
   }
 }
 
+type DonationsEventResponse = {
+  data: {
+    owner: string;
+    amount: string;
+    tokenIdentifier: string;
+  }[];
+  meta: {
+    totalRecords: number;
+  }
+}
+
 export class DonationsService {
   private static api = new ProtocolApi();
   private static readonly ITEMS_PER_PAGE = 10;
@@ -31,9 +42,15 @@ export class DonationsService {
     .then((response) => response.data)
   }
 
-  static async fetchDonationsForEvent(){
+  static async fetchDonationsForEvent(): Promise<DonationsEventResponse> {
     return this.api
-    .get(`/donations/event/donations-ranked`)
+    .get<DonationsEventResponse>(`/donations/event/donations-ranked`)
+    .then((response) => response.data)
+  }
+
+  static async fetchActionsForEvent(): Promise<any> {
+    return this.api
+    .get<any>(`/event/actions`)
     .then((response) => response.data)
   }
 
