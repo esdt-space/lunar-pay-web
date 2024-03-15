@@ -2,10 +2,14 @@ import { ContainedScreen } from "@/components/prefab/contained-screen"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { useDonationsForEventQuery } from "@/features/donations/hooks/queries";
 import { UsersDonationsRankedTable } from "./components";
+import { PaginationButtonsOld, usePagination } from "@/components/shared/pagination";
 
 export const DonationsReceivedRankingScreen = () => {
   const { data: donationsResponse } = useDonationsForEventQuery();
-  const donationsRanked = donationsResponse?.data ?? []
+  const donationsRanked = donationsResponse?.data ?? [];
+
+  const { data: usersDonationsList, ...rest} =
+    usePagination(donationsRanked, 10);
   
   return (
     <ContainedScreen className='h-full'>
@@ -14,7 +18,8 @@ export const DonationsReceivedRankingScreen = () => {
           Users ranked by Donations Received
         </CardHeader>
         <CardContent className={'p-0'}>
-          <UsersDonationsRankedTable usersDonationsList={donationsRanked} />
+          <UsersDonationsRankedTable usersDonationsList={usersDonationsList} />
+          <PaginationButtonsOld {...{...rest}} />
         </CardContent>
       </Card>
     </ContainedScreen>
