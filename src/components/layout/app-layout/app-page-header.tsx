@@ -2,7 +2,6 @@ import { Menu } from "lucide-react";
 import { Link } from "react-router-dom";
 import { logout } from "@multiversx/sdk-dapp/utils";
 import { useEffect, useState } from "react";
-import { useGetAccount } from "@multiversx/sdk-dapp/hooks";
 
 import { cn } from "@/theme/utils";
 import { RoutesConfig } from "@/navigation";
@@ -10,10 +9,10 @@ import { RoutesConfig } from "@/navigation";
 import { AppIcon } from "@/components/shared/app-icon.tsx";
 
 import { useWindowSize } from "./useWindowSize";
-import { CopyIconComponent, HeaderLink, UserMenu } from "./components";
+import { UserMenu } from "./components";
+import { LunarPayNavigationMenu } from "./navigation-menu";
 
 export function AppPageHeader() {
-  const { address } = useGetAccount()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const windowInnerWidth = useWindowSize()
@@ -55,29 +54,8 @@ export function AppPageHeader() {
               ])}
             >
               <div onClick={() => setIsMobileMenuOpen(false)} className="text-gray-600 dark:text-gray-300 lg:pr-4">
-                <ul className="space-y-6 text-base font-medium tracking-wide lg:flex lg:space-y-0 lg:text-sm">
-                  {/* <HeaderLink text={'Admin'} location={RoutesConfig.admin} /> */}
-                  <HeaderLink
-                    text={'Donations'}
-                    location={RoutesConfig.donations}
-                  />
-                  <HeaderLink
-                    text={'Agreements'}
-                    location={RoutesConfig.paymentAgreements}
-                  />
-                  <HeaderLink text={'Token Operations'} location={RoutesConfig.tokensOperations} />
-                  {isMobileMenuOpen && 
-                    <li onClick={signOutHandler}>
-                      <HeaderLink text={'Logout'} location={""} />
-                    </li>}
-                  {isMobileMenuOpen && 
-                    <div className={"flex w-full items-center sm:flex-row md:w-max mt-6 md:ml-4 space-x-4"}>
-                      <span className="text-xs max-w-[80px] truncate">
-                        {address}
-                      </span>
-                      <CopyIconComponent address={address} />
-                    </div>
-                  }
+                <ul className="text-base font-medium tracking-wide">
+                  <LunarPayNavigationMenu isMobile={isMobileMenuOpen} />
                 </ul>
               </div>
 
