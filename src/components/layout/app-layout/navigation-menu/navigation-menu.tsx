@@ -42,8 +42,9 @@ export const LunarPayNavigationMenu = ({isMobile}: Props) => {
           <NavigationMenuTrigger className='text-md'>Actions</NavigationMenuTrigger>
           <NavigationMenuContent>
             <div className={'flex flex-col p-4 space-y-2'}>
-              {components.map((component) => (
+              {components.map((component, index) => (
                 <HeaderLink
+                  key={index}
                   text={component.title}
                   location={component.href}
                 />
