@@ -30,8 +30,8 @@ export class TokenOperationsService {
   static async getTokenOperationsByParentId(page: number, id: string): Promise<TokenOperation[]> {
     const skip = (page - 1) * TokenOperationsService.ITEMS_PER_PAGE;
 
-    return TokenOperationsService.api.get<TokenOperation[]>(`/token-operations/${id}/all/charge-operations?limit=${TokenOperationsService.ITEMS_PER_PAGE}&skip=${skip}`)
+    return TokenOperationsService.api.get<TokenOperationsResponse>(`/token-operations/${id}/all/charge-operations?limit=${TokenOperationsService.ITEMS_PER_PAGE}&skip=${skip}`)
       .then((response) => response.data)
-      .then(data => data.map(item => new TokenOperation(item)))
+      .then(data => data.operations.map(item => new TokenOperation(item)))
   }
 }
