@@ -35,7 +35,7 @@ export function CreatePaymentAgreementScreen() {
     PaymentAgreementsService
       .fetchLatestAgreementCreatedByAccount()
       .then(agreement => {
-        navigate(RoutesConfig.updatePaymentAgreement.replace(":id", agreement._id))
+        navigate(RoutesConfig.updatePaymentAgreement.replace(":id", agreement.id))
     });
   }
 

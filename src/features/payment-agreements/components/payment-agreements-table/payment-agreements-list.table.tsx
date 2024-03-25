@@ -28,7 +28,7 @@ function AgreementRow(props: AgreementRowProps) {
   const navigateToAgreement = () => {
     const signed = signedList ? "/signed" : ""
 
-    return navigate(`${RoutesConfig.paymentAgreements}/${agreement._id}${signed}`)
+    return navigate(`${RoutesConfig.paymentAgreements}/${agreement.id}${signed}`)
   }
 
   const tokensMap = useTokensMap();
