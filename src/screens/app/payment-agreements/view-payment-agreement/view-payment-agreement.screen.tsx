@@ -22,8 +22,6 @@ export const ViewPaymentAgreementScreen = () => {
   const { id } = useParams()
   const navigate = useNavigate()
 
-  console.log(id)
-
   const { data: agreement } = useCreatedPaymentAgreement(id);
 
   if(!agreement) return;
