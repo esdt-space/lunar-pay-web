@@ -27,11 +27,11 @@ export function ListPaymentAgreementsScreen() {
     isFetching: isFetchingSignedAgreement,
   } = usePaymentAgreementsSignedQuery(currentPage)
 
-  const agreements = agreementsResponse?.agreements ?? []
-  const numberOfPages = agreementsResponse?.numberOfPages
+  const agreements = agreementsResponse?.data ?? []
+  const numberOfPages = agreementsResponse?.meta.totalPages
 
-  const signedAgreements = signedAgreementsResponse?.agreements ?? []
-  const numberOfPagesSignedAgreements = signedAgreementsResponse?.numberOfPages
+  const signedAgreements = signedAgreementsResponse?.data ?? []
+  const numberOfPagesSignedAgreements = signedAgreementsResponse?.meta.totalPages
 
   useEffect(() => {
     setCurrentPage(1);

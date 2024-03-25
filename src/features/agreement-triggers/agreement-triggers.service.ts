@@ -2,8 +2,13 @@ import { ProtocolApi } from "@/lib/protocol-api";
 import { AgreementTrigger } from "./models";
 
 type AgreementTriggersResponse = {
-  numberOfPages: number;
-  agreementTriggers: AgreementTrigger[];
+  data: AgreementTrigger[];
+  meta: {
+    currentPage?: number;
+    pageSize?: number;
+    totalPages?: number;
+    totalRecords: number;
+  }
 }
 
 export class AgreementTriggersService {
@@ -15,11 +20,5 @@ export class AgreementTriggersService {
 
     return this.api.get<AgreementTriggersResponse>(`/agreement-triggers/${id}/all?limit=${AgreementTriggersService.ITEMS_PER_PAGE}&skip=${skip}`)
       .then((response) => response.data)
-      .then(data => {
-        return {
-          numberOfPages: data.numberOfPages,
-          agreementTriggers: data.agreementTriggers.map(item => new AgreementTrigger(item)) 
-        }
-      })
   }
 }

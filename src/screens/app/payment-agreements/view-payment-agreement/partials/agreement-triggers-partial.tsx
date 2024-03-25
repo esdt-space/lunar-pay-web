@@ -29,8 +29,8 @@ export function AgreementTriggersPartial({ agreementId }: Props) {
   const previousPageHandler = () => setCurrentPage(page => Math.max(1, page - 1));
 
   const token = tokensMap[agreement?.tokenIdentifier];
-  const numberOfPages = triggers?.numberOfPages
-  const agreementTriggers = triggers?.agreementTriggers ?? []
+  const numberOfPages = triggers?.meta.totalPages
+  const agreementTriggers = triggers?.data ?? []
   const emptyAgreementTriggers = isFetchedAgreementsTriggers && agreementTriggers.length === 0;
 
   return (

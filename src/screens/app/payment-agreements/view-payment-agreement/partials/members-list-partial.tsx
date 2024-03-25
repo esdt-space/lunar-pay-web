@@ -21,8 +21,8 @@ export function MembersListPartial({ agreementId }: Props) {
     isFetched: isFetchedMembersList
   } = usePaymentAgreementMembers(currentPage, agreementId);
 
-  const numberOfPages = members?.numberOfPages
-  const memberships = members?.memberships ?? []
+  const memberships = members?.data ?? []
+  const numberOfPages = members?.meta.totalPages
 
   const nextPageHandler = () => setCurrentPage(page => page + 1);
   const previousPageHandler = () => setCurrentPage(page => Math.max(1, page - 1));

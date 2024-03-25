@@ -19,9 +19,9 @@ export const TokensOperationsScreen = () => {
   const [operationType, setOperationType] = useState<TokenOperationType | "all">("all");
   
   const typeFilter = operationType === "all" ? "" : operationType
-  const { data, isFetching, isFetched, refetch } = useTokenOperationsQuery(currentPage, typeFilter, filterValue);
-  const operations = data?.operations ?? []
-  const numberOfPages = data?.numberOfPages
+  const { data: tokenOperations, isFetching, isFetched, refetch } = useTokenOperationsQuery(currentPage, typeFilter, filterValue);
+  const operations = tokenOperations?.data ?? []
+  const numberOfPages = tokenOperations?.meta.totalPages
 
   const nextPageHandler = () => setCurrentPage(page => page + 1);
   const previousPageHandler = () => setCurrentPage(page => Math.max(1, page - 1));
