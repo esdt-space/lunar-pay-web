@@ -10,9 +10,9 @@ import { PaginationButtons } from "@/components/shared/pagination";
 export const DonationTransactions = () => {
   const [currentPage, setCurrentPage] = useState(1)
   
-  const { data, isFetching, isFetched } = useTokenOperationsQuery(currentPage, 'donation');
-  const operations = data?.operations ?? [];
-  const numberOfPages = data?.numberOfPages
+  const { data: tokenOperations, isFetching, isFetched } = useTokenOperationsQuery(currentPage, 'donation');
+  const operations = tokenOperations?.data ?? [];
+  const numberOfPages = tokenOperations?.meta.totalPages
 
   const nextPageHandler = () => setCurrentPage(page => page + 1);
   const previousPageHandler = () => setCurrentPage(page => Math.max(1, page - 1));
