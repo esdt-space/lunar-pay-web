@@ -13,12 +13,12 @@ import { useAccountTokensAvailableToDeposit } from "@/features/account-tokens/ho
 import { FrequencyType } from "@/contracts/lunar-pay/subscriptions/types";
 import { useCreateSubscriptionMutation } from "@/features/subscriptions/hooks";
 import { SubscriptionAmountType, SubscriptionType } from "@/contracts/lunar-pay/subscriptions/enums";
-import { PaymentAgreementsService } from "@/features/payment-agreements/payment-agreements.service.ts";
+import { SubscriptionsService } from "@/features/subscriptions/subscriptions.service.ts";
 import {ContainedScreen} from "@/components/prefab/contained-screen.tsx";
 
 const frequencyList = ["Per Minute", "Per Hour", "Daily", "Weekly", "Monthly", "Per Year"]
 
-export function CreatePaymentAgreementScreen() {
+export function CreateSubscriptionScreen() {
   const navigate = useNavigate();
   const [frequency, setFrequency] = useState('Monthly');
   const [selectedToken, setSelectedToken] = useState<Token | undefined>(undefined);
@@ -31,11 +31,11 @@ export function CreatePaymentAgreementScreen() {
   const missingToken = selectedToken === undefined
   const missingAmount = amount === ""
 
-  const agreementCreatedHandler = () => {
-    PaymentAgreementsService
-      .fetchLatestAgreementCreatedByAccount()
-      .then(agreement => {
-        navigate(RoutesConfig.updatePaymentAgreement.replace(":id", agreement.id))
+  const subscriptionCreatedHandler = () => {
+    SubscriptionsService
+      .fetchLatestSubscriptionCreatedByAccount()
+      .then(subscription => {
+        navigate(RoutesConfig.updateSubscription.replace(":id", subscription._id))
     });
   }
 
@@ -50,7 +50,7 @@ export function CreatePaymentAgreementScreen() {
       type: SubscriptionType.RecurringPayoutToReceive,
       amountType: SubscriptionAmountType.FixedAmount,
       amount: amount,
-    }, { onSuccess: agreementCreatedHandler})
+    }, { onSuccess: subscriptionCreatedHandler})
   }
 
   return (
@@ -58,7 +58,7 @@ export function CreatePaymentAgreementScreen() {
       <Card className={'shadow'}>
         <CardHeader>
           <CardTitle>
-            <h1 className={'text-xl'}>Create Subscription</h1>
+            <div className={'text-xl'}>Create Subscription</div>
           </CardTitle>
         </CardHeader>
 
@@ -97,7 +97,7 @@ export function CreatePaymentAgreementScreen() {
             <Button
               disabled={missingToken || missingAmount}
               className="flex-1"
-              onClick={buttonHandler}>Create Payment Agreement</Button>
+              onClick={buttonHandler}>Create Subscription</Button>
           </div>
         </CardContent>
       </Card>

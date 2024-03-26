@@ -17,8 +17,8 @@ const components: { title: string; href: string;}[] = [
     href: `${RoutesConfig.donations}`
   },
   {
-    title: 'Agreements',
-    href: `${RoutesConfig.paymentAgreements}`
+    title: 'Subscriptions',
+    href: `${RoutesConfig.subscriptions}`
   },
   // {
   //   title: 'Admin',

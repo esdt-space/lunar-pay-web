@@ -16,12 +16,12 @@ import { AuthForm } from "@/features/auth/components"
 import { TokenItem } from "@/core/tokens/components"
 import { useAccountVaultTokens } from "@/features/vault/hooks"
 import { formatFrequencyForSignSubscription } from "@/utils/utils.ts"
-import { useCreatedPaymentAgreement, useSignPaymentAgreementMutation} from "@/features/payment-agreements/hooks"
+import { useCreatedSubscription, useSignSubscriptionMutation} from "@/features/subscriptions/hooks"
 
-import { AgreementDetailsPartial } from "./partials/agreement-details-partial.tsx"
+import { SubscriptionDetailsPartial } from "./partials/subscription-details-partial.tsx"
 import { DepositAssetsComponent } from "../../dashboard/components/deposit-component.tsx"
 
-export const SignPaymentAgreementScreen = () => {
+export const SignSubscriptionScreen = () => {
   const { address } = useGetAccount()
   const { id } = useParams()
   const navigate = useNavigate()
@@ -29,38 +29,38 @@ export const SignPaymentAgreementScreen = () => {
   const {vaultTokens} = useAccountVaultTokens()
   const tokensMap = useTokensMap();
 
-  const { data: agreement } = useCreatedPaymentAgreement(id);
-  const { mutate: signPaymentAgreement} = useSignPaymentAgreementMutation(id);
+  const { data: subscription } = useCreatedSubscription(id);
+  const { mutate: signSubscription} = useSignSubscriptionMutation(id);
 
-  if(!agreement) return;
+  if(!subscription) return;
 
   const redirect = () => {
-    if(agreement.signAgreementRedirectUrl) {
-      window.location.href = agreement.signAgreementRedirectUrl
+    if(subscription.signSubscriptionRedirectUrl) {
+      window.location.href = subscription.signSubscriptionRedirectUrl
     }
   }
 
-  const token = tokensMap[agreement.tokenIdentifier];
-  const vaultToken = vaultTokens.find(item => item.identifier === agreement.tokenIdentifier);
+  const token = tokensMap[subscription.tokenIdentifier];
+  const vaultToken = vaultTokens.find(item => item.identifier === subscription.tokenIdentifier);
   
   const currentTokenBalance = vaultToken !== undefined ? vaultToken.balance : ""
   const currentTokenDecimals = vaultToken !== undefined ? vaultToken.decimals : 0
   const currentBalance = formatTokenBalance(currentTokenBalance, currentTokenDecimals)
 
-  const currentAgreementBalance = agreement.fixedAmount !== undefined ? agreement.fixedAmount : ""
-  const agreementRequiredBalance = formatTokenBalance(currentAgreementBalance, token.decimals)
+  const currentSubscriptionBalance = subscription.fixedAmount !== undefined ? subscription.fixedAmount : ""
+  const subscriptionRequiredBalance = formatTokenBalance(currentSubscriptionBalance, token.decimals)
 
-  const signPaymentAgreementButtonHandler = () => {
-    signPaymentAgreement(agreement.agreementIdentifier, { onSuccess: redirect })
+  const signSubscriptionButtonHandler = () => {
+    signSubscription(subscription.subscriptionIdentifier, { onSuccess: redirect })
   }
 
-  const userIsOwner = address === agreement.owner
-  const enoughAssets = Number(currentBalance.toString()) > Number(agreementRequiredBalance.toString())
+  const userIsOwner = address === subscription.owner
+  const enoughAssets = Number(currentBalance.toString()) > Number(subscriptionRequiredBalance.toString())
  
   return (
     <div className="flex flex-1 flex-col">
       <div className={'pl-8 py-4'}>
-        <Button onClick={() => navigate(`${RoutesConfig.paymentAgreements}/${agreement.id}`)} variant={'ghost'} className={'gap-2'}>
+        <Button onClick={() => navigate(`${RoutesConfig.subscriptions}/${subscription._id}`)} variant={'ghost'} className={'gap-2'}>
           <ArrowLeft />
           Back
         </Button>
@@ -76,7 +76,7 @@ export const SignPaymentAgreementScreen = () => {
             <div className="w-full h-full bg-gradient-to-br from-[#439DFE] to-[#F687FF] blur-[150px]"></div>
           </div>
 
-          <AgreementDetailsPartial agreement={agreement}/>
+          <SubscriptionDetailsPartial subscription={subscription}/>
 
           <div className={'flex items-center self-center gap-2'}>
             <div className={'text-sm'}>Powered by</div>
@@ -95,15 +95,15 @@ export const SignPaymentAgreementScreen = () => {
                   <h2 className={'text-lg font-bold'}>Payment Details</h2>
                   <div className={'ring-1 ring-slate-200 rounded'}>
                     <div className={'flex justify-between p-4 py-6'}>
-                      <div>1 x {agreement.itemName}</div>
+                      <div>1 x {subscription.itemName}</div>
                       <div>
                         <FormatAmount
                           digits={4}
                           decimals={token.decimals}
-                          token={agreement.tokenIdentifier}
-                          value={agreement.fixedAmount as string}
+                          token={subscription.tokenIdentifier}
+                          value={subscription.fixedAmount as string}
                         />
-                        /{formatFrequencyForSignSubscription(agreement.frequency)}
+                        /{formatFrequencyForSignSubscription(subscription.frequency)}
                       </div>
                     </div>
 
@@ -113,8 +113,8 @@ export const SignPaymentAgreementScreen = () => {
                         <FormatAmount
                           digits={4}
                           decimals={token.decimals}
-                          token={agreement.tokenIdentifier}
-                          value={agreement.fixedAmount as string}
+                          token={subscription.tokenIdentifier}
+                          value={subscription.fixedAmount as string}
                         />
                       </div>
                     </div>
@@ -133,9 +133,9 @@ export const SignPaymentAgreementScreen = () => {
                 </div>
 
                 <div className={'text-sm p-3 ring-1 ring-slate-100 rounded shadow-sm'}>
-                  By signing this payment agreement, you allow <span className={'font-bold'}>{agreement.ownerName ?? formatAddress(agreement.owner)}</span> to charge your wallet for this payment and future
+                  By signing this subscription, you allow <span className={'font-bold'}>{subscription.ownerName ?? formatAddress(subscription.owner)}</span> to charge your wallet for this payment and future
                   payments in accordance with their terms. Your first payment will be made <span className={'font-bold'}>today</span>, and then
-                  <span className={'font-bold'}> every {formatFrequencyForSignSubscription(agreement.frequency)}</span>.
+                  <span className={'font-bold'}> every {formatFrequencyForSignSubscription(subscription.frequency)}</span>.
                 </div>
 
                 <div className={'flex flex-col'}>
@@ -143,20 +143,20 @@ export const SignPaymentAgreementScreen = () => {
                     variant={'primary'}
                     disabled={userIsOwner || !enoughAssets}
                     className={'bg-gradient-to-r from-primary to-secondary text-white hover:text-slate-200'}
-                    onClick={signPaymentAgreementButtonHandler}
+                    onClick={signSubscriptionButtonHandler}
                   >
-                    Sign Payment Agreement
+                    Sign Subscription
                   </Button>
 
                   {userIsOwner && (
                     <div className={'text-sm text-muted-foreground text-center'}>
-                      You cannot accept your own agreement
+                      You cannot accept your own subscription
                     </div>
                   )}
 
                   {!userIsOwner && !enoughAssets && (
                     <div className={'text-sm text-red-500 text-center'}>
-                      You don't have enough tokens to accept this agreement
+                      You don't have enough tokens to accept this subscription
                     </div>
                   )}
                 </div>
