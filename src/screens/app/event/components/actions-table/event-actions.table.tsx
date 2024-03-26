@@ -11,14 +11,14 @@ function UserRow(props: UserRowProps) {
   const { toast } = useToast()
 
   const copyButtonHandler = () => {
-    return navigator.clipboard.writeText(user._id).then(() => {
+    return navigator.clipboard.writeText(user.userId).then(() => {
       toast({
         description: 'Address copied to clipboard'
       })
     })
   };
 
-  if (user._id === null) return;
+  if (user.userId === null) return;
 
   return (
     <TableRow
@@ -26,7 +26,7 @@ function UserRow(props: UserRowProps) {
     >
       <TableCell className="flex items-center">
         <span className={'ring-1 bg-slate-50 ring-slate-200 px-2 py-1 rounded-sm whitespace-nowrap'}>
-          {formatAddress(user._id)}
+          {formatAddress(user.userId)}
         </span>
         <span
           onClick={copyButtonHandler}
@@ -84,7 +84,7 @@ export const UsersActionsTable = ({ actionsList }: Props) => {
         </TableRow>
       </TableHeader>
       <TableBody className='p-0'>
-        {actionsList && actionsList.map((item) => <UserRow key={item._id} user={item} />)}
+        {actionsList && actionsList.map((item) => item.userId !== undefined && <UserRow key={item.userId} user={item} />)}
       </TableBody>
     </Table>
   </div>

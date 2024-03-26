@@ -4,13 +4,13 @@ export type UserAction = {
 }
 
 export type User = {
-  _id: string;
+  userId: string;
   allActions: number;
   actions: UserAction[];
 }
 
 export type Props = {
-  actionsList: any[] | undefined;
+  actionsList: User[] | undefined;
 }
 
 export type UserRowProps = {
