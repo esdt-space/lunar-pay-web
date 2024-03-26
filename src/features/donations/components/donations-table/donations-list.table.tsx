@@ -24,7 +24,7 @@ function DonationRow(props: DonationRowProps) {
   const navigate = useNavigate()
 
   const navigateToDonation = () => {
-    return navigate(`${RoutesConfig.donations}/${donation._id}`)
+    return navigate(`${RoutesConfig.donations}/${donation.id}`)
   }
 
   const tokensMap = useTokensMap();
@@ -72,7 +72,7 @@ export const DonationsListTable = ({ donationsList }: Props) => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {donationsList && donationsList.map((item) => <DonationRow key={item._id} donation={item} />)}
+        {donationsList && donationsList.map((item) => <DonationRow key={item.id} donation={item} />)}
       </TableBody>
     </Table>
   </div>

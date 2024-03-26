@@ -27,7 +27,7 @@ export function DonationDetails(props: Props){
   const tokensMap = useTokensMap();
   const token = tokensMap[donation.tokenIdentifier];
 
-    const publicDonationUrl = `${lunarPayTestUrl}/donations/${donation._id}/public`;
+    const publicDonationUrl = `${lunarPayTestUrl}/donations/${donation.id}/public`;
 
   const copyButtonHandler = () => {
     return navigator.clipboard.writeText(publicDonationUrl).then(() => {
@@ -38,7 +38,7 @@ export function DonationDetails(props: Props){
   };
 
   const navigateToPublicScreen = () => {
-    navigate(`${RoutesConfig.donations}/${donation._id}/public`)
+    navigate(`${RoutesConfig.donations}/${donation.id}/public`)
   }
 
   return (

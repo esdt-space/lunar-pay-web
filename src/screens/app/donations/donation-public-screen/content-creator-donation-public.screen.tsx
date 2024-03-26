@@ -21,7 +21,7 @@ export const ContentCreatorDonationPublicScreen = () => {
     >
       <div className="flex flex-1 xl:space-x-8 max-xl:flex-col max-xl:space-y-8">
         <SingleDonationWidget />
-        <LatestDonationsList donationId={donation._id} />
+        <LatestDonationsList donationId={donation.id} />
       </div>
     </DonationPageWrapper>
   )

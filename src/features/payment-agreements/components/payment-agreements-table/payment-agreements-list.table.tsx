@@ -72,7 +72,7 @@ export const PaymentAgreementListTable = ({ agreementsList, signedList }: Props)
         </TableRow>
       </TableHeader>
       <TableBody>
-        {agreementsList.map((item) => <AgreementRow key={item._id} agreement={item} signedList={signedList}/>)}
+        {agreementsList.map((item) => <AgreementRow key={item.id} agreement={item} signedList={signedList}/>)}
       </TableBody>
     </Table>
   </div>

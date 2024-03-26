@@ -31,7 +31,7 @@ const FormSchema = z.object({
 
 export function RedirectAndWebhooksSettings({ donation }: Props) {
   const navigate = useNavigate()
-  const { mutate: ediDonation } = useUpdateDonationMutation(donation._id);
+  const { mutate: ediDonation } = useUpdateDonationMutation(donation.id);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),

@@ -25,7 +25,7 @@ export function UpdateDonationDetailsScreen({ donation }: Props) {
   const [description, setDescription] = useState('')
   const [formInitialized, setFormInitialized] = useState(false);
 
-  const { mutate: ediDonation } = useUpdateDonationMutation(donation._id);
+  const { mutate: ediDonation } = useUpdateDonationMutation(donation.id);
 
   useEffect(() => {
     if(donation === undefined || formInitialized) return;
@@ -51,7 +51,7 @@ export function UpdateDonationDetailsScreen({ donation }: Props) {
     }
 
     ediDonation(
-      { id: donation._id, input: input },
+      { id: donation.id, input: input },
       {
         onSuccess: () => navigate(RoutesConfig.donations)
       }

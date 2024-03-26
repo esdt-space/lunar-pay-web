@@ -11,7 +11,7 @@ export const AgreementNameCell = ({tokenOperationItem}: Props) => {
   const navigate = useNavigate()
 
   const getOperation = () => {
-    navigate(`${RoutesConfig.paymentAgreements}/${tokenOperationItem.agreement._id}`)
+    navigate(`${RoutesConfig.paymentAgreements}/${tokenOperationItem.agreement.id}`)
   }
 
   if(!tokenOperationItem.agreement) return null;

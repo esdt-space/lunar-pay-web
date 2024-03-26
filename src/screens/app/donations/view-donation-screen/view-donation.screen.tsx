@@ -34,7 +34,7 @@ export const ViewDonationScreen = () => {
           <div className='flex flex-col space-y-4'>
             <div className='flex max-lg:flex-col max-lg:space-y-4 justify-between lg:space-x-4'>
               <DonationDetails donation={donation}/>
-              <CreateDonationWidget donationId={donation._id} />
+              <CreateDonationWidget donationId={donation.id} />
             </div>
             <div>
               <DonationTransactions />

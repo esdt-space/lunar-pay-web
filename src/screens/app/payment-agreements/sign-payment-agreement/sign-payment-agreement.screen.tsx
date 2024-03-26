@@ -60,7 +60,7 @@ export const SignPaymentAgreementScreen = () => {
   return (
     <div className="flex flex-1 flex-col">
       <div className={'pl-8 py-4'}>
-        <Button onClick={() => navigate(`${RoutesConfig.paymentAgreements}/${agreement._id}`)} variant={'ghost'} className={'gap-2'}>
+        <Button onClick={() => navigate(`${RoutesConfig.paymentAgreements}/${agreement.id}`)} variant={'ghost'} className={'gap-2'}>
           <ArrowLeft />
           Back
         </Button>

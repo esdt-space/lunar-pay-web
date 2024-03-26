@@ -54,7 +54,7 @@ export const UsersDonationsRankedTable = ({ usersDonationsList }: Props) => {
         </TableRow>
       </TableHeader>
       <TableBody className='p-0'>
-        {usersDonationsList && usersDonationsList.map((item) => <UserRow key={item._id} user={item} />)}
+        {usersDonationsList && usersDonationsList.map((item) => <UserRow key={item.id} user={item} />)}
       </TableBody>
     </Table>
   </div>

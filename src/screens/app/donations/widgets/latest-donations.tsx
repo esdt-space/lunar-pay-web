@@ -13,7 +13,7 @@ type Props = {
 export const LatestDonationsList = ({donationId}: Props) => {
   const tokensMap = useTokensMap();
   const { data: tokenOperations } = useTokenOperationsQuery(1, 'donation');
-  const operations = tokenOperations?.data.filter(el => el.donation._id === donationId) ?? []
+  const operations = tokenOperations?.data.filter(el => el.donation.id === donationId) ?? []
   
   return (
     <div className="flex flex-1 w-full justify-center">
