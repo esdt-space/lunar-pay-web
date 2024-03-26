@@ -2,8 +2,13 @@ import { ProtocolApi } from "@/lib/protocol-api";
 import { SubscriptionTrigger } from "./models";
 
 type SubscriptionTriggersResponse = {
-  numberOfPages: number;
-  subscriptionTriggers: SubscriptionTrigger[];
+  data: SubscriptionTrigger[];
+  meta: {
+    currentPage?: number;
+    pageSize?: number;
+    totalPages?: number;
+    totalRecords: number;
+  }
 }
 
 export class SubscriptionTriggersService {
@@ -15,11 +20,5 @@ export class SubscriptionTriggersService {
 
     return this.api.get<SubscriptionTriggersResponse>(`/subscription-triggers/${id}/all?limit=${SubscriptionTriggersService.ITEMS_PER_PAGE}&skip=${skip}`)
       .then((response) => response.data)
-      .then(data => {
-        return {
-          numberOfPages: data.numberOfPages,
-          subscriptionTriggers: data.subscriptionTriggers.map(item => new SubscriptionTrigger(item)) 
-        }
-      })
   }
 }

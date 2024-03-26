@@ -21,8 +21,8 @@ export function MembersListPartial({ subscriptionId }: Props) {
     isFetched: isFetchedMembersList
   } = useSubscriptionMembers(currentPage, subscriptionId);
 
-  const numberOfPages = members?.numberOfPages
-  const memberships = members?.memberships ?? []
+  const memberships = members?.data ?? []
+  const numberOfPages = members?.meta.totalPages
 
   const nextPageHandler = () => setCurrentPage(page => page + 1);
   const previousPageHandler = () => setCurrentPage(page => Math.max(1, page - 1));

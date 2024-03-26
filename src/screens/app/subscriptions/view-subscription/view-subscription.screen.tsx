@@ -59,7 +59,7 @@ export const ViewSubscriptionScreen = () => {
 
         <div className={'flex gap-2'}>
           <Button asChild variant={'ghost'} size={'sm'} className={'ml-2'}>
-            <Link to={`${RoutesConfig.subscription}/${subscription._id}`}>
+            <Link to={`${RoutesConfig.subscription}/${subscription.id}`}>
               Preview
               <Link2 className={'ml-2 w-4 h-4'} />
             </Link>

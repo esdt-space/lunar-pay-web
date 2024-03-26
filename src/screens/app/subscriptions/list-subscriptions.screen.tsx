@@ -27,11 +27,11 @@ export function ListSubscriptionsScreen() {
     isFetching: isFetchingSignedSubscription,
   } = useSubscriptionsSignedQuery(currentPage)
 
-  const subscriptions = subscriptionsResponse?.subscriptions ?? []
-  const numberOfPages = subscriptionsResponse?.numberOfPages
+  const subscriptions = subscriptionsResponse?.data ?? []
+  const numberOfPages = subscriptionsResponse?.meta.totalPages
 
-  const signedSubscriptions = signedSubscriptionsResponse?.subscriptions ?? []
-  const numberOfPagesSignedSubscriptions = signedSubscriptionsResponse?.numberOfPages
+  const signedSubscriptions = signedSubscriptionsResponse?.data ?? []
+  const numberOfPagesSignedSubscriptions = signedSubscriptionsResponse?.meta.totalPages
 
   useEffect(() => {
     setCurrentPage(1);

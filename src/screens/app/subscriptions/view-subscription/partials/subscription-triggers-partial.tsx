@@ -29,8 +29,10 @@ export function SubscriptionTriggersPartial({ subscriptionId }: Props) {
   const previousPageHandler = () => setCurrentPage(page => Math.max(1, page - 1));
 
   const token = tokensMap[subscription?.tokenIdentifier];
-  const numberOfPages = triggers?.numberOfPages
-  const subscriptionTriggers = triggers?.subscriptionTriggers ?? []
+
+  const subscriptionTriggers = triggers?.data ?? []
+  const numberOfPages = triggers?.meta.totalPages
+  
   const emptySubscriptionTriggers = isFetchedSubscriptionsTriggers && subscriptionTriggers.length === 0;
 
   return (

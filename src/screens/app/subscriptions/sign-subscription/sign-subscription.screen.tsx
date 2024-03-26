@@ -60,7 +60,7 @@ export const SignSubscriptionScreen = () => {
   return (
     <div className="flex flex-1 flex-col">
       <div className={'pl-8 py-4'}>
-        <Button onClick={() => navigate(`${RoutesConfig.subscriptions}/${subscription._id}`)} variant={'ghost'} className={'gap-2'}>
+        <Button onClick={() => navigate(`${RoutesConfig.subscriptions}/${subscription.id}`)} variant={'ghost'} className={'gap-2'}>
           <ArrowLeft />
           Back
         </Button>

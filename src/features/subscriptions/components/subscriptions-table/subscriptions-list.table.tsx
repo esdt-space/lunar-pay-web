@@ -28,7 +28,7 @@ function SubscriptionRow(props: SubscriptionRowProps) {
   const navigateToSubscription = () => {
     const signed = signedList ? "/signed" : ""
 
-    return navigate(`${RoutesConfig.subscriptions}/${subscription._id}${signed}`)
+    return navigate(`${RoutesConfig.subscriptions}/${subscription.id}${signed}`)
   }
 
   const tokensMap = useTokensMap();
@@ -72,7 +72,7 @@ export const SubscriptionListTable = ({ subscriptionsList, signedList }: Props) 
         </TableRow>
       </TableHeader>
       <TableBody>
-        {subscriptionsList.map((item) => <SubscriptionRow key={item._id} subscription={item} signedList={signedList}/>)}
+        {subscriptionsList.map((item) => <SubscriptionRow key={item.id} subscription={item} signedList={signedList}/>)}
       </TableBody>
     </Table>
   </div>

@@ -24,7 +24,7 @@ export function SubscriptionDetails(props: Props){
   const tokensMap = useTokensMap();
   const token = tokensMap[subscription.tokenIdentifier];
 
-  const { mutate: triggerSubscription, isLoading} = useTriggerSubscriptionMutation(subscription._id);
+  const { mutate: triggerSubscription, isLoading} = useTriggerSubscriptionMutation(subscription.id);
 
   const triggerSubscriptionButtonHandler = () => {
     triggerSubscription(subscription.subscriptionIdentifier)

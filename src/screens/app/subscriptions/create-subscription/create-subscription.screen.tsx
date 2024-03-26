@@ -35,7 +35,7 @@ export function CreateSubscriptionScreen() {
     SubscriptionsService
       .fetchLatestSubscriptionCreatedByAccount()
       .then(subscription => {
-        navigate(RoutesConfig.updateSubscription.replace(":id", subscription._id))
+        navigate(RoutesConfig.updateSubscription.replace(":id", subscription.id))
     });
   }
 

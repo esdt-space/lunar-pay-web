@@ -4,13 +4,23 @@ import { SubscriptionMember, Subscription } from "./models";
 import { UpdateSubscriptionDto } from "./dto";
 
 type SubscriptionsResponse = {
-  numberOfPages: number;
-  subscriptions: Subscription[]
+  data: Subscription[];
+  meta: {
+    currentPage?: number;
+    pageSize?: number;
+    totalPages?: number;
+    totalRecords: number;
+  }
 }
 
 type SubscriptionMembershipsResponse = {
-  numberOfPages: number;
-  memberships: SubscriptionMember[]
+  data: SubscriptionMember[]
+  meta: {
+    currentPage?: number;
+    pageSize?: number;
+    totalPages?: number;
+    totalRecords: number;
+  }
 }
 
 export class SubscriptionsService {
@@ -30,12 +40,6 @@ export class SubscriptionsService {
     return SubscriptionsService.api
       .get<SubscriptionMembershipsResponse>(`/subscriptions/${id}/members?limit=${SubscriptionsService.ITEMS_PER_PAGE}&skip=${skip}`)
       .then((response) => response.data)
-      .then(data => {
-        return {
-          numberOfPages: data.numberOfPages,
-          memberships: data.memberships.map(item => new SubscriptionMember(item)) 
-        }
-      })
   }
 
   static async getAllSubscriptionMembers(id: string | undefined): Promise<SubscriptionMember[]> {
@@ -60,12 +64,6 @@ export class SubscriptionsService {
     return SubscriptionsService.api
       .get<SubscriptionsResponse>(`/subscriptions/created?limit=${SubscriptionsService.ITEMS_PER_PAGE}&skip=${skip}`)
       .then((response) => response.data)
-      .then(data => {
-        return {
-          numberOfPages: data.numberOfPages,
-          subscriptions: data.subscriptions.map(item => new Subscription(item)) 
-        }
-      })
   }
 
   static async fetchSubscriptionsSigned(page: number): Promise<SubscriptionsResponse> {
@@ -74,12 +72,6 @@ export class SubscriptionsService {
     return SubscriptionsService.api
       .get<SubscriptionsResponse>(`/subscriptions/signed?limit=${SubscriptionsService.ITEMS_PER_PAGE}&skip=${skip}`)
       .then((response) => response.data)
-      .then(data => {
-        return {
-          numberOfPages: data.numberOfPages,
-          subscriptions: data.subscriptions.map(item => new Subscription(item)) 
-        }
-      })
   }
 
   static async updateSubscription(id: string, input: UpdateSubscriptionDto) {
