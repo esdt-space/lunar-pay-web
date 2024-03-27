@@ -16,3 +16,8 @@ export type Props = {
 export type UserRowProps = {
   user: User;
 }
+
+export type RowCellProps = {
+  actions: UserAction[];
+  action: string;
+}

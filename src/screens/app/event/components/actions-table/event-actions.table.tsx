@@ -3,7 +3,15 @@ import { Copy } from "lucide-react";
 import { formatAddress } from "@/utils/address";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useToast } from "@/components/ui/use-toast";
-import { Props, UserAction, UserRowProps } from "./types";
+import { Props, RowCellProps, UserAction, UserRowProps } from "./types";
+
+function RowCell(props: RowCellProps) {
+  const { actions, action } = props;
+
+  return <TableCell>
+    {getCount(actions, action)}
+  </TableCell>
+}
 
 function UserRow(props: UserRowProps) {
   const { user } = props;
@@ -35,30 +43,14 @@ function UserRow(props: UserRowProps) {
           <Copy className={'w-4 h-4'} />
         </span>
       </TableCell>
-      <TableCell>
-        {getCount(user.actions, 'donation-created')}
-      </TableCell>
-      <TableCell>
-        {getCount(user.actions, 'agreement-created')}
-      </TableCell>
-      <TableCell>
-        {getCount(user.actions, 'payment-agreement-charge')}
-      </TableCell>
-      <TableCell>
-        {getCount(user.actions, 'transfer')}
-      </TableCell>
-      <TableCell>
-        {getCount(user.actions, 'deposit')}
-      </TableCell>
-      <TableCell>
-        {getCount(user.actions, 'withdraw')}
-      </TableCell>
-      <TableCell>
-        {getCount(user.actions, 'donation')}
-      </TableCell>
-      <TableCell>
-        {getCount(user.actions, 'payment')}
-      </TableCell>
+      <RowCell actions={user.actions} action={'donation-created'} />
+      <RowCell actions={user.actions} action={'subscription-created'} />
+      <RowCell actions={user.actions} action={'payment-agreement-charge'} />
+      <RowCell actions={user.actions} action={'transfer'} />
+      <RowCell actions={user.actions} action={'deposit'} />
+      <RowCell actions={user.actions} action={'withdraw'} />
+      <RowCell actions={user.actions} action={'donation'} />
+      <RowCell actions={user.actions} action={'payment'} />
       <TableCell>
         {user.allActions}
       </TableCell>
@@ -73,7 +65,7 @@ export const UsersActionsTable = ({ actionsList }: Props) => {
         <TableRow>
           <TableHead>Users</TableHead>
           <TableHead>Donations Created</TableHead>
-          <TableHead>Agreements Created</TableHead>
+          <TableHead>Subscriptions Created</TableHead>
           <TableHead>Charges</TableHead>
           <TableHead>Transfers</TableHead>
           <TableHead>Deposits</TableHead>

@@ -1,6 +1,7 @@
 import { ProtocolApi } from '@/lib/protocol-api';
 import { Donation } from './models';
 import { CreateDonationDto, CreateDonationWidgetDto, UpdateDonationDto } from './dto';
+import { User } from '@/screens/app/event/components/actions-table/types';
 
 type DonationsResponse = {
   data: Donation[];
@@ -18,6 +19,13 @@ type DonationsEventResponse = {
     amount: string;
     tokenIdentifier: string;
   }[];
+  meta: {
+    totalRecords: number;
+  }
+}
+
+type EventActionsResponse = {
+  data: User[];
   meta: {
     totalRecords: number;
   }
@@ -48,9 +56,9 @@ export class DonationsService {
     .then((response) => response.data)
   }
 
-  static async fetchActionsForEvent(): Promise<any> {
+  static async fetchActionsForEvent(): Promise<EventActionsResponse> {
     return this.api
-    .get<any>(`/event/actions`)
+    .get<EventActionsResponse>(`/event/actions`)
     .then((response) => response.data)
   }
 
