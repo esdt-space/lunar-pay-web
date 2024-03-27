@@ -9,15 +9,15 @@ import { formatAddress } from "@/utils/address";
 import { useToast } from "@/components/ui/use-toast";
 
 type Props = {
-  donationOwner: string;
+  donationId: string;
 }
 
-export const LatestDonationsList = ({donationOwner}: Props) => {
+export const LatestDonationsList = ({donationId}: Props) => {
   const { toast } = useToast()
   
   const tokensMap = useTokensMap();
   const { data: tokenOperations } = useAllTokenOperationsQuery(1, 'donation');
-  const operations = tokenOperations?.data.filter(el => el.receiver === donationOwner).slice(0,7) ?? []
+  const operations = tokenOperations?.data.filter(el => el.parentId === donationId).slice(0,7) ?? []
 
   const copyButtonHandler = (address: string) => {
     return navigator.clipboard.writeText(address).then(() => {

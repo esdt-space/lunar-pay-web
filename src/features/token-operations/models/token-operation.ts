@@ -3,6 +3,7 @@ import { PaymentAgreement } from "@/features/payment-agreements/models";
 
 export class TokenOperation {
   id: string;
+  parentId: string;
   
   type: string;
   sender: string;
