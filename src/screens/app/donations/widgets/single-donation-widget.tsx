@@ -64,7 +64,11 @@ export const SingleDonationWidget = () => {
       token: selectedToken,
       amount: new BigNumber(donationAmount),
       receiver: donation.owner,
-    }, { onSuccess: () => redirect(donation.payDonationRedirectUrl)})
+    }, { onSuccess: () => {
+      if(donation.payDonationRedirectUrl === null) return
+
+      redirect(donation.payDonationRedirectUrl)
+    }})
   }
 
   const onAmountChange = (amount: string) => {
