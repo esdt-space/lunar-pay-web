@@ -45,7 +45,7 @@ export const CreateOneTimeDonationScreen = () => {
     return createNewDonation(dto, { onSuccess: () => navigate(RoutesConfig.donations)})
   }
 
-  const tokenIsMissing = selectedToken === undefined;
+  const tokenIsMissing = selectedDonationType === 'recurring-donations' && selectedToken === undefined;
   
   return (
     <ContainedScreen>
@@ -58,7 +58,7 @@ export const CreateOneTimeDonationScreen = () => {
             selectedOption={selectedDonationType}
             setSelectedOption={setSelectedDonationType}
           />
-          {<div className={'flex-1 border rounded-md'}>
+          {selectedDonationType === 'recurring-donations' && <div className={'flex-1 border rounded-md'}>
             <EsdtTokenSelector
               value={selectedToken}
               tokens={tokens}

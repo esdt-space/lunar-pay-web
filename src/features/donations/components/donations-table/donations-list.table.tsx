@@ -1,9 +1,7 @@
 import moment from "moment";
-import { FormatAmount } from "@multiversx/sdk-dapp/UI";
 import { Eye } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-import { useTokensMap } from "@/core/tokens";
 import { RoutesConfig } from "@/navigation";
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -27,9 +25,6 @@ function DonationRow(props: DonationRowProps) {
     return navigate(`${RoutesConfig.donations}/${donation.id}`)
   }
 
-  const tokensMap = useTokensMap();
-  const token = tokensMap[donation.tokenIdentifier];
-
   return (
     <TableRow
       className="cursor-pointer"
@@ -44,9 +39,6 @@ function DonationRow(props: DonationRowProps) {
           >
             Missing Data
           </Badge>}
-      </TableCell>
-      <TableCell>
-        <FormatAmount value={donation.totalAmount as string} decimals={token.decimals} />
       </TableCell>
       <TableCell>
         {donation.donationType}
@@ -65,7 +57,6 @@ export const DonationsListTable = ({ donationsList }: Props) => {
       <TableHeader>
         <TableRow>
           <TableHead>Name</TableHead>
-          <TableHead>Total Amount</TableHead>
           <TableHead>Type</TableHead>
           <TableHead>Target</TableHead>
           <TableHead className="max-sm:hidden">Date</TableHead>

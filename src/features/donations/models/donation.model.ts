@@ -12,8 +12,6 @@ export class Donation {
 
   tokenNonce: number;
 
-  tokenIdentifier: string;
-
   totalAmount: string;
 
   beneficiaryName?: string;
