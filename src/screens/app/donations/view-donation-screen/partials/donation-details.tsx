@@ -1,9 +1,7 @@
 import moment from 'moment';
 import { Copy } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { FormatAmount } from '@multiversx/sdk-dapp/UI';
 
-import { useTokensMap } from '@/core/tokens';
 import { Donation } from '@/features/donations/models';
 import { Separator } from '@/components/ui/separator';
 import { Input } from '@/components/ui/input';
@@ -24,10 +22,7 @@ export function DonationDetails(props: Props){
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  const tokensMap = useTokensMap();
-  const token = tokensMap[donation.tokenIdentifier];
-
-    const publicDonationUrl = `${lunarPayTestUrl}/donations/${donation.id}/public`;
+  const publicDonationUrl = `${lunarPayTestUrl}/donations/${donation.id}/public`;
 
   const copyButtonHandler = () => {
     return navigator.clipboard.writeText(publicDonationUrl).then(() => {
@@ -52,11 +47,7 @@ export function DonationDetails(props: Props){
               </div>
               <div className={'flex justify-between'}>
                 <div className='text-2xl font-black'>
-                  <FormatAmount
-                    token={token.identifier}
-                    decimals={token.decimals}
-                    value={donation.totalAmount as string}
-                  />
+                  {donation.beneficiaryName}
                 </div>
               </div>
             </div>
