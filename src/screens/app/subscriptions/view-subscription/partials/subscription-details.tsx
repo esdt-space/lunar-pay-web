@@ -82,6 +82,7 @@ export function SubscriptionDetails(props: Props){
               size={'sm'}
               disabled={isLoading || noMembers}
               onClick={cancelSubscriptionButtonHandler}
+              className={'bg-red-500 text-white hover:text-red-500'}
             >
               Cancel
               <X className={'ml-2 w-4 h-4'} />

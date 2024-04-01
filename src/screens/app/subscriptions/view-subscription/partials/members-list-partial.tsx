@@ -74,7 +74,7 @@ export function MembersListPartial({ subscriptionId,subscriptionIdentifier }: Pr
                 <TableCell>
                   <UserX 
                     onClick={() => cancelSubscriptionButtonHandler(item.member)} 
-                    className={'ml-4 -mr-6 h-5 w-5 cursor-pointer'} 
+                    className={'ml-4 -mr-6 h-5 w-5 cursor-pointer text-red-500'} 
                   />
                 </TableCell>
                 <AddressCell value={item.member} />
