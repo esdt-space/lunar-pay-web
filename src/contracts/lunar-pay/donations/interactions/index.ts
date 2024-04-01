@@ -1,1 +1,1 @@
-export * from './single-donation-interaction'
+export * from './single-donation-interaction';

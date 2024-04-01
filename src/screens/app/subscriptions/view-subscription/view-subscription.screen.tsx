@@ -17,29 +17,12 @@ import {
   RedirectAndWebhooksSettings
 } from "@/screens/app/subscriptions/view-subscription/redirect-and-webhooks-settings/redirect-and-webhooks-settings.tsx";
 
-import { SubscriptionsService } from "@/features/subscriptions/subscriptions.service.ts"
-import { useEffect, useState } from "react"
-import { SubscriptionMember } from "@/features/subscriptions/models"
-
 export const ViewSubscriptionScreen = () => {
-  const [ memberships, setMemberships ] = useState<SubscriptionMember[]>([])
   const { address } = useGetAccount()
   const { id } = useParams()
   const navigate = useNavigate()
 
   const { data: subscription } = useCreatedSubscription(id);
-
-  useEffect(() => {
-    console.log(memberships)
-  }, [memberships])
-
-  useEffect(() => {
-    if(subscription !== undefined) {
-      SubscriptionsService.getAllSubscriptionMembers(subscription?.id).then((res) => {
-        setMemberships(res)
-      })
-    }
-  }, [])
 
   if(!subscription) return;
   
@@ -91,7 +74,10 @@ export const ViewSubscriptionScreen = () => {
         </TabsContent>
 
         <TabsContent value="members" className={'space-y-4'}>
-          <MembersListPartial subscriptionId={subscription.id} />
+          <MembersListPartial 
+            subscriptionId={subscription.id} 
+            subscriptionIdentifier={subscription.subscriptionIdentifier} 
+          />
         </TabsContent>
 
         <TabsContent value="settings" className={'space-y-4'}>

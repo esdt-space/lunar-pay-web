@@ -32,9 +32,9 @@ export async function singleDonationInteraction(options: DonationInteractionOpti
     .buildTransaction();
 
   return sendTransactionWithWatcher(transaction, {
-    processingMessage: 'Creating donation',
+    processingMessage: 'Sending donation',
     errorMessage: 'An error has occurred',
-    successMessage: 'Finished creating donation',
+    successMessage: 'Finished sending donation',
   })
 }
 

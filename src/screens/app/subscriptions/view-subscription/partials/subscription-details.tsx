@@ -1,6 +1,7 @@
 import moment from "moment";
-import { Dot, Wallet } from "lucide-react";
+import { Dot, Wallet, X } from "lucide-react";
 import { FormatAmount } from "@multiversx/sdk-dapp/UI";
+import { useNavigate } from "react-router-dom";
 
 import { Badge } from "@/components/ui/badge.tsx";
 import { Button } from "@/components/ui/button.tsx";
@@ -10,6 +11,8 @@ import { formatFrequency } from "@/utils";
 import { useTokensMap } from "@/core/tokens";
 import { Subscription } from "@/features/subscriptions/models";
 import { useTriggerSubscriptionMutation } from "@/features/subscriptions/hooks";
+import { useCancelSubscriptionMutation } from "@/features/subscriptions/hooks/mutations/use-cancel-subscription-mutation";
+import { RoutesConfig } from "@/navigation";
 
 type Props = {
   subscription: Subscription;
@@ -21,13 +24,25 @@ export function SubscriptionDetails(props: Props){
 
   const noMembers = subscription.accountsCount === 0
 
+  const navigate = useNavigate()
   const tokensMap = useTokensMap();
   const token = tokensMap[subscription.tokenIdentifier];
 
   const { mutate: triggerSubscription, isLoading} = useTriggerSubscriptionMutation(subscription.id);
+  const { mutate: cancelSubscription} = useCancelSubscriptionMutation();
+
+  const redirect = () => {
+    return navigate(`${RoutesConfig.subscriptions}`)
+  }
 
   const triggerSubscriptionButtonHandler = () => {
     triggerSubscription(subscription.subscriptionIdentifier)
+  }
+
+  const cancelSubscriptionButtonHandler = () => {
+    const id = subscription.subscriptionIdentifier
+
+    cancelSubscription({ id }, {onSuccess: redirect})
   }
 
   return (
@@ -53,7 +68,7 @@ export function SubscriptionDetails(props: Props){
             </Badge>
           </div>
 
-          {!signedList && <div className="flex space-x-2 items-center">
+          {!signedList ? <div className="flex space-x-2 items-center">
             <Button
               size={'sm'}
               disabled={isLoading || noMembers}
@@ -62,13 +77,19 @@ export function SubscriptionDetails(props: Props){
               Claim
               <Wallet className={'ml-2 w-3 h-3'} />
             </Button>
+          </div> : <div className="flex space-x-2 items-center">
+            <Button
+              size={'sm'}
+              disabled={isLoading || noMembers}
+              onClick={cancelSubscriptionButtonHandler}
+            >
+              Cancel
+              <X className={'ml-2 w-4 h-4'} />
+            </Button>
           </div>}
         </div>
 
         <div>{subscription.accountsCount} members</div>
-
-        <div className={''}>
-        </div>
       </div>
 
       <div><Separator orientation="vertical"/></div>
