@@ -18,7 +18,7 @@ export async function singleDonationInteraction(options: DonationInteractionOpti
   const sender = await getAddress();
   const { chainId } = getNetworkConfig()
 
-  let interaction = lunarPaySmartContract.methods.pay([
+  let interaction = lunarPaySmartContract.methods.donate([
     new TokenIdentifierValue(options.token.identifier),
     getAmountParameter(options.amount, options.token),
     new AddressValue(new Address(options.receiver)),
