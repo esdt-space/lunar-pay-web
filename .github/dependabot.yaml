@@ -1,0 +1,13 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    assignees:
+      - "esdt-space/developers"
+    reviewers:
+      - "esdt-space/developers"
+    pull-request-branch-name:
+      separator: "-"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 10
