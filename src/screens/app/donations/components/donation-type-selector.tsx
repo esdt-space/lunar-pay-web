@@ -25,12 +25,12 @@ export const DonationTypeSelector = (props: Props) => {
         {label}
       </div>
       <div className="flex space-x-4">
-        {optionsList.map((option) => {
+        {optionsList.map((option, index) => {
           const optionIsDisabled = option.label === 'recurring-donations' || option.label === 'charity'
           const disabledStyle = !optionIsDisabled ? 'border-black' : ''
 
           return (
-            <Card className="flex flex-col flex-1 space-y-2 p-6">
+            <Card key={index} className="flex flex-col flex-1 space-y-2 p-6">
               <div className="flex items-center">
                 <div>
                   <input
