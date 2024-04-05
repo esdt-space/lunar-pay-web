@@ -734,6 +734,75 @@
                     "indexed": true
                 }
             ]
+        },
+        {
+            "identifier": "transfer",
+            "inputs": [
+                {
+                    "name": "sender",
+                    "type": "Address",
+                    "indexed": true
+                },
+                {
+                    "name": "receiver",
+                    "type": "Address",
+                    "indexed": true
+                },
+                {
+                    "name": "token_identifier",
+                    "type": "EgldOrEsdtTokenIdentifier",
+                    "indexed": true
+                },
+                {
+                    "name": "token_nonce",
+                    "type": "u64",
+                    "indexed": true
+                },
+                {
+                    "name": "amount",
+                    "type": "BigUint",
+                    "indexed": true
+                },
+                {
+                    "name": "is_internal",
+                    "type": "bool",
+                    "indexed": true
+                }
+            ]
+        },
+        {
+            "identifier": "payment",
+            "inputs": [
+                {
+                    "name": "sender",
+                    "type": "Address",
+                    "indexed": true
+                },
+                {
+                    "name": "receiver",
+                    "type": "Address",
+                    "indexed": true
+                },
+                {
+                    "name": "token_identifier",
+                    "type": "EgldOrEsdtTokenIdentifier",
+                    "indexed": true
+                },
+                {
+                    "name": "token_nonce",
+                    "type": "u64",
+                    "indexed": true
+                },
+                {
+                    "name": "amount",
+                    "type": "BigUint",
+                    "indexed": true
+                },
+                {
+                    "name": "metadata",
+                    "type": "Option<bytes>"
+                }
+            ]
         }
     ],
     "esdtAttributes": [],
