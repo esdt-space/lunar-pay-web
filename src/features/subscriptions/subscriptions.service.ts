@@ -2,26 +2,7 @@ import { ProtocolApi } from "@/lib/protocol-api";
 
 import { SubscriptionMember, Subscription } from "./models";
 import { UpdateSubscriptionDto } from "./dto";
-
-type SubscriptionsResponse = {
-  data: Subscription[];
-  meta: {
-    currentPage?: number;
-    pageSize?: number;
-    totalPages?: number;
-    totalRecords: number;
-  }
-}
-
-type SubscriptionMembershipsResponse = {
-  data: SubscriptionMember[]
-  meta: {
-    currentPage?: number;
-    pageSize?: number;
-    totalPages?: number;
-    totalRecords: number;
-  }
-}
+import { PaginatedResponse } from "@/components/shared/pagination";
 
 export class SubscriptionsService {
   private static api = new ProtocolApi()
@@ -34,11 +15,11 @@ export class SubscriptionsService {
       .then(data => new Subscription(data))
   }
 
-  static async getSubscriptionMembers(page: number, id: string): Promise<SubscriptionMembershipsResponse> {
+  static async getSubscriptionMembers(page: number, id: string): Promise<PaginatedResponse<SubscriptionMember>> {
     const skip = (page - 1) * SubscriptionsService.ITEMS_PER_PAGE;
 
     return SubscriptionsService.api
-      .get<SubscriptionMembershipsResponse>(`/subscriptions/${id}/members?limit=${SubscriptionsService.ITEMS_PER_PAGE}&skip=${skip}`)
+      .get<PaginatedResponse<SubscriptionMember>>(`/subscriptions/${id}/members?limit=${SubscriptionsService.ITEMS_PER_PAGE}&skip=${skip}`)
       .then((response) => response.data)
   }
 
@@ -58,19 +39,19 @@ export class SubscriptionsService {
       .then(item => new Subscription(item))
   }
 
-  static async fetchSubscriptionsCreated(page: number): Promise<SubscriptionsResponse> {
+  static async fetchSubscriptionsCreated(page: number): Promise<PaginatedResponse<Subscription>> {
     const skip = (page - 1) * SubscriptionsService.ITEMS_PER_PAGE;
 
     return SubscriptionsService.api
-      .get<SubscriptionsResponse>(`/subscriptions/created?limit=${SubscriptionsService.ITEMS_PER_PAGE}&skip=${skip}`)
+      .get<PaginatedResponse<Subscription>>(`/subscriptions/created?limit=${SubscriptionsService.ITEMS_PER_PAGE}&skip=${skip}`)
       .then((response) => response.data)
   }
 
-  static async fetchSubscriptionsSigned(page: number): Promise<SubscriptionsResponse> {
+  static async fetchSubscriptionsSigned(page: number): Promise<PaginatedResponse<Subscription>> {
     const skip = (page - 1) * SubscriptionsService.ITEMS_PER_PAGE;
 
     return SubscriptionsService.api
-      .get<SubscriptionsResponse>(`/subscriptions/signed?limit=${SubscriptionsService.ITEMS_PER_PAGE}&skip=${skip}`)
+      .get<PaginatedResponse<Subscription>>(`/subscriptions/signed?limit=${SubscriptionsService.ITEMS_PER_PAGE}&skip=${skip}`)
       .then((response) => response.data)
   }
 

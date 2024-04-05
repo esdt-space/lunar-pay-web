@@ -1,4 +1,4 @@
-export type User = {
+export type UserDonation = {
   owner: string;
   amount: string;
   tokenIdentifier: string;
@@ -9,5 +9,5 @@ export type Props = {
 }
 
 export type UserRowProps = {
-  user: User;
+  user: UserDonation;
 }

@@ -1,35 +1,10 @@
 import { ProtocolApi } from '@/lib/protocol-api';
 import { Donation } from './models';
 import { CreateDonationDto, CreateDonationWidgetDto, UpdateDonationDto } from './dto';
+import { PaginatedResponse } from '@/components/shared/pagination';
+
 import { User } from '@/screens/app/event/components/actions-table/types';
-
-type DonationsResponse = {
-  data: Donation[];
-  meta: {
-    currentPage?: number;
-    pageSize?: number;
-    totalPages?: number;
-    totalRecords: number;
-  }
-}
-
-type DonationsEventResponse = {
-  data: {
-    owner: string;
-    amount: string;
-    tokenIdentifier: string;
-  }[];
-  meta: {
-    totalRecords: number;
-  }
-}
-
-type EventActionsResponse = {
-  data: User[];
-  meta: {
-    totalRecords: number;
-  }
-}
+import { UserDonation } from '@/screens/app/event/components/donations-table/types';
 
 export class DonationsService {
   private static api = new ProtocolApi();
@@ -42,23 +17,23 @@ export class DonationsService {
       .then(data => new Donation(data))
   }
 
-  static async fetchDonationsCreated(page: number): Promise<DonationsResponse> {
+  static async fetchDonationsCreated(page: number): Promise<PaginatedResponse<Donation>> {
     const skip = (page - 1) * DonationsService.ITEMS_PER_PAGE;
 
     return this.api
-    .get<DonationsResponse>(`/donations?limit=${DonationsService.ITEMS_PER_PAGE}&skip=${skip}`)
+    .get<PaginatedResponse<Donation>>(`/donations?limit=${DonationsService.ITEMS_PER_PAGE}&skip=${skip}`)
     .then((response) => response.data)
   }
 
-  static async fetchDonationsForEvent(): Promise<DonationsEventResponse> {
+  static async fetchDonationsForEvent(): Promise<PaginatedResponse<UserDonation>> {
     return this.api
-    .get<DonationsEventResponse>(`/donations/event/donations-ranked`)
+    .get<PaginatedResponse<UserDonation>>(`/donations/event/donations-ranked`)
     .then((response) => response.data)
   }
 
-  static async fetchActionsForEvent(): Promise<EventActionsResponse> {
+  static async fetchActionsForEvent(): Promise<PaginatedResponse<User>> {
     return this.api
-    .get<EventActionsResponse>(`/event/actions`)
+    .get<PaginatedResponse<User>>(`/event/actions`)
     .then((response) => response.data)
   }
 
