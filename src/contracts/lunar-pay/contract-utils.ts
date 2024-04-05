@@ -8,3 +8,5 @@ export const lunarPaySmartContract = new SmartContract({
   address: new Address(AppEnvironment.contracts.lunarPay),
   abi: lunarPayAbiRegistry
 });
+
+export const gasLimit = import.meta.env.INTERACTION_GAS_LIMIT

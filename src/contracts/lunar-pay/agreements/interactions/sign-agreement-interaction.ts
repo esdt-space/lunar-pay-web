@@ -2,7 +2,7 @@ import { Address, OptionValue, StringValue } from "@multiversx/sdk-core/out";
 import { sendTransactionWithWatcher } from "@/lib/mvx";
 import { getAddress, getNetworkConfig } from "@multiversx/sdk-dapp/utils";
 
-import { lunarPaySmartContract } from "@/contracts/lunar-pay/contract-utils.ts";
+import { gasLimit, lunarPaySmartContract } from "@/contracts/lunar-pay/contract-utils.ts";
 
 export async function signPaymentAgreementInteraction (agreementId: number, metadata: string) {
   const sender = await getAddress();
@@ -20,7 +20,7 @@ export async function signPaymentAgreementInteraction (agreementId: number, meta
   const transaction = interaction
     .withChainID(chainId)
     .withSender(new Address(sender))
-    .withGasLimit(15_000_000)
+    .withGasLimit(gasLimit)
     .buildTransaction();
 
   return sendTransactionWithWatcher(transaction, {
