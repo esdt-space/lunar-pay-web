@@ -13,45 +13,23 @@ type BaseSubscriptionInteractionOptions = {
   frequency: number;
 }
 
-type AnyAmountInteractionType = BaseSubscriptionInteractionOptions & {
-  amountType: SubscriptionAmountType.AnyAmount,
-  amount: never
-}
-
 type FixedAmountInteractionType = BaseSubscriptionInteractionOptions & {
   amountType: SubscriptionAmountType.FixedAmount,
   amount: string
 }
 
-type BoundedAmountInteractionType = BaseSubscriptionInteractionOptions & {
-  amountType: SubscriptionAmountType.BoundedAmount,
+type MemberDefinedAmountInteractionType = BaseSubscriptionInteractionOptions & {
+  amountType: SubscriptionAmountType.MemberDefinedAmount,
   amount: string
 }
 
-type SenderDefinedFixedAmountInteractionType = BaseSubscriptionInteractionOptions & {
-  amountType: SubscriptionAmountType.SenderDefinedFixedAmount,
+type OwnerDefinedAmountPerMemberInteractionType = BaseSubscriptionInteractionOptions & {
+  amountType: SubscriptionAmountType.OwnerDefinedAmountPerMember,
   amount: string
 }
 
-type SenderDefinedBoundedAmountInteractionType = BaseSubscriptionInteractionOptions & {
-  amountType: SubscriptionAmountType.SenderDefinedBoundedAmount,
-  amount: string
-}
-
-type CreatorDefinedFixedAmountInteractionType = BaseSubscriptionInteractionOptions & {
-  amountType: SubscriptionAmountType.SenderDefinedBoundedAmount,
-  amount: string
-}
-
-type CreatorDefinedBoundedAmountInteractionType = BaseSubscriptionInteractionOptions & {
-  amountType: SubscriptionAmountType.SenderDefinedBoundedAmount,
-  amount: string
-}
-
-export type SubscriptionInteractionOptions = AnyAmountInteractionType |
+export type SubscriptionInteractionOptions =
   FixedAmountInteractionType |
-  BoundedAmountInteractionType |
-  SenderDefinedFixedAmountInteractionType |
-  SenderDefinedBoundedAmountInteractionType |
-  CreatorDefinedFixedAmountInteractionType |
-  CreatorDefinedBoundedAmountInteractionType;
+  MemberDefinedAmountInteractionType |
+  OwnerDefinedAmountPerMemberInteractionType;
+  

@@ -29,8 +29,12 @@ export const SignSubscriptionScreen = () => {
   const {vaultTokens} = useAccountVaultTokens()
   const tokensMap = useTokensMap();
 
+  const queryParams = new URLSearchParams(location.search)
+  const metadataValue = queryParams.get('metadata')
+  const metadata = metadataValue ?? ""
+
   const { data: subscription } = useCreatedSubscription(id);
-  const { mutate: signSubscription} = useSignSubscriptionMutation(id);
+  const { mutate: signSubscription} = useSignSubscriptionMutation(id, metadata);
 
   if(!subscription) return;
 

@@ -10,7 +10,7 @@ import {
   accountSubscriptionsSignedQueryKey
 } from "@/features/subscriptions/query-keys.ts";
 
-export function useSignSubscriptionMutation(internalSubscriptionId: string | undefined) {
+export function useSignSubscriptionMutation(internalSubscriptionId: string | undefined, metadata: string) {
   const client = useQueryClient();
   const { address } = useGetAccount();
 
@@ -28,7 +28,7 @@ export function useSignSubscriptionMutation(internalSubscriptionId: string | und
   }
 
   return useMutation({
-    mutationFn: (id: number) => signSubscriptionInteraction(id),
+    mutationFn: (id: number) => signSubscriptionInteraction(id, metadata),
     onSuccess(sessionId) {
       if(!sessionId) return Promise.reject();
 
