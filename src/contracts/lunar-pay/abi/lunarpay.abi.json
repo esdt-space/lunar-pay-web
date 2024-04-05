@@ -23,9 +23,27 @@
     },
     "endpoints": [
         {
-            "docs": [
-                "Protocol Storage "
+            "name": "upgrade",
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "isUserAdmin",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "account",
+                    "type": "Address"
+                }
             ],
+            "outputs": [
+                {
+                    "type": "bool"
+                }
+            ]
+        },
+        {
             "name": "getWhitelistedTokenIds",
             "mutability": "readonly",
             "inputs": [],
@@ -249,6 +267,30 @@
             "outputs": []
         },
         {
+            "name": "setAdmin",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "account",
+                    "type": "Address"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "removeAdmin",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "account",
+                    "type": "Address"
+                }
+            ],
+            "outputs": []
+        },
+        {
             "name": "transferTokens",
             "mutability": "mutable",
             "inputs": [
@@ -263,6 +305,29 @@
                 {
                     "name": "receiver",
                     "type": "Address"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "pay",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "token",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                },
+                {
+                    "name": "amount",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "receiver",
+                    "type": "Address"
+                },
+                {
+                    "name": "metadata",
+                    "type": "Option<bytes>"
                 }
             ],
             "outputs": []
@@ -304,6 +369,10 @@
                 {
                     "name": "agreement_id",
                     "type": "u64"
+                },
+                {
+                    "name": "metadata",
+                    "type": "Option<bytes>"
                 }
             ],
             "outputs": []
@@ -367,41 +436,6 @@
                 {
                     "name": "amount",
                     "type": "BigUint",
-                    "indexed": true
-                }
-            ]
-        },
-        {
-            "identifier": "transfer",
-            "inputs": [
-                {
-                    "name": "sender",
-                    "type": "Address",
-                    "indexed": true
-                },
-                {
-                    "name": "receiver",
-                    "type": "Address",
-                    "indexed": true
-                },
-                {
-                    "name": "token_identifier",
-                    "type": "EgldOrEsdtTokenIdentifier",
-                    "indexed": true
-                },
-                {
-                    "name": "token_nonce",
-                    "type": "u64",
-                    "indexed": true
-                },
-                {
-                    "name": "amount",
-                    "type": "BigUint",
-                    "indexed": true
-                },
-                {
-                    "name": "is_internal",
-                    "type": "bool",
                     "indexed": true
                 }
             ]
@@ -475,14 +509,18 @@
                     "indexed": true
                 },
                 {
-                    "name": "signer",
+                    "name": "member",
                     "type": "Address",
                     "indexed": true
                 },
                 {
-                    "name": "sign_time",
+                    "name": "signed_at",
                     "type": "u64",
                     "indexed": true
+                },
+                {
+                    "name": "metadata",
+                    "type": "Option<bytes>"
                 }
             ]
         },
@@ -537,6 +575,75 @@
                     "name": "cycles",
                     "type": "List<u64>",
                     "indexed": true
+                }
+            ]
+        },
+        {
+            "identifier": "transfer",
+            "inputs": [
+                {
+                    "name": "sender",
+                    "type": "Address",
+                    "indexed": true
+                },
+                {
+                    "name": "receiver",
+                    "type": "Address",
+                    "indexed": true
+                },
+                {
+                    "name": "token_identifier",
+                    "type": "EgldOrEsdtTokenIdentifier",
+                    "indexed": true
+                },
+                {
+                    "name": "token_nonce",
+                    "type": "u64",
+                    "indexed": true
+                },
+                {
+                    "name": "amount",
+                    "type": "BigUint",
+                    "indexed": true
+                },
+                {
+                    "name": "is_internal",
+                    "type": "bool",
+                    "indexed": true
+                }
+            ]
+        },
+        {
+            "identifier": "payment",
+            "inputs": [
+                {
+                    "name": "sender",
+                    "type": "Address",
+                    "indexed": true
+                },
+                {
+                    "name": "receiver",
+                    "type": "Address",
+                    "indexed": true
+                },
+                {
+                    "name": "token_identifier",
+                    "type": "EgldOrEsdtTokenIdentifier",
+                    "indexed": true
+                },
+                {
+                    "name": "token_nonce",
+                    "type": "u64",
+                    "indexed": true
+                },
+                {
+                    "name": "amount",
+                    "type": "BigUint",
+                    "indexed": true
+                },
+                {
+                    "name": "metadata",
+                    "type": "Option<bytes>"
                 }
             ]
         }
