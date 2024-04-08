@@ -19,13 +19,14 @@ export const DonationsListScreen = () => {
     data: donationsResponse,
   } = useDonationsCreatedQuery(currentPage)
 
+  const donationsList = donationsResponse?.data
   const numberOfPages = donationsResponse?.meta.totalPages
   
   useEffect(() => {
-    if (donationsResponse?.data.length === 0) {
+    if (donationsList?.length === 0) {
       navigate(RoutesConfig.createDonationIndex)
     }
-  }, [])
+  }, [donationsList?.length])
 
   const nextPageHandler = () => setCurrentPage(page => page + 1);
   const previousPageHandler = () => setCurrentPage(page => Math.max(1, page - 1));
@@ -42,7 +43,7 @@ export const DonationsListScreen = () => {
         </Button>
       </div>
       <Card>
-        <DonationsListTable donationsList={donationsResponse?.data} />
+        <DonationsListTable donationsList={donationsList} />
         <PaginationButtons 
           previousPageHandler={previousPageHandler} 
           nextPageHandler={nextPageHandler}
