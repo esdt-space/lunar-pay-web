@@ -51,7 +51,7 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.14.198",
-    "@types/node": "^20.6.0",
+    "@types/node": "^20.12.5",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@types/react-google-recaptcha": "^2.1.8",
