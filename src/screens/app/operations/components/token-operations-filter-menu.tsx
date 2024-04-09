@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
-const listOfTypes = ['all', 'deposit', 'withdraw', 'transfer', 'payment-agreement-charge'];
+const listOfTypes = ['all', 'deposit', 'withdraw', 'transfer', 'donation', 'payment', 'subscription-charge'];
 
 type Props = {
   setOperationType: (input: string) => void;
@@ -53,7 +53,7 @@ const formatOperationType = (input: string) => {
     case 'transfer': {
       return 'Transfers'
     }
-    case 'payment-agreement-charge': {
+    case 'subscription-charge': {
       return 'Charges'
     }
     case 'donation': {

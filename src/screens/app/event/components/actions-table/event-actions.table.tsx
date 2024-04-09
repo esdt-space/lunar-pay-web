@@ -45,7 +45,7 @@ function UserRow(props: UserRowProps) {
       </TableCell>
       <RowCell actions={user.actions} action={'donation-created'} />
       <RowCell actions={user.actions} action={'subscription-created'} />
-      <RowCell actions={user.actions} action={'payment-agreement-charge'} />
+      <RowCell actions={user.actions} action={'subscription-charge'} />
       <RowCell actions={user.actions} action={'transfer'} />
       <RowCell actions={user.actions} action={'deposit'} />
       <RowCell actions={user.actions} action={'withdraw'} />

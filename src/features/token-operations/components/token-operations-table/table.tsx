@@ -32,7 +32,7 @@ type Props = {
 export const TokenOperationsTable = (props: Props) => {
   const { operations, operationType } = props;
   const isAllOrTransfer = [TokenOperationType.Transfer, "all", undefined].includes(operationType);
-  const isCharge = operationType === "payment-agreement-charge"
+  const isCharge = operationType === "subscription-charge"
 
   const navigate = useNavigate()
 
@@ -53,7 +53,7 @@ export const TokenOperationsTable = (props: Props) => {
       <TableBody>
         {operations.map((item, index) => (
           <TableRow key={index} onClick={() => {
-            if(item.type === "payment-agreement-charge") {
+            if(item.type === "subscription-charge") {
               navigate(`${RoutesConfig.tokensOperations}/${item.id}`)
             }
           }}>
