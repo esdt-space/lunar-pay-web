@@ -8,7 +8,7 @@ import { MvxAxiosContext, MvxDappContext } from "@/lib/mvx";
 import { ApplicationRouter, RoutesConfig } from "@/navigation";
 
 const queryClient = new QueryClient();
-const idleTimeout = import.meta.env.VITE_IDLE_TIMEOUT
+const idleTimeout = Number(import.meta.env.VITE_IDLE_TIMEOUT) || 1_800_000
 
 function App() {
   useIdleTimer({
