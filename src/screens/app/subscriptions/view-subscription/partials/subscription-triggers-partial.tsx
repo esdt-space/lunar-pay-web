@@ -36,31 +36,29 @@ export function SubscriptionTriggersPartial({ subscriptionId }: Props) {
   const emptySubscriptionTriggers = isFetchedSubscriptionsTriggers && subscriptionTriggers.length === 0;
 
   return (
-    <Card>
-      <CardContent className="p-0">
-        {emptySubscriptionTriggers && (
-          <div className={'p-12'}>
-            <EmptyStateWithAction
-              title={'No current subscription triggers'}
-              description={"Subscription triggers will appear here"}
-              action={<></>}
-            />
-          </div>
-        )}
+    <div>
+      {emptySubscriptionTriggers && (
+        <div className={'p-12'}>
+          <EmptyStateWithAction
+            title={'No current subscription triggers'}
+            description={"Subscription triggers will appear here"}
+            action={<></>}
+          />
+        </div>
+      )}
 
-        {!emptySubscriptionTriggers && (
-          <Card>
-            <CardContent className="p-0">
-              <SubscriptionTriggersTable triggersList={subscriptionTriggers} token={token} />
-              <PaginationButtons
-                previousPageHandler={previousPageHandler}
-                nextPageHandler={nextPageHandler}
-                currentPage={currentPage}
-                lastPage={numberOfPages} />
-            </CardContent>
-          </Card>
-        )}
-      </CardContent>
-    </Card>
+      {!emptySubscriptionTriggers && (
+        <Card>
+          <CardContent className="p-0">
+            <SubscriptionTriggersTable triggersList={subscriptionTriggers} token={token} />
+            <PaginationButtons
+              previousPageHandler={previousPageHandler}
+              nextPageHandler={nextPageHandler}
+              currentPage={currentPage}
+              lastPage={numberOfPages} />
+          </CardContent>
+        </Card>
+      )}
+    </div>
   )
 }
