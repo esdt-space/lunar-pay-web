@@ -9,7 +9,8 @@ import { TokenOperationType } from "@/features/token-operations/enums";
 import { TokenOperationsTable } from "@/features/token-operations/components";
 import { useTokenOperationsQuery } from "@/features/token-operations/hooks/queries";
 import { useLoadingStateContent, useEmptyStateContent } from "@/screens/app/operations/hooks";
-import { PaginationButtonsNew } from "@/components/shared/pagination/pagination-buttons";
+import { PaginationButtons } from "@/components/shared/pagination/pagination-buttons";
+import { TokenOperationsFilterMenu } from "./components";
 
 export const TokensOperationsScreen = () => {
   const [currentPage, setCurrentPage] = useState(1)
@@ -18,9 +19,9 @@ export const TokensOperationsScreen = () => {
   const [operationType, setOperationType] = useState<TokenOperationType | "all">("all");
   
   const typeFilter = operationType === "all" ? "" : operationType
-  const { data, isFetching, isFetched, refetch } = useTokenOperationsQuery(currentPage, typeFilter, filterValue);
-  const operations = data?.operations ?? []
-  const numberOfPages = data?.numberOfPages
+  const { data: tokenOperations, isFetching, isFetched, refetch } = useTokenOperationsQuery(currentPage, typeFilter, filterValue);
+  const operations = tokenOperations?.data ?? []
+  const numberOfPages = tokenOperations?.meta.totalPages
 
   const nextPageHandler = () => setCurrentPage(page => page + 1);
   const previousPageHandler = () => setCurrentPage(page => Math.max(1, page - 1));
@@ -37,10 +38,14 @@ export const TokensOperationsScreen = () => {
   const emptyStateContent = useEmptyStateContent(isLoadedAndHasNoData);
   const loadingStateContent = useLoadingStateContent(isLoadingFirstTime);
 
+  const updateOperationsType = (input: string) => {
+    setOperationType(input as TokenOperationType)
+  }
+
   return (
     <ContainedScreen className={'space-y-3'}>
       <div className={'flex justify-between max-sm:flex-col max-sm:space-y-2'}>
-        <Tabs defaultValue="all" onValueChange={(value) => setOperationType(value as TokenOperationType)}>
+        <Tabs defaultValue="all" onValueChange={(value) => updateOperationsType(value)} className='hidden'>
           <TabsList className={'self-start mb-2 mr-2 max-sm:w-full'}>
             <TabsTrigger value={'all'} disabled={isLoadingFirstTime}>All</TabsTrigger>
             <TabsTrigger value={TokenOperationType.Deposit} disabled={isLoadingFirstTime}>Deposits</TabsTrigger>
@@ -50,10 +55,12 @@ export const TokensOperationsScreen = () => {
           </TabsList>
         </Tabs>
 
+        <TokenOperationsFilterMenu setOperationType={updateOperationsType} />
+
         <Input
           value={filterValue}
           onChange={e => setFilterValue(e.target.value)}
-          placeholder={'Filter ...'}
+          placeholder={'Filter by address ...'}
           className={'justify-self-end max-w-sm'}
         />
       </div>
@@ -68,7 +75,7 @@ export const TokensOperationsScreen = () => {
               <TokenOperationsTable 
                 operationType={operationType} 
                 operations={operations} />
-              <PaginationButtonsNew 
+              <PaginationButtons 
                 previousPageHandler={previousPageHandler} 
                 nextPageHandler={nextPageHandler}
                 currentPage={currentPage}

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
 import { ContainedScreen } from "@/components/prefab/contained-screen"
-import {  PaginationButtonsNew } from "@/components/shared/pagination"
+import {  PaginationButtons } from "@/components/shared/pagination"
 
 import { useChargesOperations } from "@/features/token-operations/hooks"
 import { useParams } from "react-router-dom"
@@ -13,10 +13,7 @@ import { ChargeOperationTable } from "@/features/token-operations/components"
 export const ChargesOperationsScreen = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const { id } = useParams()
-  const {data: chargesOperations = {
-    numberOfPages: 0,
-    operations: []
-  }, isFetching, isFetched, refetch } = useChargesOperations(currentPage, id)
+  const {data: chargesOperations, isFetching, isFetched, refetch } = useChargesOperations(currentPage, id)
 
   useEffect(() => {
     setCurrentPage(1);
@@ -28,11 +25,12 @@ export const ChargesOperationsScreen = () => {
   const nextPageHandler = () => setCurrentPage(page => page + 1);
   const previousPageHandler = () => setCurrentPage(page => Math.max(1, page - 1));
 
-  const numberOfPages = 100; // TODO: update later
+  const operations = chargesOperations?.data ?? [];
+  const numberOfPages = chargesOperations?.meta.totalPages
 
   const isLoadingFirstTime = !isFetched && isFetching;
-  const isLoadedAndHasData = isFetched && chargesOperations.operations.length > 0;
-  const isLoadedAndHasNoData = isFetched && chargesOperations.operations.length === 0;
+  const isLoadedAndHasData = isFetched && operations.length > 0;
+  const isLoadedAndHasNoData = isFetched && operations.length === 0;
 
   const emptyStateContent = useEmptyStateContent(isLoadedAndHasNoData);
   const loadingStateContent = useLoadingStateContent(isLoadingFirstTime);
@@ -55,8 +53,8 @@ export const ChargesOperationsScreen = () => {
         {isLoadedAndHasData && (
           <div>
             <ChargeOperationTable 
-              operations={chargesOperations.operations} />
-            <PaginationButtonsNew 
+              operations={operations} />
+            <PaginationButtons 
               previousPageHandler={previousPageHandler} 
               nextPageHandler={nextPageHandler}
               currentPage={currentPage}

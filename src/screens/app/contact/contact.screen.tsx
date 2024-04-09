@@ -5,16 +5,23 @@ import { ContactForm } from "./contact-form"
 import { Separator } from "@/components/ui/separator.tsx"
 
 export const ContactScreen = () => {
+  const lunarPayEmail = 'contact@lunarpay.finance';
+  const lunarPayPhone = '+40770657204';
+
   return (
-    <ContainedScreen>
+    <ContainedScreen className="flex-grow">
       <Card className="flex justify-between max-md:flex-col p-6 mt-16">
         <div className="w-6/12 md:mr-6 max-md:w-full">
           <div>
             <h2 className={'text-3xl font-medium mb-4'}>Contact us</h2>
             <p className="mb-2">Send us an email or give us a call, we try to answer<br />all enquiries within 24 hours on business days.
             </p>
-            <p>E: contact@lunarpay.finance</p>
-            <p>P: +40770657204</p>
+            <div>
+              <a href={`mailto:${lunarPayEmail}`} className="cursor-pointer">E: {lunarPayEmail}</a>
+            </div>
+            <div>
+              <a href={`tel:${lunarPayPhone}`} className="cursor-pointer">P: {lunarPayPhone}</a>
+            </div>
           </div>
           <div className="mt-4 mb-4"><Separator/></div>
           <div>

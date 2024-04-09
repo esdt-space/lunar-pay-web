@@ -2,7 +2,7 @@ import moment from "moment";
 import { useState } from "react";
 
 import { Card, CardContent } from "@/components/ui/card.tsx";
-import { PaginationButtonsNew } from "@/components/shared/pagination";
+import { PaginationButtons } from "@/components/shared/pagination";
 import { EmptyStateWithAction } from "@/components/shared/empty-states";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table.tsx";
 
@@ -21,8 +21,8 @@ export function MembersListPartial({ agreementId }: Props) {
     isFetched: isFetchedMembersList
   } = usePaymentAgreementMembers(currentPage, agreementId);
 
-  const numberOfPages = members?.numberOfPages
-  const memberships = members?.memberships ?? []
+  const memberships = members?.data ?? []
+  const numberOfPages = members?.meta.totalPages
 
   const nextPageHandler = () => setCurrentPage(page => page + 1);
   const previousPageHandler = () => setCurrentPage(page => Math.max(1, page - 1));
@@ -68,7 +68,7 @@ export function MembersListPartial({ agreementId }: Props) {
             ))}
           </TableBody>
         </Table>
-        <PaginationButtonsNew 
+        <PaginationButtons 
           previousPageHandler={previousPageHandler} 
           nextPageHandler={nextPageHandler}
           currentPage={currentPage}

@@ -20,6 +20,7 @@ export const ContactForm: React.FC = () => {
   const captchaRef = useRef(null)
 
   useEffect(() => {
+    console.log(verified)
     if(isSuccessful) {
       setTimeout(() => setIsSuccessful(false), 3000)
     }
@@ -100,7 +101,7 @@ export const ContactForm: React.FC = () => {
           ref={captchaRef}
           onVerify={verify}
         />
-        <Button disabled={!verified} type='submit'>
+        <Button type='submit'>
           Submit 
             {isLoading && <LoadingIcon className="ml-2 h-4 w-4 animate-spin" />}
             {isSuccessful && <Check className="ml-2 h-4 w-4" />}

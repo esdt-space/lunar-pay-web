@@ -1,26 +1,36 @@
-import {ChevronLeft, ChevronRight} from "lucide-react";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
-import { Button } from "@/components/ui/button.tsx";
-import { PaginatedData } from "./hooks/use-pagination.ts";
+type Props = {
+  previousPageHandler: () => void,
+  nextPageHandler: () => void,
+  currentPage: number
+}
 
-type Props = Omit<PaginatedData<unknown>, 'data'>
-
-export function PaginationButtons(props: Props) {
-  const {previousPageHandler, nextPageHandler, currentPage, lastPage} = props;
+export const PaginationComponent = (props: Props) => {
+  const { previousPageHandler, nextPageHandler, currentPage } = props;
 
   return (
-    <div className="flex justify-end items-center m-2 p-2 space-x-2">
-      <span className={'text-sm text-muted-foreground'}>Page {currentPage} of {lastPage}</span>
-
-      <Button size={'sm'} onClick={previousPageHandler} disabled={currentPage === 1}>
-        <ChevronLeft className={'w-4 h-4 mr-2'} />
-        Previous
-      </Button>
-
-      <Button size={'sm'} onClick={nextPageHandler} disabled={currentPage === lastPage}>
-        Next
-        <ChevronRight className={'w-4 h-4 ml-2'} />
-      </Button>
+    <div className="flex items-center m-2">
+      <Pagination className="justify-end">
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious href="#" onClick={previousPageHandler}/>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink href="#">{currentPage}</PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationNext href="#" onClick={nextPageHandler}/>
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
     </div>
   )
 }

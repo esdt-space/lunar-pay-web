@@ -16,7 +16,7 @@ import { useIsAuthenticated } from "@/features/auth"
 import { AuthForm } from "@/features/auth/components"
 import { TokenItem } from "@/core/tokens/components"
 import { useAccountVaultTokens } from "@/features/vault/hooks"
-import { formatFrequencyForSignAgreement } from "@/utils/utils.ts"
+import { formatFrequencyForSignSubscription } from "@/utils/utils.ts"
 import { useCreatedPaymentAgreement, useSignPaymentAgreementMutation} from "@/features/payment-agreements/hooks"
 
 import { AgreementDetailsPartial } from "./partials/agreement-details-partial.tsx"
@@ -71,7 +71,7 @@ export const SignPaymentAgreementScreen = () => {
   return (
     <div className="flex flex-1 flex-col">
       <div className={'pl-8 py-4'}>
-        <Button onClick={() => navigate(`${RoutesConfig.paymentAgreements}/${agreement._id}`)} variant={'ghost'} className={'gap-2'}>
+        <Button onClick={() => navigate(`${RoutesConfig.paymentAgreements}/${agreement.id}`)} variant={'ghost'} className={'gap-2'}>
           <ArrowLeft />
           Back
         </Button>
@@ -114,7 +114,7 @@ export const SignPaymentAgreementScreen = () => {
                           token={agreement.tokenIdentifier}
                           value={agreement.fixedAmount as string}
                         />
-                        /{formatFrequencyForSignAgreement(agreement.frequency)}
+                        /{formatFrequencyForSignSubscription(agreement.frequency)}
                       </div>
                     </div>
 
@@ -146,7 +146,7 @@ export const SignPaymentAgreementScreen = () => {
                 <div className={'text-sm p-3 ring-1 ring-slate-100 rounded shadow-sm'}>
                   By signing this payment agreement, you allow <span className={'font-bold'}>{agreement.ownerName ?? formatAddress(agreement.owner)}</span> to charge your wallet for this payment and future
                   payments in accordance with their terms. Your first payment will be made <span className={'font-bold'}>today</span>, and then
-                  <span className={'font-bold'}> every {formatFrequencyForSignAgreement(agreement.frequency)}</span>.
+                  <span className={'font-bold'}> every {formatFrequencyForSignSubscription(agreement.frequency)}</span>.
                 </div>
 
                 <div className={'flex flex-col'}>

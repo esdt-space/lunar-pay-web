@@ -28,7 +28,7 @@ function AgreementRow(props: AgreementRowProps) {
   const navigateToAgreement = () => {
     const signed = signedList ? "/signed" : ""
 
-    return navigate(`${RoutesConfig.paymentAgreements}/${agreement._id}${signed}`)
+    return navigate(`${RoutesConfig.paymentAgreements}/${agreement.id}${signed}`)
   }
 
   const tokensMap = useTokensMap();
@@ -72,7 +72,7 @@ export const PaymentAgreementListTable = ({ agreementsList, signedList }: Props)
         </TableRow>
       </TableHeader>
       <TableBody>
-        {agreementsList.map((item) => <AgreementRow key={item._id} agreement={item} signedList={signedList}/>)}
+        {agreementsList.map((item) => <AgreementRow key={item.id} agreement={item} signedList={signedList}/>)}
       </TableBody>
     </Table>
   </div>

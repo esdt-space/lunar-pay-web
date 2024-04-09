@@ -6,7 +6,7 @@ import { useCreatedPaymentAgreement } from "@/features/payment-agreements/hooks"
 import { AgreementTriggersTable } from "@/features/agreement-triggers/components"
 
 import { Card, CardContent } from "@/components/ui/card.tsx"
-import { PaginationButtonsNew } from "@/components/shared/pagination"
+import { PaginationButtons } from "@/components/shared/pagination"
 import { EmptyStateWithAction } from "@/components/shared/empty-states"
 
 type Props = {
@@ -29,8 +29,8 @@ export function AgreementTriggersPartial({ agreementId }: Props) {
   const previousPageHandler = () => setCurrentPage(page => Math.max(1, page - 1));
 
   const token = tokensMap[agreement?.tokenIdentifier];
-  const numberOfPages = triggers?.numberOfPages
-  const agreementTriggers = triggers?.agreementTriggers ?? []
+  const numberOfPages = triggers?.meta.totalPages
+  const agreementTriggers = triggers?.data ?? []
   const emptyAgreementTriggers = isFetchedAgreementsTriggers && agreementTriggers.length === 0;
 
   return (
@@ -47,14 +47,16 @@ export function AgreementTriggersPartial({ agreementId }: Props) {
         )}
 
         {!emptyAgreementTriggers && (
-          <div>
-            <AgreementTriggersTable triggersList={agreementTriggers} token={token} />
-            <PaginationButtonsNew
-              previousPageHandler={previousPageHandler}
-              nextPageHandler={nextPageHandler}
-              currentPage={currentPage}
-              lastPage={numberOfPages} />
-          </div>
+          <Card>
+            <CardContent className="p-0">
+              <AgreementTriggersTable triggersList={agreementTriggers} token={token} />
+              <PaginationButtons
+                previousPageHandler={previousPageHandler}
+                nextPageHandler={nextPageHandler}
+                currentPage={currentPage}
+                lastPage={numberOfPages} />
+            </CardContent>
+          </Card>
         )}
       </CardContent>
     </Card>

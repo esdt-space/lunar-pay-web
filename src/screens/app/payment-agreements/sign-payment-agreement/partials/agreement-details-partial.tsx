@@ -2,7 +2,7 @@ import { Check } from "lucide-react";
 import { FormatAmount } from "@multiversx/sdk-dapp/UI";
 
 import { useTokensMap } from "@/core/tokens";
-import { formatFrequencyForSignAgreement } from "@/utils";
+import { formatFrequencyForSignSubscription } from "@/utils";
 import { PaymentAgreement } from "@/features/payment-agreements/models";
 
 type Props = {
@@ -31,7 +31,7 @@ export function AgreementDetailsPartial(props: Props) {
               value={agreement.fixedAmount as string}
             />
           </div>
-          <span className={'font-medium'}>/{formatFrequencyForSignAgreement(agreement.frequency)}</span>
+          <span className={'font-medium'}>/{formatFrequencyForSignSubscription(agreement.frequency)}</span>
         </div>
       </div>
 

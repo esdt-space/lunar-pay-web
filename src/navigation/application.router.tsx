@@ -10,7 +10,6 @@ import { PublicLayout } from "@/components/layout/public-layout";
 
 import { HomeScreen } from "@/screens/landing/home";
 import { AdminScreen } from '@/screens/admin';
-import { SubscriptionMembersList } from "@/screens/app/subscriptions";
 import { AuthenticationScreen } from "@/screens/auth/authentication-screen.tsx";
 import { DashboardScreen } from "@/screens/app/dashboard";
 import { ChargesOperationsScreen, TokensOperationsScreen } from '@/screens/app/operations';
@@ -19,18 +18,18 @@ import {Subscriptions} from "@/screens/landing/subscriptions";
 import {Donations} from "@/screens/landing/donations";
 import {PortfolioManagement} from "@/screens/landing/portfolio-management";
 import {
-  CreatePaymentAgreementIndexScreen,
-  CreatePaymentAgreementScreen,
-  ViewPaymentAgreementScreen,
-  ListPaymentAgreementsScreen,
-  UpdatePaymentAgreementScreen, SignPaymentAgreementScreen
-} from "@/screens/app/payment-agreements";
+  CreateSubscriptionScreen,
+  ViewSubscriptionScreen,
+  ListSubscriptionsScreen,
+  UpdateSubscriptionScreen, SignSubscriptionScreen, ViewSignedSubscriptionScreen
+} from "@/screens/app/subscriptions";
 import { DemoPage } from '@/screens/app/demo';
-import { ViewSignedPaymentAgreementScreen } from '@/screens/app/payment-agreements/view-payment-agreement/view-signed-payment-agreement.screen';
 import { ContactScreen } from '@/screens/app/contact';
 import { FrequentlyAskedQuestionsScreen } from '@/screens/app/static-pages/frequently-asked-questions/frequently-asked-questions.screen';
 import { TermsAndConditionsScreen } from '@/screens/app/static-pages/terms-and-conditions/terms-and-conditions-screen';
 import { WhitepaperScreen } from '@/screens/app/static-pages/white-paper/whitepaper.screen';
+import { CreateOneTimeDonationScreen, CreateDonationWidgetScreen, DonationDashboardScreen, ContentCreatorDonationPublicScreen, DonationsListScreen, ViewDonationScreen } from '@/screens/app/donations';
+import { ActionsPerformedRankingScreen, DonationsReceivedRankingScreen } from '@/screens/app/event';
 
 export function ApplicationRouter() {
   useScrollToTopHandler()
@@ -57,33 +56,45 @@ export function ApplicationRouter() {
           <Route path={RoutesConfig.termsAndConditions} element={<TermsAndConditionsScreen />} />
           <Route path={RoutesConfig.whitepaper} element={<WhitepaperScreen />} />
           <Route path={RoutesConfig.contactUs} element={<ContactScreen />} />
+          
+          <Route path={RoutesConfig.donationPublic} element={<ContentCreatorDonationPublicScreen />} />
+
+          <Route path={RoutesConfig.eventActions} element={<ActionsPerformedRankingScreen />} />
+          <Route path={RoutesConfig.eventDonations} element={<DonationsReceivedRankingScreen />} />
         </Route>
 
-        <Route path={RoutesConfig.agreement}>
-          <Route path={RoutesConfig.signAgreement} element={<SignPaymentAgreementScreen />} />
+        <Route path={RoutesConfig.subscription}>
+          <Route path={RoutesConfig.signSubscription} element={<SignSubscriptionScreen />} />
         </Route>
 
         <Route element={<AuthenticatedRouteOutlet />}>
           <Route element={<AppLayout />}>
+
+
             <Route index element={<DashboardScreen />} />
             <Route path={RoutesConfig.dashboard} element={<DashboardScreen />} />
+
+            <Route path={RoutesConfig.donations}>
+              <Route index element={<DonationsListScreen />} />
+              <Route path={':id'} element={<ViewDonationScreen />} />
+
+              <Route path={RoutesConfig.createDonationIndex}>
+                <Route index element={<DonationDashboardScreen />} />
+                <Route path={RoutesConfig.createDonationWidget} element={<CreateDonationWidgetScreen />} />
+                <Route path={RoutesConfig.createOneTimeDonation} element={<CreateOneTimeDonationScreen />} />
+              </Route>
+            </Route>
 
             <Route path={RoutesConfig.admin}>
               <Route index element={<AdminScreen />} />
             </Route>
 
             <Route path={RoutesConfig.subscriptions}>
-              <Route path={RoutesConfig.subscriptionMembers} element={<SubscriptionMembersList />} />
-            </Route>
-
-            <Route path={RoutesConfig.paymentAgreements}>
-              <Route index element={<ListPaymentAgreementsScreen />} />
-              <Route path={':id'} element={<ViewPaymentAgreementScreen />} />
-              <Route path={':id/signed'} element={<ViewSignedPaymentAgreementScreen />} />
-              <Route path={':id/edit'} element={<UpdatePaymentAgreementScreen />} />
-              <Route path={RoutesConfig.createPaymentAgreementIndex} element={<CreatePaymentAgreementIndexScreen />} />
-              <Route path={RoutesConfig.createPaymentAgreementSubscription} element={<CreatePaymentAgreementScreen />} />
-              <Route path={RoutesConfig.updatePaymentAgreement} element={<UpdatePaymentAgreementScreen />} />
+              <Route index element={<ListSubscriptionsScreen />} />
+              <Route path={RoutesConfig.viewSubscription} element={<ViewSubscriptionScreen />} />
+              <Route path={RoutesConfig.signedSubscription} element={<ViewSignedSubscriptionScreen />} />
+              <Route path={RoutesConfig.createSubscription} element={<CreateSubscriptionScreen />} />
+              <Route path={RoutesConfig.updateSubscription} element={<UpdateSubscriptionScreen />} />
             </Route>
 
             <Route path={RoutesConfig.tokensOperations}>

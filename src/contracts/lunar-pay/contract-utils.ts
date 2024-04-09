@@ -9,4 +9,4 @@ export const lunarPaySmartContract = new SmartContract({
   abi: lunarPayAbiRegistry
 });
 
-export const gasLimit = import.meta.env.INTERACTION_GAS_LIMIT
+export const gasLimit = Number(import.meta.env.VITE_INTERACTION_GAS_LIMIT) || 15_000_000

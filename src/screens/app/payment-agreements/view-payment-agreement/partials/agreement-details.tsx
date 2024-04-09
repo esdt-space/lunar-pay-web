@@ -24,7 +24,7 @@ export function AgreementDetails(props: Props){
   const tokensMap = useTokensMap();
   const token = tokensMap[agreement.tokenIdentifier];
 
-  const { mutate: triggerAgreement, isLoading} = useTriggerPaymentAgreementMutation(agreement._id);
+  const { mutate: triggerAgreement, isLoading} = useTriggerPaymentAgreementMutation(agreement.id);
 
   const triggerAgreementButtonHandler = () => {
     triggerAgreement(agreement.agreementIdentifier)
