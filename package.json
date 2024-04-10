@@ -73,7 +73,7 @@
     "tailwindcss-animate": "^1.0.7",
     "typescript": "^5.0.2",
     "vite": "^5.2.8",
-    "vite-plugin-mkcert": "^1.16.0",
+    "vite-plugin-mkcert": "^1.17.5",
     "vite-plugin-svgr": "^4.1.0"
   }
 }
