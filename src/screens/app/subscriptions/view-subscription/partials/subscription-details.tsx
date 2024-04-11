@@ -9,10 +9,12 @@ import { Separator } from "@/components/ui/separator.tsx";
 
 import { formatFrequency } from "@/utils";
 import { useTokensMap } from "@/core/tokens";
+import { ProtocolVaultService } from "@/features/vault";
 import { Subscription } from "@/features/subscriptions/models";
 import { useTriggerSubscriptionMutation } from "@/features/subscriptions/hooks";
 import { useCancelSubscriptionMutation } from "@/features/subscriptions/hooks/mutations/use-cancel-subscription-mutation";
 import { RoutesConfig } from "@/navigation";
+import { useState } from "react";
 
 type Props = {
   subscription: Subscription;
@@ -22,6 +24,11 @@ type Props = {
 export function SubscriptionDetails(props: Props){
   const { subscription, signedList } = props;
 
+  const [amounts, setAmounts] = useState({
+    pendingAmount: '0',
+    affordableAmount: '0',
+  })
+
   const noMembers = subscription.accountsCount === 0
 
   const navigate = useNavigate()
@@ -30,6 +37,10 @@ export function SubscriptionDetails(props: Props){
 
   const { mutate: triggerSubscription, isLoading} = useTriggerSubscriptionMutation(subscription.id);
   const { mutate: cancelSubscription} = useCancelSubscriptionMutation();
+
+  ProtocolVaultService.getSubscriptionClaimAmount(subscription.subscriptionIdentifier).then((res) => {
+    setAmounts(res)
+  })
 
   const redirect = () => {
     return navigate(`${RoutesConfig.subscriptions}`)
@@ -76,6 +87,9 @@ export function SubscriptionDetails(props: Props){
             >
               Claim
               <Wallet className={'ml-2 w-3 h-3'} />
+              <div className={'ml-2'}>
+                {amounts.pendingAmount}
+              </div>
             </Button>
           </div> : <div className="flex space-x-2 items-center">
             <Button

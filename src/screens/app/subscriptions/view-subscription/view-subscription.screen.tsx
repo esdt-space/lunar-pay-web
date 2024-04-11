@@ -30,9 +30,6 @@ export const ViewSubscriptionScreen = () => {
     navigate(RoutesConfig.dashboard, { replace: true });
   }
 
-  const totalAmountPerMonth = 300;
-  const totalAmountCharged = 30000;
-
   return (
     <ContainedScreen className="space-y-6">
       <div className={'flex justify-between items-top'}>
@@ -88,8 +85,8 @@ export const ViewSubscriptionScreen = () => {
           <Card className={'p-6'}>
             <div className="flex flex-col">
               <div className="text-2xl bold mb-4">Analytics</div>
-              <div>Total Amount per Month: {totalAmountPerMonth}</div>
-              <div>Total Amount Charged: {totalAmountCharged}</div>
+              <div>Total Amount per Month: 300</div>
+              <div>Total Amount Charged: 30000</div>
             </div>
           </Card>
         </TabsContent>
