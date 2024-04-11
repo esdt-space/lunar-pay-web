@@ -1,4 +1,5 @@
 import moment from "moment";
+import { useEffect, useState } from "react";
 import { Dot, Wallet, X } from "lucide-react";
 import { FormatAmount } from "@multiversx/sdk-dapp/UI";
 import { useNavigate } from "react-router-dom";
@@ -9,12 +10,11 @@ import { Separator } from "@/components/ui/separator.tsx";
 
 import { formatFrequency } from "@/utils";
 import { useTokensMap } from "@/core/tokens";
-import { ProtocolVaultService } from "@/features/vault";
+import { RoutesConfig } from "@/navigation";
 import { Subscription } from "@/features/subscriptions/models";
 import { useTriggerSubscriptionMutation } from "@/features/subscriptions/hooks";
 import { useCancelSubscriptionMutation } from "@/features/subscriptions/hooks/mutations/use-cancel-subscription-mutation";
-import { RoutesConfig } from "@/navigation";
-import { useState } from "react";
+import { useSubscriptionClaimAmountsQuery } from "@/features/vault/hooks/queries/use-subscription-amounts-query";
 
 type Props = {
   subscription: Subscription;
@@ -37,10 +37,13 @@ export function SubscriptionDetails(props: Props){
 
   const { mutate: triggerSubscription, isLoading} = useTriggerSubscriptionMutation(subscription.id);
   const { mutate: cancelSubscription} = useCancelSubscriptionMutation();
+  const { data: subscriptionAmounts } = useSubscriptionClaimAmountsQuery(subscription.subscriptionIdentifier)
 
-  ProtocolVaultService.getSubscriptionClaimAmount(subscription.subscriptionIdentifier).then((res) => {
-    setAmounts(res)
-  })
+  useEffect(() => {
+    if(subscriptionAmounts !== undefined) {
+      setAmounts(subscriptionAmounts)
+    }
+  }, [subscriptionAmounts])
 
   const redirect = () => {
     return navigate(`${RoutesConfig.subscriptions}`)

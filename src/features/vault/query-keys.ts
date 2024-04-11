@@ -4,5 +4,4 @@ export const protocolWhitelistedAddressesQueryKey =  ['protocol-whitelisted-addr
 
 /** Account **/
 export const accountBalancesQueryKey = (address: string) =>  ['protocol-vault-account-balances', address]
-
-
+export const subscriptionAmountsQueryKey = (id: number) =>  ['subscription-amounts', id]
