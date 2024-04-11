@@ -35,7 +35,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "cmdk": "^1.0.0",
-    "date-fns": "^2.30.0",
+    "date-fns": "^3.6.0",
     "framer-motion": "^10.16.4",
     "lodash": "^4.17.21",
     "lucide-react": "^0.367.0",
