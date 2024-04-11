@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@formkit/auto-animate": "^0.8.0",
+    "@formkit/auto-animate": "^0.8.2",
     "@hookform/resolvers": "^3.3.2",
     "@multiversx/sdk-core": "^12.18.0",
     "@multiversx/sdk-dapp": "^2.28.2",
