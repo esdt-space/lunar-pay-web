@@ -36,7 +36,7 @@
     "clsx": "^2.0.0",
     "cmdk": "^1.0.0",
     "date-fns": "^3.6.0",
-    "framer-motion": "^10.16.4",
+    "framer-motion": "^11.0.27",
     "lodash": "^4.17.21",
     "lucide-react": "^0.367.0",
     "moment": "^2.29.4",
