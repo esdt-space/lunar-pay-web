@@ -6,12 +6,13 @@ import { useToast } from '@/components/ui/use-toast';
 
 type Props = {
   codeString: string;
+  hasSubtitle?: boolean;
   subtitleStyling?: string;
   copyIconStyling?: string;
 }
 
 export const CodeStringHighlighter = (props: Props) => {
-  const { codeString, subtitleStyling, copyIconStyling } = props
+  const { codeString, hasSubtitle, subtitleStyling, copyIconStyling } = props
   const { toast } = useToast();
   
   const copyButtonHandler = () => {
@@ -22,10 +23,12 @@ export const CodeStringHighlighter = (props: Props) => {
     })
   };
 
+  const displaySubtitle = hasSubtitle ? true : false;
+
   return <div className='relative'>
-    <div className={`absolute text-white left-9 ${subtitleStyling}`}>
+    {displaySubtitle && <div className={`absolute text-white left-9 ${subtitleStyling}`}>
       Copy the code below and use it into your application
-    </div>
+    </div>}
     <SyntaxHighlighter
       language='typescript'
       style={dark}
@@ -34,7 +37,7 @@ export const CodeStringHighlighter = (props: Props) => {
         border: 'none', 
         marginTop: '24px', 
         marginBottom: '24px', 
-        paddingTop: '54px',
+        paddingTop: hasSubtitle ? '54px' : '16px',
       }}
     >
       {codeString}

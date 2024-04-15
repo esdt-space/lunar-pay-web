@@ -65,7 +65,12 @@ export const CreateDonationWidget = ({ donationId }: Props) => {
       </div> 
       : 
       <CardContent className='flex flex-col'>
-        <CodeStringHighlighter codeString={codeString} subtitleStyling={'top-9'} copyIconStyling={'top-10'}/>
+        <CodeStringHighlighter 
+          codeString={codeString} 
+          hasSubtitle
+          subtitleStyling={'top-9'} 
+          copyIconStyling={'top-10'}
+        />
 
         <Button className='w-full' onClick={() => setDisplayCodeString(false)}>
           Close

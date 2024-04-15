@@ -20,12 +20,12 @@ export const CreateDonationWidgetScreen = () => {
 
       <div className='text-2xl font-semibold mt-16 mb-4'>Donation Button HTML Code</div>
       <div className='text-lg'>First, here's a template for the donation button you'll embed on your site.</div>
-      <CodeStringHighlighter codeString={donationButtonTemplate} subtitleStyling={'top-4'} copyIconStyling={'top-5'}/>
+      <CodeStringHighlighter codeString={donationButtonTemplate} copyIconStyling={'top-5'}/>
       <div className='text-lg mt-4'>Replace `INSERT_YOUR_DONATION_URL_HERE` with your custom donation URL following the guidelines below.</div>
 
       <div className='text-2xl font-semibold mt-16 mb-4'>Constructing Your Donation URL</div>
       <div className='text-lg'>Your donation URL will direct supporters to a simple donation process. Construct this URL with the following format:</div>
-      <CodeStringHighlighter codeString={donationUrlFormat} subtitleStyling={'top-4'} copyIconStyling={'top-5'}/>
+      <CodeStringHighlighter codeString={donationUrlFormat} copyIconStyling={'top-5'}/>
 
       <div className='text-xl font-semibold mt-8 mb-4'>Parameters:</div>
       <div className='mt-4'>
@@ -39,11 +39,11 @@ export const CreateDonationWidgetScreen = () => {
       </div>
 
       <div className='text-2xl font-semibold mt-16 mb-4'>Example URL</div>
-      <CodeStringHighlighter codeString={donationUrlExample} subtitleStyling={'top-4'} copyIconStyling={'top-5'}/>
+      <CodeStringHighlighter codeString={donationUrlExample} copyIconStyling={'top-5'}/>
 
       <div className='text-2xl font-semibold mt-16 mb-4'>Embedding the Button</div>
       <div className='text-lg'>Once your URL is ready, embed the donation button in your website's HTML where you want it to appear, using the complete URL:</div>
-      <CodeStringHighlighter codeString={embeddedDonationButton} subtitleStyling={'top-4'} copyIconStyling={'top-5'}/>
+      <CodeStringHighlighter codeString={embeddedDonationButton} hasSubtitle subtitleStyling={'top-4'} copyIconStyling={'top-5'}/>
 
       <div className='text-xl font-semibold mt-16 mb-16'>
         Tailoring these instructions to your specific needs and the cryptocurrency you're accepting will ensure your donors have all the information they need for a smooth donation process.
