@@ -15,7 +15,7 @@ export const DonationDashboardScreen = () => {
           title='Create Widget'
           description='Innovate Giving: Customizable Widget Creation'
           extraDescription='Create a personalized donation widget for integration into your own application. This feature offers flexibility and control, enabling you to customize appearance and functionality, making it easier for your audience to contribute directly from your platform, enhancing user engagement and support for your cause.'
-          navigationRoute={''}
+          navigationRoute={RoutesConfig.createDonationWidget}
         />
         <CreateDonationCard 
           title='Create Donation'
