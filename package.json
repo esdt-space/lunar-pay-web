@@ -52,7 +52,7 @@
     "reaptcha": "^1.12.1",
     "recharts": "^2.12.6",
     "tailwind-merge": "^2.3.0",
-    "zod": "^3.22.5"
+    "zod": "^3.23.0"
   },
   "devDependencies": {
     "@types/lodash": "^4.17.0",
