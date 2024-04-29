@@ -40,7 +40,7 @@
     "lodash": "^4.17.21",
     "lucide-react": "^0.372.0",
     "moment": "^2.29.4",
-    "react": "^18.2.0",
+    "react": "^18.3.1",
     "react-day-picker": "^8.10.1",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.3",
@@ -57,7 +57,7 @@
   "devDependencies": {
     "@types/lodash": "^4.17.0",
     "@types/node": "^20.12.7",
-    "@types/react": "^18.2.79",
+    "@types/react": "^18.3.1",
     "@types/react-dom": "^18.2.25",
     "@types/react-google-recaptcha": "^2.1.8",
     "@types/react-syntax-highlighter": "^15.5.11",
