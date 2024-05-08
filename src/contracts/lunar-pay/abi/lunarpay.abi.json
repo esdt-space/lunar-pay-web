@@ -267,8 +267,29 @@
             "outputs": []
         },
         {
-            "name": "payWithWalletBalance",
+            "name": "payWithEgldWalletBalance",
             "mutability": "mutable",
+            "payableInTokens": [
+                "EGLD"
+            ],
+            "inputs": [
+                {
+                    "name": "receiver",
+                    "type": "Address"
+                },
+                {
+                    "name": "metadata",
+                    "type": "Option<bytes>"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "payWithEsdtWalletBalance",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
             "inputs": [
                 {
                     "name": "receiver",
@@ -305,8 +326,29 @@
             "outputs": []
         },
         {
-            "name": "donateWithWalletBalance",
+            "name": "donateWithEgldWalletBalance",
             "mutability": "mutable",
+            "payableInTokens": [
+                "EGLD"
+            ],
+            "inputs": [
+                {
+                    "name": "receiver",
+                    "type": "Address"
+                },
+                {
+                    "name": "metadata",
+                    "type": "Option<bytes>"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "donateWithEsdtWalletBalance",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
             "inputs": [
                 {
                     "name": "receiver",
@@ -393,7 +435,11 @@
                     "type": "Option<BigUint>"
                 }
             ],
-            "outputs": []
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
         },
         {
             "name": "addSubscriptionMember",
@@ -419,7 +465,7 @@
                     "type": "u64"
                 },
                 {
-                    "name": "address",
+                    "name": "opt_address",
                     "type": "Option<Address>"
                 }
             ],
@@ -716,7 +762,7 @@
             ]
         },
         {
-            "identifier": "chargeSubscription",
+            "identifier": "chargeSubscriptionMulti",
             "inputs": [
                 {
                     "name": "id",
@@ -736,71 +782,27 @@
             ]
         },
         {
-            "identifier": "transfer",
+            "identifier": "cancelSubscriptionMembership",
             "inputs": [
                 {
-                    "name": "sender",
-                    "type": "Address",
-                    "indexed": true
-                },
-                {
-                    "name": "receiver",
-                    "type": "Address",
-                    "indexed": true
-                },
-                {
-                    "name": "token_identifier",
-                    "type": "EgldOrEsdtTokenIdentifier",
-                    "indexed": true
-                },
-                {
-                    "name": "token_nonce",
+                    "name": "id",
                     "type": "u64",
                     "indexed": true
                 },
                 {
-                    "name": "amount",
-                    "type": "BigUint",
-                    "indexed": true
-                },
-                {
-                    "name": "is_internal",
-                    "type": "bool",
-                    "indexed": true
-                }
-            ]
-        },
-        {
-            "identifier": "payment",
-            "inputs": [
-                {
-                    "name": "sender",
+                    "name": "canceled_by",
                     "type": "Address",
                     "indexed": true
                 },
                 {
-                    "name": "receiver",
+                    "name": "member",
                     "type": "Address",
                     "indexed": true
                 },
                 {
-                    "name": "token_identifier",
-                    "type": "EgldOrEsdtTokenIdentifier",
-                    "indexed": true
-                },
-                {
-                    "name": "token_nonce",
+                    "name": "cancelled_at",
                     "type": "u64",
                     "indexed": true
-                },
-                {
-                    "name": "amount",
-                    "type": "BigUint",
-                    "indexed": true
-                },
-                {
-                    "name": "metadata",
-                    "type": "Option<bytes>"
                 }
             ]
         }
