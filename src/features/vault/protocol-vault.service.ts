@@ -9,6 +9,11 @@ type AccountBalance = {
 }
 type AccountBalancesList = AccountBalance[];
 
+type SubscriptionAmounts = {
+  pendingAmount: string,
+  affordableAmount: string,
+}
+
 export class ProtocolVaultService {
   private static api = new ProtocolApi()
 
@@ -24,6 +29,11 @@ export class ProtocolVaultService {
 
   static async getAccountBalances(): Promise<AccountBalancesList> {
     return ProtocolVaultService.api.get<AccountBalancesList>('/protocol/vault/account-balances')
+      .then((response) => response.data);
+  }
+
+  static async getSubscriptionClaimAmount(id: number): Promise<SubscriptionAmounts> {
+    return ProtocolVaultService.api.get<SubscriptionAmounts>(`/protocol/vault/subscription-charge-amount/${id}`)
       .then((response) => response.data);
   }
 }
