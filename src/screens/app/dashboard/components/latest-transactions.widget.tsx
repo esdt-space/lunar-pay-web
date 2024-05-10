@@ -30,9 +30,9 @@ export const DashboardLatestTransactionsWidget = () => {
       {!isLoadedAndHasData && 
         <Card className={'flex-1 shadow p-2'} >
           {emptyStateContent}
+          {loadingStateContent}
         </Card>
       }
-      {loadingStateContent}
 
       {isLoadedAndHasData && (
         <Card className={'flex-1 shadow p-2'}>
