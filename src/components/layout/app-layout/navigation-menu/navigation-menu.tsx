@@ -11,14 +11,16 @@ import {
 import { CopyIconComponent, HeaderLink } from '../components';
 import { RoutesConfig } from '@/navigation';
  
-const components: { title: string; href: string;}[] = [
+const components: { title: string; href: string; subtitle?: string}[] = [
   {
     title: 'Donations',
-    href: `${RoutesConfig.donations}`
+    href: `${RoutesConfig.donations}`,
+    subtitle: 'Start your donation plan',
   },
   {
     title: 'Subscriptions',
-    href: `${RoutesConfig.subscriptions}`
+    href: `${RoutesConfig.subscriptions}`,
+    subtitle: 'Start your subscription plan',
   },
   // {
   //   title: 'Admin',
@@ -41,12 +43,14 @@ export const LunarPayNavigationMenu = ({isMobile}: Props) => {
         <NavigationMenuItem className={`${isMobile && 'self-start md:ml-1 max-sm: -ml-3'}`}>
           <NavigationMenuTrigger className='text-md'>Actions</NavigationMenuTrigger>
           <NavigationMenuContent>
-            <div className={'flex flex-col p-4 space-y-2'}>
+            <div className={'flex flex-col p-4 space-y-2 cursor-pointer'}>
               {components.map((component, index) => (
                 <HeaderLink
                   key={index}
                   text={component.title}
                   location={component.href}
+                  subtitle={component.subtitle}
+                  isDropdown
                 />
               ))}
             </div>
