@@ -11,14 +11,16 @@ import {
 import { CopyIconComponent, HeaderLink } from '../components';
 import { RoutesConfig } from '@/navigation';
  
-const components: { title: string; href: string; subtitle?: string}[] = [
+const components: { title: string; href: string; subtitle?: string; menuIconLabel?: string}[] = [
   {
     title: 'Donations',
+    menuIconLabel: 'donations_icon',
     href: `${RoutesConfig.donations}`,
     subtitle: 'Start your donation plan',
   },
   {
     title: 'Subscriptions',
+    menuIconLabel: 'subscriptions_icon',
     href: `${RoutesConfig.subscriptions}`,
     subtitle: 'Start your subscription plan',
   },
@@ -47,9 +49,10 @@ export const LunarPayNavigationMenu = ({isMobile}: Props) => {
               {components.map((component, index) => (
                 <HeaderLink
                   key={index}
-                  text={component.title}
+                  menuItem={component.title}
                   location={component.href}
                   subtitle={component.subtitle}
+                  menuIconLabel={component.menuIconLabel}
                   isDropdown
                 />
               ))}
@@ -57,13 +60,13 @@ export const LunarPayNavigationMenu = ({isMobile}: Props) => {
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem className={`${isMobile && 'self-start mt-2'}`}>
-          <HeaderLink text={'Token Operations'} location={RoutesConfig.tokensOperations} />
+          <HeaderLink menuItem={'Token Operations'} location={RoutesConfig.tokensOperations} />
         </NavigationMenuItem>
         <NavigationMenuItem className={`${isMobile && 'self-start mt-4 ml-1'}`}>
           {isMobile && 
             <div>
               <div onClick={signOutHandler}>
-                <HeaderLink text={'Logout'} location={""} />
+                <HeaderLink menuItem={'Logout'} location={""} />
               </div>
               <div className={"flex w-full items-center sm:flex-row md:w-max mt-6 md:ml-4 space-x-4"}>
                 <span className="text-xs max-w-[80px] truncate">
