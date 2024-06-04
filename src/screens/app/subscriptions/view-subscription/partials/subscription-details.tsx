@@ -88,10 +88,10 @@ export function SubscriptionDetails(props: Props){
               disabled={isLoading || noMembers}
               onClick={triggerSubscriptionButtonHandler}
             >
+              <Wallet className={'mr-2 w-3 h-3'} />
               Claim
-              <Wallet className={'ml-2 w-3 h-3'} />
               <div className={'ml-2'}>
-                {amounts.pendingAmount}
+                <FormatAmount value={amounts.affordableAmount as string} decimals={token.decimals} />
               </div>
             </Button>
           </div> : <div className="flex space-x-2 items-center">
