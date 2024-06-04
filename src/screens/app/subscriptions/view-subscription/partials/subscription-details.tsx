@@ -30,6 +30,7 @@ export function SubscriptionDetails(props: Props){
   })
 
   const noMembers = subscription.accountsCount === 0
+  const noAffordableAmount = amounts.affordableAmount === '0'
 
   const navigate = useNavigate()
   const tokensMap = useTokensMap();
@@ -85,7 +86,7 @@ export function SubscriptionDetails(props: Props){
           {!signedList ? <div className="flex space-x-2 items-center">
             <Button
               size={'sm'}
-              disabled={isLoading || noMembers}
+              disabled={isLoading || noMembers || noAffordableAmount}
               onClick={triggerSubscriptionButtonHandler}
             >
               <Wallet className={'mr-2 w-3 h-3'} />
