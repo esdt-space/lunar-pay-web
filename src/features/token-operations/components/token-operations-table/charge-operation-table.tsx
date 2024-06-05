@@ -32,7 +32,6 @@ export const ChargeOperationTable = (props: Props) => {
         <TableRow>
           <TableHead>Amount</TableHead>
           <TableHead>From</TableHead>
-          <TableHead className={'max-lg:hidden'}>Agreement</TableHead>
           <TableHead className={'max-lg:hidden'}>Date</TableHead>
           <TableHead className="max-w-[150px]"></TableHead>
         </TableRow>
