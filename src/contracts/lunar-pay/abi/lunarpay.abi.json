@@ -13,7 +13,7 @@
         },
         "framework": {
             "name": "multiversx-sc",
-            "version": "0.47.8"
+            "version": "0.50.1"
         }
     },
     "name": "LunarPay",
@@ -21,13 +21,11 @@
         "inputs": [],
         "outputs": []
     },
+    "upgradeConstructor": {
+        "inputs": [],
+        "outputs": []
+    },
     "endpoints": [
-        {
-            "name": "upgrade",
-            "mutability": "mutable",
-            "inputs": [],
-            "outputs": []
-        },
         {
             "name": "isUserAdmin",
             "mutability": "readonly",
@@ -365,7 +363,7 @@
             "docs": [
                 "    * It returns the subscription charge amount information.\\n     * Returns: (pendingChargeAmount, affordableChargeAmount)\\n     "
             ],
-            "name": "getUserSubscriptionsChargeAmounts",
+            "name": "getUserSubscriptionChargeAmounts",
             "mutability": "readonly",
             "inputs": [
                 {
