@@ -5,9 +5,9 @@ import { accountBalancesQueryKey } from "@/features/vault/query-keys.ts";
 import { useSuccessfulTransactionCallback } from "@/utils/hooks/use-successful-transaction-callback.ts";
 
 import { DonationInteractionOptions } from "@/contracts/lunar-pay/donations/types";
-import { singleDonationInteraction } from "@/contracts/lunar-pay/donations/interactions";
+import { singleVaultDonationInteraction } from "@/contracts/lunar-pay/donations/interactions";
 
-export function useSingleDonationMutation() {
+export function useSingleVaultDonationMutation() {
   const client = useQueryClient();
   const { address } = useGetAccount();
 
@@ -19,7 +19,7 @@ export function useSingleDonationMutation() {
   }
 
   return useMutation({
-    mutationFn: (options: DonationInteractionOptions) => singleDonationInteraction(options),
+    mutationFn: (options: DonationInteractionOptions) => singleVaultDonationInteraction(options),
     onSuccess(sessionId) {
       if(!sessionId) return Promise.reject();
 

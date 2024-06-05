@@ -16,20 +16,20 @@ export function HeaderLink(props: Props) {
 
   return (
     <li className={`${isDropdown && 'w-64 p-2 rounded-lg hover:bg-slate-100'}`}>
-      <div className={'flex items-center'}>
-        <div>
-          {isDropdown && <DropdownMenuIcon feature={menuIconLabel} />}
+      <NavLink to={location} className={({isActive}) => cn([
+        'block transition md:px-4',
+        isActive && `text-primary`
+      ])}>
+        <div className={'flex items-center'}>
+          <div>
+            {isDropdown && <DropdownMenuIcon feature={menuIconLabel} />}
+          </div>
+          <div>
+            <p className={'ml-4'}>{menuItem}</p>
+            {subtitle && <p className={'ml-4 text-xs font-semibold'}>{subtitle}</p>}
+          </div>
         </div>
-        <div>
-          <NavLink to={location} className={({isActive}) => cn([
-            'block transition md:px-4',
-            isActive && `text-primary`
-          ])}>
-            {menuItem}
-          </NavLink>
-          {subtitle && <p className={'ml-4 text-xs font-semibold'}>{subtitle}</p>}
-        </div>
-      </div>
+      </NavLink>
     </li>
   )
 }
