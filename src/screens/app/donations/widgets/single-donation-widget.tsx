@@ -7,10 +7,11 @@ import { useAccountVaultTokens } from "@/features/vault/hooks";
 import { useCreatedDonation } from "@/features/donations/hooks";
 
 import { TokenSelectorWithAmount } from "@/core/tokens/components";
-import { useSingleDonationMutation } from "@/features/donations/hooks/mutations/use-single-donation-mutation";
+import { useSingleVaultDonationMutation, useSingleWalletDonationMutation } from "@/features/donations/hooks/mutations";
 import { DonationWidgetWrapper } from "./donation-widget-wrapper";
 import { DonationAmountSelect } from "../components";
 import { useEnoughAssets } from "../../../../utils/hooks";
+import { useAccountTokensAvailableToDeposit } from "@/features/account-tokens/hooks";
 
 export type PredeterminedAmount = '5' | '10' | '20' | null;
 
@@ -35,8 +36,13 @@ export const SingleDonationWidget = () => {
   }, [selectedPredeterminedAmount])
 
   const { vaultTokens } = useAccountVaultTokens();
-  const { mutate } = useSingleDonationMutation();
-  const { enoughAssets } = useEnoughAssets(amount, selectedToken);
+  const depositTokensList = useAccountTokensAvailableToDeposit();
+  
+  const { mutate: vaultDonationMutation } = useSingleVaultDonationMutation();
+  const { mutate: walletDonationMutation } = useSingleWalletDonationMutation();
+
+  const enoughVaultAssets = useEnoughAssets(amount, selectedToken, vaultTokens);
+  const enoughWalletAssets = useEnoughAssets(amount, selectedToken, depositTokensList);
 
   if(donation === undefined) return;
 
@@ -55,12 +61,28 @@ export const SingleDonationWidget = () => {
     window.location.href = url
   }
 
-  const donate = () => {
+  const vaultDonation = () => {
     const donationAmount = selectedPredeterminedAmount === null ? amount : selectedPredeterminedAmount;
 
     if (!selectedToken || !donationAmount) return;
     
-    mutate({
+    vaultDonationMutation({
+      token: selectedToken,
+      amount: new BigNumber(donationAmount),
+      receiver: donation.owner,
+    }, { onSuccess: () => {
+      if(donation.payDonationRedirectUrl === null) return
+
+      redirect(donation.payDonationRedirectUrl)
+    }})
+  }
+
+  const walletDonation = () => {
+    const donationAmount = selectedPredeterminedAmount === null ? amount : selectedPredeterminedAmount;
+
+    if (!selectedToken || !donationAmount) return;
+    
+    walletDonationMutation({
       token: selectedToken,
       amount: new BigNumber(donationAmount),
       receiver: donation.owner,
@@ -82,8 +104,10 @@ export const SingleDonationWidget = () => {
       donationCurrency={selectedToken?.identifier || ''}
       donationReceiver={donation.beneficiaryName ?? ''}
       description={donation.description}
-      donateMethod={donate}
-      disableButton={selectedToken === undefined || !enoughAssets} 
+      vaultDonationMethod={vaultDonation}
+      walletDonationMethod={walletDonation}
+      disableVaultButton={selectedToken === undefined || !enoughVaultAssets} 
+      disableWalletButton={selectedToken === undefined || !enoughWalletAssets} 
     >
       <DonationAmountSelect selectedPredeterminedAmount={selectedPredeterminedAmount}  selectPredeterminedAmount={selectPredeterminedAmount}/>
 
@@ -93,6 +117,8 @@ export const SingleDonationWidget = () => {
         onTokenChange={(token) => setSelectedToken(token)}
         amount={amount}
         onAmountChange={onAmountChange}
+        hasMaxButton={false}
+        showBalances={false}
       />
     </DonationWidgetWrapper>
   )

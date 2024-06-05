@@ -1,16 +1,13 @@
-import { Token } from "@/core/tokens";
-import { useAccountVaultTokens } from "@/features/vault/hooks";
+import { Egld, EsdtToken, Token } from "@/core/tokens";
 import { formatTokenBalance } from "@/theme/utils";
 import BigNumber from "bignumber.js";
 import { useState, useEffect } from "react";
 
-export const useEnoughAssets = (amount: string, selectedToken: Token | undefined) => {
+export const useEnoughAssets = (amount: string, selectedToken: Token | undefined, tokens: (Egld | EsdtToken)[]) => {
   const [enoughAssets, setEnoughAssets] = useState(false);
 
-  const { vaultTokens } = useAccountVaultTokens();
-
   useEffect(() => {
-    const vaultToken = vaultTokens.find(item => item.identifier === selectedToken?.identifier);
+    const vaultToken = tokens.find(item => item.identifier === selectedToken?.identifier);
     const currentTokenBalance = vaultToken !== undefined ? vaultToken.balance : ""
     const currentTokenDecimals = vaultToken !== undefined ? vaultToken.decimals : 0
     const currentBalance = formatTokenBalance(currentTokenBalance, currentTokenDecimals)
@@ -23,5 +20,5 @@ export const useEnoughAssets = (amount: string, selectedToken: Token | undefined
     setEnoughAssets(assets)
   }, [amount, selectedToken])
 
-  return { enoughAssets }
+  return enoughAssets;
 }

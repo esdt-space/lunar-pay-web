@@ -9,12 +9,24 @@ type Props = {
   description?: string;
   donationAmount: string;
   donationCurrency: string;
-  disableButton: boolean;
-  donateMethod: () => void;
+  disableVaultButton: boolean;
+  disableWalletButton: boolean;
+  vaultDonationMethod: () => void;
+  walletDonationMethod: () => void;
 }
 
 export const DonationWidgetWrapper = (props: PropsWithChildren<Props>) => {
-  const { donationReceiver, description, donationAmount, donationCurrency, disableButton, donateMethod, children } = props;
+  const { 
+    donationReceiver, 
+    description, 
+    donationAmount, 
+    donationCurrency, 
+    disableVaultButton,
+    disableWalletButton, 
+    vaultDonationMethod, 
+    walletDonationMethod, 
+    children 
+  } = props;
 
   return (
     <div className="flex flex-1 justify-center items-center">
@@ -27,7 +39,23 @@ export const DonationWidgetWrapper = (props: PropsWithChildren<Props>) => {
 
         {children}
 
-        <Button disabled={disableButton} onClick={donateMethod} className="bg-gradient-to-r from-primary to-secondary text-white hover:text-slate-200">Donate {donationAmount} {donationCurrency}</Button>
+        <div className={'flex flex-col w-full space-y-2'}>
+          <Button 
+            disabled={disableVaultButton} 
+            onClick={vaultDonationMethod} 
+            className="bg-gradient-to-r from-primary to-secondary text-white hover:text-slate-200"
+          >
+            Donate {donationAmount} {donationCurrency} with vault balance
+          </Button>
+
+          <Button 
+            disabled={disableWalletButton} 
+            onClick={walletDonationMethod} 
+            className="bg-gradient-to-r from-primary to-secondary text-white hover:text-slate-200"
+          >
+            Donate {donationAmount} {donationCurrency} with wallet balance
+          </Button>
+        </div>
 
         <div className="flex justify-center items-center w-full space-x-4"><p className={'text-medium font-bold'}>Powered by</p> <AppIcon /></div>
       </Card>

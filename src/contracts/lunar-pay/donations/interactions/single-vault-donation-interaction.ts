@@ -14,7 +14,7 @@ import { lunarPaySmartContract } from "@/contracts/lunar-pay/contract-utils.ts";
 
 import { DonationInteractionOptions } from "../types";
 
-export async function singleDonationInteraction(options: DonationInteractionOptions) {
+export async function singleVaultDonationInteraction(options: DonationInteractionOptions) {
   const sender = await getAddress();
   const { chainId } = getNetworkConfig()
 
