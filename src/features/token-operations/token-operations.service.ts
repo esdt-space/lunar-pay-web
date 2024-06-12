@@ -22,7 +22,7 @@ export class TokenOperationsService {
 
     return TokenOperationsService.api
       .get<PaginatedResponse<TokenOperation>>(
-        `/token-operations?limit=${TokenOperationsService.ITEMS_PER_PAGE}&skip=${skip}&type=${type}&addressFilter=${address}`
+        `/token-operations?limit=${TokenOperationsService.ITEMS_PER_PAGE}&skip=${skip}&type=${type}&filterByAddress=${address}`
       )
       .then((response) => response.data)
   }
