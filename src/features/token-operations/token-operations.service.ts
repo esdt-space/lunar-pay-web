@@ -17,12 +17,12 @@ export class TokenOperationsService {
       .then((response) => response.data)
   }
 
-  static async getAllTokenOperations(page: number, type: string, address?: string): Promise<PaginatedResponse<TokenOperation>> {
+  static async getAllTokenOperations(page: number, type: string, address?: string, parentId?: string): Promise<PaginatedResponse<TokenOperation>> {
     const skip = (page - 1) * TokenOperationsService.ITEMS_PER_PAGE;
 
     return TokenOperationsService.api
       .get<PaginatedResponse<TokenOperation>>(
-        `/token-operations?limit=${TokenOperationsService.ITEMS_PER_PAGE}&skip=${skip}&type=${type}&filterByAddress=${address}`
+        `/token-operations?limit=${TokenOperationsService.ITEMS_PER_PAGE}&skip=${skip}&type=${type}&addressFilter=${address}&parentId=${parentId}`
       )
       .then((response) => response.data)
   }

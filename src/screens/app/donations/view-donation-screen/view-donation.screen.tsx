@@ -37,7 +37,7 @@ export const ViewDonationScreen = () => {
               <CreateDonationWidget donationId={donation.id} />
             </div>
             <div>
-              <DonationTransactions />
+              <DonationTransactions donationId={donation.id} />
             </div>
           </div>
         </TabsContent>
