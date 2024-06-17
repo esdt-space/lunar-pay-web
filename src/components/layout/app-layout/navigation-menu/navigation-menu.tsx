@@ -31,10 +31,11 @@ const components: { title: string; href: string; subtitle?: string; menuIconLabe
 ]
 
 type Props = {
-  isMobile: boolean
+  isMobile: boolean;
+  setIsMobileMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
  
-export const LunarPayNavigationMenu = ({isMobile}: Props) => {
+export const LunarPayNavigationMenu = ({isMobile, setIsMobileMenuOpen}: Props) => {
   const { address } = useGetAccount();
 
   const signOutHandler = () => logout(RoutesConfig.home)
@@ -47,25 +48,29 @@ export const LunarPayNavigationMenu = ({isMobile}: Props) => {
           <NavigationMenuContent>
             <div className={'flex flex-col p-4 space-y-2 cursor-pointer'}>
               {components.map((component, index) => (
-                <HeaderLink
-                  key={index}
-                  menuItem={component.title}
-                  location={component.href}
-                  subtitle={component.subtitle}
-                  menuIconLabel={component.menuIconLabel}
-                  isDropdown
-                />
+                <div onClick={() => setIsMobileMenuOpen(false)}>
+                  <HeaderLink
+                    key={index}
+                    menuItem={component.title}
+                    location={component.href}
+                    subtitle={component.subtitle}
+                    menuIconLabel={component.menuIconLabel}
+                    isDropdown
+                  />
+                </div>
               ))}
             </div>
           </NavigationMenuContent>
         </NavigationMenuItem>
-        <NavigationMenuItem className={`${isMobile && 'self-start mt-2'}`}>
-          <HeaderLink menuItem={'Token Operations'} location={RoutesConfig.tokensOperations} />
+        <NavigationMenuItem className={`${isMobile && 'self-start mt-2 md:ml-1 max-sm: -ml-3'}`} onClick={() => setIsMobileMenuOpen(false)}>
+          <div className='-ml-4'>
+            <HeaderLink menuItem={'Token Operations'} location={RoutesConfig.tokensOperations} />
+          </div>
         </NavigationMenuItem>
-        <NavigationMenuItem className={`${isMobile && 'self-start mt-4 ml-1'}`}>
+        <NavigationMenuItem className={`${isMobile && 'self-start mt-4 md:ml-1 max-sm: -ml-3'}`} onClick={() => setIsMobileMenuOpen(false)}>
           {isMobile && 
             <div>
-              <div onClick={signOutHandler}>
+              <div className='-ml-4' onClick={signOutHandler}>
                 <HeaderLink menuItem={'Logout'} location={""} />
               </div>
               <div className={"flex w-full items-center sm:flex-row md:w-max mt-6 md:ml-4 space-x-4"}>

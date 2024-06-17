@@ -53,9 +53,9 @@ export function AppPageHeader() {
                 isMobileMenuOpen ? "visible opacity-100 translate-y-0 scale-100" : "invisible opacity-0 translate-y-1 scale-90"
               ])}
             >
-              <div onClick={() => setIsMobileMenuOpen(false)} className="text-gray-600 dark:text-gray-300 lg:pr-4">
+              <div className="text-gray-600 dark:text-gray-300 lg:pr-4">
                 <ul className="text-base font-medium tracking-wide">
-                  <LunarPayNavigationMenu isMobile={isMobileMenuOpen} />
+                  <LunarPayNavigationMenu isMobile={isMobileMenuOpen} setIsMobileMenuOpen={setIsMobileMenuOpen} />
                 </ul>
               </div>
 

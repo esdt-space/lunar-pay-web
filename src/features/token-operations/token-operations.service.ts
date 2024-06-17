@@ -27,10 +27,13 @@ export class TokenOperationsService {
       .then((response) => response.data)
   }
 
-  static async getTokenOperationsByParentId(page: number, id: string): Promise<PaginatedResponse<TokenOperation>> {
+  static async getTokenOperationsByParentId(page: number, id: string, address?: string): Promise<PaginatedResponse<TokenOperation>> {
     const skip = (page - 1) * TokenOperationsService.ITEMS_PER_PAGE;
 
-    return TokenOperationsService.api.get<PaginatedResponse<TokenOperation>>(`/token-operations/${id}/all/charge-operations?limit=${TokenOperationsService.ITEMS_PER_PAGE}&skip=${skip}`)
+    return TokenOperationsService.api
+      .get<PaginatedResponse<TokenOperation>>(
+        `/token-operations/${id}/all/charge-operations?limit=${TokenOperationsService.ITEMS_PER_PAGE}&skip=${skip}&filterByAddress=${address}`
+      )
       .then((response) => response.data)
   }
 }

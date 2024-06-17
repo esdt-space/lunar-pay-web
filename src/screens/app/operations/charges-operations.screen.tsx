@@ -12,15 +12,15 @@ import { ChargeOperationTable } from "@/features/token-operations/components"
 
 export const ChargesOperationsScreen = () => {
   const [currentPage, setCurrentPage] = useState(1)
+  const [filterValue, setFilterValue] = useState("")
+
   const { id } = useParams()
-  const {data: chargesOperations, isFetching, isFetched, refetch } = useChargesOperations(currentPage, id)
+  const {data: chargesOperations, isFetching, isFetched, refetch } = useChargesOperations(currentPage, id, filterValue)
 
   useEffect(() => {
     setCurrentPage(1);
     refetch();
-  }, [])
-
-  const [filterValue, setFilterValue] = useState("")
+  }, [filterValue])
 
   const nextPageHandler = () => setCurrentPage(page => page + 1);
   const previousPageHandler = () => setCurrentPage(page => Math.max(1, page - 1));
