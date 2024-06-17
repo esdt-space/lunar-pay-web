@@ -6,12 +6,12 @@ import {
   accountTokenOperationsFilteredQueryKey,
 } from "@/features/token-operations/query-keys.ts";
 
-export function useTokenOperationsQuery(pageNumber: number, type: string, address?: string) {
+export function useTokenOperationsQuery(pageNumber: number, type: string, address?: string, parentId?: string) {
   const { address: currentAddress} = useGetAccount();
 
   return useQuery({
     queryKey: accountTokenOperationsFilteredQueryKey(currentAddress, type, pageNumber),
-    queryFn: () => TokenOperationsService.getAllTokenOperations(pageNumber, type, address),
+    queryFn: () => TokenOperationsService.getAllTokenOperations(pageNumber, type, address, parentId),
     refetchOnMount: true,
     refetchOnWindowFocus: false,
     keepPreviousData: true,
