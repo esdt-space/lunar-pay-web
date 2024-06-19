@@ -29,6 +29,7 @@ export async function singleWalletDonationInteraction(options: DonationInteracti
 
   let interaction = lunarPaySmartContract.methods.donateWithEsdtWalletBalance([
     new AddressValue(new Address(options.receiver)),
+    Buffer.from(options.donationId, 'utf-8'),
     OptionValue.newMissing(),
   ]);
 

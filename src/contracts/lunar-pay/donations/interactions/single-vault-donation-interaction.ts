@@ -22,6 +22,7 @@ export async function singleVaultDonationInteraction(options: DonationInteractio
     new TokenIdentifierValue(options.token.identifier),
     getAmountParameter(options.amount, options.token),
     new AddressValue(new Address(options.receiver)),
+    Buffer.from(options.donationId, 'utf-8'),
     OptionValue.newMissing(),
   ]);
 
