@@ -13,7 +13,7 @@
     "@formkit/auto-animate": "^0.8.2",
     "@hookform/resolvers": "^3.3.2",
     "@multiversx/sdk-core": "^13.1.0",
-    "@multiversx/sdk-dapp": "^2.31.5",
+    "@multiversx/sdk-dapp": "^2.34.0",
     "@multiversx/sdk-network-providers": "^2.4.3",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-avatar": "^1.0.3",
