@@ -1,11 +1,11 @@
 {
     "buildInfo": {
         "rustc": {
-            "version": "1.78.0",
-            "commitHash": "9b00956e56009bab2aa15d7bff10916599e3d6d6",
-            "commitDate": "2024-04-29",
+            "version": "1.80.1",
+            "commitHash": "3f5fd8dd41153bc5fdca9427e9e05be2c767ba23",
+            "commitDate": "2024-08-06",
             "channel": "Stable",
-            "short": "rustc 1.78.0 (9b00956e5 2024-04-29)"
+            "short": "rustc 1.80.1 (3f5fd8dd4 2024-08-06)"
         },
         "contractCrate": {
             "name": "lunarpay",
@@ -13,7 +13,7 @@
         },
         "framework": {
             "name": "multiversx-sc",
-            "version": "0.50.5"
+            "version": "0.52.3"
         }
     },
     "name": "LunarPay",
@@ -386,12 +386,17 @@
                 "It returns the subscription charge amount information.",
                 "Returns: (pendingChargeAmount, affordableChargeAmount)"
             ],
-            "name": "getUserSubscriptionChargeAmounts",
+            "name": "getSubscriptionChargeAmounts",
             "mutability": "readonly",
             "inputs": [
                 {
                     "name": "id",
                     "type": "u64"
+                },
+                {
+                    "name": "opt_address",
+                    "type": "optional<Address>",
+                    "multi_arg": true
                 }
             ],
             "outputs": [
