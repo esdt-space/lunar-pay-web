@@ -1,6 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { TransactionWatcher } from "@multiversx/sdk-core";
+import { ApiNetworkProvider } from "@multiversx/sdk-network-providers";
+import { useGetNetworkConfig } from "@multiversx/sdk-dapp/hooks";
+import { SmartContractTransactionsOutcomeParser, TransactionsConverter } from "@multiversx/sdk-core";
+
+import { lunarPayAbiRegistry } from "@/contracts/lunar-pay/contract-utils";
+
 import { Button } from "@/components/ui/button.tsx";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card.tsx";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -22,6 +29,13 @@ export function CreateSubscriptionScreen() {
   const navigate = useNavigate();
   const [frequency, setFrequency] = useState('Monthly');
   const [selectedToken, setSelectedToken] = useState<Token | undefined>(undefined);
+  const { network } = useGetNetworkConfig();
+  
+  const apiNetworkProvider = new ApiNetworkProvider(network.apiAddress);
+  const converter = new TransactionsConverter();
+  const parser = new SmartContractTransactionsOutcomeParser({
+      abi: lunarPayAbiRegistry
+  });
 
   const tokens = useAccountTokensAvailableToDeposit();
   const [amount, setAmount] = useState('')
@@ -31,9 +45,9 @@ export function CreateSubscriptionScreen() {
   const missingToken = selectedToken === undefined
   const missingAmount = amount === ""
 
-  const subscriptionCreatedHandler = () => {
+  const subscriptionCreatedHandler = (identifier: number) => {
     SubscriptionsService
-      .fetchLatestSubscriptionCreatedByAccount()
+      .fetchLatestSubscriptionCreatedByAccount(identifier)
       .then(subscription => {
         navigate(RoutesConfig.updateSubscription.replace(":id", subscription.id))
     });
@@ -50,7 +64,17 @@ export function CreateSubscriptionScreen() {
       type: SubscriptionType.RecurringPayoutToReceive,
       amountType: SubscriptionAmountType.FixedAmount,
       amount: amount,
-    }, { onSuccess: subscriptionCreatedHandler})
+    }, { onSuccess: async () => {
+      const txHash = '7e3d694b83fa614975b1213e8ba4deb33a298b31a0d837e5547177fc32678af1'
+      const watcherUsingApi = new TransactionWatcher(apiNetworkProvider);
+      const transactionOnNetworkUsingApi = await watcherUsingApi.awaitCompleted(txHash);
+      
+      const transactionOutcome = converter.transactionOnNetworkToOutcome(transactionOnNetworkUsingApi);
+      const parsedOutcome = parser.parseExecute({ transactionOutcome });
+      const subscriptionIdentifier = parsedOutcome.values[0].toString();
+
+      subscriptionCreatedHandler(Number(subscriptionIdentifier))
+    }})
   }
 
   return (

@@ -8,7 +8,6 @@ import { SubscriptionInteractionOptions } from "../types/index.ts";
 import { getSubscriptionTypeInteractionValue } from "../subscription-type-helper.ts";
 import { getSubscriptionAmountTypeInteractionValue, getCreateSubscriptionAmountInteractionValue } from "../subscription-amount-helper.ts";
 
-
 export async function createSubscriptionInteraction (options: SubscriptionInteractionOptions) {
   const sender = await getAddress();
   const { chainId } = getNetworkConfig();

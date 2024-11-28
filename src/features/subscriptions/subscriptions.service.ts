@@ -32,9 +32,9 @@ export class SubscriptionsService {
       })
   }
 
-  static async fetchLatestSubscriptionCreatedByAccount() {
+  static async fetchLatestSubscriptionCreatedByAccount(subscriptionIdentifier: number) {
     return SubscriptionsService.api
-      .get<Subscription>(`/subscriptions/created/latest`)
+      .get<Subscription>(`/subscriptions/created/latest/${subscriptionIdentifier}`)
       .then((response) => response.data)
       .then(item => new Subscription(item))
   }
