@@ -31,7 +31,7 @@
     "@radix-ui/react-toast": "^1.1.5",
     "@radix-ui/react-toggle": "^1.0.3",
     "@splinetool/react-spline": "^2.2.6",
-    "@tanstack/react-virtual": "^3.4.0",
+    "@tanstack/react-virtual": "^3.8.3",
     "bignumber.js": "^9.1.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
